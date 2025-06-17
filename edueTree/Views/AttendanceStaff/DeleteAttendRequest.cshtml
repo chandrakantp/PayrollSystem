@@ -1,0 +1,37 @@
+﻿
+@model edueTree.Models.AttendanceRequest
+
+
+<br/><br/>
+<section class="content">
+    <section class="col-md-5 col-md-offset-3">
+        <div class="box box-success">
+            <div class="box-header">              
+                <h4 class="box-title"> Are you sure you want to delete?</h4>
+            </div>
+            <div class="box-body chat" id="chat-box">
+                <div class="item">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-horizontal">
+                            <hr/>
+                            @Html.ValidationSummary(true)
+                        </div>
+                        var message = TempData["actionanme"] as string;                                                  
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-10">
+                                <input type="submit" value="OK" class="btn btn-default" />&nbsp;&nbsp;
+                                <a href='@Url.Action(message)' class="btn btn-default">Cancel</a>
+                            </div>
+                        </div>
+                    
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</section>
+
+

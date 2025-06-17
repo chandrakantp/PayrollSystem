@@ -1,0 +1,156 @@
+﻿@model edueTree.Models.ShiftMasterModel
+@{
+
+    var hourList = new SelectList(new[]
+            {
+                new SelectListItem {Text = " Hours ", Value = null, Selected = true},
+                new SelectListItem {Text = "1", Value = "1"},
+                new SelectListItem {Text = "2", Value = "2"},
+                new SelectListItem {Text = "3", Value = "3"},
+                new SelectListItem {Text = "4", Value = "4"},
+                new SelectListItem {Text = "5", Value = "5"},
+                new SelectListItem {Text = "6", Value = "6"},
+                new SelectListItem {Text = "7", Value = "7"},
+                new SelectListItem {Text = "8", Value = "8"},
+                new SelectListItem {Text = "9", Value = "9"},
+                new SelectListItem {Text = "10", Value = "10"},
+                new SelectListItem {Text = "11", Value = "11"},
+                new SelectListItem {Text = "12", Value = "12"},
+                new SelectListItem {Text = "13", Value = "13"},
+                new SelectListItem {Text = "14", Value = "14"},
+                new SelectListItem {Text = "15", Value = "15"},
+                new SelectListItem {Text = "16", Value = "16"},
+                new SelectListItem {Text = "17", Value = "17"},
+                new SelectListItem {Text = "18", Value = "18"},
+                new SelectListItem {Text = "19", Value = "19"},
+                new SelectListItem {Text = "20", Value = "20"},
+                new SelectListItem {Text = "21", Value = "21"},
+                new SelectListItem {Text = "22", Value = "22"},
+                new SelectListItem {Text = "23", Value = "23"},             
+            }, "Value", "Text");
+}
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <a data-toggle="modal" data-target="#myModal" class="btn btn-success pull-right">
+                    <i class="fa fa-plus-square"></i> Add Shift
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content-header">
+    <h1>
+        @*Shift Master*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#s"><i class="fa fa-dashboard"></i>Shift</a></li>
+        <li class="active">Add</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="myModal" class="modal fade" role="dialog">
+                @using (Html.BeginForm())
+                {
+                @Html.AntiForgeryToken()
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"> Add Shift</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true)
+                                <div class="form-group">
+                                    <div class="col-md-4"><label>Shift Name</label></div>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => model.ShiftName, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ShiftName)
+                                    </div>
+
+
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>Start Time</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model => model.Hour, hourList, new { id = "Hour", @class = "form-control" })
+
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model => model.Minute, new SelectList(Enumerable.Range(0, 60).Select(x => new { Value = x, Text = x }), "Value", "Text"), new { @class = "form-control" })
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <div class="col-md-4"><label>End Time</label></div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model => model.Hour1, hourList, new { id = "Hour", @class = "form-control" })
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model => model.Minute1, new SelectList(Enumerable.Range(0, 60).Select(x => new { Value = x, Text = x }), "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+
+
+                                </div>
+                                <br />
+
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" value="Add" class="btn btn-default pull-right" />
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+            <div class="col-md-12">
+                @{Html.RenderAction("ShiftIndex", "Staffs");}
+            </div>
+</div>
+</section>
+
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "error");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

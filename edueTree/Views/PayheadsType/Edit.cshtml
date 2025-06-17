@@ -1,0 +1,48 @@
+﻿@model edueTree.Models.PayheadTypeModel
+@{
+    ViewBag.Title = "Edit Pay Heads Type";
+}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Pay head Type</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Firmid)
+
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title">Edit Pay Heads Type</h3>
+                    </div>
+
+                    <div class="box-body">
+
+                        <div class="col-md-6">
+                            <label>Pay Head Type:</label>
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "required", placeholder = "Enter Pay Heads Type" })
+                            @Html.ValidationMessageFor(model => model.Name, string.Empty, new { @class = "help-block" })
+                        </div>
+                    </div>                  
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("Create")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

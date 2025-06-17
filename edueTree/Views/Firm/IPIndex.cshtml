@@ -1,0 +1,33 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.StaticIP>
+
+@{
+    Layout = null;
+}
+
+
+<div class="box box-info">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">IP Address List</h3>
+    </div>
+    <div class="box-body">
+
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">              
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.staticIPaddress)
+                        </td>
+
+                      
+                      
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

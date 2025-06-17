@@ -1,0 +1,131 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.TrainingFeedbackModel>
+
+@{
+    ViewBag.Title = "Invitation Index";
+}
+@*@{
+
+    Layout = null;
+}*@
+
+<section class="content-header">
+        <h1>
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i></a>Training</li>
+            <li class="active">Invitation List</li>
+        </ol>
+    </section>
+
+
+
+<section class="content">
+
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Training Invitation List</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Staff Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Trainer Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Topic")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Start Date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("End Date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Duration ")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Status")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Feedback")
+                                        </th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.StaffNamea)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TrainerName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Topic)
+                                            </td>
+                                            <td>
+                                                @Convert.ToDateTime(item.TrainingDateStart).ToString("dd-MM-yyyy")
+                                            </td>
+                                            <td>
+                                                @Convert.ToDateTime(item.TrainingEndDate).ToString("dd-MM-yyyy")
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Duration)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Status)
+                                            </td>
+                                            <td>
+                                                @(item.Feedback == null ? Html.EncodedActionLink("Write Feedback", "Employeefeedback", "Training", new {id = item.Id}, null) : Html.DisplayFor(modelItem => item.Feedback))
+                                            </td>
+
+
+                                          
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    @*<div class="input-group box-tools pull-right">
+                            <a href='@Url.Action("Create")' class="btn btn-success"><i class="fa fa-plus"></i></a>
+                        </div>*@
+                </div>
+                <div class="modal fade" id="myModalInvitationDelete" role="dialog"></div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $(".table").DataTable({
+                dom: "Bfrtip",
+                buttons: [
+                        "copy", "csv", "excel", "pdf", "print"
+                ]
+            });
+        });
+
+    });
+
+</script>
+

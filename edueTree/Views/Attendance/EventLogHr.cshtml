@@ -1,0 +1,160 @@
+﻿@model IEnumerable<edueTree.Models.EventLogTran_Result>
+@{
+    ViewBag.Title = "Event Log";
+    @*Layout = "~/Views/Shared/_Layout.cshtml";*@
+}
+
+<section class="content-header">
+    <h1>
+        @*Manage Generated Attendance*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Generated Attendance</a></li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+<script type="text/javascript">
+    $(function () {
+        jQuery.ajax({
+            type: 'POST',
+            url: '/Attendance/GetStaff',
+            data: {},
+            datatype: 'json',
+            error:
+                            function () {
+                                alert("Not any Staff");
+                            },
+            success: function (response) {
+
+                var items = "";
+                $(response.SubcatId).each(function (i, item) {
+                    //if (i == 0) {
+                    //    items += "<option value=\"" + 0 + "\">Select Employee</option>";
+                    //}
+                    //else {
+                        items += "<option value=\"" + item + "\">" + response.Subcat[i] + "</option>";
+                    //}
+                });
+
+                $("#empId").html(items);
+                if (strUser !== 0) {
+                    $("#empId option:selected").text(strUser);
+                }
+            }
+        });
+    });
+</script>
+<section class="col-lg-10 connectedSortable">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Event Log</h3>
+            <div class="pull-right">
+            </div>
+        </div>
+        <div class="box-body chat">
+            <div class="item">
+                <form action="/Attendance/EventLog" method="get" id="form1">
+                    <div class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.Label("Date:", new { @id = "month", @class = "control-label col-md-3" })
+                                    <div class="col-md-8">
+                                       @Html.TextBox("date", null, new { id = "date", @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    @Html.Label("Employee:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-8">
+                                            <select id="empId" name="empId" class="form-control"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" form="form1" value="Submit" class="btn btn-default">Show</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (!Request.QueryString["date"].IsEmpty() && !Request.QueryString["empId"].IsEmpty())
+{
+    <section class="content">
+        <div class="row">
+            <section class="col-lg-10 connectedSortable">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-calendar"></i>
+                        <h3 class="box-title">Event Log</h3>
+                        <div class="pull-right">
+                          
+                        </div>
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+
+                            <div class="table-responsive" style="height: 400px">
+                                <table id="activity" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayName("User")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Date time")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Status")
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.UserName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Time)
+                                            </td>
+                                            <td>
+                                                @{
+                                                    if (item.Statu == 1)
+                                                    {
+                                                        @Html.DisplayName("IN")
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayName("OUT")
+                                                    }
+                                                    }
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#date').datepicker({
+            dateFormat: "dd/mm//yy",
+            autoclose: true
+        });
+    });
+</script>
+

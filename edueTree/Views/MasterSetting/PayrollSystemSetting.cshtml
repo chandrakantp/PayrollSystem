@@ -1,0 +1,127 @@
+﻿@model edueTree.Models.PayrollConfigModel
+
+<style type="text/css">
+    .help-block {
+        color: #BC3C3C;
+    }
+</style>
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <a data-toggle="modal" data-target="#myModal1" class="btn btn-success pull-right">
+                    <i class="fa fa-plus-square"></i> Add Payroll Setting
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Payroll Setting</a></li>
+        <li class="active">Setting</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="myModal1" class="modal fade" role="dialog">
+                @using (Html.BeginForm())
+                {
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Payroll Configure Setting</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-horizontal">
+                                    @Html.ValidationSummary(true)
+                                    <div class="form-group">
+
+                                        <div class="col-md-3">
+                                            <label>Monthly Leaves:</label>
+
+                                            @Html.TextBoxFor(model => model.MonthlyLeaves, new {id = "MonthlyLeaves", @class = "form-control", placeholder = "Monthly paid Leaves"})
+                                            @Html.ValidationMessageFor(model => model.MonthlyLeaves)
+                                            <span class="help-block" id="MonthlyLeavesMessage" />
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>Working Hours Per Day</label>
+                                            @Html.TextBoxFor(model => model.WorkingHoursDay, new {id = "WorkingHoursDay", @class = "form-control", placeholder = "hh:mm:ss"})
+                                            @Html.ValidationMessageFor(model => model.WorkingHoursDay)
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Min Hour Work Per Day</label>
+                                            @Html.TextBoxFor(model => model.HalfDayMinWorkHours, new {@class = "form-control", placeholder = "hh:mm:ss"})
+                                            @Html.ValidationMessageFor(model => model.HalfDayMinWorkHours)
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>Working Days Per Month</label>
+                                            @Html.TextBoxFor(model => model.WorkingdaysPermonth, new {@class = "form-control", placeholder = "Min working days per month"})
+                                            @Html.ValidationMessageFor(model => model.WorkingdaysPermonth)
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Add" class="pull-right btn btn-default" />
+                            </div>
+                        </div>
+                       
+                        </div>                  
+                }
+            </div>
+            @{Html.RenderAction("PayrollSystemIndex", "MasterSetting");}
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "error") {
+                $.notify(" Something went wrong Plz check ! ", "error");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. !", "warn");
+            }
+            if ('@TempData["notice"]' === "wrong") {
+                $.notify(" Something went wrong plz check ! ", "error");
+            }
+        }
+
+    });
+
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+</script>

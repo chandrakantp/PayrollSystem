@@ -1,0 +1,131 @@
+﻿@model edueTree.Models.NomineeDetailModel
+
+@{
+    ViewBag.Title = "NomineeCreate";
+}
+<section class="content-header">
+    <h1>
+
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Manage</a></li>
+        <li class="active">Nominee</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        @if (ViewBag.message == true)
+        {
+            
+            <div class="col-md-12">
+            @using (Html.BeginForm("NomineeCreatepost", "staffs"))
+            {
+                <div class="box box-success">
+                    @Html.HiddenFor(model => model.Nomineestatus)
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="box-header">
+                        <h4>Add Nominees Info @Html.DisplayFor(model => model.Nomineestatus) </h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">
+
+                            @Html.HiddenFor(model => model.Staffid)
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Nominee Name:</label>
+                                    @Html.TextBoxFor(model => model.Nomineename, new {id = "nomineename", @class = "form-control", placeholder = "Nominee Name"})
+                                    @Html.ValidationMessageFor(model => model.Nomineename, string.Empty, new {@class = "help-block"})
+                                    <span class="help-block" id="nomineename"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Nominee Address:</label>
+                                    @Html.TextBoxFor(model => model.Nomineeaddress, new {id = "nomineeaddress", @class = "form-control", placeholder = "Address"})
+                                    @Html.ValidationMessageFor(model => model.Nomineeaddress, string.Empty, new {@class = "help-block"})
+                                    <span class="help-block" id="nomineeaddress"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Relationship : </label>
+                                    @Html.TextBoxFor(model => model.Nomineeralation, new {id = "nomineeralation", @class = "form-control", placeholder = " Relationship"})
+                                    @Html.ValidationMessageFor(model => model.Nomineeralation, string.Empty, new {@class = "help-block"})
+                                    <span class="help-block" id="nomineeralation"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Nominee Age</label>
+                                    @Html.TextBoxFor(model => model.Age, new {id = "age", @class = "form-control", placeholder = "Age"})
+                                    @Html.ValidationMessageFor(model => model.Age, string.Empty, new {@class = "help-block"})
+                                    <span class="help-block" id="age"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Nominee Birth Date</label>
+                                    @Html.TextBoxFor(model => model.Dob, new {id = "Dob", @class = "form-control datepicker", placeholder = "Birth Date"})
+                                    @Html.ValidationMessageFor(model => model.Dob, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="Dob"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Nominee shared</label>
+                                    @Html.TextBoxFor(model => model.Share, new {id = "age", @class = "form-control", placeholder = "Share"})
+                                    <span class="help-block" id="age"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right"/>
+                        <a href='@Url.Action("StaffDashboard", "Staffs", new {staffid = Model.Staffid})' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+        }
+        
+
+        <div class="col-md-12">
+            @{Html.RenderAction("NomineeIndex", "Staffs", new {@status = Model.Nomineestatus, @id = Model.Staffid});}
+
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

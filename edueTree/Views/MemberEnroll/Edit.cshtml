@@ -1,0 +1,110 @@
+﻿@model edueTree.Models.MemberattendanceConfigModel
+@{
+
+    ViewBag.Title = "Create";
+}
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+
+<script src="~/plugins/select2/select2.js"></script>
+<section class="content-header">
+    <h1>
+        @*Employee Registration*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Machine Config</a></li>
+        <li class="active">Manage</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm())
+            {
+
+            @Html.HiddenFor(model=>model.ConfigId)
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title"> Update Member Config Information</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-4">
+                            <div class="form-group">
+
+                                <label>select Staff </label>
+                                @Html.DropDownListFor(model => model.StaffId, Model.StaffList, " - Select Employee - ", new { id = "Id", @class = "form-control select2", placeholder = "select Role" })
+                                @Html.ValidationMessageFor(model => model.StaffId, string.Empty, new { @class = "help-block" })
+                                <span class="help-block" id="RoleIdmsg"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+
+                                <label>Select Machine Serial Key</label>
+                                @Html.DropDownListFor(model => model.Machineid, Model.MachineList, " - Select Serial Key - ", new { id = "Id", @class = "form-control select2", placeholder = "select Role" })
+                                @Html.ValidationMessageFor(model => model.Machineid, string.Empty, new { @class = "help-block" })
+                                <span class="help-block" id="RoleIdmsg"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+
+                                <label>Fingure Id</label>
+                                @Html.TextBoxFor(model => model.FingureId, new { id = "FingureId", @class = "form-control", placeholder = "Enter FingureId" })
+                                @Html.ValidationMessageFor(model => model.FingureId, string.Empty, new { @class = "help-block" })
+                                <span class="help-block" id="RoleIdmsg"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @*@{Html.RenderAction("Index", "MemberEnroll");}*@
+</section>
+
+
+
+
+<script type="text/javascript">
+    $(".select2").select2();
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "/MemberEnroll/GetMachineList",
+            datatype: "Json",
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    $('#dropMachine').append('<option value="' + value.id + '">' + value.SerialKey + '</option>');
+                });
+            }
+        });
+
+        $('#dropdownCountry').change(function () {
+
+            $('#dropdownState').empty();
+
+            $.ajax({
+                type: "POST",
+                url: "/MemberEnroll/GetMachineByEmployeeId",
+                datatype: "Json",
+                data: { machineId: $('#dropMachine').val() },
+                success: function (data) {
+                    $.each(data, function (index, value) {
+                        $('#dropEnroll').append('<option value="' + value.Id + '">' + value.StateName + '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+
+
+

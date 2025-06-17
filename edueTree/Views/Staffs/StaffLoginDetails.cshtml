@@ -1,0 +1,133 @@
+﻿@model IEnumerable<edueTree.Models.LoginRecordModel>
+
+@{
+    ViewBag.Title = "MachineData";
+}
+
+<br />
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Employee's Login Record</h3>
+                    <div class="pull-right">
+                        <a href="@Url.Action("StaffLoginRecords", "Staffs")">  <span class="btn btn-default"><i class="fa fa-backward"> Back To Report </i></span></a>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <br />
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Login Date</th>
+                                <th>IP Address</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Country</th>
+                                <th>Zipcode</th>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>                                         
+                                            @Html.DisplayFor(modelitem => item.StaffcodeLogin) :
+                                            @Html.DisplayFor(modelitem => item.FirstLogin)
+                                            @Html.DisplayFor(modelitem => item.MiddleLogin)
+                                            @Html.DisplayFor(modelitem => item.LastLogin)
+                                        </td>
+
+                                        <td>
+                                            @Convert.ToDateTime(item.CreatedDateLogin).ToString("dd-MM-yyyy HH:mm")
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelitem => item.Ipaddress)
+                                        </td>
+
+
+                                        @if (string.IsNullOrEmpty(item.City))
+                                        {
+                                            <td>@Html.DisplayName("N/A")</td>
+                                        }
+                                        else
+                                        {
+                                        <td>@Html.DisplayFor(modelitem => item.City)</td>
+                                        }
+
+
+                                        @if (string.IsNullOrEmpty(item.State))
+                                        {
+                                            <td>@Html.DisplayName("N/A")</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Html.DisplayFor(modelitem => item.State)</td>
+                                        }
+
+
+                                        @if (string.IsNullOrEmpty(item.CountryName))
+                                        {
+                                            <td>@Html.DisplayName("N/A")</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Html.DisplayFor(modelitem => item.CountryName)</td>
+                                        }
+
+
+                                        @if (string.IsNullOrEmpty(item.ZipCode))
+                                        {
+                                            <td>@Html.DisplayName("N/A")</td>
+                                        }
+                                        else
+                                        {
+                                           <td>@Html.DisplayFor(modelitem => item.ZipCode)</td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true,
+        });
+    });
+
+</script>
+
+<script>
+    $(function () {
+
+        $(document).ready(function () {
+            $('.table').DataTable({
+                //'ordering' : false,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

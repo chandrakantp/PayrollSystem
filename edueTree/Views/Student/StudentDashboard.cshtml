@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "StudentDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            @{Html.RenderAction("StudentDetails", "Student");}
+        </section>
+        <section class="col-md-12">
+            @{Html.RenderAction("PreSchoolIndex", "Student");}
+        </section>
+        <section class="col-lg-5 connectedSortable">         
+           
+        </section>
+    </div>
+</section>
+
+

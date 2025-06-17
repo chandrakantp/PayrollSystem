@@ -1,0 +1,43 @@
+﻿@model IEnumerable<edueTree.Models.notice>
+
+
+<br />
+<br />
+
+@*<body style="background-color: #FFEF81;">*@
+
+
+<section class="content">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Notice</h3>
+                </div>
+
+                <table style="width: 100%;">
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="col-md-offset-5" style="color: blue; font-size:x-large">
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </span>
+                                   <hr/>
+                                    <div class="col-md-12">
+                                        @Html.DisplayFor(modelItem => item.narration)<hr/>
+                                    </div>
+                                    <br />
+                                </td>
+                              
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @*</body>*@
+            </div>
+        </div>
+    </div>
+</section>

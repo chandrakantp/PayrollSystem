@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9b2efb0e1c6e40e0b06cc1537f432638" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.AdvanceRequest" Width="1.5" PointX="5.75" PointY="62" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.AspNetRole" Width="1.5" PointX="3" PointY="105.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.AspNetUserClaim" Width="1.5" PointX="8.25" PointY="97.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.AspNetUserLogin" Width="1.5" PointX="8.625" PointY="75.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.AspNetUserRole" Width="1.5" PointX="0.75" PointY="2" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.AspNetUser" Width="1.5" PointX="6" PointY="80" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.AttendanceRequest" Width="1.5" PointX="6" PointY="73.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.Bonu" Width="1.5" PointX="10.5" PointY="105.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.City" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.CompansationRequest" Width="1.5" PointX="2.875" PointY="63.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.CompansationTran" Width="1.5" PointX="3.125" PointY="61.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.ComputerAssinged" Width="1.5" PointX="6" PointY="63.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.Config" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.Department" Width="1.5" PointX="3" PointY="108.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.Designation" Width="1.5" PointX="3" PointY="96.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.DurationTran" Width="1.5" PointX="11" PointY="63.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.EventLog" Width="1.5" PointX="3" PointY="61" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.Event" Width="1.5" PointX="3" PointY="90.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.GeneratedSalary" Width="1.5" PointX="15.75" PointY="71.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.GeneratedSalaryVariable" Width="1.5" PointX="15.75" PointY="82.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.Holiday" Width="1.5" PointX="3" PointY="102" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.InActiveResion" Width="1.5" PointX="10.5" PointY="92.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.LeaveBalance" Width="1.5" PointX="16.5" PointY="77.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.LeaveRequest" Width="1.5" PointX="13.5" PointY="80.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.LeaveType" Width="1.5" PointX="5.25" PointY="87" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.LoginLog" Width="1.5" PointX="10.5" PointY="108.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.Menu" Width="1.5" PointX="1.25" PointY="113.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.MenuItem" Width="1.5" PointX="3.5" PointY="113.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.NetDurationTotal" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.notice" Width="1.5" PointX="10.5" PointY="76.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.num" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.OptionalHoliday" Width="1.5" PointX="3" PointY="93.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.OptionalHolidayTran" Width="1.5" PointX="10.5" PointY="83.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.PreviousEduInfo" Width="1.5" PointX="3" PointY="56.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.ShiftHistory" Width="1.5" PointX="10.375" PointY="62.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.StaffDesignation" Width="1.5" PointX="13.5" PointY="86.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.StaffDocument" Width="1.5" PointX="10.5" PointY="102.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.StaffEducation" Width="1.5" PointX="10.5" PointY="88.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.StaticIP" Width="1.5" PointX="3" PointY="99.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.Subject" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.UserRole" Width="1.5" PointX="5.25" PointY="102.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.Weekend" Width="1.5" PointX="5.25" PointY="91.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.WorkExperiance" Width="1.5" PointX="10.5" PointY="111.125" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_dbo_UserRole_dbo_AspNetRoles_RoleId" />
+        <AssociationConnector Association="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" />
+        <AssociationConnector Association="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="Model.FK_dbo_UserRole_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="Model.FK_GeneratedSalary_AspNetUser" />
+        <AssociationConnector Association="Model.FK_LeaveRequests_AspNetUser" />
+        <AssociationConnector Association="Model.FK_DurationTran_ToPCAssigned" />
+        <AssociationConnector Association="Model.FK_LeaveType_Department" />
+        <AssociationConnector Association="Model.FK_Weekends_Department" />
+        <AssociationConnector Association="Model.FK_StaffDesignation_Designation" />
+        <AssociationConnector Association="Model.FK_LeaveBalance_LeaveType" />
+        <AssociationConnector Association="Model.FK_LeaveRequests_LeaveType" />
+        <AssociationConnector Association="Model.FK_MenuItem_Menu" />
+        <AssociationConnector Association="Model.FK_OptionalHolidayTran_OptionalHoliday" />
+        <EntityTypeShape EntityType="Model.Degree" Width="1.5" PointX="8.25" PointY="101.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.DegreeSubject" Width="1.5" PointX="7.875" PointY="89" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_StaffEducation_Degree" />
+        <AssociationConnector Association="Model.FK_StaffEducation_DegreeSubject" />
+        <EntityTypeShape EntityType="Model.EsiInfo" Width="1.5" PointX="2.625" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.EPFDetail" Width="1.5" PointX="2.625" PointY="1.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.insuranceinfo" Width="1.5" PointX="2.625" PointY="5.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.Undertaking" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.NomineeDetail" Width="1.5" PointX="2.625" PointY="3.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.EsiFamily" Width="1.5" PointX="2.625" PointY="4.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TrainingFeedback" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TblUniversal" Width="1.5" PointX="2.625" PointY="5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.BankInfo" Width="1.5" PointX="2.625" PointY="3.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.LeavePassbook" Width="1.5" PointX="26.25" PointY="82.375" />
+        <EntityTypeShape EntityType="Model.TblLeaveRecord" Width="1.5" PointX="24" PointY="83.375" />
+        <AssociationConnector Association="Model.FK_LeavePassbook_LeaveType" />
+        <AssociationConnector Association="Model.FK_LeavePassbook_TblLeaveRecord" />
+        <AssociationConnector Association="Model.FK_TblLeaveRecord_TblLeaveRecord" />
+        <EntityTypeShape EntityType="Model.MachineConfigure" Width="1.5" PointX="3" PointY="81.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.MemberattendaceConfig" Width="1.5" PointX="2.625" PointY="2" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.ShiftMaster" Width="1.5" PointX="3" PointY="52.125" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_ShiftHistory_ShiftMaster" />
+        <EntityTypeShape EntityType="Model.AssignShift" Width="1.5" PointX="4.375" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.BufferTimeSetting" Width="1.5" PointX="2.625" PointY="2.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.EditPermission" Width="1.5" PointX="4.375" PointY="1.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TblEmailConfig" Width="1.5" PointX="4.375" PointY="2.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.PayrollConfig" Width="1.5" PointX="3" PointY="84.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.VisaPassport" Width="1.5" PointX="4.375" PointY="3.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.FeedbackFormMaster" Width="1.5" PointX="8.5" PointY="3.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.QuestionMaster" Width="1.5" PointX="10.25" PointY="1.25" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_QuestionMaster_QuestionMaster" />
+        <EntityTypeShape EntityType="Model.QuestionAssigment" Width="1.5" PointX="8.5" PointY="2.25" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_QuestionAssigment_FeedbackFormMaster" />
+        <AssociationConnector Association="Model.FK_QuestionAssigment_QuestionMaster" />
+        <EntityTypeShape EntityType="Model.Training" Width="1.5" PointX="5.25" PointY="108.875" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_Training_Department" />
+        <EntityTypeShape EntityType="Model.TblRating" Width="1.5" PointX="24" PointY="48.75" />
+        <AssociationConnector Association="Model.FK_TblRating_FeedbackFormMaster" />
+        <AssociationConnector Association="Model.FK_TblRating_QuestionMaster" />
+        <EntityTypeShape EntityType="Model.LeaveMaster" Width="1.5" PointX="2.625" PointY="6.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TblFormAssignment" Width="1.5" PointX="24" PointY="53.5" />
+        <EntityTypeShape EntityType="Model.TblFormEvaluator" Width="1.5" PointX="24" PointY="91.25" />
+        <EntityTypeShape EntityType="Model.TblSection" Width="1.5" PointX="6.375" PointY="1.5" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_TblFormAssignment_FeedbackFormMaster" />
+        <AssociationConnector Association="Model.FK_QuestionMaster_TblSection" />
+        <EntityTypeShape EntityType="Model.MonthlyTTarget" Width="1.5" PointX="3.375" PointY="112.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.VarienceReport" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_VarienceReport_VarienceReport" />
+        <AssociationConnector Association="Model.FK_MonthlyTTarget_FirmInfo1" />
+        <EntityTypeShape EntityType="Model.AttendanceStaff" Width="1.5" PointX="3" PointY="75.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.tblEventLog" Width="1.5" PointX="4.375" PointY="2.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TblNetDurationUsersName" Width="1.5" PointX="24" PointY="80.5" />
+        <EntityTypeShape EntityType="Model.TblAverageTime" Width="1.5" PointX="24" PointY="77.625" />
+        <EntityTypeShape EntityType="Model.LeaveRecordNew" Width="1.5" PointX="27" PointY="89.375" />
+        <AssociationConnector Association="Model.FK_LeaveRecordNew_LeaveRecordNew" />
+        <EntityTypeShape EntityType="Model.TblAverageTimeForAttendanceSheet" Width="1.5" PointX="24" PointY="94.875" />
+        <EntityTypeShape EntityType="Model.Permission" Width="1.5" PointX="8.25" PointY="110.75" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_Permission_ToAspNetRole" />
+        <AssociationConnector Association="Model.FK_Permission_ToMenuItem" />
+        <EntityTypeShape EntityType="Model.TblAllowance" Width="1.5" PointX="10.5" PointY="0.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TblAllowTransaction" Width="1.5" PointX="24" PointY="43.625" />
+        <AssociationConnector Association="Model.FK_TblAllowTransaction_TblAllowance" />
+        <EntityTypeShape EntityType="Model.TblLoginCounter" Width="1.5" PointX="3" PointY="77.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TblLoginRecord" Width="1.5" PointX="24" PointY="73.25" />
+        <EntityTypeShape EntityType="Model.SalaryStructure" Width="1.5" PointX="3" PointY="72.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.Structurepermission" Width="1.5" PointX="27" PointY="78" />
+        <AssociationConnector Association="Model.FK_Structurepermission_SalaryStructure" />
+        <EntityTypeShape EntityType="Model.AdvanceEMI" Width="1.5" PointX="27" PointY="73.5" />
+        <AssociationConnector Association="Model.FK_AdvanceEMI_AdvanceRequest" />
+        <EntityTypeShape EntityType="Model.CoumputedValue" Width="1.5" PointX="5.25" PointY="44.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TblGratuityCalculation" Width="1.5" PointX="5.25" PointY="41" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TblSpecifiedFormula" Width="1.5" PointX="5.25" PointY="48.125" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_CoumputedValues_VariableSettings1" />
+        <EntityTypeShape EntityType="Model.Staff" Width="1.5" PointX="21.75" PointY="72.25" />
+        <AssociationConnector Association="Model.FK_AdvanceEMI_Staff" />
+        <AssociationConnector Association="Model.FK_AdvanceRequest_Staff" />
+        <AssociationConnector Association="Model.FK_Staff_AspNetUsers" />
+        <AssociationConnector Association="Model.FK_AttendanceRequest_staff" />
+        <AssociationConnector Association="Model.FK_Bonus_Staff" />
+        <AssociationConnector Association="Model.FK_CompansationRequest_Staff" />
+        <AssociationConnector Association="Model.FK_CompansationRequest_Staff1" />
+        <AssociationConnector Association="Model.FK_CompansationTran_Staff" />
+        <AssociationConnector Association="Model.FK_ComputerAssinged_ToStaff" />
+        <AssociationConnector Association="Model.FK_Staff_Department" />
+        <AssociationConnector Association="Model.FK_Staff_Designation" />
+        <AssociationConnector Association="Model.FK_Staff_InActiveResion" />
+        <AssociationConnector Association="Model.FK_LeaveBalance_Staff_" />
+        <AssociationConnector Association="Model.FK_LeaveBalance_Staff1" />
+        <AssociationConnector Association="Model.FK_LeavePassbook_Staff" />
+        <AssociationConnector Association="Model.FK_LeaveRecordNew_Staff" />
+        <AssociationConnector Association="Model.FK_LeaveRequests_Staff" />
+        <AssociationConnector Association="Model.FK_LoginLogs_Staff" />
+        <AssociationConnector Association="Model.FK_notice_ToTable" />
+        <AssociationConnector Association="Model.FK_OptionalHolidayTran_Staff" />
+        <AssociationConnector Association="Model.FK_ShiftHistory_Staff" />
+        <AssociationConnector Association="Model.FK_Staff_ShiftMaster" />
+        <AssociationConnector Association="Model.FK_Staff_staff" />
+        <AssociationConnector Association="Model.FK_StaffDesignation_Staff" />
+        <AssociationConnector Association="Model.FK_StaffDocument_Teacher" />
+        <AssociationConnector Association="Model.FK_StaffEducation_Teacher" />
+        <AssociationConnector Association="Model.FK_Structurepermission_Structurepermission" />
+        <AssociationConnector Association="Model.FK_TblAllowTransaction_Staff" />
+        <AssociationConnector Association="Model.FK_TblAverageTime_Staff" />
+        <AssociationConnector Association="Model.FK_TblAverageTimeForAttendanceSheet_Staff" />
+        <AssociationConnector Association="Model.FK_TblFormAssignment_Staff" />
+        <AssociationConnector Association="Model.FK_TblFormEvaluator_Staff" />
+        <AssociationConnector Association="Model.FK_TblFormEvaluator_Staff1" />
+        <AssociationConnector Association="Model.FK_TblLeaveRecord_Staff" />
+        <AssociationConnector Association="Model.FK_TblLoginRecord_Staff" />
+        <AssociationConnector Association="Model.FK_TblNetDurationUsersName_TblNetDurationUsersName" />
+        <AssociationConnector Association="Model.FK_TblRating_Staff" />
+        <AssociationConnector Association="Model.FK_WorkExperiance_Staff" />
+        <EntityTypeShape EntityType="Model.Reporting" Width="1.5" PointX="24" PointY="87.25" />
+        <AssociationConnector Association="Model.FK_Reporting_Staff" />
+        <AssociationConnector Association="Model.FK_Reporting_Staff1" />
+        <EntityTypeShape EntityType="Model.tblSalaryCalculateRule" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TblCalculateMonth" Width="1.5" PointX="2.625" PointY="7.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.StaffCTC" Width="1.5" PointX="30" PointY="71.75" />
+        <AssociationConnector Association="Model.FK_GeneratedSalary_StaffCTC" />
+        <AssociationConnector Association="Model.FK_StaffCTC_Staff" />
+        <EntityTypeShape EntityType="Model.MonthlyAttenDetail" Width="1.5" PointX="30" PointY="81.25" />
+        <AssociationConnector Association="Model.FK_GeneratedSalaryVariables_GeneratedSalary" />
+        <AssociationConnector Association="Model.FK_MonthlyAttenDetail_Staff" />
+        <AssociationConnector Association="Model.FK_StaffCTC_SalaryStructure" />
+        <EntityTypeShape EntityType="Model.SalaryVariable" Width="1.5" PointX="32.25" PointY="79.25" />
+        <AssociationConnector Association="Model.FK_SalaryVariables_StaffCTC" />
+        <EntityTypeShape EntityType="Model.TblOvertimeCalculate" Width="1.5" PointX="24" PointY="69.375" />
+        <EntityTypeShape EntityType="Model.TblPayheadType" Width="1.5" PointX="3" PointY="86.625" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_TblOvertimeCalculate_Staff" />
+        <EntityTypeShape EntityType="Model.VariableSetting" Width="1.5" PointX="8.25" PointY="76.875" />
+        <AssociationConnector Association="Model.FK_GeneratedSalaryVariables_VariableSettings" />
+        <AssociationConnector Association="Model.FK_InActiveResion_VariableSettings" />
+        <AssociationConnector Association="Model.FK_VariableSettings_SalaryStructure" />
+        <AssociationConnector Association="Model.FK_TblGratuityCalculation_VariableSettings" />
+        <AssociationConnector Association="Model.FK_TblSpecifiedFormula_VariableSettings" />
+        <AssociationConnector Association="Model.FK_VariableSettings_CalculateFrom1" />
+        <AssociationConnector Association="Model.FK_VariableSettings_CalculateFrom2" />
+        <AssociationConnector Association="Model.FK_VariableSettings_CalculateFrom3" />
+        <EntityTypeShape EntityType="Model.FailureSignupFirm" Width="1.5" PointX="5.5" PointY="4.75" />
+        <EntityTypeShape EntityType="Model.FirmInfo" Width="1.5" PointX="0.75" PointY="78.5" />
+        <AssociationConnector Association="Model.FK_AdvanceEMI_FirmInfo" />
+        <AssociationConnector Association="Model.FK_AdvanceRequest_FirmInfo" />
+        <AssociationConnector Association="Model.FK_AspNetRoles_FirmInfo" />
+        <AssociationConnector Association="Model.FK_AttendanceRequest_FirmInfo" />
+        <AssociationConnector Association="Model.FK_AttendanceStaff_FirmInfo" />
+        <AssociationConnector Association="Model.FK_CompansationRequest_FirmInfo" />
+        <AssociationConnector Association="Model.FK_CompansationTran_FirmInfo" />
+        <AssociationConnector Association="Model.FK_ComputerAssinged_FirmInfo" />
+        <AssociationConnector Association="Model.FK_Department_FirmInfo" />
+        <AssociationConnector Association="Model.FK_Designation_FirmInfo" />
+        <AssociationConnector Association="Model.FK_DurationTran_FirmInfo" />
+        <AssociationConnector Association="Model.FK_EventLog_FirmInfo" />
+        <AssociationConnector Association="Model.FK_Events_FirmInfo" />
+        <AssociationConnector Association="Model.FK_GeneratedSalary_FirmInfo" />
+        <AssociationConnector Association="Model.FK_Holidays_FirmInfo" />
+        <AssociationConnector Association="Model.FK_LeaveBalance_FirmInfo" />
+        <AssociationConnector Association="Model.FK_LeaveRequests_FirmInfo" />
+        <AssociationConnector Association="Model.FK_LeaveType_FirmInfo" />
+        <AssociationConnector Association="Model.FK_MachineConfigure_FirmInfo" />
+        <AssociationConnector Association="Model.FK_MonthlyAttenDetail_FirmInfo" />
+        <AssociationConnector Association="Model.FK_MonthlyTTarget_FirmInfo" />
+        <AssociationConnector Association="Model.FK_notice_FirmInfo" />
+        <AssociationConnector Association="Model.FK_OptionalHoliday_FirmInfo" />
+        <AssociationConnector Association="Model.FK_Payhead_FirmInfo" />
+        <AssociationConnector Association="Model.FK_PayrollConfig_FirmInfo" />
+        <AssociationConnector Association="Model.FK_PreviousEduInfo_FirmInfo" />
+        <AssociationConnector Association="Model.FK_SalaryStructure_FirmInfo" />
+        <AssociationConnector Association="Model.FK_SalaryVariables_FirmInfo" />
+        <AssociationConnector Association="Model.FK_Staff_FirmInfo" />
+        <AssociationConnector Association="Model.FK_StaffCTC_FirmInfo" />
+        <AssociationConnector Association="Model.FK_StaticIPs_FirmInfo" />
+        <AssociationConnector Association="Model.FK_Structurepermission_FirmInfo" />
+        <AssociationConnector Association="Model.FK_TblLoginCounter_TblLoginCounter" />
+        <AssociationConnector Association="Model.FK_VariableSettings_FirmInfo" />
+        <AssociationConnector Association="Model.FK_Weekends_FirmInfo" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

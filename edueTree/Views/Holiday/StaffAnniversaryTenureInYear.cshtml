@@ -1,0 +1,124 @@
+﻿@model IEnumerable<edueTree.Models.NoticeBoardModel>
+
+@{
+    ViewBag.Title = "AnniversaryTenure";
+}
+<br />
+@{
+    var StatusList = new SelectList(new[]
+        {
+              new SelectListItem { Value = null , Text =  "---- All Records ----", Selected = true},
+              new SelectListItem {Text = "Upcoming", Value = "Upcoming"},
+              new SelectListItem {Text = "Completed", Value = "Completed"},
+              new SelectListItem {Text = "Today", Value = "Today"}
+         }, "Value", "Text");
+}
+
+@{Html.RenderAction("EmployeeAnniversaryTenure", "Event");}
+
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Search Options - </h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("StaffAnniversaryTenureInYear", "Holiday", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Status:", new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.DropDownList("status", StatusList, new { id = "statuslist", @class = "form-control" })
+                            </div>
+
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Employee's Anniversary Tenure Report</h3>
+                </div>
+                <div class="box-body">
+                    <br />
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Employee Name
+                                </th>
+                                <th>
+                                    Joining Date
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelitem => item.EmpFullnameSp)
+                                        </td>
+
+                                        <td>
+                                            @Convert.ToDateTime(item.DateSp).ToString("dd-MMM-yyyy")
+                                        </td>
+                                        @if (item.StatusSp == "Completed")
+                                        {
+                                            <td>
+                                                <span class="label label-success">@Html.DisplayFor(modelitem => item.StatusSp)</span>
+                                            </td>
+                                        }
+                                        else if (item.StatusSp == "Today")
+                                        {
+                                            <td>
+                                                <span class="label label-danger">@Html.DisplayFor(modelitem => item.StatusSp)</span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <span class="label label-info">@Html.DisplayFor(modelitem => item.StatusSp)</span>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+    });
+</script>

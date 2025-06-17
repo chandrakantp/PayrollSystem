@@ -1,0 +1,183 @@
+﻿@model IEnumerable<edueTree.Models.Reporting>
+
+@{
+    Layout = null;
+}
+
+<style>
+    .dp {
+        width: 200px;
+    }
+</style>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title">Email Reporting Search Options - You can search Daily,Weekly & Monthly</h3>
+                </div>
+
+                <div class="box-body chat">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="">
+                                @using (Html.BeginForm("EmailReportingForm", "Reporting", FormMethod.Get))
+                                {
+                                    <div class="form-horizontal">
+
+                                        <div class="form-group">
+                                            @Html.Label("Employee Name:", new { @class = "control-label col-md-2" })
+                                            <div class="col-md-5">
+                                                @Html.DropDownList("staffidEmp", (IEnumerable<SelectListItem>)ViewBag.staffid, "---- All Employee ----", new { @class = "form-control select2 dp" })
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="">
+                                @using (Html.BeginForm("EmailReportingForm", "Reporting", FormMethod.Get))
+                                {
+                                    <div class="form-horizontal">
+
+                                        <div class="form-group">
+                                            @Html.Label("Email Reporting Name:", new { @class = "control-label col-md-2" })
+                                            <div class="col-md-5">
+                                                @Html.DropDownList("staffid", (IEnumerable<SelectListItem>)ViewBag.staffid, "---- All Employee ----", new { @class = "form-control select2 dp" })
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Employee Wise Reporting List</h3>
+                </div>
+
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table style="overflow-x: scroll; white-space: nowrap;" class="table table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Employee Name
+                                        </th>
+                                        <th>
+                                            Email Reporting Name
+                                        </th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var group in Model.GroupBy(x => x.Staff.schoolCode + " " + x.Staff.firstName + " " + x.Staff.lastName))
+                                        {
+                                            <tr class="group-header">
+                                                <td>
+                                                    @group.Key
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+
+                                            </tr>
+
+                                            foreach (var item in group)
+                                            {
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td>@item.Staff1.firstName @item.Staff1.lastName</td>
+                                                    <td>
+                                                        <a href="@Url.Action("EmailReportingEdit", "Reporting", new {id = item.ReportingId})"><i class="fa fa-pencil-square"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a data-toggle="modal" data-target="#myModalEvaluteDelete" href='@Url.Action("DeleteEmailReporting", new {id = item.ReportingId})'><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="col-md-12">
+            @{Html.RenderAction("MemberNotAssignEmailReporting", "NoAssign");}
+        </section>
+    </div>
+
+</section>
+
+<div class="modal fade" id="myModalEvaluteDelete" role="dialog"></div>
+<script>
+    $(function () {
+        $(document).ready(function () {
+            //$(".select2").select2();
+            $(".table").DataTable({
+                "ordering": false,
+                dom: "Bfrtip",
+                buttons: [
+                    "copy", "csv", "excel", "pdf", "print"
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(".select2").select2();
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

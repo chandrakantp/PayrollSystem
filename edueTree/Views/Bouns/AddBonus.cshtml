@@ -1,0 +1,100 @@
+﻿@model edueTree.Models.BonusModel
+
+@{
+    ViewBag.Title = "AddBonus";
+}
+
+<section class="content-header">
+    <h1>
+        @*Employee Registration*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Bonus</a></li>
+        <li class="active">Add</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-user"></i>
+                        <h3 class="box-title"> Add Bonus</h3>
+                    </div>
+                    <div class="box-body">
+
+                        @*@Html.AntiForgeryToken()*@
+
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true)
+
+                            <div class="form-group ">
+
+                                <div class="col-md-4">
+                                    <label>Bonus Month</label>
+                                    @Html.DropDownListFor(a => a.BonusMonth, Model.MonthList, new { id = "month", @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.BonusMonth, string.Empty, new { @class = "help-block" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Bonus Year</label>
+                                    @Html.DropDownListFor(a => a.BonusYear, Model.YearList, new { id = "year", @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.BonusYear, string.Empty, new { @class = "help-block" })
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Employee</label>
+                                    @Html.DropDownListFor(a => a.StaffId, Model.StaffList, "---- Select Employee ----", new { id = "StaffList", @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.StaffId, string.Empty, new { @class = "help-block" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Amount</label>
+                                    @Html.TextBoxFor(model => model.Amount, new { id = "Amount", @class = "form-control", placeholder = "Enter contact number", maxlength = 10 })
+                                    @Html.ValidationMessageFor(model => model.Amount, string.Empty, new { @class = "help-block" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Narration</label>
+                                    @Html.TextAreaFor(model => model.Narration, new { id = "Narration", @class = "form-control", placeholder = "Enter bonus narration" })
+                                    @Html.ValidationMessageFor(model => model.Narration, string.Empty, new { @class = "help-block" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "wrong") {
+                $.notify(" Something went wrong plz check ! ", "error");
+            }
+        }
+
+    });
+</script>

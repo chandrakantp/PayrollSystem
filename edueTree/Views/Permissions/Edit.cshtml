@@ -1,0 +1,74 @@
+﻿@model edueTree.Models.Permission
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<section class="content-header">
+    <h1>
+        @*Manage Role*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Permission</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm())
+                 {
+                     <div class="box box-success">
+
+                         <div class="box-header">
+                             <i class="fa fa-check-square"></i>
+                             <h3 class="box-title">Edit Asign Role</h3>
+
+                         </div>
+                         <div class="box-body chat" id="chat-box">
+                             <div class="item">
+
+                                 @Html.AntiForgeryToken()
+
+                                 <div class="form-horizontal">
+
+                                     @Html.ValidationSummary(true)
+                                     @Html.HiddenFor(model => model.permissionId)
+
+                                     <div class="form-group">
+
+                                         <div class="col-md-6">
+                                             <label>Role Name</label>
+                                             @Html.DropDownList("RoleId", null, new {@class = "form-control"})
+                                             @Html.ValidationMessageFor(model => model.RoleId)
+                                         </div>
+                                         <div class="col-md-6">
+                                             <label> Menu Item</label>
+                                             @Html.DropDownList("menuItemId", null, new {@class = "form-control"})
+                                             @Html.ValidationMessageFor(model => model.menuItemId)
+                                         </div>
+                                     </div>
+
+
+
+                                     <div class="form-group">
+                                         <div class="col-md-offset-3 col-md-10">
+                                             
+                                         </div>
+                                     </div>
+                                 </div>
+
+
+                             </div>
+                         </div>
+                         <div class="box-footer">
+                             <input type="submit" value="Update" class="btn btn-default pull-right" />
+                             <a href='@Url.Action("Create")' class="btn btn-default pull-left">Back to list</a>
+                         </div>
+                     </div>
+                 }
+        </section>
+        </div>
+    </section>

@@ -1,0 +1,143 @@
+﻿@model IEnumerable<edueTree.Models.EsiinfoModel>
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<section class="content-header">
+    <h1>
+        @*Leave Request*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~//Index"><i class="fa fa-dashboard"></i>ESI Info</a></li>
+        <li class="active">Report</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> ESI Nominees Details Report</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table class="table table-fixed">
+                            <thead>
+                            <tr>
+                                <th> @Html.DisplayName("Username")</th>
+                                <th>@Html.DisplayName("Staff Name")</th>
+                                <th>@Html.DisplayName("Father Name")</th>
+                                <th>@Html.DisplayName("Per Address")</th>
+                                <th>@Html.DisplayName("Pin")</th>
+
+                                <th>@Html.DisplayName("Branch Office")</th>
+                                <th>@Html.DisplayName("Date Of Appointment")</th>
+                                <th>@Html.DisplayName("Pre Ins No")</th>
+                                <th>@Html.DisplayName("Pre Emp Code")</th>
+
+                                @*<th>@Html.DisplayName("Relationship")</th>
+                                <th>@Html.DisplayName("NomineeAdd")</th>*@
+                                <th>@Html.DisplayName("Corp Name")</th>
+                                <th>@Html.DisplayName("Corp Ins No")</th>
+
+                                <th>@Html.DisplayName("Corp Father Name")</th>
+                                <th>@Html.DisplayName("Corp Branch Office")</th>
+                                <th>@Html.DisplayName("Date of Entry")</th>
+                                <th>@Html.DisplayName("Corp BOD ")</th>
+
+                                <th>@Html.DisplayName("Dispensary")</th>
+                                <th>@Html.DisplayName("Employer Address Name")</th>
+                                <th>@Html.DisplayName("CurEmployer Address Name ")</th>
+                                <th>@Html.DisplayName("corp Dispensary ")</th>
+
+
+                                <th>@Html.DisplayName("Corp Names Address code ")</th>
+                                <th>@Html.DisplayName("Nominees Name ")</th>
+                                <th>@Html.DisplayName("Nominees Address ")</th>
+                                <th>@Html.DisplayName("Nominees Relation ")</th>
+
+                                @*<th>@Html.DisplayName("Nomineestatus")</th>*@
+                                <th>@Html.DisplayName("Dob ")</th>
+                                <th>@Html.DisplayName("Age ")</th>
+                                <th>@Html.DisplayName("Shares")</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td> @Html.DisplayFor(modelitem => item.staffcode)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.fathername)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.peraddress)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.pin)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.branchoffice)</td>
+                                    <td>@Convert.ToDateTime(item.dateofappoint).ToString("dd MMM yyyy")</td>
+                                    <td>@Html.DisplayFor(modelItem => item.preinsuranceno)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.preempolyecode)</td>
+
+                                    @*<td>@Html.DisplayFor(modelItem => item.relationship)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.nomaddress)</td>*@
+                                    <td>@Html.DisplayFor(modelItem => item.corponame)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.corpinsno)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.corpfathername)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.corpbranchoffice)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.dateofentry)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.corpdob)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.dispensary)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Employeraddressname)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CurEmployeraddressname)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.corpDispensary)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.corpnameaddresscode)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.nomineename)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Nomineeaddress)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Nomineeralation)</td>
+
+                                    @*<td>@Html.DisplayFor(modelItem => item.Nomineestatus)</td>*@
+                                    <td>@Html.DisplayFor(modelItem => item.Dob)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Age)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Share)</td>
+
+                                </tr>
+                            }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <section class="col-md-12">
+            @{Html.RenderAction("NotAssignEsiInfoToEmployee", "NoAssign");}
+        </section>
+    </div>
+</section>
+<script type="text/javascript">
+    $(function () {
+
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+
+
+

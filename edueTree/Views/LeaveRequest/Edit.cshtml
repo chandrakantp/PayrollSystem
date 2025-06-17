@@ -1,0 +1,471 @@
+﻿@model edueTree.Models.LeaveRequest
+@{
+    ViewBag.Title = "Edit";
+    Layout = null;
+}
+
+@{
+ var SessionLists = new SelectList(new[]
+        {
+            new SelectListItem {Text = "First Session", Value = "First Session"},
+            new SelectListItem {Text = "Second Session", Value = "Second Session"}
+
+         }, "Value", "Text");
+
+}
+
+@{
+    var StatusList = new SelectList(new[]
+        {         
+              new SelectListItem {Text = "Approved", Value = "Approved"},
+              new SelectListItem {Text = "Rejected", Value = "Rejected"}
+
+         }, "Value", "Text");
+
+}
+
+
+<section class="content-header">
+    <h1>
+       @*Edit Leave*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/LeaveRequest/Index"><i class="fa fa-list"></i>Leave</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-5 col-md-offset-3">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="box-title"> Are you sure you want @TempData["status"] this leave request?</h4>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal" id="defaultForm">
+                                <hr/>
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.tranId)
+                                @Html.HiddenFor(model => model.lTypeId)
+                                @Html.HiddenFor(model => model.staffId)
+                                @Html.HiddenFor(model => model.dateFrom)
+                                @Html.HiddenFor(model => model.sesionDateFrom)
+                                @Html.HiddenFor(model => model.dateTo)
+                                @Html.HiddenFor(model => model.sesionDateTo)
+                                @Html.HiddenFor(model => model.totalCounts)
+                                @Html.HiddenFor(model => model.firmId)
+
+                                <br/>
+
+                                @*<div class="form-group">
+                                    @Html.Label("From date:", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-5">
+                                        @Html.TextBoxFor(model => model.dateFrom, new {id = "dateFrom", @class = "form-control", onkeypress = "return alpha(event,'')", onKeyDown = "preventBackspace();"})
+                                        @Html.ValidationMessageFor(model => model.dateFrom)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model => model.sesionDateFrom, SessionLists, new {id = "sfd", @class = "form-control", onchange = "changecount()"})
+                                        @Html.ValidationMessageFor(model => model.sesionDateFrom)
+                                    </div>
+                                </div>*@
+
+                                @*<div class="form-group">
+                                    @Html.Label("Todate:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-5">
+                                        @Html.TextBoxFor(model => model.dateTo, new { id = "datepicker", @class = "form-control", onkeypress = "return alpha(event,'')", onKeyDown = "preventBackspace();" })
+                                        @Html.ValidationMessageFor(model => model.dateTo)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model => model.sesionDateTo, SessionLists, new { id = "std", @class = "form-control", onchange = "changecount()" })
+                                        @Html.ValidationMessageFor(model => model.sesionDateTo)
+                                    </div>
+                                </div>*@
+
+
+                                @*<div class="form-group">
+                                    @Html.Label("Count:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.totalCounts, new { id = "totalDays", @readonly = "readonly", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.totalCounts)
+                                    </div>
+                                </div>*@
+
+                                @*<div class="form-group">
+                                    @Html.LabelFor(model => model.createdDate, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(model => model.createdDate)
+                                        @Html.ValidationMessageFor(model => model.createdDate)
+                                    </div>
+                                </div>*@
+
+                                @*<div class="form-group">
+                                    @Html.Label("Status:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.DropDownListFor(model => model.status, StatusList, new { id = "statuslist", @class = "form-control" })
+                                        @Html.TextBoxFor(model => model.status, new {@class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.status)
+                                    </div>
+                                </div>*@
+
+                                @*<div class="form-group">
+                                    @Html.LabelFor(model => model.approvedBY, "approvedBY", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("approvedBY", String.Empty)
+                                        @Html.ValidationMessageFor(model => model.approvedBY)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.approvalDate, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.approvalDate)
+                                        @Html.ValidationMessageFor(model => model.approvalDate)
+                                    </div>
+                                </div>*@
+                                @*<div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+                                        <input type="submit" value="Save" class="btn btn-default"/>
+                                        <a href='@Url.Action("Index")' class="btn btn-default">Back to list</a>
+                                    </div>
+                                </div>*@
+                            
+                                    <div class="col-md-offset-4 col-md-10">
+                                        <input type="submit" value="OK" class="btn btn-default"/>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                
+                            </div>
+                        }
+                    </div>
+                </div>
+                @*<div class="box-footer">
+                    <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                        <div class="btn-group" data-toggle="btn-toggle">
+                            <a href='@Url.Action("Index")'><i class="fa fa-arrow-left"></i> Back to list</a>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+        </section>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    var arr = [];
+    var fromdate;
+    var todate;
+    var x2;
+    var x3;
+    var getsfd;
+    var getstd;
+    var session1 = 0;
+    var session2 = 0;
+
+    $(function () {
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Search", "LeaveRequest")',
+            // data: { fd: fromdate, td: todate },
+            success: function(result) {
+                //alert("here" + data.d.toString());
+                for (i = 0; i < result.length; i++) {
+                    var dateineval = eval(("new " + result[i]).replace(/\//g, ""));
+                    var dd = dateineval.getDate();
+                    var mm = dateineval.getMonth() + 1;
+                    var yy = dateineval.getFullYear();
+                    var k = mm + "/" + dd + "/" + yy;
+                    arr.push(k);
+                }
+
+                var dateStart = $('#dateFrom').datepicker({
+                    startDate: new Date(),
+                    autoclose: true,
+                    beforeShowDay: function(Date) {
+                        var curr_day = Date.getDate();
+                        var curr_month = Date.getMonth() + 1;
+                        var curr_year = Date.getFullYear();
+                        var curr_date = curr_month + '/' + curr_day + '/' + curr_year;
+                        if (arr.indexOf(curr_date) > -1) return false, 'ui-state-error';
+                    },
+                    daysOfWeekDisabled: [0],
+                    orientation: "bottom auto",
+                    todayBtn: "linked"
+                }).on('changeDate', function(ev) {
+                    dateEnd.datepicker('setStartDate', ev.date);
+                    //dateStart.datepicker('hide');
+                    dateEnd.focus();
+                    var x2 = document.getElementById("datepicker").value;
+                    var x3 = document.getElementById("dateFrom").value;
+                    if (!x2.match(/\S/)) {
+                        //alert("To Date field is blank");
+                        $(this).datepicker('hide');
+                        return false;
+                    } else {
+                        var msPerDay = 1000 * 60 * 60 * 24;
+                        d1 = new Date(x2);
+                        d2 = new Date(x3);
+                        var x4 = document.getElementById("totalDays");
+                        var dd = (((d1 - d2) / msPerDay).toFixed(0));
+                        x4.value = dd;
+                        $(this).datepicker('hide');
+                    }
+
+                });;
+
+
+                var dateEnd = $('#datepicker').datepicker({
+                    autoclose: true,
+                    beforeShowDay: function(Date) {
+                        var curr_day = Date.getDate();
+                        var curr_month = Date.getMonth() + 1;
+                        var curr_year = Date.getFullYear();
+                        var curr_date = curr_month + '/' + curr_day + '/' + curr_year;
+                        if (arr.indexOf(curr_date) > -1) return false, 'ui-state-error';
+                    },
+                    daysOfWeekDisabled: [0],
+                    orientation: "bottom auto",
+                    todayBtn: "linked"
+                }).on('changeDate', function(ev) {
+                    dateStart.datepicker('setEndDate', ev.date);
+                    //dateStart.datepicker('setEndDate', ev.date);
+                    //dateEnd.datepicker('hide');
+                    fromdate = document.getElementById("dateFrom").value;
+                    todate = document.getElementById("datepicker").value;
+                    x2 = document.getElementById("datepicker").value;
+                    x3 = document.getElementById("dateFrom").value;
+                    getsfd = document.getElementById("sfd").value;
+                    getstd = document.getElementById("std").value;
+                    session1 = 0;
+                    session2 = 0;
+
+                    if (!x3.match(/\S/)) {
+                        //alert("From date field is blank");
+                        $(this).datepicker('hide');
+                        return false;
+                    } else {
+                        if (getsfd == "Second Session") {
+                            session1 = 0.5;
+                        }
+                        if (getstd == "First Session") {
+                            session2 = 0.5;
+                        }
+                        var msPerDay = 1000 * 60 * 60 * 24;
+                        d1 = new Date(x2);
+                        d2 = new Date(x3);
+                        var x4 = document.getElementById("totalDays");
+                        var dd = (((d1 - d2) / msPerDay).toFixed(0));
+                        x4.value = (1 + (parseInt(dd) - (parseFloat(session1) + parseFloat(session2))));
+
+                        //x4.value = (parseInt(dd));
+                        $(this).datepicker('hide');
+                    }
+                });;
+
+                //$('#datepicker').datepicker({
+                //    beforeShowDay: function (Date) {
+                //        var curr_day = Date.getDate();
+                //        var curr_month = Date.getMonth() + 1;
+                //        var curr_year = Date.getFullYear();
+                //        var curr_date = curr_month + '/' + curr_day + '/' + curr_year;
+                //        if (arr.indexOf(curr_date) > -1) return false,'ui-state-error';
+                //    }, daysOfWeekDisabled: [0], orientation: "bottom auto", todayBtn: "linked"
+
+                //}
+                //);
+            }
+        });
+
+    });
+
+
+    function changecount() {
+        var fromdate = document.getElementById("dateFrom").value;
+        var todate = document.getElementById("datepicker").value;
+        var x2 = document.getElementById("datepicker").value;
+        var x3 = document.getElementById("dateFrom").value;
+        var getsfd = document.getElementById("sfd").value;
+        var getstd = document.getElementById("std").value;
+        var session1 = 0;
+        var session2 = 0;
+        if (!x3.match(/\S/) || !x2.match(/\S/)) {
+            //alert("From date field is blank");
+            $(this).datepicker('hide');
+            return false;
+        } else {
+            if (getsfd == "Second Session") {
+                session1 = 0.5;
+            }
+            if (getstd == "First Session") {
+                session2 = 0.5;
+            }
+            var msPerDay = 1000 * 60 * 60 * 24;
+            d1 = new Date(x2);
+            d2 = new Date(x3);
+            var x4 = document.getElementById("totalDays");
+            var dd = (((d1 - d2) / msPerDay).toFixed(0));
+            x4.value = (1 + (parseInt(dd) - (parseFloat(session1) + parseFloat(session2))));
+            //x4.value = (parseInt(dd));
+            $(this).datepicker('hide');
+        }
+
+    }
+
+
+    function alpha(e, allow) {
+        var k;
+        k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+        return (allow.indexOf(String.fromCharCode(k)) != -1);
+    }
+
+    function preventBackspace(e) {
+        var evt = e || window.event;
+        if (evt) {
+            var keyCode = evt.charCode || evt.keyCode;
+            if (keyCode === 8 || keyCode === 46) {
+                if (evt.preventDefault) {
+                    evt.preventDefault();
+                } else {
+                    evt.returnValue = false;
+                }
+            }
+        }
+    }
+
+    function getRemainingcnt() {
+
+        var ltype = document.getElementById("ltype").value;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("lcount", "LeaveRequest")',
+            data: { leave: ltype },
+            success: function (result) {
+                //alert(result);
+                $('#Remainingcnt').html("&nbsp;&nbsp;&nbsp;&nbsp;Remaining&nbsp;leave&nbsp;&nbsp;" + result);
+            }
+        });
+    }
+
+</script>
+
+
+@*<h2>Edit</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>LeaveRequest</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.tranId)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.lTypeId, "lTypeId", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("lTypeId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.lTypeId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.staffId, "staffId", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("staffId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.staffId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.dateFrom, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.dateFrom)
+                    @Html.ValidationMessageFor(model => model.dateFrom)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.sesionDateFrom, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.sesionDateFrom)
+                    @Html.ValidationMessageFor(model => model.sesionDateFrom)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.dateTo, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.dateTo)
+                    @Html.ValidationMessageFor(model => model.dateTo)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.sesionDateTo, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.sesionDateTo)
+                    @Html.ValidationMessageFor(model => model.sesionDateTo)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.totalCounts, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.totalCounts)
+                    @Html.ValidationMessageFor(model => model.totalCounts)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.createdDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.createdDate)
+                    @Html.ValidationMessageFor(model => model.createdDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.status, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.status)
+                    @Html.ValidationMessageFor(model => model.status)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.approvedBY, "approvedBY", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("approvedBY", String.Empty)
+                    @Html.ValidationMessageFor(model => model.approvedBY)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.approvalDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.approvalDate)
+                    @Html.ValidationMessageFor(model => model.approvalDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@

@@ -1,0 +1,87 @@
+﻿@model edueTree.Models.AttendanceStaff
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>AttendanceStaff</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.attendId)
+        @Html.HiddenFor(model => model.firmId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.enrollNumber, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.enrollNumber)
+                @Html.ValidationMessageFor(model => model.enrollNumber)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.attendDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.attendDate)
+                @Html.ValidationMessageFor(model => model.attendDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.verifyMode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.verifyMode)
+                @Html.ValidationMessageFor(model => model.verifyMode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.inOutMode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.inOutMode)
+                @Html.ValidationMessageFor(model => model.inOutMode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.worCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.worCode)
+                @Html.ValidationMessageFor(model => model.worCode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.attendTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.attendTime)
+                @Html.ValidationMessageFor(model => model.attendTime)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.isManuallyCheckOut, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.isManuallyCheckOut)
+                @Html.ValidationMessageFor(model => model.isManuallyCheckOut)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

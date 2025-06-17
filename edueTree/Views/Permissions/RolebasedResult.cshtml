@@ -1,0 +1,81 @@
+﻿@model edueTree.Models.permissionViewModel
+@*<style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('../../Images/pageloader.gif') 50% 50% no-repeat rgb(0,0,0);
+        opacity: .5;
+    }
+</style>*@
+
+<section class="content-header">
+    <h1>
+        Role Based Access
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Role Based Access</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Roles</h3>
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <ul class="nav1 nav nav-pills nav-stacked">
+                        @foreach (var item in Model.Rolelist)
+                        {
+                            <li id="@item.Id">
+                                <a><i class="fa  fa-hand-o-right"></i>
+                                <span style="cursor: pointer"> @item.Name</span></a>
+                            </li>                                                        
+                        }
+                    </ul>
+                </div>                
+            </div>      
+        </div>    
+        <div id="your_desired_div_id"></div>
+    </div>
+    
+</section>
+
+<script type="text/javascript">
+   var selector = '.nav1 li';
+    $(selector).on('click', function () {     
+        $(selector).removeClass('active');
+        $(this).addClass('active !important');      
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {       
+        $(selector).on('click', function () {
+                $(".loader").fadeIn("slow");
+            var value = $(this).attr('id');         
+            $.ajax({
+                url: '/permissions/_GetMenuAssign',
+                type: 'POST',
+                async: true,
+                data: { id: value },
+                success: function (result) {
+                    $("#your_desired_div_id").html(result);
+                    $(".loader").fadeOut();
+                }
+            });
+        });
+    });
+</script>

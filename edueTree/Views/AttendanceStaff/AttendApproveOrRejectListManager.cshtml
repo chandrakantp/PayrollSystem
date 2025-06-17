@@ -1,0 +1,347 @@
+﻿@model IEnumerable<edueTree.Models.AttendanceRequestModel>
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+<section class="content-header">
+    <h1>
+        @*Manage staff Attendance*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Staff Attendance</a></li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm//yy",
+            autoclose: true,
+        });
+
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true,
+        });
+    });
+
+    $(function () {
+        jQuery.ajax({
+            type: 'POST',
+            url: '/LeaveRequest/GetStaffUnderMgr',
+            data: {},
+            datatype: 'json',
+            error:
+                function () {
+                    alert("Not any Staff");
+                },
+            success: function (response) {
+                var items = "";
+                $(response.SubcatId).each(function (i, item) {
+                    //if (i == 0) {
+                    //    items += "<option value=\"" + 0 + "\">Select Employee</option>";
+                    //}
+                    //else {
+                    items += "<option value=\"" + item + "\">" + response.Subcat[i] + "</option>";
+                    //}
+                });
+
+                $("#empId").html(items);
+                if (strUser !== 0) {
+                    $("#empId option:selected").text(strUser);
+                }
+            }
+        });
+    });
+</script>
+
+
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Search Options - You can search Daily,Weekly & Monthly</h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("AttendApproveOrRejectListManager", "AttendanceStaff", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Date - From:", new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker", null, new { id = "datepicker1", @class = "form-control datepicker" })
+                            </div>
+                            @Html.Label("To:", new { @class = "control-label col-md-1" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control datepicker" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownList("empId", (IEnumerable<SelectListItem>)ViewBag.staffid, "Select Employee", new { @class = "form-control select2" })
+                                @*<select id="empId" name="empId" class="form-control"></select>*@
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Manually Attendance Request List</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" id="checkAll" /></th>
+                                        <th>
+                                            @Html.DisplayName("Staff Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Request Date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Attendance Date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Narration")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Check In/Check Out")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Status")
+                                        </th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                           
+                                            @if (item.IsApproved != true)
+                                            {
+                                                <td>
+                                                    @Html.HiddenFor(modelItem => item.StaffId)
+                                                    <input type="checkbox" class="checkBox" value="@item.TransId"/>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Fullname) 
+                                            </td>
+                                            <td>
+                                                @Convert.ToDateTime(item.TransDate).ToString("dd MMM yyyy")
+                                            </td>
+                                            <td>
+                                                @Convert.ToDateTime(item.AttendDate).ToString("dd MMM yyyy HH:mm:ss")
+                                            </td>
+                                            <td>                                               
+                                                @*@if (item.Narration != null)
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.Narration)
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayName("N/A")
+                                                }*@
+                                            </td>
+                                            @if (item.InOutMode == 0)
+                                            {
+                                                <td>
+                                                    <span class="" style="color: green"><b>@Html.DisplayName("Check In")</b></span>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <span class="" style="color: red"><b>@Html.DisplayName("Check Out")</b></span>
+                                                </td>
+                                            }
+
+                                            @if (item.IsApproved == null)
+                                            {
+                                                <td>
+                                                    <span class="" style="color: red"><b>@Html.DisplayName("Pending")</b></span>
+                                                </td>
+                                            }
+                                            else if (item.IsApproved == true)
+                                            {
+                                                <td>
+                                                    <span class="" style="color: green"><b>@Html.DisplayName("Approved")</b></span>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <span class="" style="color: red"><b>@Html.DisplayName("Rejected")</b></span>
+                                                </td>
+                                            }
+
+                                            @if (item.IsApproved == null)
+                                            {
+                                               <td>
+                                                    <a data-toggle="modal" data-target="#myModalLeaveApproved" href='@Url.Action("EditAttendRequest", new { id = item.TransId, status = true, ActionName = "AttendApproveOrRejectListManager" })'>
+                                                        <i class="fa fa-check" style="color: green" data-toggle="tooltip" title="Approve"></i> <span class="hidden-sm hidden-xs"></span>
+                                                    </a>
+                                                    <div class="modal fade" id="myModalLeaveApproved" role="dialog"></div>
+                                                </td>
+                                                
+                                                <td>
+                                                    <a data-toggle="modal" data-target="#rejectedmodeelpopup" href='@Url.Action("EditAttendRequest", new { id = item.TransId, actionName = "AttendApproveOrRejectListManager" })'>
+                                                        <i class="fa fa-times" style="color: red" data-toggle="tooltip" title="Reject"></i><span class="hidden-sm hidden-xs"></span>
+                                                    </a>
+                                                    <div class="modal fade" id="rejectedmodeelpopup" role="dialog"></div>
+                                                </td>
+                                            }
+                                            
+                                            <td>
+                                                <a href='@Url.Action("EditAttendRequestMember", new { id = item.TransId, status = item.IsApproved, actionName = "AttendApproveOrRejectListManager" })'><i class="fa fa-pencil-square"></i> <span class="hidden-sm hidden-xs"></span></a>
+                                            </td>
+                                            <td>
+                                                <a href='@Url.Action("DeleteAttendRequest", new { id = item.TransId, date = item.AttendDate, actionName = "AttendApproveOrRejectListManager" })'><i class="fa fa-trash"></i> <span class="hidden-sm hidden-xs"></span></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>              
+                            </table>
+                            <div class="pull-left">
+                                <input type="button" id="delete" value="Approve" class="btn btn-success" />
+                                &nbsp;
+                                <input type="button" id="delete1" value="Reject" class="btn btn-danger" />
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<script>
+    $(function () {
+        $(".select2").select2();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#checkAll").click(function () {
+            $(".checkBox").prop('checked',
+                $(this).prop('checked'));
+        });
+
+        $("#delete").click(function () {
+            debugger;
+            var selectedIDs = new Array();
+            $('input:checkbox.checkBox').each(function () {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+            });
+
+            var options = {};
+            options.url = "/AttendanceStaff/AppOrRejectMultiple";
+            options.type = "POST";
+            options.data = JSON.stringify(selectedIDs);
+            options.contentType = "application/json";
+            options.dataType = "json";
+            options.success = function (msg) {
+                alert(msg);
+               // document.getElementById("msg").innerText = msg;
+                window.location.reload();
+            }
+            $.ajax(options);
+        });
+    });
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        $("#delete1").click(function () {
+            debugger;
+            var selectedIDs = new Array();
+            $('input:checkbox.checkBox').each(function() {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+            });
+
+            var options = {};
+            options.url = "/AttendanceStaff/OnlyRejectMultiple";
+            options.type = "POST";
+            options.data = JSON.stringify(selectedIDs);
+            options.contentType = "application/json";
+            options.dataType = "json";
+            options.success = function(msg) {
+                alert(msg);
+              //  document.getElementById("msg").innerText = msg;
+                window.location.reload();
+            }
+            $.ajax(options);
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "approved") {
+                $.notify("Attendance request Approved ", "success");
+            }
+            if ('@TempData["notice"]' === "reject") {
+                $.notify("Attendance request rejected  successfully", "success");
+            }
+        }
+
+    });
+</script>

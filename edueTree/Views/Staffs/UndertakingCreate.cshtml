@@ -1,0 +1,60 @@
+﻿@model edueTree.Models.UndertakingModel
+@{
+    ViewBag.Title = "Undertaking Details";
+}
+
+<section class="content-header">
+    <h1>Undertaking Form Detail</h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+@using (Html.BeginForm("Undertakingpost", "staffs"))
+            {
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="fa fa-bars"></i>
+                    <h4 class="box-title">  Undertaking Form Detail</h4>
+                    <div class="pull-right">
+                        @*<a data-toggle="modal" data-target="#myModalstaffESI" href='@Url.Action("Edit", new { id = Model.staffid1 })'><i class="fa fa-pencil-square fa-2x"></i></a>*@
+                        
+                    </div>
+                    @Html.HiddenFor(model => model.StaffId)
+                    @Html.HiddenFor(model => model.Name)
+                    @Html.HiddenFor(model => model.CompanyName)
+                    @Html.HiddenFor(model => model.Position)
+                    @Html.HiddenFor(model => model.JoinDate)
+
+                </div>
+                <div class="box-body">
+                    <h2>Letter of Undertaking </h2>
+                    <br />
+                    <div class="pull-left">
+                        Company Name: <b>@Html.DisplayFor(model => model.CompanyName)</b>,
+                      
+                        <br />
+                        Dear <b>Mr./Mrs.</b> @Html.DisplayFor(model => model.Name)
+                        <p>
+                            This letter is to inform you that, You wish to accept the position of <b>@Html.DisplayFor(model => model.Position)</b>  and you will join on <b>@Convert.ToDateTime(Model.JoinDate).ToString("MMM-dd-yyyy")</b> .
+
+
+                        </p>
+                        <p>As per the agreed upon terms, I will be responsible for all incorrect information provided by me I agree that I can be terminated at any time if I voilate the company code of Conduct.</p>
+
+                        <br />
+                        <br />
+                        @Html.CheckBoxFor(model => model.Undertakingcheck)  <small> Terms & Conditions Apply</small>
+                        <div class="pull-right">Sincerely,</div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <input type="submit" value="Save" class="btn btn-default pull-right"/>
+
+                </div>
+            </div>
+}
+        </div>
+    </div>
+</section>
+
+

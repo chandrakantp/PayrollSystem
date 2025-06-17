@@ -1,0 +1,86 @@
+﻿@model IEnumerable<edueTree.Models.AttendanceStaff>
+
+
+<br />
+<section class="content-header">
+    <h1>
+        @*Manage staff Attendance*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Staff Attendance</a></li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-lg-11 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Manually Attendance List</h3>                    
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Enroll Number")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Attendance Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Check In/Check Out")
+
+                                    </th>
+                                    <th>@Html.DisplayName("Delete")</th>
+                                </tr>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.enrollNumber)
+                                           
+                                        </td>
+                                        <td>
+                                            @Convert.ToDateTime(item.attendDate).ToString("dd MMM yyyy hh:mm:ss")
+                                        </td>
+
+                                        @if (item.inOutMode == 1)
+                                        {
+                                            <td>
+                                                <span class="" style="color: green"><b>@Html.DisplayName("Check In")</b></span>                                                
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <span class="" style="color: red"><b>@Html.DisplayName("Check Out")</b></span>                                                
+                                            </td>
+                                        }
+
+                                        <td>
+                                            <a href='@Url.Action("Delete", new {id = item.attendId})'><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+
+                                   
+                                }
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="input-group box-tools pull-right">
+                        <a href='@Url.Action("Create")' class="btn btn-success"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+    </section>
+    </div>
+</section>
+    

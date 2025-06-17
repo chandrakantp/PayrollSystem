@@ -1,0 +1,153 @@
+﻿@model edueTree.Models.VariableSetting
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>VariableSetting</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.VariableName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VariableName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isCalculateFromCTC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isCalculateFromCTC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.persentage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.persentage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isEarnings)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isEarnings)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isDuductions)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isDuductions)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.graterThanLimit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.graterThanLimit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.graterLimitAmt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.graterLimitAmt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lessThanLimit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lessThanLimit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lessLimitAmt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lessLimitAmt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createdBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createdBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createdDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createdDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VariableSetting1.VariableName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VariableSetting1.VariableName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VariableSetting2.VariableName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VariableSetting2.VariableName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VariableSetting3.VariableName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VariableSetting3.VariableName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,211 @@
+﻿@model IEnumerable<edueTree.Models.EmpQuestionlistModel>
+@{
+    ViewBag.Title = "EmpQuestionlistModel";
+}
+@{
+
+    var rating = new SelectList(new[]
+        {
+           // new SelectListItem { Value = null , Text =  "----  Select Rating ----", Selected = true},
+            new SelectListItem {Text = "0", Value = "0",Selected = true},
+            new SelectListItem {Text = "1", Value = "1"},
+            new SelectListItem {Text = "2", Value = "2"},
+            new SelectListItem {Text = "3", Value = "3"},
+            new SelectListItem {Text = "4", Value = "4"},
+            new SelectListItem {Text = "5", Value = "5"},
+            new SelectListItem {Text = "6", Value = "6"},
+            new SelectListItem {Text = "7", Value = "7"},
+            new SelectListItem {Text = "8", Value = "8"},
+            new SelectListItem {Text = "9", Value = "9"},
+            new SelectListItem {Text = "10", Value = "10"},
+        }, "Value", "Text");
+}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Question List</a></li>
+        <li class="active">List</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+
+            <div class="box box-success">
+
+                <div class="box-header">
+                    <i class="fa fa-user"></i>
+                    <h3 class="box-title"> Emp Question Rating</h3>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        @foreach (var group in Model.GroupBy(x => x.Title))
+                        {
+                            <center>
+                                <tr class="group-header">
+                                    <td>
+                                        <span style="color: green;"> <h4>@group.Key</h4></span>
+                                    </td>
+                                </tr>
+                            </center>
+                        }
+                        <table id="StructureTable" class="table table-fixed">
+                            <thead>
+                            <tr>
+
+                                <th>Sr No.</th>
+                                <th>Questions</th>
+                                <th>Weightage</th>
+                                <th>Rating</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            @{
+                                int index = 1;
+                                foreach (var qus in Model)
+                                {
+                                    <tr>
+                                        <td style="display: none;">@Html.DisplayFor(modelItem => qus.staffid) </td>
+                                        <td style="display: none;">@Html.DisplayFor(modelItem => qus.QuestionId)</td>
+                                        <td style="display: none;">@Html.DisplayFor(modelItem => qus.FeedbacFId)</td>
+                                        <td> @index</td>
+                                        <td> @Html.DisplayFor(modelItem => qus.Questions)</td>
+                                        <td> @Html.DisplayFor(modelItem => qus.Wightage) %</td>
+
+                                        <td class="col-md-2">@Html.TextBoxFor(modelItem => qus.Rating, new { @id = "ratings", @class = "form-control", placeholder = "Rating", onblur = "myFunction(this)", onkeypress = "return isNumberKey(event,this)" })</td>
+                                        <div id="errDiv2" style="color: red; font-size: 14px;"></div>
+                                    </tr>
+                                    index++;
+                                }
+                            }
+
+                            </tbody>
+                        </table>
+                        <center><input type="submit" value="Submit Form" class="btn btn-default" onclick=" dataStore(); "/></center>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </section>
+        @*<div class="col-md-12">
+                @{Html.RenderAction("QuestionIndex", "Performance");}
+            </div>*@
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    
+    function myFunction(e) {      
+        var x = e.value;
+        
+        if (x > 10 || x <= -1 || x == null) {
+            $('#errDiv2').html("Please enter rating between 0 to 10");
+            return false;
+        } else {
+            $('#errDiv2').html("");
+        }
+    }
+
+    function isNumberKey(evt, el) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        var number = el.value.split('.');
+        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }        
+        if (number.length > 1 && charCode == 46) {
+            return false;
+        }        
+        var caratPos = getSelectionStart(el);
+        var dotPos = el.value.indexOf(".");
+        if (caratPos > dotPos && dotPos > -1 && (number[1].length > 0)) {
+            return false;
+        }
+        return true;
+    }
+
+    function getSelectionStart(o) {
+        if (o.createTextRange) {
+            var r = document.selection.createRange().duplicate();
+            r.moveEnd('character', o.value.length);
+            if (r.text == '') return o.value.length;
+            return o.value.lastIndexOf(r.text);
+        } else return o.selectionStart;
+    }
+
+    function dataStore() {
+        debugger;
+        var table = document.getElementById("StructureTable");
+        var rowCount = table.rows.length;
+        var staffids = new Array();
+        var questionId = new Array();
+        var feedbackIds = new Array();
+        var ratings = new Array();
+
+        var j = 0;
+        for (var i = 1; i < rowCount; i++) {
+            var row = table.rows[i];
+            var idbox = row.cells[0].childNodes[0].textContent;
+            if (idbox !== "0") {
+
+                staffids[j] = idbox;
+                questionId[j] = row.cells[1].childNodes[0].textContent;
+                feedbackIds[j] = row.cells[2].childNodes[0].textContent;
+                ratings[j] = row.cells[6].childNodes[0].value;
+
+                j += 1;
+            }
+        }
+        jQuery.ajax({
+            type: "POST",
+            url: "/Performance/SubmitQuestionFromEmp",
+            data: { staffids: JSON.stringify(staffids), questionId: JSON.stringify(questionId), feedbackIds: JSON.stringify(feedbackIds), rating: JSON.stringify(ratings) },
+            datatype: "json",
+            success: function (data) {
+                location.reload();
+                $.notify(data.Message, "success");
+               
+            }
+        });
+    }
+
+</script>
+
+
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "error");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this Shift used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>
+
+
+

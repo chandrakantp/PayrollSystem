@@ -1,0 +1,73 @@
+﻿@model edueTree.Models.LeaveTypeModel
+
+@{
+    ViewBag.Title = "Edit";
+    //Layout = null;
+
+}
+
+<section class="content-header">
+    <h1>
+        @*Leave*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Class/Index"><i class="fa fa-dashboard"></i> Leave</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-calendar-plus-o"></i>
+                        <h3 class="box-title">Edit Leave</h3>
+
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.leaveTypeId)
+                                @Html.HiddenFor(model => model.firmId)
+                                <div class="form-group">
+
+                                    <div class="col-md-4">
+                                        <label>LeaveType</label>
+                                        @Html.TextBoxFor(model => model.LeaveType1, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.LeaveType1)
+                                    </div>
+                                    @*<div class="col-md-4">
+                                        <label>Leave Count</label>
+                                        @Html.TextBoxFor(model => model.counts, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.counts)
+                                    </div>*@
+                                    @*<div class="col-md-4">
+                                        <label>Department</label>
+                                        @Html.DropDownListFor(model => model.deptId, Model.DepartmentList, " - Select Department - ", new { @class = "form-control", placeholder = "select department" })
+                                        @Html.ValidationMessageFor(model => model.deptId)
+
+                                    </div>*@
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("Create")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+
+                </div>
+            }
+        </section>
+    </div>
+</section>

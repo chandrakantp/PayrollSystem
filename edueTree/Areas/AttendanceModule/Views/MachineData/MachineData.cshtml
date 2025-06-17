@@ -1,0 +1,173 @@
+﻿@model IEnumerable<edueTree.Models.AttendanceSheetModel>
+@{
+    ViewBag.Title = "MachineData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript">
+    $(function () {
+        jQuery.ajax({
+            type: 'POST',
+            url: '/Attendance/GetStaff',
+            data: {},
+            datatype: 'json',
+            error:
+                            function () {
+                                alert("Not any Staff");
+                            },
+            success: function (response) {
+
+                var items = "";
+                $(response.SubcatId).each(function (i, item) {
+                    items += "<option value=\"" + item + "\">" + response.Subcat[i] + "</option>";
+                });
+
+                $("#empId").html(items);
+                console.log(items);
+            }
+        });
+    });
+</script>
+<section class="content-header">
+    <h1>
+        @*Attendance sheet*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Machine</a></li>
+        <li class="active">Data</li>
+    </ol>
+</section>
+
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Attendance Search Options - You can search Daily,Weekly & Monthly </h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("MachineData", "Attendance", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            @Html.Label("From Date:", new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker", null, new { id = "datepicker1", @class = "form-control" })
+                            </div>
+
+                            @Html.Label("To Date:", new { @class = "control-label col-md-1" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control" })
+                            </div>
+                            <div class="col-md-4">
+                                <select id="empId" name="empId" class="form-control"></select>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Machine data list</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Name")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Time")
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EmployeeName)
+                                        </td>
+                                        <td>
+                                            @Convert.ToDateTime(item.TranDate).ToString("dd-MM-yyyy")
+                                        </td>
+                                        <td>
+                                            @Convert.ToDateTime(item.TranDate).ToString("HH:mm tt")
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    var totalTileFunction = function (e) {
+        document.getElementById("Timetotalspan").innerHTML("Total time:" + e);
+    }
+
+
+    $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm//yy",
+            autoclose: true,
+        });
+
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true,
+        });
+
+    });
+
+
+</script>
+
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

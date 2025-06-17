@@ -1,0 +1,74 @@
+﻿@model edueTree.Models.LoginViewModel
+<style>
+    .side-trigger ul li a {
+        width: 50px !important;
+    }
+</style>
+@{
+    ViewBag.Title = "Sign in | Innovative Fusion";
+    ViewBag.MetaKeywords = "hrms,hr software, employee database, web based hr software, cloud based hr software, hr software";
+    ViewBag.MetaDescription = "Innopeople HRMS easy, simple to use online HRMS.";
+}
+
+<br /><br /><br /><br />
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <section id="loginForm">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <i class="fa fa-sign-in"></i>
+                        <h2 class="box-title">Login Here </h2>
+                    </div>
+                    <div class="col-md-offset-3">
+                        <span class="" style="color: red;"><h4>@TempData["ResetPasswordSuccess"]  </h4></span>
+                    </div>
+                    <hr />
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                            @using (Html.BeginForm("Login", "hrms", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.UserName, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.UserName)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-8">
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Password)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-8">
+                                        <input type="submit" name="submit" id="submit" value="Log in " class="btn btn-info" />
+                                        @Html.ActionLink("Forgot Password ?", "ForgotPassword", "Account", new { @class = "pull-right" })
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="col-md-offset-3 col-md-8">
+                                    <span class="" style="color: red;">@Html.ValidationMessage("CustomError")  </span>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+</section>

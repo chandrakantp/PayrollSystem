@@ -1,0 +1,160 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.AssignShiftModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+@*<section class="content header">
+        <div class="row">
+            <div class="col-md-12">
+
+                <a href='@Url.Action("Create")' class="btn btn-success pull-right">
+                    <i class="fa fa-plus-square"></i> Assign Shift to Employee
+                </a>
+
+            </div>
+        </div>
+    </section>*@
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Training/Index"><i class="fa fa-dashboard"></i></a>List</li>
+        <li class="active">Assign Employee Shift</li>
+    </ol>
+</section>
+
+
+
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title">Employee shift List Search Options </h3>
+                </div>
+
+                <div class="box-body chat">
+                    <div class="item">
+                        @using (Html.BeginForm("AllassignShiftResult", "AssignShift", FormMethod.Get))
+                        {
+                            <div class="form-horizontal">
+
+                                <div class="form-group">
+                                    @Html.Label("Employee  Name:", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-3">
+                                        @Html.DropDownList("staffid", (IEnumerable<SelectListItem>)ViewBag.staffid, "All Employee ", new { @class = "form-control select2" })
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<section class="content">
+
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Employee shift List</h3>
+                    <div class="pull-right">
+                        <a href="#" id="exportexcel" class=" btn btn-success">
+                            <i class="fa fa-file-excel-o"></i> Excel
+                        </a>
+                    </div>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table id="activity" style="overflow-x:scroll; white-space: nowrap;" class="table table-striped ">
+                                <tbody>
+                                    @{
+                                        foreach (var group in Model.GroupBy(x => x.StaffName))
+                                        {
+                                            <tr class="group-header">
+                                                <td>
+                                                    <div class="h4">@group.Key</div>
+                                                </td>
+                                                @*</tr>
+                                                    <tr>*@
+                                                @foreach (var item in group)
+                                                {
+                                                    <td>@item.Fromdate - @item.Todate</td>
+                                                    <td>@item.ShiftName</td>
+                                                    @*<td>@Convert.ToDateTime(item.ShiftName).ToString("dd-MMM")</td>*@
+                                                }
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    @*<div class="input-group box-tools pull-right">
+                            <a href='@Url.Action("Create")' class="btn btn-success"><i class="fa fa-plus"></i></a>
+                        </div>*@
+                </div>
+                <div class="modal fade" id="myModalTraingDelete" role="dialog"></div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+<script src="~/Scripts/tableExport.js"></script>
+<script src="~/Scripts/jquery.base64.js"></script>
+<script src="~/Scripts/jspdf/libs/sprintf.js"></script>
+<script src="~/Scripts/jspdf/jspdf.js"></script>
+<script src="~/Scripts/jspdf/libs/base64.js"></script>
+
+<script type="text/javascript">
+    $(function ($) {
+        $('#exportexcel').bind('click', function (e) {
+            $("#activity").tableExport({ type: 'excel', escape: 'false' });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        $(".select2").select2();
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

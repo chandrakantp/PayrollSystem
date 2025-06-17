@@ -1,0 +1,89 @@
+﻿@model edueTree.Models.VisaPassportModel
+@{
+    ViewBag.Title = "Create";
+}
+
+@{
+    var visapassport = new SelectList(new[]
+        {
+            new SelectListItem {Text = "Visa", Value = "Visa"},
+            new SelectListItem {Text = "Passport", Value = "Passport"}
+
+         }, "Value", "Text");
+
+}
+<section class="content-header">
+    <h1>
+        @*Event*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Event</a></li>
+        <li class="active">Create</li>
+    </ol>
+</section>
+
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Createpost", "VisaPassport"))
+            {
+                @Html.AntiForgeryToken()
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-calendar-plus-o"></i>
+                        <h3 class="box-title">Add Passport Deails </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="">
+                            @Html.HiddenFor(model => model.StaffId)
+                            @Html.ValidationSummary(true)
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Visa Passport No</label>
+                                        @Html.TextBoxFor(model => model.Num, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Num)
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        @Html.TextBoxFor(model => model.Country, new { @class = "form-control " })
+                                        @Html.ValidationMessageFor(model => model.Country)
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+
+                                        <label>Expiry Date</label>
+                                        @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "form-control datepicker" })
+                                        @Html.ValidationMessageFor(model => model.ExpiryDate)
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+
+                                        <label>Type</label>
+                                        @Html.DropDownListFor(model => model.Type, visapassport, new { id = "sfd", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Type)
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("StaffDashboard", "Staffs", new { staffid =Model.StaffId })' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

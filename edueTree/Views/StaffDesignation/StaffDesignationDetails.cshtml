@@ -1,0 +1,63 @@
+﻿@model IEnumerable<edueTree.Models.StaffDesignModel>
+@{ Layout = null; }
+
+<div class="box box-primary">
+    <div class="box-header">
+        <i class="fa fa-history"></i>
+        <h3 class="box-title">Designation history</h3>
+    </div>
+    @{
+        int? staffId = null;
+        <!-- /.box-header -->
+        <div class="box-body">
+
+            <table class="table responsive">
+                <tr>
+                    @*<th>
+                            @Html.DisplayName("Staff / Emp Code")
+                        </th>*@
+                    <th>
+                        @Html.DisplayName("From Date")
+                    </th>
+                    <th>
+                        @Html.DisplayName("End Date")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Designation")
+                    </th>
+
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    staffId = item.StaffId;
+                    <tr>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.StaffCode)
+                            </td>*@
+                        <td>
+                            @(item.DateFrom != null?Convert.ToDateTime(item.DateFrom).ToString():Html.DisplayName("N/A").ToString())
+                            @*@Html.DisplayFor(modelItem => item.DateFrom)*@
+                        </td>
+                        <td>
+                            @(item.DateEnd == null ? Html.DisplayName("Still") : Html.DisplayFor(modelItem => item.DateEnd))
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Designation)
+                        </td>
+
+                        @*<td>
+                                <a href='@Url.Action("Edit", new {id = item.tranId})'><i class="fa fa-pencil-square"></i></a>
+                            </td>*@
+                    </tr>
+                }
+
+            </table>
+
+        </div>
+
+    }
+</div>
+

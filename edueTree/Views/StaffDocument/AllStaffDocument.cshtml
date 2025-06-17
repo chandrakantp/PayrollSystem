@@ -1,0 +1,87 @@
+﻿@using edueTree.Models
+@model IEnumerable<edueTree.Models.StaffDocument>
+@{
+    ViewBag.Title = "AllEmpDocument";
+}
+
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">All Employee Document</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table id="activity" class="table table-fixed">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            @foreach (var item in Model.GroupBy(a => a.Staff.schoolCode + ": " + a.Staff.firstName + " " + a.Staff.lastName))
+                            {
+                                <tr>
+                                    <td><b> @item.Key </b></td>
+
+                                    @foreach (var itemss in item)
+                                    {
+                                        <td>
+                                            <img src="~/StaffDocument/@itemss.attachedDoc" alt="" style="height: 60px; width: 60px;">
+                                        </td>
+
+                                    }
+                                    <td class="" style="padding-top: 27px;">
+                                        <a href='@Url.Action("DowmloadStaffDoc", new {StaffName = item.Key})'><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="col-md-12">
+            @{Html.RenderAction("MemberNotSubmitDocumentList", "NoAssign");}
+        </section>
+</div>
+</section>
+
+<script type="text/javascript">
+
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify("Document download successfully ! ", "success");
+            }
+        }
+    });
+</script>
+
+
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({           
+                dom: 'Bfrtip',
+                'ordering': false,
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+

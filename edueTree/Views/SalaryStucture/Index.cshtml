@@ -1,0 +1,62 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.SalaryStructure>
+@{
+    Layout = null;
+}
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Salary Structure List</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table class="table table-fixed">
+                <thead>
+                <tr>
+                    <th>Srno</th>
+                    <th>Structure Name</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @{ int count = 1;}
+                @foreach (var item in Model)
+                {
+                    <tr><td>@count</td>
+                        <td class="col-xs-10">
+                            @Html.DisplayFor(modelItem => item.StuctureName)
+                        </td>
+                        <td>
+                            @Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "Edit", "SalaryStucture", new {id = item.Id}, null)
+                        </td>
+                        <td>
+                            <a data-toggle="modal" data-target="#myModalstructureDelete" href='@Url.Action("Delete", new {id = item.Id})'><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    count++;
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalstructureDelete" role="dialog"></div>
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+

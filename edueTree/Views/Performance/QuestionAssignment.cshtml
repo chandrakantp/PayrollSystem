@@ -1,0 +1,129 @@
+﻿@model edueTree.Models.QuestionAssigmentModel
+@{
+    ViewBag.Title = "QuestionAssigmentModel";
+}
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Question Assignment</a></li>
+        <li class="active">Add</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+
+            <div class="box box-success">
+
+                <div class="box-header">
+                    <i class="fa fa-user"></i>
+                    <h3 class="box-title"> Add Question To form</h3>
+                </div>
+                <div class="box-body">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Form Name:</label>
+                                @Html.DropDownListFor(model => model.qustId, Model.FormTitleList, " - Select Form - ", new { id = "qustId", @class = "form-control select2", placeholder = "select Form", required = "required" })
+                            </div>
+                        </div>
+                        <br />
+                        <table>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Questions:</label>
+                                    @{
+                                        int index = 1;
+                                        foreach (var qus in Model.QueList)
+                                        {
+                                            <tr>
+                                                <td> @index . &nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <input type="checkbox" class="checkBox" value="@qus.QuestionId"/>
+                                                </td>
+                                                <td>&nbsp;&nbsp;&nbsp; @Html.DisplayFor(modelItem => qus.QuestionName)</td>
+                                            </tr>
+                                            index++;
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </table>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <input type="button" id="addcheck" value="Add" class="btn btn-default pull-right" />
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "error");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this Shift used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $(".select2").select2();
+
+        $("#addcheck").click(function () {
+            var selectedIDs = new Array();
+            var feedid = new Array();
+
+            $('input:checkbox.checkBox').each(function () {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+            });
+            feedid.push($('#qustId option:selected').text());
+
+            //alert(feedid);
+            var options = {};
+            options.url = "/Performance/QuestionAssignmentNew";
+            options.type = "POST";
+            options.data = JSON.stringify({ customerIDs: selectedIDs, feedid: feedid }),
+            options.contentType = "application/json";
+            options.dataType = "json";
+            options.success = function (msg) {                
+                location.reload();               
+                $.notify(msg.Message, "success");
+            }
+            $.ajax(options);
+
+        });
+    });
+</script>
+

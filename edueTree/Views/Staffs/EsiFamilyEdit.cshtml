@@ -1,0 +1,133 @@
+﻿@using System.Web.UI.HtmlControls
+@model edueTree.Models.EsiFamilyModel
+@{
+    ViewBag.Title = "EsiFamilyEdit";
+}
+<section class="content-header">
+    <h1>
+
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Manage</a></li>
+        <li class="active">ESI Family</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("EsiFamilyEditpost", "staffs"))
+            {
+                <div class="box box-primary">
+                    @Html.HiddenFor(model => model.staffid)
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="box-header">
+                        <h4>Edit Esi Family Info  </h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            @Html.HiddenFor(model=>model.esifamid)
+                            @Html.HiddenFor(model=>model.firmid)
+                            @Html.HiddenFor(model=>model.isdeleted)
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Full Name:</label>
+                                    @Html.TextBoxFor(model => model.name, new { id = "name", @class = "form-control", placeholder = "Name" })
+                                    @Html.ValidationMessageFor(model => model.name, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="nomineename"></span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Relationship : </label>
+                                    @Html.TextBoxFor(model => model.relationship, new { id = "nomineeralation", @class = "form-control", placeholder = " Relationship" })
+                                    @Html.ValidationMessageFor(model => model.relationship, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="nomineeralation"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Reside</label><br />
+                                    @Html.RadioButtonFor(model => model.reside, true, new { name = "Reside", id = "Reside" }) Yes
+                                    @Html.RadioButtonFor(model => model.reside, false, new { name = "Reside", id = "Reside" }) No
+                                    @*@Html.TextBoxFor(model => model.reside, new { id = "reside", @class = "form-control", placeholder = "reside" })*@
+                                    @Html.ValidationMessageFor(model => model.reside, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="age"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Birth Date</label>
+                                    @Html.TextBoxFor(model => model.dob, new { id = "Dob", @class = "form-control datepicker", placeholder = "Birth Date" })
+                                    @Html.ValidationMessageFor(model => model.dob, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="Dob"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Town</label>
+                                    @Html.TextBoxFor(model => model.town, new { id = "age", @class = "form-control", placeholder = "Share" })
+                                    @Html.ValidationMessageFor(model => model, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="age"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>State</label>
+                                    @Html.TextBoxFor(model => model.state, new { id = "age", @class = "form-control", placeholder = "Share" })
+                                    @Html.ValidationMessageFor(model => model.state, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="age"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("StaffDashboard", "Staffs", new { staffid =Model.staffid })' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+    
+
+    </div>
+</section>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

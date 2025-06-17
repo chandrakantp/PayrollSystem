@@ -1,0 +1,93 @@
+﻿@model edueTree.Models.Weekend
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <h1>
+        @*Manage Role*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Role</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-calendar-plus-o"></i>
+                        <h3 class="box-title">Edit Weekend</h3>
+
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.weekendId)
+                                @Html.HiddenFor(model => model.firmId)
+                                <div class="form-group">
+
+                                    <div class="col-md-6">
+                                        Weekend Date 
+                                        @Html.TextBoxFor(model => model.dates, new {@class = "form-control datepicker"})
+                                        @Html.ValidationMessageFor(model => model.dates)
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        Department List
+                                        @Html.DropDownList("deptId", (SelectList)ViewBag.departmentlist, "--Choose Your department--", new {@class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.deptId)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("Weekends","LeaveRequest")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div> }
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify("Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify("Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>
+

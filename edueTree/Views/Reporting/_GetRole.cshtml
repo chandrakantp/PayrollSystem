@@ -1,0 +1,50 @@
+﻿@model edueTree.Models.ReportingModel
+<table class="table">
+    <thead>
+        <tr>
+            <th>Assign Role</th>
+            <th>Email Reporting to</th>
+            <th>Manager Reporting To</th>
+         
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Html.HiddenFor(model=>model.UserId)
+                @Html.DropDownListFor(model => model.RoleId, Model.RoleListnew, " - Select Role - ", new { id = "Id", @class = "form-control", placeholder = "select Role" })
+                @Html.ValidationMessageFor(model => model.RoleId, string.Empty, new { @class = "help-block" })
+                <span class="help-block" id="RoleIdmsg"></span>
+            </td>
+            <td>@Html.TextBoxFor(model => model.EmailReportingTo, new { id = "tokenfield-1", @class = "form-control", placeholder = "Type Email-Ids and hit enter" })
+                @Html.ValidationMessageFor(model => model.EmailReportingTo, string.Empty, new { @class = "help-block" })
+                <span class="help-block" id="EmailReportingTommsg"></span>
+            </td>
+            <td>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @*@Html.DropDownList("ReportingManagerId",
+                                               new MultiSelectList(Model.StaffList3,
+                    "Id", "Name",
+                    Model.StaffList3.Select(m => m.staffId)),
+                    new
+                    {
+                        multiple = "multiple",
+                        @class = "multiselect"
+                    })*@
+
+                        @Html.DropDownListFor(model => model.ReportingManagerId, Model.StaffListNew, new { id = "ReportingManagerId", @class = "form-control select2", @multiple = "multiple", placeholder = "select Reporting Manager" })
+                        @Html.ValidationMessageFor(model => model.ReportingManagerId, string.Empty, new { @class = "help-block" })
+                        <span class="help-block" id="ReportingManagerIdmsg"></span>
+                    </div>
+                </div>
+            </td>
+           
+           
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $("#ReportingManagerId").select2();
+</script>

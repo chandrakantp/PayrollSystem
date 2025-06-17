@@ -1,0 +1,39 @@
+﻿@model edueTree.Models.ConfigMachine
+@{
+    ViewBag.Title = "Delete Visa Passport";
+}
+@{ Layout = null; }
+
+<section class="content">
+    <section class="col-md-5 col-md-offset-3">
+        <div class="box box-success">
+            <div class="box-header">
+                <i class="fa fa-exclamation-triangle"></i>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="box-title"> Are you sure you want to delete?</h4>
+            </div>
+            <div class="box-body chat" id="chat-box">
+                <div class="item">
+                    @using (Html.BeginForm("DeleteConfirm", "MachineConfig"))
+                    {
+                        @*@Html.AntiForgeryToken()*@
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.HiddenFor(model => model.id)
+
+
+                            @Html.ValidationSummary(true)
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="submit" value="OK" class="btn btn-default pull-right" />&nbsp;&nbsp;
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

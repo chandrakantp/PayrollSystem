@@ -1,0 +1,112 @@
+﻿@model edueTree.Models.ComputerAssingedModel
+
+@{
+    ViewBag.Title = "Create";
+}
+<style type="text/css">
+    .help-block {
+        color: #BC3C3C;
+    }
+</style>
+<section class="content-header">
+    <h1>
+        @*Role Assignment*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Assigned Computer</a></li>
+        <li class="active">Add</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar-plus-o"></i>
+                    <h3 class="box-title">Assign Computer</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true)
+                                <div class="form-group">
+                                    @Html.Label("Employee Name:", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-9">
+                                        @Html.DropDownListFor(model => model.staffId, Model.StaffList, " - Select Employee - ", new { id = "StaffId", @class = "form-control", placeholder = "select staff" })
+                                        @Html.ValidationMessageFor(model => model.staffId, string.Empty, new {@class = "help-block"})
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("User Name:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.Username, new { id = "Username", @class = "form-control", placeholder = "User Name" })
+                                        @Html.ValidationMessageFor(model => model.Username, string.Empty, new { @class = "help-block" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("IP Address:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.IPAddress, new {id = "IPAddress", @class = "form-control", placeholder = "IP Address"})
+                                        @Html.ValidationMessageFor(model => model.IPAddress, string.Empty, new { @class = "help-block" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Machine Name:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.MachineName, new { id = "MachineName", @class = "form-control", placeholder = "Machine Name" })
+                                        @Html.ValidationMessageFor(model => model.MachineName, string.Empty, new { @class = "help-block" })
+                                    </div>
+                                </div>                             
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+                                        <input type="submit" value="Add" class="btn btn-default"/>                                      
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @*<div class="box-footer">
+                        <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                            <div class="btn-group" data-toggle="btn-toggle">
+                                <a href='@Url.Action("Index")'><i class="fa fa-arrow-left"></i> Back to list</a>
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+        </section>
+        <section class="col-md-12">
+            @{Html.RenderAction("AssignedComputerReport", "Department");}
+        </section>
+    </div>
+</section>
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

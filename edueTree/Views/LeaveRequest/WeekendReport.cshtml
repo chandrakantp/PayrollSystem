@@ -1,0 +1,92 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.Weekend>
+
+@{
+    Layout = null;
+}
+
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Weekends List</h3>
+    </div>
+    <div class="box-body">
+        <table class="table table responsive">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Date")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Day")
+                    </th>
+                    <th>@Html.DisplayName("Department")</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @*@foreach (var group in Model.GroupBy(a => a.Department.deptName))
+                {
+                    <tr>
+                        <td>
+                            <div class="col-md-3 col-sm-6"><label>Department Name:</label></div>
+                            <div class="col-md-3 col-sm-6"><label>@group.Key</label></div>
+                        </td>
+                        <td></td><td></td>
+                        <td></td>
+                    </tr>*@
+
+
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Convert.ToDateTime(item.dates).ToString("dd MMM yyyy")
+                            </td>
+
+                            <td style="color: red">
+                                @Convert.ToDateTime(item.dates).ToString("dddd")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Department.deptName)
+
+                            </td>
+                            <td>
+                                @*@Html.ActionLink("Edit", "Editweekend", "LeaveRequest", new {weekendId = item.weekendId}, null)*@
+                                <a href="@Url.Action("Editweekend", "LeaveRequest", new { weekendId = item.weekendId })" class=""><i class="fa fa-pencil-square"></i>                                    
+                                </a>
+                            </td>
+                              <td>
+                                <a data-toggle="modal" data-target="#myModalDelete" href='@Url.Action("DeleteWeekend", new { id = item.weekendId })'><i class="fa fa-trash"></i></a>
+
+                            </td>
+
+
+                        </tr>
+                    }
+
+                @*}*@
+            </tbody>
+
+        </table>
+        <div class="modal fade" id="myModalDelete" role="dialog"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+    $(document).ready(function () {
+            $('.table').DataTable({               
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

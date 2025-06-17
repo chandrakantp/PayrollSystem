@@ -1,0 +1,96 @@
+﻿@using edueTree.Helpers
+@model edueTree.Models.MonthlyTTargetModel
+
+
+@{
+    var monthList = new SelectList(new[]
+    {
+        new SelectListItem {Text = "Select Month", Value = null, Selected = true},
+        new SelectListItem {Text = "January", Value = "1"},
+        new SelectListItem {Text = "February", Value = "2"},
+        new SelectListItem {Text = "March", Value = "3"},
+        new SelectListItem {Text = "April", Value = "4"},
+        new SelectListItem {Text = "May", Value = "5"},
+        new SelectListItem {Text = "June", Value = "6"},
+        new SelectListItem {Text = "July", Value = "7"},
+        new SelectListItem {Text = "August", Value = "8"},
+        new SelectListItem {Text = "September", Value = "9"},
+        new SelectListItem {Text = "October", Value = "10"},
+        new SelectListItem {Text = "November", Value = "11"},
+        new SelectListItem {Text = "December", Value = "12"},
+    }, "Value", "Text");
+
+
+
+    var yearList = new SelectList(new[]
+    {
+        new SelectListItem {Text = "Select Year", Value = null, Selected = true},
+        new SelectListItem {Text = "2016", Value = "2016"},
+        new SelectListItem {Text = "2017", Value = "2017"},
+        new SelectListItem {Text = "2018", Value = "2018"},
+        new SelectListItem {Text = "2019", Value = "2019"},
+        new SelectListItem {Text = "2020", Value = "2020"},
+        new SelectListItem {Text = "2021", Value = "2021"},
+        new SelectListItem {Text = "2022", Value = "2022"},
+        new SelectListItem {Text = "2023", Value = "2023"},
+        new SelectListItem {Text = "2024", Value = "2024"},
+        new SelectListItem {Text = "2025", Value = "2025"},
+
+    }, "Value", "Text");
+}
+<section class="content">
+
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm("GetMontHrEditPost", "Training"))
+                {
+            @Html.ValidationSummary(true)
+            <div class="box box-success">
+                <div class="box-header">
+                <h4>Edit Assign Man Hours </h4>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    @Html.HiddenFor(model=>model.trgId)
+                                    <label> Target Man Hours</label>
+                                    @Html.TextBoxFor(model => model.trgValue, new {@class = "form-control"})
+                                </div>
+                                <div class="col-md-3">
+                                    <label> Month</label>
+                                    @Html.TextBoxFor(model => model.trgMonth, new {@class = "form-control", @readonly = "readonly"})
+
+                                </div>
+                                <div class="col-md-3">
+                                    <label> Year</label>
+                                    @Html.TextBoxFor(model => model.trgYear, new {@class = "form-control", @readonly = "readonly"})
+
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Department Name</label>
+                                    @Html.TextBoxFor(model => model.deptName, new {@class = "form-control", @readonly = "readonly"})
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <a href='@Url.Action("GetManHrIndex")' class="btn btn-default pull-left">
+                        Back to List
+                    </a>
+
+                    <div class="">
+                        <input type="submit" value="Update" class="btn btn-default  pull-right" />
+                        @*<input type="submit" value="Save" class="btn btn-success pull-right" onclick=" datastore(); "/>*@
+                    </div>
+                </div>
+
+            </div>
+            }
+        </section>
+    </div>
+</section>

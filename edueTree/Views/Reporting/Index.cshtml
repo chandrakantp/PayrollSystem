@@ -1,0 +1,89 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.ReportingModel>
+
+@{
+    //ViewBag.Title = "Index";
+     Layout = null;
+}
+
+@*<section class="content">
+    <div class="row">
+        <section class="col-md-12">*@
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Reporting List</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-fixed">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Staff Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Email Reporting To")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Reporting Manager Name")
+                                </th>
+                                <th>Role</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StaffName)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EmailReportingTo)
+
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RptMgrName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RoleName)
+                                    </td>
+                                    <td>
+                                        @*<a href='@Url.Action("Edit", new {id = item.holidayId})'><i class="fa fa-pencil-square"></i> <span class="hidden-sm hidden-xs"></span></a>*@
+                                        @Html.EncodedActionLink("Edit", "Edit", "Holiday", new { id = item.ReportingId }, null)
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModalHolidayDelete" href='@Url.Action("Delete", new {id = item.ReportingId})'><i class="fa fa-trash"></i></a>
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                    <div class="modal fade" id="myModalHolidayDelete" role="dialog"></div>
+                </div>
+            </div>
+        @*</section>
+    </div>
+</section>*@
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

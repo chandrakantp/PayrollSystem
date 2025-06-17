@@ -1,0 +1,153 @@
+﻿@using edueTree.Controllers
+@using edueTree.Models
+@using Microsoft.AspNet.Identity
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+
+<style type="text/css">
+    .dropdown-menu > li > a:hover {
+        background-color: #3c8dbc;
+    }
+</style>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-custom-menu" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav">
+
+            @{
+        dbContainer dbNew = new dbContainer();
+        var userAdmin = User.Identity.GetUserId();
+        var stcode = dbNew.Staffs.FirstOrDefault(s => s.userId == userAdmin).staffCode;
+        var stcodeFive = stcode.Substring(stcode.Length - 5);
+        if (stcodeFive == "00001")
+        {
+
+            <li class="dropdown messages-menu" data-toggle="tooltip" title=" Today Logins" data-placement="left">
+                <a href="@Url.Action("StaffLoginRecords", "Staffs")">
+                    <i class="fa fa-eye"></i>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="dropdown messages-menu" data-toggle="tooltip" title=" Today Logins" data-placement="left">
+                <a href="@Url.Action("StaffLoginDetailsMember", "Staffs")">
+                    <i class="fa fa-eye"></i>
+                </a>
+            </li>
+        }
+
+            }
+
+            <li class="dropdown user user-menu">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    @{
+        dbContainer _db = new dbContainer();
+        var getphoto = _db.GetLoginUserPhoto(User.Identity.GetUserId());
+        <img src="~/StaffDocument/@getphoto.FirstOrDefault()" class="user-image" alt="User Image">
+                    }
+                    @Html.Raw("Hello " + User.Identity.GetUserName())
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="user-header">
+                        <a href="@Url.Action("UploadStaffProfileImage", "Staffs")" data-toggle="tooltip" title="change profile picture!">
+
+                            @{
+        dbContainer _db1 = new dbContainer();
+        var getphoto1 = _db.GetLoginUserPhoto(User.Identity.GetUserId());
+        <img src="~/StaffDocument/@getphoto1.FirstOrDefault()" class="img-circle" alt="User Image" style="height: 75px">
+                            }
+                        </a>
+                        <p>
+                            @Html.Raw("Hello " + User.Identity.GetUserName())
+                        </p>
+                    </li>
+                    <!-- Menu Body -->
+                    <li class="user-body">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <a href="#"></a>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </li>
+                    <!-- Menu Footer-->
+                    @*<a href="@Url.Action("ForgotPassword", "Account")" class="btn btn-default btn-flat">Forgot Password</a>*@
+                    <li class="user-footer">
+                        <div class="pull-left">
+                            <a href="@Url.Action("Manage", "Account")" class="btn btn-default btn-flat">Change Password</a>
+                        </div>
+                        <div class="pull-right">
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Sign out</a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    }
+}
+else
+{
+    <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav fnt">
+            @*<li><a href="@Url.Action("Features", "hrms")">Features</a></li>*@
+            @*<li><a href="@Url.Action("Pricing", "hrms")">Pricing</a></li>
+                <li><a href="@Url.Action("Resources", "hrms")">Resources</a></li>*@
+            <li><a href="http://innopeople.innovative-fusion.com/hrms/leavemanagement/">Leave</a></li>
+            <li><a href="http://innopeople.innovative-fusion.com/hrms/attendancemanagement/">Attendance</a></li>
+            <li><a href="http://innopeople.innovative-fusion.com/hrms/trainingmanagement/">Training</a></li>
+            <li><a href="http://innopeople.innovative-fusion.com/hrms/elearning/">E-Learning</a></li>
+            <li><a href="http://innopeople.innovative-fusion.com/hrms/performancemanagement/">Performance</a></li>
+            <li><a href="http://innopeople.innovative-fusion.com/hrms/noticemanagement/">Notice Board</a></li>
+            <li><a href="http://innopeople.innovative-fusion.com/hrms/trackerapp/">Tracker App</a></li>
+            <li><a href="http://innopeople.innovative-fusion.com/hrms/shiftmanagement/">Shift Mgmt</a></li>
+            <li><a href="http://innopeople.innovative-fusion.com/hrms/payrollmanagement/">Payroll</a></li>
+
+
+            @*<li class="dropdown messages-menu">
+                    <a href="@Url.Action("login", "hrms")"><i class="fa fa-user"></i> Sign In</a>
+                </li>
+                <li class="dropdown messages-menu">
+                    <a href="@Url.Action("UserRegister", "Account")"><i class="fa fa-user"></i> Sign Up</a>
+                </li>*@
+        </ul>
+    </div>
+
+}
+
+
+@*@using Microsoft.AspNet.Identity
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href='@Url.Action("Manage", "Account")'><span class="glyphicon glyphicon-user"></span> @User.Identity.GetUserName()!</a>
+                 @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-off"></span> Log off</a></li>
+        </ul>
+        }
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new {id = "registerLink"})</li>
+
+            <li>
+                <a href='@Url.Action("Login", "Account")'><span class="glyphicon glyphicon-log-in"></span> Log in</a>
+                @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new {id = "loginLink"})
+            </li>
+        </ul>
+    }*@

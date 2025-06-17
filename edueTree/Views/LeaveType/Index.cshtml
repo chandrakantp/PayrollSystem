@@ -1,0 +1,100 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.LeaveType>
+
+@{
+
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-header">
+                <i class="fa fa-calendar"></i>
+                <h3 class="box-title">Leave Type List</h3>
+
+            </div>
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="example1" class="table table-bordered table-striped display nowrap">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    @Html.DisplayName("Leave Type")
+                                </th>
+                                @*<th>
+                                        @Html.DisplayName("Leave Count")
+                                    </th>*@
+                                @*<th>
+                                    @Html.DisplayName("Department")
+                                </th>*@
+                                <th></th>
+                                <th></th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LeaveType1)
+                                    </td>
+                                    @*<td>
+                                            @Html.DisplayFor(modelItem => item.counts)
+                                        </td>*@
+                                    @*<td>
+                                        @Html.DisplayFor(modelItem => item.Department.deptName)
+                                    </td>*@
+
+                                    @if (item.LeaveType1 != "Compensation Leaves" && item.LeaveType1 != "Informed Absent" && item.LeaveType1 != "Paid Leaves")
+                                    {
+                                        <td>
+                                            @*<a href='@Url.Action("Edit", new { id = item.leaveTypeId })'><i class="fa fa-pencil-square"></i> <span class="hidden-sm hidden-xs"></span></a>*@
+                                            @Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "Edit", "LeaveType", new { id = item.leaveTypeId }, null)
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    @if (item.LeaveType1 != "Compensation Leaves" && item.LeaveType1 != "Informed Absent" && item.LeaveType1 != "Paid Leaves")
+                                    {
+                                        <td>
+                                            <a data-toggle="modal" data-target="#myModalLeaveDelete" href='@Url.Action("Delete", new {id = item.leaveTypeId})'><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal fade" id="myModalLeaveDelete" role="dialog"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+</script>

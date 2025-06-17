@@ -1,0 +1,135 @@
+﻿@model IEnumerable<edueTree.Models.AllTrainingModel>
+@{
+    ViewBag.Title = "AllTrainingByEmployee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <h1>
+        @*Attendance sheet*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> AllTrainingByEmployee</a></li>
+        <li class="active">All emp</li>
+    </ol>
+</section>
+
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Search Options - You can search Daily,Weekly & Monthly </h3>
+        </div>
+
+        <div class="box-body">
+            <div class="item">
+                @using (Html.BeginForm("AllTrainingByEmployee", "Training", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @Html.Label("From Date:", new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBox("datepicker", null, new { id = "datepicker1", @class = "form-control" })
+                                </div>
+                                @Html.Label("To Date:", new { @class = "control-label col-md-1" })
+                                <div class="col-md-4">
+                                    @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Employee Training Report</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr class="active">
+                                    <th>@Html.DisplayName("Name")</th>
+                                    <th>@Html.DisplayName("Status")</th>
+                                    <th>@Html.DisplayName("Trainer Name")</th>
+                                    <th>@Html.DisplayName("Topic")</th>
+                                    <th>@Html.DisplayName("Duration")</th>
+                                    <th>@Html.DisplayName("Training Type")</th>
+                                    <th>@Html.DisplayName("Training Repetition")</th>
+                                    <th>@Html.DisplayName("Training Date")</th>
+                                    <th>@Html.DisplayName("Training Start Time")</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.fullname)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.status)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.trainername)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.topic)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.duration) Min</td>
+                                        <td>@Html.DisplayFor(modelItem => item.trainingtype)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.trainingrepition)</td>
+                                        <td>@Convert.ToDateTime(item.trainingdate).ToString("dd-MMM-yyyy")</td>
+                                        <td>@Html.DisplayFor(modelItem => item.trainingstarttime)</td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<script>
+    $(function() {
+        $(document).ready(function() {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                "ordering": false,
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "date") {
+                $.notify("Please select From Date and To Date ", "warn");
+            }
+        }
+    });
+</script>
+
+<script type="text/javascript">
+   $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm//yy",
+            autoclose: true
+        });
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true
+        });
+    });
+</script>

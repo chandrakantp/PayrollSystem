@@ -1,0 +1,122 @@
+﻿@model edueTree.Models.AttendanceRequestModel
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Attendance</a></li>
+        <li class="active">Request</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3"></div>
+            <section class="col-md-6">
+                @using (Html.BeginForm("AttendanceRequestSelf", "AttendanceStaff"))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="box box-success">
+                        <div class="box-header">
+                            <i class="fa fa-calendar-plus-o"></i>
+                            <h3 class="box-title">Manual Attendance Self approval </h3>
+                        </div>
+                        <div class="box-body chat" id="chat-box">
+                            <div class="item">
+                                <div class="form-horizontal">
+                                    <hr />
+                                    @Html.ValidationSummary(true)
+                                    <br />
+                                    <div class="form-group">
+                                        @Html.Label("Attend Date:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.AttendanceDate, null, new { id = "AttendDate", @class = "form-control", placeholder = "select attend date", required = "required"})
+                                            @Html.ValidationMessageFor(model => model.AttendanceDate)
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.Label("Check In/Check Out:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.RadioButtonFor(model => model.InOutMode, 0, new { name = "InOutMode", id = "InOutMode" }) Check In
+                                            @Html.RadioButtonFor(model => model.InOutMode, 1, new { name = "InOutMode", id = "InOutMode" }) Check Out
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.Label("Hour:", new { @id = "Hour", @class = "control-label col-md-3" })
+                                        <div class="col-md-3">
+                                            @*@Html.DropDownListFor(model => model.Hour, hourList, new { id = "Hour", @class = "form-control dropdown" })*@
+                                         
+                                            @Html.DropDownListFor(model => model.Hour, new SelectList(Enumerable.Range(0, 24).Select(x => new { Value = x, Text = x }), "Value", "Text"), "-select Hours-", new { @class = "form-control", required = "required" })
+                                            @Html.ValidationMessageFor(model => model.Hour)
+                                        </div>
+                                        @Html.Label("Minute:", new { @id = "Minute", @class = "control-label col-md-3" })
+                                        <div class="col-md-3">
+                                            @*@Html.DropDownListFor(model => model.Minute, minuteList, new { id = "Minute", @class = "form-control  dropdown" })*@
+                                        
+                                            @Html.DropDownListFor(model => model.Minute, new SelectList(Enumerable.Range(0, 60).Select(x => new { Value = x, Text = x }), "Value", "Text"), "-select Minute-", new { @class = "form-control", required = "required" })
+                                            @Html.ValidationMessageFor(model => model.Minute)
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <div class="">
+                                <input type="submit" value="Add" class="btn btn-default pull-right" onclick="DisableButton(this);" />
+                                <a href='@Url.Action("AttendRequestselfList")' class="btn btn-default pull-left">Back to list</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </section>
+            <div class="col-md-3"></div>
+        </div>
+
+    </div>
+</section>
+
+<script type="text/javascript">
+
+    function DisableButton(b) {
+        b.disabled = true;
+        b.value = 'Add';
+        b.form.submit();
+    }
+
+
+    $(function () {       
+        $('#AttendDate').datepicker({
+            format: 'mm-dd-yyyy',
+            endDate: '+0d',
+            orientation: "bottom auto",
+            autoclose: true
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

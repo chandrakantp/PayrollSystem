@@ -1,0 +1,307 @@
+﻿@model edueTree.Models.TrainingModel
+@{
+    ViewBag.Title = "Update";
+}
+@{
+    var trainingRepetition = new SelectList(new[]
+    {
+          new SelectListItem{ Text="One Time", Value = "OneTime" },
+          new SelectListItem{ Text="Three Month", Value = "three" },
+          new SelectListItem{ Text="Six Month", Value = "six" },
+          new SelectListItem{ Text="One Year", Value = "year" }
+    }, "Value", "Text");
+
+}
+@{
+    var trainingTypeList = new SelectList(new[]
+    {
+        new SelectListItem{ Text="Mandatory", Value = "Mandatory" },
+        new SelectListItem{ Text="Optional", Value = "Optional" }
+
+    }, "Value", "Text")
+    ;}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Training</a></li>
+        <li class="active">Manage</li>
+    </ol>
+</section>
+
+<section class="content">
+<div class="row">
+
+<div class="col-md-12">
+@using (Html.BeginForm("Editpost", "Training"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="box box-success">
+        <div class="box-header">
+            @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+            <h4 class="box-title"> Add Training</h4>
+        </div>
+        <div class="box-body">
+            <div class="col-md-12">
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.TrainigId)
+                @*@Html.HiddenFor(model => model.Duration)*@
+                @Html.HiddenFor(model => model.TotalManpower)
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Topic Name</label>
+
+                        @Html.TextBoxFor(model => model.Topic, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Topic)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Trainer Name</label>
+
+                        @Html.TextBoxFor(model => model.TrainerName, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.TrainerName)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Trainer Department </label>
+                        @Html.DropDownListFor(model => model.TrainerDept, Model.DeptListItems, " - Select Department list - ", new {id = "TrainerDept", @class = "form-control select2"})
+                        @Html.ValidationMessageFor(model => model.TrainerDept, string.Empty, new {@class = "help-block"})
+                        <span class="help-block" id="staffListMsg"></span>
+                    </div>
+                </div>
+                @*<div class="col-md-4">
+            <div class="form-group">
+                <label>Trainer Department</label>
+                <div class="col-md-">
+                    @Html.TextBoxFor(model => model.TrainerDept, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TrainerDept)
+                </div>
+            </div>
+        </div>*@
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Trainer Criteria</label>
+
+                        @Html.TextBoxFor(model => model.EgibilityCriteria, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.EgibilityCriteria)
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Category</label>
+
+                        @Html.TextBoxFor(model => model.Category, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Category)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Start Date</label>
+
+                        @Html.TextBoxFor(model => model.TrainingDateStart, "{0:yyyy-MM-dd}",new {@id = "start_date", @class = "form-control datepicker1"})
+                        @Html.ValidationMessageFor(model => model.TrainingDateStart)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="bootstrap-timepicker">
+
+
+                            <label>Start Time</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.TrainingStartTime, new {@id = "start_time", @class = "form-control timepicker", @placeholder = "00:00"})
+
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+
+                            </div>
+                        </div>@Html.ValidationMessageFor(model => model.TrainingStartTime)
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="form-group">
+                        <div class="bootstrap-timepicker">
+
+                            <label>End Time</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.TrainingEndTime, new {@id = "end_time", @class = "form-control timepicker", @placeholder = "00:00"})
+
+                                @*<input type="text" class="form-control timepicker">*@
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                            </div>
+                            <!-- /.input group -->
+                            <!-- /.form group -->
+                        </div>
+                        @*<label>End Time</label>*@
+
+                        @Html.ValidationMessageFor(model => model.TrainingEndTime)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>End Date</label>
+
+                        @Html.TextBoxFor(model => model.TrainingEndDate, new {@class = "form-control datepicker"})
+                        @Html.ValidationMessageFor(model => model.TrainingEndDate)
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Duration</label>
+                        @*, @readonly = "readonly"*@
+                        @Html.TextBoxFor(model => model.Duration, new { @id = "Total_Dur", @class = "form-control ", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.Duration)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>No of Attendant</label>
+
+                        @Html.TextBoxFor(model => model.NoofAttendant, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.NoofAttendant)
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Training Type</label>
+                        @Html.DropDownList("TrainingType", trainingTypeList, new {id = "TrainingType", @class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.TrainingType)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Repetition</label>
+                        @Html.DropDownListFor(model => model.TrainingRepetition, new SelectList(Enumerable.Range(1, 365).Select(x => new {Value = x, Text = x}), "Value", "Text"), new {@class = "form-control"})
+                        @*@Html.DropDownList("TrainingRepetition", trainingRepetition, new {id = "TrainingRepetition", @class = "form-control"})*@
+                        @Html.ValidationMessageFor(model => model.TrainingRepetition)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Narration</label>
+                        @Html.TextBoxFor(model => model.Narration, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Narration)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Training Content</label>
+                        @Html.TextBoxFor(model => model.TrainingContent, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.TrainingContent)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Training Location</label>
+
+                        @Html.TextBoxFor(model => model.TrainingLocation, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.TrainingLocation)
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="box-footer">
+            <input type="submit" value="Update" class="btn btn-default pull-right"/>
+            <a href="@Url.Action("Index", "Training")" class="btn btn-default">Back to list</a>
+        </div>
+    </div>
+
+}
+</div>
+
+
+
+
+
+</div>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        $('.datepicker1').datepicker({ format: 'yyyy-mm-dd' });
+    });
+    $('#end_time').on('change', function () {
+        debugger;
+
+        var start_time = $('#start_time').val();
+        var end_time = $('#end_time').val();
+        var start_date = $('#start_date').val();
+        var stt = new Date(start_date + " " + start_time);
+        var endt = new Date(start_date + " " + end_time);
+
+        if (start_date === "") {
+            $.notify("Please select start date ! ", "error");
+        }
+        if (endt > stt) {
+            var diff = (new Date(start_date + " " + end_time) - new Date(start_date + " " + start_time)) / 1000 / 60;
+            $('#Total_Dur').val(diff);
+        } else {
+            $.notify("Please select End time is greater than start time ! ", "error");
+            $('#Total_Dur').val(0);
+            $('#end_time').val();
+            $('#start_time').val();
+        }
+
+    });
+
+
+    $(function () {
+        $('#TrainerDept').on('change', function () {
+            var deptid = $("#TrainerDept").val();
+            //    alert(deptid);
+            $.ajax({
+                type: "POST",
+                url: "/Training/GetCount",
+                data: { deptId: deptid }, //--> send id of checked checkbox on other page
+                success: function (Result) {
+                  
+                    if (Result !=null) {
+                        $("#NoofAttendant").val(Result);
+                    }
+
+
+                },
+                error: function () {
+                    if (data === "false") {
+                        $.notify(" Something Went wrong ! ", "error");
+                    }
+                }
+
+            });
+        });
+    });
+
+
+    </script>

@@ -1,0 +1,107 @@
+﻿@using edueTree.Helpers
+@model edueTree.Models.StaffDesignation
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    a[type="button"] {
+        border-radius: 3px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid transparent;
+        background-color: #f4f4f4;
+        cursor: pointer;       
+        padding: 7px;
+        margin-right: 8px;
+        width: auto;
+        text-decoration: none;
+        color: #444;
+        border-color: #ddd;
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        touch-action: manipulation;
+        user-select: none;
+        background-image: none;
+    }
+</style>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-8">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-comments-o"></i>
+                    <h3 class="box-title">Edit</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                         
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.tranId)
+                                @Html.HiddenFor(model => model.staffId)
+
+                                <div class="form-group">
+                                    @Html.Label("Staff name:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.DisplayFor(a => a.Staff.firstName)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Designation:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.DropDownListFor(m => m.designationId, Model.Design1List, "- Select Designation -", new { @class = "form-control", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.designationId)
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    @Html.Label("From Date:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.fromDate, new { id = "DateFrom", @class = "form-control datepicker", placeholder = "Select from date", required = "required" })
+                                        <span class="help-block" id="DateFromMessage" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+                                        <input type="submit" value="Update" class="btn btn-default" />
+                                        @Html.EncodedActionLink("Cancel", "StaffDashboard", "Staffs", new { staffid = Model.staffId }, new { Type="button" })  
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                @*<div class="box-footer">
+                    <div class="box-tools pull-right" data-toggle="tooltip" title="BackToList">
+                        <div class="btn-group" data-toggle="btn-toggle">
+                            <a href='@Url.Action("StaffDashboard", "Staffs", new { staffid = Model.staffId })'><i class="fa fa-arrow-left"></i> Back to list</a>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

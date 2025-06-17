@@ -1,0 +1,138 @@
+﻿@using edueTree.Helpers
+@model edueTree.Models.StaffDocumentModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<style type="text/css"> 
+    a[type="button"] {
+        border-radius: 3px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid transparent;
+        background-color: #f4f4f4;
+        cursor: pointer;
+        padding: 7px;
+        margin-right: 8px;
+        width: auto;
+        text-decoration: none;
+        color: #444;
+        border-color: #ddd;
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        touch-action: manipulation;
+        user-select: none;
+        background-image: none;
+    }
+</style>
+<section class="content">
+    <div class="row">
+        <section class="col-md-7 col-md-offset-3">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-plus-square"></i>                    
+                    <h4 class="box-title">Add</h4>
+                </div>
+           
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm("Create", "StaffDocument", null, FormMethod.Post,
+                              new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                           
+                            <div class="form-horizontal" id="defaultForm">
+                                <hr />
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(a => a.StaffId)
+
+                                <br />
+                                <div class="form-group">
+                                    @Html.Label("Staff name:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.DisplayFor(a => a.StaffName)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Title:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.Title, new { id = "Title", @class = "form-control", placeholder = "Enter title", required = "required" })
+                                       @Html.ValidationMessageFor(model => model.Title)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Attach Document:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        <input id="files" title="Upload a image" type="file" name="file" required="required" />                                        
+                                        <img id="image" style="height: 50px; width: 50px;" />                                     
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr/>   
+                            <div class="form-group">
+                                <div class="col-md-offset-3 col-md-10">
+                                    <input type="submit" value="Add" class="btn btn-default"/>
+                                    @Html.EncodedActionLink("Cancel", "StaffDashboard", "Staffs", new { staffid = Model.StaffId }, new { Type = "button" })
+                                    
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+                @*<div class="box-footer">
+                    <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                        <div class="btn-group" data-toggle="btn-toggle">
+
+                            <a href='@Url.Action("StaffDashboard", "Staffs", new { staffId = Model.StaffId })'><i class="fa fa-arrow-left"></i> Back to profile</a>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+        </section>
+    </div>
+</section>
+<script type="text/javascript">
+   document.getElementById("files").onchange = function () {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            document.getElementById("image").src = e.target.result;
+        };
+        reader.readAsDataURL(this.files[0]);     
+    };
+
+
+    $(document).ready(function () {
+        $("#Title").focus();
+        $("#defaultForm").bootstrapValidator({
+            message: "This value is not valid",
+            feedbackIcons: {
+                //valid: "glyphicon glyphicon-ok",
+                invalid: "glyphicon glyphicon-remove",
+                validating: "glyphicon glyphicon-refresh"
+            },
+            fields: {
+                Title: {
+                    container: "#TitleMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The title is required and cannot be empty"
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>

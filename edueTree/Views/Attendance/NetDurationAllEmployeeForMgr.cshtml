@@ -1,0 +1,143 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.NetDurationModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> All Employee</a></li>
+        <li class="active">NetDuration</li>
+    </ol>
+</section>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm//yy",
+            autoclose: true,
+        });
+
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true,
+        });
+    });
+    
+</script>
+
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Search Options - You can search Daily,Weekly & Monthly</h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("NetDurationAllEmployeeForMgr", "Attendance", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Date - From:", new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker", null, new { id = "datepicker1", @class = "form-control datepicker" })
+                            </div>
+                            @Html.Label("To:", new { @class = "control-label col-md-1" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control datepicker" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownList("empId", (IEnumerable<SelectListItem>)ViewBag.staffid, "Select Employee", new { @class = "form-control select2" })
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">            
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Manage Net Duration</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayName("User Names")</th>
+                                    <th>
+                                        @Html.DisplayName("Transaction Date")
+                                    </th>
+                                    <th>@Html.DisplayName("Total Duration")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UserNames)
+                                        </td>
+                                        <td>
+                                            @Convert.ToDateTime(item.Trandate).ToString("dd-MMM-yyyy")
+
+                                        </td>
+
+                                        <td>
+                                            @{
+                                    if (item.TotalDuration == null)
+                                    {
+                                        <label>N/A</label>
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(modelItem => item.TotalDuration)
+                                    }
+                                            }
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $(".select2").select2();
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

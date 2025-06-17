@@ -1,0 +1,334 @@
+﻿@model edueTree.Models.LeaveRequestModel
+@{
+    ViewBag.Title = "Edit";
+   // Layout = null;
+}
+
+@{
+ var SessionLists = new SelectList(new[]
+        {
+            new SelectListItem {Text = "First Session", Value = "First Session"},
+            new SelectListItem {Text = "Second Session", Value = "Second Session"}
+
+         }, "Value", "Text");
+
+}
+
+@{
+    var StatusList = new SelectList(new[]
+        {
+            new SelectListItem {Text = "Planned", Value = "Planned"},
+            new SelectListItem {Text = "Requested", Value = "Requested"},
+
+         }, "Value", "Text");
+
+}
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-11">
+            @using (Html.BeginForm())
+                        {
+            <div class="box box-success">               
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="" id="defaultForm">
+                            <div class="">
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.tranId)
+                                @Html.HiddenFor(model => model.staffId)                                
+                                @Html.HiddenFor(model => model.firmId)
+
+
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <label>Leave type</label>
+                                        @Html.DropDownList("lTypeId", (IEnumerable<SelectListItem>) ViewBag.Leavetype, "--- Please select leave type ---", new {id = "ltype", @class = "form-control", onchange = "getRemainingcnt()", required = "required"})                                        
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>From date</label>
+                                        @Html.TextBoxFor(model => model.dateFrom, new {id = "dateFrom", @class = "form-control", onkeypress = "return alpha(event,'')", onKeyDown = "preventBackspace();"})
+                                        @Html.ValidationMessageFor(model => model.dateFrom)
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Select Session</label>
+                                        @Html.DropDownListFor(model => model.sesionDateFrom, SessionLists, new {id = "sfd", @class = "form-control", onchange = "changecount()"})
+                                        @Html.ValidationMessageFor(model => model.sesionDateFrom)
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>To date</label>
+                                        @Html.TextBoxFor(model => model.dateTo, new {id = "datepicker", @class = "form-control", onkeypress = "return alpha(event,'')", onKeyDown = "preventBackspace();"})
+                                        @Html.ValidationMessageFor(model => model.dateTo)
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Select Session</label>
+                                        @Html.DropDownListFor(model => model.sesionDateTo, SessionLists, new {id = "std", @class = "form-control", onchange = "changecount()"})
+                                        @Html.ValidationMessageFor(model => model.sesionDateTo)
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Count</label>
+                                        @Html.TextBoxFor(model => model.totalCounts, new {id = "totalDays", @readonly = "readonly", @class = "form-control"})
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Status</label>
+                                        @Html.DropDownListFor(model => model.status, StatusList, new {id = "statuslist", @class = "form-control"})
+                                    </div>
+
+                                    <span class="text-danger">
+                                            <div id="errorcnt" class=" col-md-offset-3 col-md-9"></div>
+                                        </span>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <input type="submit" value="Update" class="btn btn-default pull-right" />
+                    <a href='@Url.Action(Model.ActionName)' class="btn btn-default pull-left">Back to list</a>
+                </div>
+            </div>  
+            }
+        </section>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    var arr = [];
+    var fromdate;
+    var todate;
+    var x2;
+    var x3;
+    var getsfd;
+    var getstd;
+    var session1 = 0;
+    var session2 = 0;
+    $(function () {
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Search", "LeaveRequest")',
+            // data: { fd: fromdate, td: todate },
+            success: function (result) {
+                //alert("here" + data.d.toString());
+                for (i = 0; i < result.length; i++) {
+                    var dateineval = eval(("new " + result[i]).replace(/\//g, ""));
+                    var dd = dateineval.getDate();
+                    var mm = dateineval.getMonth() + 1;
+                    var yy = dateineval.getFullYear();
+                    var k = mm + "/" + dd + "/" + yy;
+                    arr.push(k);
+                }
+
+                var dateStart = $('#dateFrom').datepicker({
+                    // startDate: new Date(),
+                    autoclose: true,
+                    beforeShowDay: function (Date) {
+                        var curr_day = Date.getDate();
+                        var curr_month = Date.getMonth() + 1;
+                        var curr_year = Date.getFullYear();
+                        var curr_date = curr_month + '/' + curr_day + '/' + curr_year;
+                        if (arr.indexOf(curr_date) > -1) return false, 'ui-state-error';
+                    },
+                    daysOfWeekDisabled: [0],
+                    orientation: "bottom auto",
+                    todayBtn: "linked"
+                }).on('changeDate', function (ev) {
+                    dateEnd.datepicker('setStartDate', ev.date);
+                    //dateStart.datepicker('hide');
+                    dateEnd.focus();
+                    var x2 = document.getElementById("datepicker").value;
+                    var x3 = document.getElementById("dateFrom").value;
+                    if (!x2.match(/\S/)) {
+                        //alert("To Date field is blank");
+                        $(this).datepicker('hide');
+                        return false;
+                    } else {
+                        var msPerDay = 1000 * 60 * 60 * 24;
+                        d1 = new Date(x2);
+                        d2 = new Date(x3);
+                        var x4 = document.getElementById("totalDays");
+                        var dd = (((d1 - d2) / msPerDay).toFixed(0));
+                        x4.value = dd;
+
+                        getRemainingcnt(function (count) {
+                            var getvalueN = count;
+
+                            @*//  var balanceLeaves = '@TempData["Balanceleaves"]';
+                            //var compLeave = ' @ViewData["result"]';*@
+                            if (x4.value > getvalue) {
+                                $('#errorcnt').html("Your Leave balance &nbsp;" + getvalue + "&nbsp; plz leave is less than or equal balance leave");
+                            };;
+                            if (x4.value > getvalueN) {
+                                $('#errorcnt').html("Your Leave balance &nbsp;" + getvalueN + "&nbsp; plz leave is less than or equal balance leave");
+                            } else {
+                                $('#errorcnt').html("");
+                            };
+                            $(this).datepicker('hide');
+
+                        });
+                    }
+
+
+                });;
+
+
+                var dateEnd = $('#datepicker').datepicker({
+                    autoclose: true,
+                    beforeShowDay: function (Date) {
+                        var curr_day = Date.getDate();
+                        var curr_month = Date.getMonth() + 1;
+                        var curr_year = Date.getFullYear();
+                        var curr_date = curr_month + '/' + curr_day + '/' + curr_year;
+                        if (arr.indexOf(curr_date) > -1) return false, 'ui-state-error';
+                    },
+                    daysOfWeekDisabled: [0],
+                    orientation: "bottom auto",
+                    todayBtn: "linked"
+                }).on('changeDate', function (ev) {
+                    dateStart.datepicker('setEndDate', ev.date);
+                    //dateStart.datepicker('setEndDate', ev.date);
+                    //dateEnd.datepicker('hide');
+                    fromdate = document.getElementById("dateFrom").value;
+                    todate = document.getElementById("datepicker").value;
+                    x2 = document.getElementById("datepicker").value;
+                    x3 = document.getElementById("dateFrom").value;
+                    getsfd = document.getElementById("sfd").value;
+                    getstd = document.getElementById("std").value;
+                    session1 = 0;
+                    session2 = 0;
+
+                    if (!x3.match(/\S/)) {
+                        //alert("From date field is blank");
+                        $(this).datepicker('hide');
+                        return false;
+                    } else {
+                        if (getsfd == "Second Session") {
+                            session1 = 0.5;
+                        }
+                        if (getstd == "First Session") {
+                            session2 = 0.5;
+                        }
+                        var msPerDay = 1000 * 60 * 60 * 24;
+                        d1 = new Date(x2);
+                        d2 = new Date(x3);
+                        var x4 = document.getElementById("totalDays");
+
+                        var dd = (((d1 - d2) / msPerDay).toFixed(0));
+                        x4.value = (1 + (parseInt(dd) - (parseFloat(session1) + parseFloat(session2))));
+
+
+                        getRemainingcnt(function (count) {
+                            var getvalue2 = count;
+                            if (x4.value > getvalue2) {
+                                $('#errorcnt').html("Your Leave balance &nbsp;" + getvalue2 + "&nbsp; plz leave is less than or equal balance leave");
+                            } else {
+                                $('#errorcnt').html("");
+                            };
+
+                            $(this).datepicker('hide');
+                        });
+                    }
+                });
+            }
+        });
+
+    });
+
+    function changecount() {
+        var fromdate = document.getElementById("dateFrom").value;
+        var todate = document.getElementById("datepicker").value;
+        var x2 = document.getElementById("datepicker").value;
+        var x3 = document.getElementById("dateFrom").value;
+        var getsfd = document.getElementById("sfd").value;
+        var getstd = document.getElementById("std").value;
+        var session1 = 0;
+        var session2 = 0;
+        if (!x3.match(/\S/) || !x2.match(/\S/)) {
+            //alert("From date field is blank");
+            $(this).datepicker('hide');
+            return false;
+        } else {
+            if (getsfd == "Second Session") {
+                session1 = 0.5;
+            }
+            if (getstd == "First Session") {
+                session2 = 0.5;
+            }
+            var msPerDay = 1000 * 60 * 60 * 24;
+            d1 = new Date(x2);
+            d2 = new Date(x3);
+            var x4 = document.getElementById("totalDays");
+            var dd = (((d1 - d2) / msPerDay).toFixed(0));
+            x4.value = (1 + (parseInt(dd) - (parseFloat(session1) + parseFloat(session2))));
+            //x4.value = (parseInt(dd));
+
+            getRemainingcnt(function (count) {
+                var getvalue1 = count;
+
+                @*//var balanceLeaves = '@TempData["Balanceleaves"]';
+                //var compLeave = ' @ViewData["result"]';*@
+
+                if (x4.value > getvalue1) {
+                    $('#errorcnt').html("Your Leave balance &nbsp;" + getvalue1 + "&nbsp; plz leave is less than or equal balance leave");
+                } else {
+                    $('#errorcnt').html("");
+                };
+
+                //if (x4.value > getvalue) {
+
+                //    $('#errorcnt').html("Your Leave balance &nbsp;" + getvalue + "&nbsp; plz leave is less than or equal balance leave");
+                //};
+                $(this).datepicker('hide');
+            });
+        }
+
+    }
+
+
+    function alpha(e, allow) {
+        var k;
+        k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+        return (allow.indexOf(String.fromCharCode(k)) != -1);
+    }
+
+    function preventBackspace(e) {
+        var evt = e || window.event;
+        if (evt) {
+            var keyCode = evt.charCode || evt.keyCode;
+            if (keyCode === 8 || keyCode === 46) {
+                if (evt.preventDefault) {
+                    evt.preventDefault();
+                } else {
+                    evt.returnValue = false;
+                }
+            }
+        }
+    }
+
+    function getRemainingcnt(callback) {
+        var count;
+        var ltype = document.getElementById("ltype").value;
+        var staffid = document.getElementById("staffid").value;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("EmployeeLeaveBalanceSelected", "LeaveRequest")',
+            data: { ltypeId: ltype, empId: staffid },
+            success: function (result) {
+                //alert(result);
+                console.log(result);
+                $('#Remainingcnt').html("&nbsp;&nbsp;&nbsp;&nbsp;Remaining&nbsp;leave&nbsp;&nbsp;" + result);
+                // alert(result);
+                count = result;
+
+                if (typeof callback === "function") callback(count);
+            }
+        });
+    }
+</script>

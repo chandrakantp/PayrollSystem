@@ -1,0 +1,119 @@
+﻿@using edueTree.Models
+@model edueTree.Models.BufferTimeSettingModel
+<style type="text/css">
+    .help-block {
+        color: #BC3C3C;
+    }
+</style>
+
+    <section class="content-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    @if (ViewBag.visible == true)
+                    {
+                    <a data-toggle="modal" data-target="#myModal" class="btn btn-success pull-right">
+                        <i class="fa fa-plus-square"></i> Add Buffer Time
+                    </a>
+               
+                    }
+                    </div>
+            </div>
+        </div>
+    </section>
+
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Buffer Time</a></li>
+        <li class="active">Setting</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="myModal" class="modal fade" role="dialog">
+                @using (Html.BeginForm())
+                {
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Add Buffer Time</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                @Html.AntiForgeryToken()
+                                <div class="form-horizontal">
+                                    @Html.ValidationSummary(true)
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+
+                                            <label>Set Buffer Time</label>
+                                            @Html.TextBoxFor(model => model.EarlyIn, new { id = "EarlyIn", @class = "form-control", placeholder = "Enter time in minute ", onkeypress = "return isNumber(event)" })
+                                            @Html.ValidationMessageFor(model => model.EarlyIn, string.Empty, new { @class = "help-block" })
+                                            <span class="help-block" id="deptNameMessage" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Add" class="pull-right btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            @{Html.RenderAction("Index", "MasterSetting");}
+        </div>
+    </div>
+</section>
+<!--Notice Script-->
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "error") {
+                $.notify(" Something went wrong Plz check ! ", "error");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. !", "warn");
+            }
+            if ('@TempData["notice"]' === "wrong") {
+                $.notify(" Something went wrong plz check ! ", "error");
+            }
+        }
+
+    });
+
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+</script>
+
+
+

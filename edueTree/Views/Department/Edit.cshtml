@@ -1,0 +1,57 @@
+﻿@model edueTree.Models.DepartmentModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Department</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            @using (Html.BeginForm())
+            {
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-check-square"></i>
+                        <h3 class="box-title">Edit Department</h3>
+
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.deptId)
+                                @Html.HiddenFor(model => model.firmId)
+                                <div class="form-group">
+                                    
+                                    <div class="col-md-12">
+                                        <label>Department name</label>
+                                        @Html.TextBoxFor(m => m.deptName, new {@class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.deptName)
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("Create")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>
+

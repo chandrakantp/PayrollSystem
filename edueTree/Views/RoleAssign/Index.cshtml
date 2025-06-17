@@ -1,0 +1,78 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.RoleAssignInfdexModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Role Assignment</h3>
+        @*<div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                <div class="btn-group" data-toggle="btn-toggle">
+                    @Html.ActionLink("Create New", "Create")
+                </div>
+            </div>*@
+    </div>
+    <div class="box-body chat" id="chat-box">
+        <div class="item">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Role Name")
+                        </th>
+                        <th>
+                            @Html.DisplayName("User Name")
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RoleName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FullName)                                        
+                                    </td>
+                                    <td>
+                                        @*<a href='@Url.Action("Edit", new {id = item.TransId})'><i class="fa fa-pencil-square"></i> <span class="hidden-sm hidden-xs"></span></a>*@
+                                        @Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "Edit", "RoleAssign", new { id = item.TranId }, null)
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModalPermissionDelete" href='@Url.Action("Delete", new { id = item.TranId })'><i class="fa fa-trash"></i></a>
+
+                                    </td>
+                                   
+                                </tr>
+                                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalPermissionDelete" role="dialog"></div>
+
+</div>
+
+
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

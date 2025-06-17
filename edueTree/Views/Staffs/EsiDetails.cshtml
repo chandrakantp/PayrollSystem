@@ -1,0 +1,145 @@
+﻿@model edueTree.Models.EsiinfoModel
+@{
+    Layout = null;
+}
+
+<div class="col-md-12">
+    @*<section class="content-header">
+        <h1>ESI Form Detail</h1>
+    </section>*@
+    <div class="box box-primary">
+        <div class="box-header">
+            <i class="fa fa-bars"></i>
+            <h4 class="box-title"> ESI Form Detail</h4>
+            <div class="pull-right">
+                @*<a data-toggle="modal" data-target="#myModalstaffESI" href='@Url.Action("Edit", new { id = Model.staffid1 })'><i class="fa fa-pencil-square fa-2x"></i></a>*@
+            @if (ViewBag.message == true)
+            {
+                <a href='@Url.Action("esiinfoedit", "Staffs", new {id = Model.staffid1})'><i class="fa fa-pencil"></i></a>
+            }
+        </div>
+        @Html.HiddenFor(model => model.esiid)
+    </div>
+    <div class="box-body">
+        <table class="table table-responsive table-striped">
+            <tr>
+                <td><label>Universal Id</label></td>
+                <td>@Html.DisplayFor(model => model.staffcode)</td>
+                <td><label>Name</label></td>
+                <td>@Html.DisplayFor(model => model.Name)</td>
+            </tr>
+            <tr>
+                <td><label>Father Name</label></td>
+                <td>@Html.DisplayFor(model => model.fathername)</td>
+                <td><label>Permanent Address</label></td>
+                <td>@Html.DisplayFor(model => model.peraddress)</td>
+            </tr>
+            <tr>
+                <td><label>Pin</label></td>
+
+                <td>@Html.DisplayFor(model => model.pin)</td>
+                <td><label>Branch Office</label></td>
+                <td>@Html.DisplayFor(model => model.branchoffice)</td>
+
+            </tr>
+            <tr>
+                <td><label>Date of Appointment</label></td>
+
+                <td>
+                    @Convert.ToDateTime(Model.dateofappoint).ToString("MMM-dd-yyyy")
+                    @*@Html.DisplayFor(model => model.dateofappoint)*@
+                </td>
+                <td><label>Previous Ins. No.</label></td>
+                <td>@Html.DisplayFor(model => model.preinsuranceno)</td>
+
+            </tr>
+            <tr>
+                <td><label>Pre Employee Code</label></td>
+
+                <td>@Html.DisplayFor(model => model.preempolyecode)</td>
+                <td><label>Corp. Dispensary</label></td>
+                <td>@Html.DisplayFor(model => model.corpDispensary)</td>
+                @*<td><label>Nominee Name</label></td>
+                    <td>@Html.DisplayFor(model => model.nomineename)</td>*@
+
+            </tr>
+            <tr>
+                <td><label>Name, Add & Code No. of the emp</label></td>
+
+                <td>@Html.DisplayFor(model => model.corpnameaddresscode)</td>
+                @*<td><label>Nominee Address</label></td>
+                    <td>@Html.DisplayFor(model => model.nomaddress)</td>*@
+
+            </tr>
+            <tr>
+                <td><label>Corporation Name</label></td>
+
+                <td>@Html.DisplayFor(model => model.corponame)</td>
+                <td><label>Corporate Ins. No.</label></td>
+                <td>@Html.DisplayFor(model => model.corpinsno)</td>
+
+            </tr>
+            <tr>
+                <td><label>Corp Father Name</label></td>
+
+                <td>@Html.DisplayFor(model => model.corpfathername)</td>
+                <td><label>Corp Branch Office.</label></td>
+                <td>@Html.DisplayFor(model => model.corpbranchoffice)</td>
+
+            </tr>
+            <tr>
+                <td><label>Date of Entry</label></td>
+
+                <td>@Html.DisplayFor(model => model.dateofentry)</td>
+                <td><label>Corp Birth Date.</label></td>
+                <td>@Html.DisplayFor(model => model.corpdob)</td>
+
+            </tr>
+            <tr>
+                <td><label>Dispensary</label></td>
+
+                <td>@Html.DisplayFor(model => model.dispensary)</td>
+                @*<td><label>Employer Address Name.</label></td>
+                    <td>@Html.DisplayFor(model => model.Employeraddressname)</td>*@
+
+            </tr>
+            @*<tr>
+                    <td><label>Current Employer Name and Address</label></td>
+
+                    <td>@Html.DisplayFor(model => model.CurEmployeraddressname)</td>
+                    <td><label>Employer address name.</label></td>
+                    <td>@Html.DisplayFor(model => model.Employeraddressname)</td>
+
+                </tr>*@
+
+            @*<tr>
+                    <td><label>Corp. Name Address Code</label></td>
+
+                    <td>@Html.DisplayFor(model => model.corpnameaddresscode)</td>
+
+
+                </tr>*@
+
+        </table>
+    </div>
+    <div class="box-footer">
+      
+            <div class="pull-left">
+                <a href='@Url.Action("EsiFamilyCreate", "Staffs", new {@id = Model.staffid1})' class="btn btn-primary"><i class="fa fa-user"></i> Add Family Member</a>
+            </div>
+
+            <div class="pull-right">
+                <a href='@Url.Action("NomineeCreate", "Staffs", new {@status = "ESI", @id = Model.staffid1})' class="btn btn-default"><i class="fa fa-file-pdf-o"></i> Add Nominee</a>
+            </div> 
+</div>
+</div>
+
+
+</div>
+
+@*@{Html.RenderAction("NomineeIndex", "Staffs", new { @status = "ESI", @id = Model.staffid1 });}
+
+    @{Html.RenderAction("EsiFamilyIndex", "Staffs", new { Model.staffid1 });}*@
+
+
+

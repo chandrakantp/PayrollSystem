@@ -1,0 +1,40 @@
+﻿@model IEnumerable<edueTree.Models.NotAssignMemberMachineModel>
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-header">
+                <div class="box-title">
+                    Insurance Info Not Fill Employee List
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("Staff Name")
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Fullname)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,410 @@
+﻿@using System.Web.UI.WebControls
+@model List<edueTree.Models.MonthllyAttendanceModel>
+@{
+    ViewBag.Title = "GenerateSalary";
+    //  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+
+    var monthList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select Month ----", Value = null, Selected = true},
+                new SelectListItem {Text = "January", Value = "1"},
+                new SelectListItem {Text = "February", Value = "2"},
+                new SelectListItem {Text = "March", Value = "3"},
+                new SelectListItem {Text = "April", Value = "4"},
+                new SelectListItem {Text = "May", Value = "5"},
+                new SelectListItem {Text = "June", Value = "6"},
+                new SelectListItem {Text = "July", Value = "7"},
+                new SelectListItem {Text = "August", Value = "8"},
+                new SelectListItem {Text = "September", Value = "9"},
+                new SelectListItem {Text = "October", Value = "10"},
+                new SelectListItem {Text = "November", Value = "11"},
+                new SelectListItem {Text = "December", Value = "12"},
+            }, "Value", "Text");
+
+
+
+    var yearList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select Year----", Value = null, Selected = true},
+                new SelectListItem {Text = "2016", Value = "2016"},
+                new SelectListItem {Text = "2017", Value = "2017"},
+                new SelectListItem {Text = "2018", Value = "2018"},
+                new SelectListItem {Text = "2019", Value = "2019"},
+                new SelectListItem {Text = "2020", Value = "2020"},
+                new SelectListItem {Text = "2021", Value = "2021"},
+                new SelectListItem {Text = "2022", Value = "2022"},
+                new SelectListItem {Text = "2023", Value = "2023"},
+                new SelectListItem {Text = "2024", Value = "2024"},
+                new SelectListItem {Text = "2025", Value = "2025"}
+            }, "Value", "Text");
+}
+
+
+
+
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Salary</a></li>
+        <li class="active">All emp</li>
+    </ol>
+</section>
+
+
+@if (TempData["SuccessModel"] != null)
+{
+    <div id="note1">
+        <h4>
+            <font color="black">
+                <p>@TempData["SuccessModel"]</p>
+                <a id="close"><font color="black">[close]</font></a>
+            </font>
+        </h4>
+    </div>
+}
+    @*<h4>
+            <font color="black">
+                <p id="msg" style="background-color: lightgreen" class="col-lg-11"></p>
+            </font>
+        </h4>*@
+
+
+    <section class="content">
+        <div class="row">
+            <section class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-search"></i>
+                        <h3 class="box-title">Search Options - For Generate Salary (Select Month & Year)</h3>
+                        <div class="pull-right">
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+
+                        <form action="/Attendance/PreSalaryReport" method="get" id="form1">
+                            <div class="form-horizontal">
+                                <div class="col-md-12">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            @Html.Label("Month:", new { @id = "month", @class = "control-label col-md-3" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("month", monthList, new { id = "month", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            @Html.Label("Year:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("year", yearList, new { id = "year", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" form="form1" value="Submit" class="btn btn-default">Generate</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    @if (!Request.QueryString["month"].IsEmpty())
+    {
+        <section class="content">
+
+            <div class="row">
+                <section class="col-md-12">
+                    <div class="col-md-6">
+
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                </section>
+            </div>
+
+            @{
+        if (Model.Count != 0)
+        {
+            <div class="row">
+                <section class="col-md-12">
+                    <div class="box box-success">
+
+
+                        <div class="box-header">
+                            <i class="fa fa-calendar"></i>
+                            <h3 class="box-title">
+                                Pre salary report month of
+                                (@Html.DisplayFor(a => a.FirstOrDefault().MonthString, new { id = "intmonth" }) - @Html.DisplayFor(a => a.FirstOrDefault().Year, new { id = "intyear" }))
+                            </h3>
+                            <div class="pull-right">
+                                <h3 class=" box-title"> Applied Formula : </h3>   <b>
+                                    @if (Model.First().CalculateOn == "MD")
+                                    {
+                                        @Html.DisplayName("MD")
+                                    }
+                                    else if (Model.First().CalculateOn == "WD")
+                                    {
+                                        @Html.DisplayName("WD")
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayName("Custom Value")
+
+                                    }
+                                    =
+                                </b>
+                                <b>
+                                    @{
+            if (@Model.First().SalaryFormula == "formula_a")
+            {
+                @Html.DisplayName("PPR")
+            }
+            if (@Model.First().SalaryFormula == "formula_b")
+            {
+                @Html.DisplayName("PR + LV ")
+            }
+            if (@Model.First().SalaryFormula == "formula_c")
+            {
+                @Html.DisplayName("PR + LV + HD + WO")
+            }
+            if (@Model.First().SalaryFormula == "formula_d")
+            {
+                @Html.DisplayName("WDPR + LV")
+            }
+            if (@Model.First().SalaryFormula == "formula_e")
+            {
+                @Html.DisplayName("WDPR + LV + HD + WO")
+            }
+                                    }
+                                </b>
+                            </div>
+                        </div>
+
+
+                        <div class="box-body chat">
+                            <div class="table-responsive">
+
+                                <table id="StructureTable" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Employee Name</th>
+                                            <th>Month</th>
+                                            <th>Year</th>
+                                            <th>
+
+                                                @switch (@Model.First().CalculateOn)
+                                                {
+                                                    case "MD":
+                                                        @Model.First().CalculateOn
+                                                        break;
+                                                    case "WD":
+                                                    @Model.First().CalculateOn
+                                                        break;
+                                                    default:
+                                                    @Html.DisplayName("CV")
+                                                        break;
+                                                }
+
+                                            </th>
+
+                                            <th>AB</th>
+                                            <th>AB AMT</th>
+                                            <th>Payable Day</th>
+                                            <th>Monthly Salary</th>
+                                            <th>Extra Earning</th>
+                                            <th>Extra Deduction</th>
+                                            <th>Total Earning</th>
+                                            <th>Total Deduction</th>
+                                            <th>Net Amount</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td style="display: none"> @Html.DisplayFor(modelItem => item.MonthlyAttenDetailId)</td>
+                                                <td style="display: none"> @Html.DisplayFor(modelItem => item.ctcId)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.EmployeeName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Month)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Year)</td>
+
+                                                <td>
+                                                    @switch (item.CalculateOn)
+                                                    {
+                                                        case "MD":
+                                                            @Html.DisplayFor(modelItem => item.MonthDays)
+                                                            break;
+                                                        case "WD":
+                                                        @Html.DisplayFor(modelItem => item.MonthworkingDays)
+                                                            break;
+                                                        default:
+                                                        @Html.DisplayFor(modelItem => item.CalculateOn)
+                                                            break;
+                                                    }
+
+
+                                                </td>
+                                                <td>@Html.DisplayFor(modelItem => item.Absent)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.AbsentAmount)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.PaybleDays)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.TotalAmount)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.AllowanceCredit)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.AllowanceDebit)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.TotalEarning)</td>
+
+                                                <td><a href="#" data-toggle="tooltip" title="@Html.DisplayName("Absent Amount : ")  @Html.DisplayFor(modelItem => item.AbsentAmount)  @Html.DisplayName("+ Under Time : ")  @Html.DisplayFor(modelItem => item.Undertime) @Html.DisplayName(" + Allowance Debit: ")  @Html.DisplayFor(modelItem => item.AllowanceDebit) ">@Html.DisplayFor(modelItem => item.DeductionAmount)</a> </td>
+                                                <td><a href="#" data-toggle="tooltip" title="@Html.DisplayName("Total Amount : ")  @Html.DisplayFor(modelItem => item.TotalAmount)  @Html.DisplayName("+ Allowance Credit : ")  @Html.DisplayFor(modelItem => item.AllowanceCredit) @Html.DisplayName(" - Allowance Debit: ")  @Html.DisplayFor(modelItem => item.AllowanceDebit) @Html.DisplayName(" - Under Time: ")  @Html.DisplayFor(modelItem => item.Undertime) @Html.DisplayName(" - Absent Amount: ")  @Html.DisplayFor(modelItem => item.AbsentAmount) ">@Html.DisplayFor(modelItem => item.NetAmount)</a></td>
+                                                <td style="display: none">@Html.DisplayFor(modelItem => item.StaffId)</td>
+                                                <td style="display:none">@Html.DisplayFor(modelItem => item.Undertime) </td>
+                                                <td style="display:none">@Html.DisplayFor(modelItem => item.Overtime) </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><b>Total:</b></td>
+                                            <td> <b>@Model.Sum(a => a.NetAmount)</b></td>
+                                        </tr>
+
+                                    </tfoot>
+                                </table>
+                                <center><input type="submit" value="Store generated salary" class="btn btn-default" onclick=" dataStore(); " /></center>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </section>
+            </div>
+        }
+        else
+        {
+
+            <script>
+                $.noConflict();
+                jQuery(document).ready(function () {
+                    if (true) {
+                        $.notify(" Attendance is not generated first generate attendace and then Salary ! ", "warn");
+                    }
+                });
+            </script>
+        }
+            }
+        </section>
+    }
+
+    <!--Datatable Searching Sorting-->
+    <script type="text/javascript">
+        $(function () {
+            $(document).ready(function () {
+                $('.table').DataTable({
+                    dom: 'Bfrtip',
+                    "pageLength": 50,
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        function dataStore() {
+            debugger;
+            var table = document.getElementById("StructureTable");
+            var rowCount = table.rows.length - 1;
+
+            var ctcId = new Array();
+            var monthlyAttenDetailId = new Array();
+            var month = new Array();
+            var year = new Array();
+            var monthDays = new Array();
+            var absents = new Array();
+            var absentsAmount = new Array();
+            var paybleDays = new Array();
+            var totalAmount = new Array();
+            var paidLeaves = new Array();
+            var staffId = new Array();
+            var staffBonus = new Array();
+            var bonusNarration = new Array();
+            var AllowanceCredit = new Array();
+            var AllowanceDebit = new Array();
+            var TotalEarning = new Array();
+            var DeductionAmount = new Array();
+            var Undertime = new Array();
+            var EmployeeName = new Array();
+            var NetAmount = new Array();
+            var Overtime = new Array();
+            var UnderTime = new Array();
+            var j = 0;
+            for (var i = 1; i < rowCount; i++) {
+                var row = table.rows[i];
+                var idbox = row.cells[0].childNodes[0].textContent;
+                if (idbox !== "0") {
+
+                    monthlyAttenDetailId[j] = idbox;
+                    monthlyAttenDetailId[j] = row.cells[0].childNodes[0].textContent;
+                    ctcId[j] = row.cells[1].childNodes[0].textContent;
+                    EmployeeName[j] = row.cells[2].childNodes[0].textContent;
+                    month[j] = row.cells[3].childNodes[0].textContent;
+                    year[j] = row.cells[4].childNodes[0].textContent;
+                    monthDays[j] = row.cells[5].childNodes[0].textContent;
+                    absents[j] = row.cells[6].childNodes[0].textContent;
+                    absentsAmount[j] = row.cells[7].childNodes[0].textContent;
+                    paybleDays[j] = row.cells[8].childNodes[0].textContent;
+                    totalAmount[j] = row.cells[9].childNodes[0].textContent;
+                    AllowanceCredit[j] = row.cells[10].childNodes[0].textContent;
+                    AllowanceDebit[j] = row.cells[11].childNodes[0].textContent;
+                    TotalEarning[j] = row.cells[12].childNodes[0].textContent;
+                    DeductionAmount[j] = row.cells[13].childNodes[0].textContent;
+                    NetAmount[j] = row.cells[14].childNodes[0].textContent;
+                    staffId[j] = row.cells[15].childNodes[0].textContent;
+
+                    UnderTime[j] = row.cells[16].childNodes[0].textContent;
+                    Overtime[j] = row.cells[17].childNodes[0].textContent;
+                    debugger;
+                    j += 1;
+                }
+            }
+            jQuery.ajax({
+                type: "POST",
+                url: "/Attendance/GenerateSalaryDataStore",
+                data: { monthlyAttenDetailId: JSON.stringify(monthlyAttenDetailId), ctcId: JSON.stringify(ctcId), month: JSON.stringify(month), year: JSON.stringify(year), monthDays: JSON.stringify(monthDays), absents: JSON.stringify(absents), absentsAmount: JSON.stringify(absentsAmount), paybleDays: JSON.stringify(paybleDays), totalAmount: JSON.stringify(totalAmount), AllowanceCredit: JSON.stringify(AllowanceCredit), AllowanceDebit: JSON.stringify(AllowanceDebit), TotalEarning: JSON.stringify(TotalEarning), DeductionAmount: JSON.stringify(DeductionAmount), NetAmount: JSON.stringify(NetAmount), staffId: JSON.stringify(staffId), Overtime: JSON.stringify(Overtime), UnderTime: JSON.stringify(UnderTime) },
+                datatype: "json",
+                success: function (data) {
+                    $.notify(data.Message, "success");
+
+                }
+            });
+        }
+
+    </script>

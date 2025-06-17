@@ -1,0 +1,63 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.Department>
+@{
+    Layout = null;
+}
+
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Department List</h3>
+    </div>
+    <div class="box-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                      Department
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.deptName)
+                        </td>
+                        <td>
+                            @Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "Edit", "Department", new { id = item.deptId }, null)
+                        </td>
+                        <td>
+                            <a data-toggle="modal" data-target="#myModalDeptDelete" href='@Url.Action("Delete", new {id = item.deptId})'><i class="fa fa-trash"></i></a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="modal fade" id="myModalDeptDelete" role="dialog"></div>
+        <br />
+  
+    </div>
+</div>
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

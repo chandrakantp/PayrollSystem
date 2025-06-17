@@ -1,0 +1,154 @@
+﻿@model edueTree.Models.AssignShiftModel
+@{
+
+}
+@{
+
+    var dateList = new SelectList(new[]
+            {
+                new SelectListItem {Text = " Date ", Value = null, Selected = true},
+                new SelectListItem {Text = "01", Value = "01"},
+                new SelectListItem {Text = "02", Value = "02"},
+                new SelectListItem {Text = "03", Value = "03"},
+                new SelectListItem {Text = "04", Value = "04"},
+                new SelectListItem {Text = "05", Value = "05"},
+                new SelectListItem {Text = "06", Value = "06"},
+                new SelectListItem {Text = "07", Value = "07"},
+                new SelectListItem {Text = "08", Value = "08"},
+                new SelectListItem {Text = "09", Value = "09"},
+                new SelectListItem {Text = "10", Value = "10"},
+                new SelectListItem {Text = "11", Value = "11"},
+                new SelectListItem {Text = "12", Value = "12"},
+                new SelectListItem {Text = "13", Value = "13"},
+                new SelectListItem {Text = "14", Value = "14"},
+                new SelectListItem {Text = "15", Value = "15"},
+                new SelectListItem {Text = "16", Value = "16"},
+                new SelectListItem {Text = "17", Value = "17"},
+                new SelectListItem {Text = "18", Value = "18"},
+                new SelectListItem {Text = "19", Value = "19"},
+                new SelectListItem {Text = "20", Value = "20"},
+                new SelectListItem {Text = "21", Value = "21"},
+                new SelectListItem {Text = "22", Value = "22"},
+                new SelectListItem {Text = "23", Value = "23"},
+                new SelectListItem {Text = "24", Value = "24"},
+                new SelectListItem {Text = "25", Value = "25"},
+                new SelectListItem {Text = "26", Value = "26"},
+                new SelectListItem {Text = "27", Value = "27"},
+                new SelectListItem {Text = "28", Value = "28"},
+                new SelectListItem {Text = "29", Value = "29"},
+                new SelectListItem {Text = "30", Value = "30"},
+                new SelectListItem {Text = "31", Value = "31"}
+            }, "Value", "Text");
+}
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+
+<script src="~/plugins/select2/select2.js"></script>
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Allot</a></li>
+        <li class="active">Shift to Employee</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Createpost", "AssignShift"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title"> Manage Shift Allotment</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Select Multiple Employee </label>
+                                @Html.DropDownListFor(model => model.StaffId, Model.StaffList, new { id = "dropStaffId", @class = "form-control select2", @multiple = "multiple" })
+                                @Html.ValidationMessageFor(model => model.StaffId, string.Empty, new { @class = "help-block" })
+                                <span class="help-block" id="staffListMsg"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Select Multiple Shifts </label>
+                                @Html.DropDownListFor(model => model.ShiftId, Model.ShiftList, new { id = "dropShiftId", @class = "form-control select2", @multiple = "multiple" })
+                                @Html.ValidationMessageFor(model => model.ShiftId, string.Empty, new { @class = "help-block" })
+                                <span class="help-block" id="staffListMsg"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <label> From Date</label>
+                                @Html.DropDownListFor(model => model.Fromdate, dateList, new { id = "Fromdate", @class = "form-control" })
+                            </div>
+                            <div class="col-md-3">
+                                <label>To Date</label>
+                                @Html.DropDownListFor(model => model.Todate, dateList, new { id = "Todate", @class = "form-control" })
+
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    @*@{Html.RenderAction("Index", "EditPermission");}*@
+
+
+</section>
+
+<script type="text/javascript">
+    // assuming you're using jQuery
+    $('#dropStaffId').change(function () {
+
+        /* Get the selected value of dropdownlist */
+        var selectedID = $(this).val();
+
+        /* Request the partial view with .get request. */
+        $.get('/AssignShift/GetAssignShiftByEmployeeId/' + selectedID, function (data) {
+
+            /* data is the pure html returned from action method, load it to your page */
+            $('#partialPlaceHolder').html(data);
+            /* little fade in effect */
+            $('#partialPlaceHolder').fadeIn('fast');
+        });
+
+    });
+</script>
+
+
+<!-- Success Notice-->
+<script type="text/javascript">
+    $(".select2").select2();
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

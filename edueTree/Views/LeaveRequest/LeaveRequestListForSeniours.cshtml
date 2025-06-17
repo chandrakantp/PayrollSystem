@@ -1,0 +1,364 @@
+﻿@model IEnumerable<edueTree.Models.LeaveRequest>
+@{
+    ViewBag.Title = "LeaveRequestListForSeniours";
+}
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm//yy",
+            autoclose: true,
+        });
+
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true,
+        });
+    });   
+</script>
+
+
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Search Options - You can search Daily,Weekly & Monthly</h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("LeaveRequestListForSeniours", "LeaveRequest", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Date - From:", new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker", null, new { id = "datepicker1", @class = "form-control datepicker" })
+                            </div>
+                            @Html.Label("To:", new { @class = "control-label col-md-1" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control datepicker" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownList("empId", (IEnumerable<SelectListItem>)ViewBag.staffid, "All Employee", new { @class = "form-control select2" })
+
+                                
+                                @*<select id="empId" name="empId" class="form-control select2"></select>*@
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Leave Request List</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="checkAll" /></th>
+                                    <th class="col-xs-1">
+                                        @Html.DisplayName("User Name")
+                                    </th>
+                                    <th class="col-xs-2">
+                                        @Html.DisplayName("Employee Name")
+                                    </th>
+                                    <th class="col-xs-2">
+                                        @Html.DisplayName("From date")
+                                    </th>
+
+                                    <th class="col-xs-2">
+                                        @Html.DisplayName("To date")
+                                    </th>
+                                    <th class="col-xs-2">
+                                        @Html.DisplayName("Leave Type")
+                                    </th>
+                                    <th class="col-xs-2">
+                                        @Html.DisplayName("Leave Apply Date")
+                                    </th>
+                                    <th class="col-xs-2">
+                                        @Html.DisplayName("Leave count")
+                                    </th>
+                                  
+                                    <th class="col-xs-1">
+                                        @Html.DisplayName("Status")
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        @if (item.status != "Approved")
+                                        {
+                                            <td>
+                                                <input type="checkbox" class="checkBox" value="@item.tranId" />
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        <td class="col-xs-1">
+                                            @Html.DisplayFor(modelItem => item.Staff.staffCode)
+                                        </td>
+                                        <td class="col-xs-2">
+                                            @Html.DisplayFor(modelItem => item.Staff.firstName)
+                                            @Html.DisplayFor(modelItem => item.Staff.middleName)
+                                            @Html.DisplayFor(modelItem => item.Staff.lastName)
+
+                                        </td>
+                                        <td class="col-xs-3">
+                                            @Convert.ToDateTime(item.dateFrom).ToString("dd MMM yyyy")
+                                            (@Html.DisplayFor(modelItem => item.sesionDateFrom))
+                                        </td>
+
+                                        <td class="col-xs-3">
+                                            @Convert.ToDateTime(item.dateTo).ToString("dd MMM yyyy")
+                                            (@Html.DisplayFor(modelItem => item.sesionDateTo))
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LeaveType.LeaveType1)
+                                        </td>
+
+                                        <td class="col-xs-1">
+                                            @Convert.ToDateTime(item.createdDate).ToString("dd MMM yyyy")
+                                        </td>
+
+                                        <td class="col-xs-1">
+                                            @Convert.ToDecimal(item.totalCounts).ToString("0.##")
+                                        </td>
+                                        @*<td class="col-xs-1">
+                                                @Convert.ToDateTime(item.rejoing).ToString("dd MMM yyyy")
+
+                                            </td>*@
+                                        @if (item.status == "Approved")
+                                        {
+                                            <td class="col-xs-1">
+                                                <span class="" style="color: green"> @Html.DisplayName("Approved")</span>
+                                            </td>
+                                        }
+                                        else if (item.status == "Rejected")
+                                        {
+                                            <td class="col-xs-1">
+                                                <span class="" style="color: red"> @Html.DisplayName("Rejected")</span>
+                                            </td>
+                                        }
+                                        else if (item.status == "Planned")
+                                        {
+                                            <td class="col-xs-1">
+                                                <span class="" style="color: blue"> @Html.DisplayName("Planned")</span>
+                                            </td>
+                                        }
+                                        else if (item.status == "Requested")
+                                        {
+                                            <td class="col-xs-1">
+                                                <span class="" style="color: blue"> @Html.DisplayName("Requested")</span>
+                                            </td>
+                                        }
+
+                                        @if (item.status == "Planned" || item.status == "Requested")
+                                        {
+                                            <td>
+                                                <a data-toggle="modal" data-target="#myModalLeaveApproved" href='@Url.Action("Edit", new {id = item.tranId, status = true, ActionName = "LeaveRequestListForSeniours"})'>
+                                                    <i class="fa fa-check" style="color: green" data-toggle="tooltip" title="Approve!"></i> <span class="hidden-sm hidden-xs"></span>
+                                                </a>
+                                                <div class="modal fade" id="myModalLeaveApproved" role="dialog"></div>
+                                            </td>
+
+                                            <td>
+                                                <a data-toggle="modal" data-target="#myModalLeaveRejected"   href='@Url.Action("Edit", new {id = item.tranId, ActionName = "LeaveRequestListForSeniours"})'>
+                                                    <i class="fa fa-times" style="color: red" data-toggle="tooltip" title="Reject"></i><span class="hidden-sm hidden-xs"></span>
+                                                </a>
+                                                <div class="modal fade" id="myModalLeaveRejected" role="dialog"></div>
+                                            </td>
+                                            <td>
+                                                <a href='@Url.Action("LeaveMasterEdit", new {id = item.tranId, actionName = "LeaveRequestListForSeniours"})'>
+                                                    <i class="fa fa-pencil-square" aria-hidden="true"></i><span class="hidden-sm hidden-xs"></span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a data-toggle="modal" data-target="#modaLVDelete" href='@Url.Action("DeleteLeaveRequestSeniour", new {id = item.tranId})'><i class="fa fa-trash"></i></a>
+                                                <div class="modal fade" id="modaLVDelete" role="dialog"></div>
+                                            </td>
+                                        }
+                                        @if (item.status == "Approved")
+                                        {
+                                            <td></td>
+
+                                            <td>
+                                                <a data-toggle="modal" data-target="#myModalLeaveted" href='@Url.Action("RejectAfterApproval", new { id = item.tranId, ActionName = "LeaveRequestListForSeniours" })'>
+                                                    <i class="fa fa-times" style="color: red"></i><span class="hidden-sm hidden-xs"></span>
+                                                </a>
+                                                <div class="modal fade" id="myModalLeaveted" role="dialog"></div>
+                                            </td>
+
+                                            <td>
+                                                <a href='@Url.Action("EditLeavesAfterApproval", new {id = item.tranId, status = "true", actionName = "LeaveRequestListForSeniours"})'>
+                                                    <i class="fa fa-pencil-square" aria-hidden="true"></i><span class="hidden-sm hidden-xs"></span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a data-toggle="modal" data-target="#myModlete" href='@Url.Action("DeleteLeaveRequestAfterApp", new {id = item.tranId})'><i class="fa fa-trash"></i></a>
+                                                <div class="modal fade" id="myModlete" role="dialog"></div>
+                                            </td>
+                                        }
+                                        @if (item.status == "Rejected")
+                                        {
+                                            <td></td>
+                                            <td>
+                                                <a data-toggle="modal" data-target="#myModaLVDelete" href='@Url.Action("DeleteLeaveRequestAfterReject", new {id = item.tranId, actionName = "LeaveRequestListForSeniours"})'><i class="fa fa-trash"></i></a>
+                                                <div class="modal fade" id="myModaLVDelete" role="dialog"></div>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                        }
+
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="pull-left">
+                            <input type="button" id="delete" value="Approve" class="btn btn-success" />
+                            &nbsp;
+                            <input type="button" id="delete1" value="Reject" class="btn btn-danger" />
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                "ordering": false,
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        $(".select2").select2();
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "change") {
+                $.notify(" Password Change Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "notenough") {
+                $.notify(" You do not have enough leave balance ! ", "error");
+            }
+            if ('@TempData["notice"]' === "leaverequest") {
+                $.notify(" Leave request approved Successfully ! ", "sussess");
+            }
+            if ('@TempData["notice"]' === "reject") {
+                $.notify("Leave request rejected successfully ! ", "sussess");
+            }
+        }
+
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        $("#checkAll").click(function () {
+            $(".checkBox").prop('checked',
+                $(this).prop('checked'));
+        });
+
+        $("#delete").click(function () {
+            var selectedIDs = new Array();
+            $('input:checkbox.checkBox').each(function () {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+            });
+
+            var options = {};
+            options.url = "/LeaveRequest/ApptMultipleLeaveRequest";
+            options.type = "POST";
+            options.data = JSON.stringify(selectedIDs);
+            options.contentType = "application/json";
+            options.dataType = "json";
+            options.success = function (msg) {
+                alert(msg);
+                location.reload();
+                document.getElementById("msg").innerText = msg;
+            }
+            $.ajax(options);
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#delete1").click(function () {
+            var selectedIDs = new Array();
+            $('input:checkbox.checkBox').each(function () {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+            });
+
+            var options = {};
+            options.url = "/LeaveRequest/RejectMultipleLeaveRequest";
+            options.type = "POST";
+            options.data = JSON.stringify(selectedIDs);
+            options.contentType = "application/json";
+            options.dataType = "json";
+            options.success = function (msg) {
+                alert(msg);
+                location.reload();
+                document.getElementById("msg").innerText = msg;
+            }
+            $.ajax(options);
+        });
+    });
+</script>

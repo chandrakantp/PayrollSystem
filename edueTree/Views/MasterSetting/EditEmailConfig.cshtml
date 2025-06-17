@@ -1,0 +1,91 @@
+﻿@model edueTree.Models.TblEmailConfig
+@{
+    ViewBag.Title = "Edit";   
+}
+
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> EmailConfig</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            @using (Html.BeginForm())
+            {
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-check-square"></i>
+                        <h3 class="box-title">Edit Email Configure Setting </h3>
+
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                            @Html.AntiForgeryToken()
+                            <div class="">`
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.EmailConfigId)
+                                @Html.HiddenFor(model => model.firmid)
+                                <div class="form-group">
+
+                                    <div class="col-md-12">
+                                        <label>Configure Email:</label>
+
+                                        @Html.TextBoxFor(model => model.EmailAddress, new { id = "EmailAddress", @class = "form-control", placeholder = "Enter Configure Email Address" })
+                                        @Html.ValidationMessageFor(model => model.EmailAddress)
+                                        <span class="help-block" id="EmailAddressmsg" />
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label>Configure Password</label>
+                                        @Html.TextBoxFor(model => model.Password, new { id = "Password", @class = "form-control", placeholder = "Enter configure Password" })
+                                        @Html.ValidationMessageFor(model => model.Password)
+                                        <span class="help-block" id="Passwordsmsg" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>SMTP Port No</label>
+                                        @Html.TextBoxFor(model => model.SMTPPortNo, new { @class = "form-control", placeholder = "Enter SMTP Port No" })
+                                        @Html.ValidationMessageFor(model => model.SMTPPortNo)
+                                        <span class="help-block" id="SMTPPortNomsg" />
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label>Host Name</label>
+                                        @Html.TextBoxFor(model => model.HostName, new { @class = "form-control", placeholder = "Enter Host Name" })
+                                        @Html.ValidationMessageFor(model => model.HostName)
+                                        <span class="help-block" id="HostNamemsg" />
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Recheck" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("CreateEmailConfig")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+</script>

@@ -1,0 +1,58 @@
+﻿@model edueTree.Models.Event
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Event</h4>
+    	<hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.event1)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.event1)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.dateFrom)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.dateFrom)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.dateTo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.dateTo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.totalDays)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.totalDays)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.eventId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

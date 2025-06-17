@@ -1,0 +1,87 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.WorkExperiance>
+
+@{ Layout = null; }
+
+<style type="text/css">
+    .modal-dialog {
+        left: 0;
+        padding-bottom: 40px;
+        padding-top: 80px;
+        right: auto;
+        width: 600px;
+    }
+</style>
+<div class="box box-primary">
+    <div class="box-header">
+        <i class="fa fa-briefcase"></i>
+        <h3 class="box-title">Work experience</h3>
+        <div class="pull-right" title="Add Experience">
+            @if (ViewBag.message == true)
+            {
+                <a href='@Url.Action("Create", new {staffId = ViewData["staffId"]})' c class="btn btn-primary"><i class="fa fa-plus"></i> Add Work Experience</a>
+            }
+        </div>
+
+    </div>
+    <div class="box-body">
+        <table class="table responsive">
+            <tr>
+                <th>
+                    @Html.DisplayName("Organization")
+                </th>
+                <th>
+                    @Html.DisplayName("Joining Date")
+                </th>
+                <th>
+                    @Html.DisplayName("Release Date")
+                </th>
+                <th>
+                    @Html.DisplayName("Designation")
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.organizationName)
+                    </td>
+                    <td>
+                        @Convert.ToDateTime(item.JoiningDate).ToString("dd MMM yyyy")
+
+                    </td>
+                    <td>
+                        @Convert.ToDateTime(item.releaseDate).ToString("dd MMM yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.designation)
+                    </td>
+                    <td>
+                        @if (ViewBag.message == true)
+                        {
+                            @Html.EncodedActionLink("<i class='fa fa-pencil'></i>", "Edit", "WorkExperiance", new { id = item.previousId, Staffid = item.staffId }, null)
+                        }
+                    <td>
+                        @if (ViewBag.message == true)
+                        {
+                            <a data-toggle="modal" data-target="#myModalDelete" href='@Url.Action("Delete", new {id = item.previousId, Staffid = ViewData["staffId"]})'><i class="fa fa-trash"></i></a>
+                        }
+                    </td>
+                    <div class="modal fade" id="myModalDelete" role="dialog"></div>
+
+                </tr>
+            }
+
+        </table>
+
+    </div>
+    <div class="box-footer">
+
+    </div>
+
+</div>

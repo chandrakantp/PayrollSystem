@@ -1,0 +1,565 @@
+﻿@using edueTree.Models
+@model edueTree.Models.Staff
+
+@{
+    Layout = null;
+}
+@*<style type="text/css">
+    .dl-horizontal dt {
+        width: 100px;
+    }
+
+    hr {
+        margin-bottom: 4px;
+        margin-top: 5px;
+    }
+
+    .img-thumbnail {
+        height: 160px;
+    }
+    /*input[type='file'] {
+        opacity: 0;
+    }*/
+    .file-input-wrapper {
+        height: 162px;
+        margin: 5px;
+        overflow: hidden;
+        position: relative;
+        width: 162px;
+        background-color: #fff;
+        cursor: pointer;
+    }
+
+        .file-input-wrapper > input[type="file"] {
+            font-size: 110px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-input-wrapper > .btn-file-input {
+            background-color: #494949;
+            -ms-border-radius: 4px;
+            border-radius: 4px;
+            color: #fff;
+            display: inline-block;
+            height: 34px;
+            margin: 0 0 0 -1px;
+            padding-left: 0;
+            width: 121px;
+            cursor: pointer;
+        }
+    .bg-teal-gradient {
+        color: #000000;
+    }
+
+    .modal {
+        top: 38px;
+    }
+
+    .modal {
+        background: rgba(0, 0, 0, 0.0) none repeat scroll 0 0;
+    }
+</style>*@
+
+
+
+@*<section class="content-header">
+    <h1>
+        Staff dashboard
+   </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Staff</a></li>
+        <li class="active">Detail</li>
+    </ol>
+</section>*@
+
+
+@*<div class="box box-success">*@
+@*<div class="box-header">
+        <i class="fa fa-user"></i>
+        <h3 class="box-title">Details</h3>
+    </div>*@
+@*<div class="box-body">*@
+@*<label style="color:maroon;"> Universal No : </label><b> @Html.DisplayFor(model => model.staffCode)</b>*@
+
+<div class="col-md-3">
+    <!-- Profile Image -->
+    <div class="box box-primary">
+        <div class="box-body box-profile">
+            @if (Model.passportPhoto == null)
+            {
+                <img src="~/Images/profile.jpg" class="profile-user-img img-responsive img-circle" alt="" />
+                <br />
+                <br />
+                using (Html.BeginForm("UploadImage", "Staffs", new { staffid = Model.staffId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <input id="files" title="Upload a image" type="file" name="file" multiple />
+                    <img id="image" height="150" width="150" style="display: none;" alt="" />
+                    <div class="form-group">
+                        <input type="submit" value="Upload" class="btn btn-default" />
+                    </div>
+                }
+
+            }
+
+            else
+            {
+                using (Html.BeginForm("UploadImage", "Staffs", new { staffid = Model.staffId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="">
+                        <img src="~/StaffDocument/@Model.passportPhoto" width="180" class="profile-user-img img-responsive img-circle" alt="" />
+                        @*<input id="files" title="" type="file" name="file" multiple />
+                            <img id="image" height="150" width="150" alt="" style="" />
+                            <span id="img_text" style="float: right; margin-right: -80px; margin-top: -14px;"></span>*@
+                    </div>
+
+
+
+                    @*<div class="form-group">
+                            <input type="submit" value="Save Change" class="btn btn-default btn-sm" />
+                        </div>*@
+                }
+
+            }
+
+            <h3 class="profile-username text-center">
+                @Html.DisplayFor(model => model.firstName)
+                @Html.DisplayFor(model => model.middleName)
+                @Html.DisplayFor(model => model.lastName)
+            </h3>
+            <p class="text-muted text-center">@Html.DisplayFor(model => model.Designation.designation1)</p>
+            <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                    <b>Universal Id :</b> <a class="pull-right">@Html.DisplayFor(model => model.schoolCode)</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Company Id :</b> <a class="pull-right">@Html.DisplayFor(model => model.CompanyId)</a>
+                </li>
+                @*<li class="list-group-item">
+                    <b>Finger Id :</b> <a class="pull-right">@Html.DisplayFor(model => model.enrollNumber)</a>
+                </li>*@
+            </ul>
+          
+        </div>
+     
+    </div>
+</div>
+
+
+
+
+@*<div class="col-md-3">
+        <div class="item">
+            @if (Model.passportPhoto == null)
+            {
+                <img src="~/Images/profile.jpg" class="profile-user-img img-responsive img-circle" />   <br /> <br />
+                using (Html.BeginForm("UploadImage", "Staffs", new { staffid = Model.staffId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <input id="files" title="Upload a image" type="file" name="file" multiple />
+                    <img id="image" height="150" width="150" style="display: none;" alt="" />
+                    <div class="form-group">
+                        <input type="submit" value="Upload" class="btn btn-default" />
+                    </div>
+                }
+            }
+            else
+            {
+                using (Html.BeginForm("UploadImage", "Staffs", new { staffid = Model.staffId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="file-input-wrapper">
+                        <img src="~/StaffDocument/@Model.passportPhoto" width="180" class="profile-user-img img-responsive img-circle" />
+                        <input id="files" title="" type="file" name="file" multiple />
+                        <img id="image" height="150" width="150" alt="" style="" />
+                        <span id="img_text" style="float: right; margin-right: -80px; margin-top: -14px;"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save Change" class="btn btn-default btn-sm" />
+                    </div>
+                }
+            }
+            <br />
+            <label style="color:maroon;">Name : </label>
+            <b>
+                @Html.DisplayFor(model => model.firstName)
+                @Html.DisplayFor(model => model.middleName)
+                @Html.DisplayFor(model => model.lastName)
+            </b>
+            <hr />
+            <label style="color:maroon;"> Universal No : </label><b> @Html.DisplayFor(model => model.staffCode)</b>
+            <hr />
+            <label style="color:maroon; "> Company Id : </label> <b> @Html.DisplayFor(model => model.firmId)</b>
+            <hr />
+            <label style="color:maroon;">Fingure Id : </label> <b>@Html.DisplayFor(model => model.enrollNumber) </b>
+            <hr />
+        </div>
+    </div>*@
+
+<div id="newpartial"></div>
+
+<div class="col-md-9">
+    <div class="item">
+        <div class="box box-primary">
+            <div class="box-header">
+                <i class="fa fa-bars"></i>
+                <h4 class="box-title">Employee General Information</h4>
+
+                <div class="pull-right">
+                    <td>
+                        @if (ViewBag.message == true)
+                        {
+                            <a href='@Url.Action("Edit", new {id = Model.staffId})'><i class="fa fa-pencil-square fa-2x"></i></a>
+                        }
+                    </td>
+                    <div class="modal fade" id="myModalstaffEdit" role="dialog"></div>
+                    @*<a href='@Url.Action("Edit", new {id = Model.staffId})'><i class="fa fa-pencil-square fa-2x"></i></a>*@
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table">
+                    <tr>
+                        <td><b>@Html.DisplayName("Universal Id :") </b></td>
+                        <td> @Html.DisplayFor(model => model.schoolCode)</td>
+                        <td> <b>@Html.DisplayName("Name :")</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.firstName)
+                            @Html.DisplayFor(model => model.middleName)
+                            @Html.DisplayFor(model => model.lastName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>@Html.DisplayName("Gender :")</b></td>
+                        <td>
+                            @if (Model.gender == 1)
+                            {
+                                @Html.DisplayName("Male")
+                            }
+                            else
+                            {
+                                @Html.DisplayName("Female")
+                            }
+                        </td>
+                        <td><b>@Html.DisplayName("DOB :")</b></td>
+                        <td>@Convert.ToDateTime(Model.dob).ToString("MMM-dd-yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td><label>Emergency No</label></td>
+                        <td>@Html.DisplayFor(model => model.emergencyContact1)</td>
+                        @*<td><label>Email Reporting to</label></td>
+                        <td>@Html.DisplayFor(model => model.emailReportingTo)</td>*@
+                    </tr>
+
+                    <tr>
+                        <td><b>@Html.DisplayName("Contact :")</b></td>
+                        <td>@Html.DisplayFor(model => model.contact)</td>
+                        <td><b>@Html.DisplayName("Personal Email :")</b></td>
+                        <td>@Html.DisplayFor(model => model.Personalmail)</td>
+
+                    </tr>
+
+                    <tr>
+                        <td><b>@Html.DisplayName("Company Email :")</b></td>
+                        <td>@Html.DisplayFor(model => model.email)</td>
+
+                        <td><b>@Html.DisplayName("Joining Date :")</b></td>
+                        <td>@Convert.ToDateTime(Model.joingDate).ToString("MMM-dd-yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.DisplayName("PAN No :")</b>
+                        </td>
+                        <td>
+                            @(Model.PAN != null ? Html.DisplayFor(model => model.PAN) : Html.DisplayName("N/A"))
+                        </td>
+                        <td><b>@Html.DisplayName("Department:")</b></td>
+                        <td>
+                                @Html.DisplayFor(model => model.Department.deptName)
+                        </td>
+
+                        @*<td><b>@Html.DisplayName("PF No :")</b></td>
+                            <td>
+                                @if (Model.PF != null)
+                                {
+                                    @Html.DisplayFor(model => model.PF)
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("N/A")
+                                }
+                            </td>*@
+                    </tr>
+                    <tr>
+                        <td><b>@Html.DisplayName("Designation :")</b></td>
+                        <td>@Html.Raw(Model.designationId == null ? "" : Model.Designation.designation1)</td>
+
+                        <td><b>@Html.DisplayName("Probation :")</b></td>
+                        <td>
+                            @(Model.probation != null ? @Convert.ToDateTime(Model.probation).ToString("dd-MMM-yyyy") : Html.DisplayName("N/A").ToString())                           
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Aadhar No :</label></td>
+                        <td>
+                            @(Model.Adharcardno != null ? Html.DisplayFor(model => model.Adharcardno) : Html.DisplayName("N/A"))                            
+                        </td>
+
+                        <td><label>License No :</label></td>
+                        <td>
+                            @(Model.Licence != null ? Html.DisplayFor(model => model.Licence) : Html.DisplayName("N/A"))                                                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>Referral Detail:</label></td>
+                        <td>
+                            @(Model.ReferalDetail != null ? Html.DisplayFor(model => model.ReferalDetail) : Html.DisplayName("N/A"))                                                        
+                        </td>
+
+                        <td><label>Nationality :</label></td>
+                        <td>
+                            @(Model.Nationality != null ? Html.DisplayFor(model => model.Nationality) : Html.DisplayName("N/A"))                                                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>Blood Group :</label></td>
+                        <td>
+                            @(Model.Bloodgroup != null ? Html.DisplayFor(model => model.Bloodgroup) : Html.DisplayName("N/A"))                                                       
+                        </td>
+
+                        <td><b>@Html.DisplayName("Marital Status :")</b></td>
+                        <td>@(Model.isMarried == true ? Html.DisplayName("Married") : Html.DisplayName("Unmarried"))</td>
+                    </tr>
+                    <tr>
+                        <td><label>Language Known :</label></td>
+                        <td>
+                            @(Model.Languageknown != null ? Html.DisplayFor(model => model.Languageknown) : Html.DisplayName("N/A"))                                                        
+                        </td>
+
+                        <td><label>VoterId No :</label></td>
+                        <td>
+                            @(Model.VoteridNo != null ? Html.DisplayFor(model => model.VoteridNo) : Html.DisplayName("N/A"))                                                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>City :</label></td>
+                        <td>
+                            @(Model.City != null ? Html.DisplayFor(model => model.City) : Html.DisplayName("N/A"))                                                        
+                        </td>
+
+                        <td><label>State :</label></td>
+                        <td>
+                            @(Model.State != null ? Html.DisplayFor(model=>model.State):Html.DisplayName("N/A"))                            
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Temp Address:</label>    </td>
+                        <td>@Html.DisplayFor(model => model.tempAddress) @Html.DisplayFor(model => model.tempArea) @Html.DisplayFor(model => model.tempPincode)</td>
+                        <td><b><label> Permanent Address :</label></b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.perAddress) @Html.DisplayFor(model => model.perArea)
+                            @Html.DisplayFor(model => model.perPincode)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-6">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h4 class="box-title">Employee Status</h4>
+            <div class="pull-right">
+                @if (Model.isActive == false)
+                {
+                    <a data-toggle="modal" data-target="#myModalDocDel1" href='@Url.Action("EmployeeStatus", new { staffId = Model.staffId})'><i class="fa fa-pencil"></i></a>
+                }                
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="dl-horizontal">
+                <dt>
+                    Current Status:
+                </dt>
+                <dd>
+                    @Html.Raw(Model.isActive == true ? "Active" : "InActive")
+                </dd>
+            </div>
+            <div class="modal fade" id="myModalDocDel1" role="dialog"></div>
+            @if (Model.isActive == false)
+            {
+                <div class="dl-horizontal">
+                    <dt>Reason:</dt>
+                    <dd>@Html.DisplayFor(a => a.InActiveResion.resion)</dd>
+                </div>
+                <div class="dl-horizontal">
+                    <dt>Remark:</dt>
+                    <dd> @Html.DisplayFor(a => a.remark)</dd>
+                </div>
+                <div class="dl-horizontal">
+                    <dt>Last working date:</dt>
+                    @if (Model.lastWorkingDate != null)
+                    {
+                        <dd> @Convert.ToDateTime(Model.lastWorkingDate).ToString("dd-MMM-yyyy")</dd>
+                    }
+                    else
+                    {
+                        <dd>N/A</dd>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+
+@*<div class="col-md-6">@{ Html.RenderAction("Index", "BankInfo", new {staffid = Model.staffId});}</div>*@
+
+@*<div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h4>Temporarily Address</h4>
+            </div>
+            <div class="box-body">
+                <dl class="dl-horizontal">
+                    @Html.DisplayFor(model => model.tempAddress)
+                    @Html.DisplayFor(model => model.tempArea)
+                    @Html.DisplayFor(model => model.tempPincode)
+                </dl>
+            </div>
+        </div>
+    </div>*@
+@*<div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h4>Permanent Address</h4>
+            </div>
+            <div class="box-body">
+                <dl class="dl-horizontal">
+                    @Html.DisplayFor(model => model.perAddress)
+                    @Html.DisplayFor(model => model.perArea)
+                    @Html.DisplayFor(model => model.perPincode)
+                </dl>
+            </div>
+        </div>
+    </div>*@
+
+
+<div class="col-md-6">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h4 class="box-title">Email Reporting:</h4>
+        </div>
+        <div class="box-body">
+            @{
+                dbContainer db = new dbContainer();
+                var emailreport = db.UserEmailReport(@Model.staffId, @Model.firmId).ToList();
+                int index = 1;
+                foreach (var ex in emailreport)
+                {
+                    <tr>
+                        <td>
+                            @index)
+                        </td>
+                        <td>
+                            @ex.fullName
+                        </td>
+                    </tr>
+                <br/>
+                   @*@Html.DisplayName(Convert.ToString(@index))
+                   @Html.DisplayName(ex.fullName);*@
+                   index++;
+                }
+               
+                
+             }                           
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+    document.getElementById("files").onchange = function () {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            document.getElementById("image").src = e.target.result;
+        };
+        reader.readAsDataURL(this.files[0]);
+    };
+
+    (function ($) {
+        $('input[type="file"]').bind('change', function () {
+            $("#img_text").html($('input[type="file"]').val());
+        });
+    })(jQuery)
+    //$('#button').click(function () {
+    //    $("input[type='file']").trigger('click');
+    //})
+
+    //$("input[type='file']").change(function () {
+    //    $('#val').text(this.value.replace(/C:\\fakepath\\/i, ''))
+    //})
+</script>
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@*<script type="text/javascript">
+        // assuming you're using jQuery
+        $("#UserLevel").change(function () {
+            alert("hi");
+            debugger;
+            $.ajax({
+                url: "staffs/Allpartial/" + $(this).val(),
+                data: { id : $(this).val() /* add other additional parameters */ },
+                cache: false,
+                type: "POST",
+                dataType: "html",
+
+                success: function (data, textStatus, XMLHttpRequest) {
+                    $("#divPartialView").html( data); // HTML DOM replace
+                }
+            });
+        });
+    </script>*@

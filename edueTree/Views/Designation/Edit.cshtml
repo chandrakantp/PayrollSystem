@@ -1,0 +1,65 @@
+﻿@model edueTree.Models.DesignationModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Designation</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-6">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-check-square"></i>
+                        <h3 class="box-title">Edit Designation</h3>
+
+                    </div>
+                    <div class="box-body">
+
+
+
+                        <div class="form-horizontal">
+
+                            @Html.ValidationSummary(true)
+                            @Html.HiddenFor(model => model.designationId)
+                            @Html.HiddenFor(model => model.FirmId)
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.designation1, "Designation:", new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(m => m.designation1, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.designation1)
+                                </div>
+                            </div>
+
+                           
+                        </div>
+
+
+                    </div>
+                    <div class="box-footer">
+                       
+                                <input type="submit" value="Update" class="btn btn-default pull-right" />
+                                <a href='@Url.Action("Create")' class="btn btn-default pull-left">Back to list</a>
+                           
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>

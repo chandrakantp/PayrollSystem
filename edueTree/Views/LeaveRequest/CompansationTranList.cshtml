@@ -1,0 +1,137 @@
+﻿@model IEnumerable<edueTree.Models.CompansationTran>
+@{
+    ViewBag.Title = "CompansationTranList";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
+}
+
+
+
+<div class="table-responsive">
+    <table class="table table-fixed">
+        <thead>
+
+        <tr>
+            <th class="col-xs-1">
+                @Html.DisplayName("Staffcode")
+            </th>
+            <th class="col-xs-2">
+                @Html.DisplayName("Username")
+            </th>
+            <th class="col-xs-3">
+                @Html.DisplayName("From date")
+            </th>
+
+            <th class="col-xs-1">
+                @Html.DisplayName("Status")
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @Html.HiddenFor(modelItem => item.compId)
+                @Html.HiddenFor(modelItem => item.staffid)
+                @Html.HiddenFor(modelItem => item.date)
+                <tr>
+                    <td class="col-xs-1">
+                        @Html.DisplayFor(modelItem => item.Staff.staffCode)
+                    </td>
+                    <td class="col-xs-2">
+                        @Html.DisplayFor(modelItem => item.Staff.firstName)
+                        @Html.DisplayFor(modelItem => item.Staff.middleName)
+                        @Html.DisplayFor(modelItem => item.Staff.lastName)
+                    </td>
+                    <td class="col-xs-3">
+                        @Convert.ToDateTime(item.date).ToString("dd MMM yyyy")
+                    </td>
+                    @if (item.isApprove == true)
+                    {
+                        <td class="col-xs-1">
+                            <span class="" style="color: green"> @Html.DisplayName("Approved")</span>
+                        </td>
+                    }
+                    else if (item.isRejected == true)
+                    {
+                        <td class="col-xs-1">
+                            <span class="" style="color: red"> @Html.DisplayName("Rejected")</span>
+                        </td>
+                    }
+                    else if (item.isRejected == false)
+                    {
+                        <td class="col-xs-1">
+                            <span class="" style="color: blue"> @Html.DisplayName("Pending")</span>
+                        </td>
+                    }
+
+                    @if (item.isRejected == false && item.isApprove == false)
+                    {
+                        <td>
+                            <a data-toggle="modal" data-target="#myModalCompApproved" title="Approved" href='@Url.Action("CompEdit", new {id = item.compId, status = true})'>
+                                <i class="fa fa-check" style="color: green"></i> <span class="hidden-sm hidden-xs"></span>
+                            </a>
+                            <div class="modal fade" id="myModalCompApproved" role="dialog"></div>
+                        </td>
+
+                        <td>
+                            <a data-toggle="modal" data-target="#myModalCompRejected" title="Reject" href='@Url.Action("CompEdit", new {id = item.compId})'>
+                                <i class="fa fa-times" style="color: red"></i><span class="hidden-sm hidden-xs"></span>
+                            </a>
+                            <div class="modal fade" id="myModalCompRejected" role="dialog"></div>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+@*<section class="content-header">
+    <h1>       
+        <small></small>
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-lg-11 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Compensation Request List</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    
+                </div>
+            </div>
+        </section>
+    </div>
+</section>*@
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

@@ -1,0 +1,1053 @@
+﻿@model edueTree.Models.StudentModel
+
+<script language="javascript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>  
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#AddStudent').click(function (e) {
+            e.preventDefault();
+            if ($("#addNewUserForm").valid()) { //if you use validation
+                $.ajax({
+                    url: $("#addNewUserForm").attr('action'),
+                    type: $("#addNewUserForm").attr('method'),
+                    data: $("#addNewUserForm").serialize(),
+                    success: function (data) {
+                        alert(data.Status);
+                    }
+                });
+            }
+        });
+    });
+
+
+
+    $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: 'POST',
+        url: '/Student/AddStudent',
+        data: emps
+    });
+
+
+
+    $(document).ready
+   (function () {
+    $("#btn").click
+    (
+        function() {
+            $("#ta").append("<tr><td>" + $("#tb").val() + "</td><td>" + $("#tb1").val() + "</td></tr>");
+            return false;
+        }
+    );
+   });
+
+    //function AddStudent() {
+    //    var studentModel =
+    //    {
+
+    //    };
+    //    $.ajax({
+    //        url: '/Student/Create/',
+    //        data: JSON.stringify(studentModel),
+    //        type: 'POST',
+    //        contentType: 'application/json; charset=utf-8',
+    //        success: function (data) {
+    //            // return values
+    //        }
+    //    });
+    //}
+
+
+</script>
+
+
+
+
+
+@{
+
+    var occupationList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "Employee", Value = "Employee"},
+                new SelectListItem {Text = "Entrepreneur", Value = "Entrepreneur"},
+                new SelectListItem {Text = "Doctor", Value = "Doctor"},
+                new SelectListItem {Text = "Police officer", Value = "Police officer"},
+                new SelectListItem {Text = "Professors", Value = "Professors"},
+                new SelectListItem {Text = "Engineer", Value = "Engineer"},
+                new SelectListItem {Text = "Industrialist", Value = "Industrialist"},
+                new SelectListItem {Text = "Electrician", Value = "Electrician"},
+                new SelectListItem {Text = "Fisherman", Value = "Fisherman"},
+                new SelectListItem {Text = "Farmer", Value = "Farmer"},
+            }, "Value", "Text");
+
+
+
+    var bloodgroupList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "A+", Value = "A+"},
+                new SelectListItem {Text = "B+", Value = "B+"},
+                new SelectListItem {Text = "A-", Value = "A-"},
+                new SelectListItem {Text = "B-", Value = "B-"},
+                new SelectListItem {Text = "O+", Value = "O+"},
+                new SelectListItem {Text = "O-", Value = "O-"},
+                new SelectListItem {Text = "AB+", Value = "AB+"},
+                new SelectListItem {Text = "AB-", Value = "AB-"},
+
+            }, "Value", "Text");
+}
+
+<br />
+<section class="content-header">
+    <h1>
+        Add New Student
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Student</a></li>
+        <li class="active">Add</li>
+    </ol>
+</section>
+
+
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#tab1">Student Info</a></li>
+    <li><a data-toggle="tab" href="#tab2">Parents Info </a></li>
+    <li><a data-toggle="tab" href="#tab3">Pre School Info</a></li>
+</ul>
+@using (Html.BeginForm("AddStudent", "Student", FormMethod.Post, new { id = "addNewUserForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(a => a.StudentId)
+    @Html.HiddenFor(model => model.UserId)
+    @Html.HiddenFor(a => a.InfoId)
+
+
+    <section class="content">
+        <div class="row">
+            <section class="col-lg-9 connectedSortable">
+                <div class="box box-success">
+                    <br />
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                            <div class="form-horizontal" id="defaultform1">
+                                <div class="tab-content">
+                                    <div id="tab1" class="tab-pane active">
+                                        <div class="form-group">
+                                            @Html.Label("Roll No :", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.RollNo, new { id = "RollNo", @class = "form-control", placeholder = "enter roll number" })
+                                                <span class="help-block" id="rollmessage" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group" style="margin-bottom: 0px;">
+                                            @Html.Label("Student Name:", new { @class = "control-label col-md-3" })
+
+                                            <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.FirstName, new { id = "FirstName", @class = "form-control", placeholder = "First name" })
+                                                <span class="help-block" id="FirstNameMessage" />
+                                            </div>
+                                            <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.MiddleName, new { id = "MiddleName", @class = "form-control", placeholder = "Middle name" })
+                                                <span class="help-block" id="MiddleNameMessage" />
+                                            </div>
+
+                                            <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.LastName, new { id = "LastName", @class = "form-control", placeholder = "Last name" })
+                                                <span class="help-block" id="LastNameMessage" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.Label("Gender:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.RadioButtonFor(model => model.Gender, 1, new { name = "gender", id = "gender" }) Male
+                                                @Html.RadioButtonFor(model => model.Gender, 2, new { name = "gender", id = "gender" }) Female
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Date of birth:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.Dob, new { id = "Dob", @class = "form-control datepicker", placeholder = " select date of birth" })
+                                                <span class="help-block" id="dobMessage" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Nationality :", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.Nationality, new { id = "Nationality", @class = "form-control", placeholder = "enter nationality" })
+                                                <span class="help-block" id="NationalityMessage" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.Label("Blood Group:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.DropDownList("BloodGroup", bloodgroupList, new { id = "BloodGroup", @class = "form-control" })
+                                                <span class="help-block" id="BloodGroupMessage" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.Label("Body Marks:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextAreaFor(model => model.BodyMarks, new { id = "BodyMarks", @class = "form-control", placeholder = "enter body marks" })
+                                                <span class="help-block" id="BodyMarksMessage" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Mother Tongue:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.MotherTongue, new { id = "MotherTongue", @class = "form-control", placeholder = "enter mother tongue" })
+                                                <span class="help-block" id="MotherTongueMessage" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.DivisionId, "Class division:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.DropDownListFor(a => a.DivisionId, Model.DivisionList, "-- Select Class and Divisions --", new { id = "divisionId", @Class = "form-control" })
+                                                <span class="help-block" id="divisionIdMessage" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Admission Year :", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.AddmissionYear, new { id = "AddmissionYear", @class = "form-control", placeholder = "enter addmission year" })
+                                                <span class="help-block" id="addmissionYearMessage" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <div class="tab-pane active" id="tab1">
+                                                <a class="btn btn-primary btnNext">Next&nbsp;<i class="fa fa-forward"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="tab2" class="tab-pane">
+                                        <div class="form-group" style="margin-bottom: 0px;">
+                                            @Html.Label("Father Name:", new { @class = "control-label col-md-3" })
+
+                                            <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.FatherFirstName, new { id = "FatherFirstName", @class = "form-control", placeholder = "First name" })
+                                                <span class="help-block" id="FatherFirstNameMessage" />
+                                            </div>
+                                            <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.FatherMiddleName, new { id = "FatherMiddleName", @class = "form-control", placeholder = "Middle name" })
+                                                <span class="help-block" id="FatherMiddleNameMessage" />
+                                            </div>
+
+                                            <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.FatherLastName, new { id = "FatherLastName", @class = "form-control", placeholder = "Last name" })
+                                                <span class="help-block" id="FatherLastNameMessage" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Mother Name :", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.MotherName, new { id = "MotherName", @class = "form-control", placeholder = "enter mother name" })
+                                                <span class="help-block" id="MotherNameMessage" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("E-mail :", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.Email, new { id = "Email", @class = "form-control", placeholder = "enter email address" })
+                                                <span class="help-block" id="EmailMessage" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 0px;">
+                                            @Html.Label("Contact Number:", new { @class = "control-label col-md-3" })
+
+                                            <div class="form-group col-md-4 " style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.Contact1, new { id = "Contact1", @class = "form-control", placeholder = "contact first" })
+                                                <span class="help-block" id="Contact1Message" />
+                                            </div>
+                                            <div class="form-group col-md-4" style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.Contact2, new { id = "Contact2", @class = "form-control", placeholder = "contact second" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.Label("Occupation:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.DropDownList("FatherOccupation", occupationList, new { id = "FatherOccupation", @class = "form-control" })
+                                                <span class="help-block" id="FatherOccupationMessage" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Pancard No :", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.PancardNo, new { id = "PancardNo", @class = "form-control", placeholder = "enter pancard number " })
+                                                <span class="help-block" id="PancardNoMessage" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Passport No :", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.PassportNo, new { id = "PassportNo", @class = "form-control", placeholder = "enter passport number " })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Temporary Address :", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextAreaFor(model => model.TempAddress, new { @class = "form-control", placeholder = "enter temporary address" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.Label("Temp city:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.DropDownListFor(model => model.TempCityId, Model.CityList, " - Select City - ", new { id = "TempCityId", @class = "form-control", placeholder = "enter temporary city" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Pincode:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.TempPincode, new { id = "TempPincode", @class = "form-control", placeholder = "enter temporary pincode" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Area:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.TempArea, new { id = "TempPincode", @class = "form-control", placeholder = "enter temporary area" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.Label("Permonant Address :", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextAreaFor(model => model.PerAddress, new { @class = "form-control", placeholder = "enter permonant address" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Per city:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.DropDownListFor(model => model.PerCityId, Model.CityList, " - Select City - ", new { id = "PerCityId", @class = "form-control", placeholder = "enter permanent city" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Pincode:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.PerPincode, new { id = "perPincode", @class = "form-control", placeholder = "enter permonant pincode" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Area:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextBoxFor(model => model.PerArea, new { id = "perarea", @class = "form-control", placeholder = "enter permonant area" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.Label("Main Cast:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.DropDownListFor(model => model.CastId, Model.CastList, " - Select Cast - ", new { id = "CastId", @class = "form-control", placeholder = "select cast" })
+                                                <span class="help-block" id="CastIdMessage" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Sub Cast:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.DropDownListFor(model => model.SubCastId, Model.SubCastList, " - Select Sub Cast - ", new { id = "SubCastId", @class = "form-control", placeholder = "select sub-cast" })
+                                                <span class="help-block" id="SubCastIdMessage" />
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="form-group" style="margin-bottom: 0px;">
+                                            @Html.Label("Emergency Contact 1:", new { @class = "control-label col-md-3" })
+                                            <div class="form-group col-md-4 " style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.EmergencyContact1, new { id = "EmergencyContact1", @class = "form-control", placeholder = "contact number" })
+                                                <span class="help-block" id="EmergencyContact1Message" />
+                                            </div>
+                                            <div class="form-group col-md-4 " style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.EmergencyContact1Relation, new { id = "EmergencyContact1Relation", @class = "form-control", placeholder = "contact relation" })
+                                                <span class="help-block" id="EmergencyContact1RelationMessage" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group" style="margin-bottom: 0px;">
+                                            @Html.Label("Emergency Contact 2:", new { @class = "control-label col-md-3" })
+
+                                            <div class="form-group col-md-4 " style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.EmergencyContact2, new { id = "EmergencyContact2", @class = "form-control", placeholder = "contact number" })
+                                                <span class="help-block" id="EmergencyContact2Message" />
+                                            </div>
+                                            <div class="form-group col-md-4 " style="padding-left: 29px; padding-right: 18px;">
+                                                @Html.TextBoxFor(model => model.EmergencyContact2Relation, new { id = "EmergencyContact2Relation", @class = "form-control", placeholder = "contact relation" })
+                                                <span class="help-block" id="EmergencyContact2RelationMessage" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <div class="tab-pane" id="tab2">
+                                                <a class="btn btn-primary btnPrevious"><i class="fa fa-backward"></i>&nbsp;Previous</a>
+                                                <a class="btn btn-primary btnNext">Next&nbsp;<i class="fa fa-forward"></i></a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="tab3" class="tab-pane">
+                                        <div class="form-group">
+                                            @Html.Label("Name Of School:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-7">
+                                                @Html.TextBoxFor(model => model.NameOfSchool, new { id = "nameOfSchool", @class = "form-control", placeholder = "previous school name" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Class:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-7">
+                                                @Html.DropDownListFor(model => model.ClassId, Model.ClassList, " - Select class - ", new { id = "ClassId", @class = "form-control", placeholder = "enter permanent city" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Passing Year:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-7">
+                                                @Html.TextBoxFor(model => model.PassingYear, new { id = "passingYear", @class = "form-control", placeholder = "passing year" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Reason Of Leaving:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-7">
+                                                @Html.TextAreaFor(model => model.PreresonOfLeaving, new { id = "PreresonOfLeaving", @class = "form-control", placeholder = "reason of leaving" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.Label("Contact:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-7">
+                                                @Html.TextBoxFor(model => model.Precontact, new { id = "contact", @class = "form-control", placeholder = "contact number" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("Address:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-7">
+                                                @Html.TextAreaFor(model => model.Preschooladdress, new { id = "address", @class = "form-control", placeholder = "address" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("City:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-7">
+                                                @Html.TextBoxFor(model => model.Preschoolcity, new { id = "city", @class = "form-control", placeholder = "city" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.Label("State:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-7">
+                                                @Html.TextBoxFor(model => model.Prestate, new { id = "state", @class = "form-control", placeholder = "state" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Pincode:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-7">
+                                                @Html.TextBoxFor(model => model.Prepincode, new { id = "Pincode", @class = "form-control", placeholder = "pincode" })
+                                            </div>
+                                        </div>
+
+                                        <div class="box box-success">
+                                            <div class="box-body chat" id="chat-box">
+                                                <div class="item">
+                                                    <div id="welcomeDiv" style="display: none;" class="answer_list">
+                                                        <br />
+                                                        <div class="form-group">
+                                                            @Html.Label("Name Of School:", new { @class = "control-label col-md-3" })
+                                                            <div class="col-md-7">
+                                                                @Html.TextBoxFor(model => model.NameOfSchool, new { id = "nameOfSchool", @class = "form-control", placeholder = "previous school name" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.Label("Class:", new { @class = "control-label col-md-3" })
+                                                            <div class="col-md-7">
+                                                                @Html.DropDownListFor(model => model.ClassId, Model.ClassList, " - Select class - ", new { id = "ClassId", @class = "form-control", placeholder = "enter permanent city" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @Html.Label("Passing Year:", new { @class = "control-label col-md-3" })
+                                                            <div class="col-md-7">
+                                                                @Html.TextBoxFor(model => model.PassingYear, new { id = "passingYear", @class = "form-control", placeholder = "passing year" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.Label("Reason Of Leaving:", new { @class = "control-label col-md-3" })
+                                                            <div class="col-md-7">
+                                                                @Html.TextAreaFor(model => model.PreresonOfLeaving, new { id = "PreresonOfLeaving", @class = "form-control", placeholder = "reason of leaving" })
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            @Html.Label("Contact:", new { @class = "control-label col-md-3" })
+                                                            <div class="col-md-7">
+                                                                @Html.TextBoxFor(model => model.Precontact, new { id = "contact", @class = "form-control", placeholder = "contact number" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.Label("Address:", new { @class = "control-label col-md-3" })
+                                                            <div class="col-md-7">
+                                                                @Html.TextAreaFor(model => model.Preschooladdress, new { id = "address", @class = "form-control", placeholder = "address" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.Label("City:", new { @class = "control-label col-md-3" })
+                                                            <div class="col-md-7">
+                                                                @Html.TextBoxFor(model => model.Preschoolcity, new { id = "city", @class = "form-control", placeholder = "city" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.Label("State:", new { @class = "control-label col-md-3" })
+                                                            <div class="col-md-7">
+                                                                @Html.TextBoxFor(model => model.Prestate, new { id = "state", @class = "form-control", placeholder = "state" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            @Html.Label("Pincode:", new { @class = "control-label col-md-3" })
+                                                            <div class="col-md-7">
+                                                                @Html.TextBoxFor(model => model.Prepincode, new { id = "Pincode", @class = "form-control", placeholder = "pincode" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+
+                                            <table>
+                                                <tr>
+                                                    <td>NameOfSchool</td>
+                                                    <td>
+                                                        <input type="text" name="NameOfSchool" id="tb">
+                                                    </td>
+
+                                                      
+                                                    @*<td>NameOfSchool</td>
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.NameOfSchool, new {id = "tb", @class = "form-control", placeholder = "pincode"})
+                                                    </td>*@
+                                                </tr>
+                                                <tr>
+                                                    <td>Precontact</td>
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.Precontact, new { id = "tb1", @class = "form-control", placeholder = "pincode" })
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>&nbsp;</td>
+                                                    <td>
+                                                        @*<input type="button" value="Add" id="btn" class="btn btn-default" />*@
+                                                        <button type="button" value="Submit" id="btn">Add</button>
+                                                    </td>
+                                                </tr>
+
+                                                <tr><td>&nbsp;</td><td><table id="ta" border="1" width="100%"><tr><th>NameOfSchool</th><th>Precontact</th></tr></table></td></tr>
+                                            </table>
+
+                                        </div>
+
+
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <div class="tab-pane" id="tab3">
+                                                <a class="btn btn-primary btnPrevious"><i class="fa fa-backward"></i>&nbsp;Previous</a>
+                                                <input type="submit" value="Submit" class="btn btn-default" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+}
+
+<script type="text/javascript">
+
+    function showDiv() {
+        document.getElementById('welcomeDiv').style.display = "block";
+    }
+
+    $(document).ready(function () {
+        $("#defaultform1").bootstrapValidator({
+            //message: "This value is not valid",
+            feedbackIcons: {
+                valid: "glyphicon glyphicon-ok",
+                invalid: "glyphicon glyphicon-remove",
+                validating: "glyphicon glyphicon-refresh"
+            },
+            fields: {
+                RollNo: {
+                    container: "#rollmessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The roll number is required and cannot be empty"
+                        }
+                    }
+                },
+
+                FirstName: {
+                    container: "#FirstNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The first name is required and cannot be empty"
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The first name must consist of a-z, A-Z characters only'
+                        }
+                    }
+
+                },
+                MiddleName: {
+                    container: "#MiddleNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The middle name is required and cannot be empty"
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The middle name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+                LastName: {
+                    container: "#LastNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The last name is required and cannot be empty"
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The last name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+
+                'gender': {
+                    feedbackIcons: false,
+                    validators: {
+                        notEmpty: {
+                            message: 'The gender is required'
+                        }
+                    }
+                },
+
+                Dob: {
+                    container: "#dobMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The date of birth is required and cannot be empty"
+                        }
+                    }
+                },
+
+                Nationality: {
+                    container: "#NationalityMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The nationality is required and cannot be empty"
+                        },
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The last name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+
+
+                BloodGroup: {
+                    container: "#BloodGroupMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The blood group is required and cannot be empty"
+                        }
+
+                    }
+                },
+
+                BodyMarks: {
+                    container: "#BodyMarksMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The body marks is required and cannot be empty"
+                        }
+
+                    }
+                },
+
+                MotherTongue: {
+                    container: "#MotherTongueMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The mother tongue is required and cannot be empty"
+                        },
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The last name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+
+
+                AddmissionYear: {
+                    container: "#addmissionYearMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The admission year is required and cannot be empty"
+                        }
+
+                    }
+                },
+
+
+                FatherFirstName: {
+                    container: "#FatherFirstNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The first name is required and cannot be empty"
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The first name must consist of a-z, A-Z characters only'
+                        }
+                    }
+
+                },
+                FatherMiddleName: {
+                    container: "#FatherMiddleNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The middle name is required and cannot be empty"
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The middle name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+                FatherLastName: {
+                    container: "#FatherLastNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The last name is required and cannot be empty"
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The last name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+                MotherName: {
+                    container: "#MotherNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The mothrt name is required and cannot be empty"
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The last name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+
+
+                Email: {
+                    validators: {
+                        emailAddress: {
+                            message: 'The input is not a valid email address'
+                        }
+                    }
+                },
+
+
+                Contact1: {
+                    container: "#Contact1Message",
+                    validators: {
+                        notEmpty: {
+                            message: "The contact is required and cannot be empty"
+                        },
+                        digits: {
+                            message: 'The value can contain only digits'
+                        }
+                    }
+                },
+                FatherOccupation: {
+                    container: "#FatherOccupationMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The father occupation is required and cannot be empty"
+                        }
+
+                    }
+                },
+
+                PancardNo: {
+                    container: "#PancardNoMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The  Pancard number is required and cannot be empty"
+                        }
+
+                    }
+                },
+
+
+                PassportNo: {
+                    validators: {
+                        blank: {
+                            message: 'The Passport No not a valid'
+                        }
+                    }
+                },
+
+
+                LeavingReason: {
+                    validators: {
+                        blank: {
+                            message: 'entered leaving reason'
+                        }
+                    }
+                },
+
+                SiblingBrothers: {
+                    validators: {
+                        blank: {
+                            message: 'entered sibling brothers '
+                        }
+                    }
+                },
+
+
+                SiblingSisters: {
+                    validators: {
+                        blank: {
+                            message: 'entered sibling sisters '
+                        }
+                    }
+                },
+                MedicalDetails: {
+                    validators: {
+                        blank: {
+                            message: 'entered medical details '
+                        }
+                    }
+                },
+
+                TempAddress: {
+                    container: "#TempAddressMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The Temp Address is required and cannot be empty"
+                        }
+                    }
+                },
+                TempPincode: {
+                    container: "#TempPincodeMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The temp. pin code is required and cannot be empty"
+                        },
+                        digits: {
+                            message: 'The value can contain only digits'
+                        },
+                        regexp: {
+                            regexp: /^([0][1-9]|[1-6])(\d{5})$/,
+                            message: 'The input is not a valid pin code'
+                        }
+                    }
+                },
+                TempArea: {
+                    container: "#TempAreaMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The Temp Area is required and cannot be empty"
+                        }
+                    }
+                },
+
+                PerAddress: {
+                    container: "#PerAddressMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The per address is required and cannot be empty"
+                        }
+                    }
+                },
+
+                EmergencyContact1: {
+                    container: "#EmergencyContact1Message",
+                    validators: {
+                        notEmpty: {
+                            message: "The emergency contact is required and cannot be empty"
+                        }
+                    }
+                },
+                EmergencyContact1Relation: {
+                    container: "#EmergencyContact1RelationMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The emergency contact is required and cannot be empty"
+                        }
+                    }
+                },
+
+                EmergencyContact2: {
+                    container: "#EmergencyContact2Message",
+                    validators: {
+                        notEmpty: {
+                            message: "The emergency contact is required and cannot be empty"
+                        }
+                    }
+                },
+                EmergencyContact2Relation: {
+                    container: "#EmergencyContact2RelationMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The emergency contact is required and cannot be empty"
+                        }
+                    }
+                },
+
+                CastId: {
+                    container: "#CastIdMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The cast is required and cannot be empty"
+                        }
+                    }
+                },
+                SubCastId: {
+                    container: "#SubCastIdMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The sub cast is required and cannot be empty"
+                        }
+                    }
+                },
+
+
+                TempCityId: {
+                    container: "#TempCityIdMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The city is required and cannot be empty"
+                        }
+                    }
+                },
+
+                PerCityId: {
+                    container: "#PerCityIdMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The city is required and cannot be empty"
+                        }
+                    }
+                },
+                PerPincode: {
+                    container: "#PerPincodeMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The Per. Pin code is required and cannot be empty"
+                        },
+                        digits: {
+                            message: 'The value can contain only digits'
+                        },
+                        regexp: {
+                            regexp: /^([0][1-9]|[1-6])(\d{5})$/,
+                            message: 'The input is not a valid pin code'
+                        }
+                    }
+                },
+                PerArea: {
+                    container: "#PerAreaMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The per. area is required and cannot be empty"
+                        }
+                    }
+                },
+                JoiningDate: {
+                    container: "#JoiningDateMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The joining date is required and cannot be empty"
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+
+
+
+    $(document).ready(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-red',
+            radioClass: 'iradio_flat-red'
+        });
+    });
+
+    $('.btnNext').click(function () {
+        $('.nav-tabs > .active').next('li').find('a').trigger('click');
+    });
+
+    $('.btnPrevious').click(function () {
+        $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+    });
+
+
+
+</script>

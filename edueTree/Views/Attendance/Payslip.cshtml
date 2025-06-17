@@ -1,0 +1,339 @@
+﻿@model IEnumerable<edueTree.Models.PaySlipModel>
+@{
+    ViewBag.Title = "Payslip";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+@{
+
+    var monthList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "January", Value = "1"},
+                new SelectListItem {Text = "February", Value = "2"},
+                new SelectListItem {Text = "March", Value = "3"},
+                new SelectListItem {Text = "April", Value = "4"},
+                new SelectListItem {Text = "May", Value = "5"},
+                new SelectListItem {Text = "June", Value = "6"},
+                new SelectListItem {Text = "July", Value = "7"},
+                new SelectListItem {Text = "August", Value = "8"},
+                new SelectListItem {Text = "September", Value = "9"},
+                new SelectListItem {Text = "October", Value = "10"},
+                new SelectListItem {Text = "November", Value = "11"},
+                new SelectListItem {Text = "December", Value = "12"},
+            }, "Value", "Text");
+
+
+
+    var yearList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "2016", Value = "2016"},
+                new SelectListItem {Text = "2017", Value = "2017"},
+                new SelectListItem {Text = "2018", Value = "2018"},
+                new SelectListItem {Text = "2019", Value = "2019"},
+                new SelectListItem {Text = "2020", Value = "2020"},
+                new SelectListItem {Text = "2021", Value = "2021"},
+                new SelectListItem {Text = "2022", Value = "2022"},
+                new SelectListItem {Text = "2023", Value = "2023"},
+                new SelectListItem {Text = "2024", Value = "2024"},
+                new SelectListItem {Text = "2025", Value = "2025"},
+
+            }, "Value", "Text");
+}
+@if (TempData["EmptyMessage"] != null)
+{
+    <script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["EmptyMessage"]' === "salary") {
+                $.notify("Your this month salary not generated , please contact HR department ", "warn");
+            }
+          
+        }
+
+    });
+</script>
+}
+<section class="content-header">
+    <h1>
+        @*Pay slips*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Salary</a></li>
+        <li class="active">Slips</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title">Search Options - For PaySlip (Select Month & Year)</h3>
+                    <div class="pull-right">
+                    </div>
+                </div>
+                <div class="box-body chat">
+                    <div class="item">
+                        <form action="/Attendance/Payslip" method="get" id="form1">
+                            <div class="form-horizontal">
+                                <div class="col-md-10">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.Label("Month:", new {@id = "month", @class = "control-label col-md-3"})
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("month", monthList, new { id = "month", @class = "form-control select2" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.Label("Year:", new {@class = "control-label col-md-3"})
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("year", yearList, new { id = "year", @class = "form-control select2" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" form="form1" value="Submit" class="btn btn-default">Search</button>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+@if (Model.Count() != 0)
+{
+    <section class="content">
+        <div class="row">
+            <section class="col-lg-12 connectedSortable">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-search"></i>
+                        <h3 class="box-title">
+                            Pay slip to the month of -                          
+                            (@Html.DisplayFor(a => a.FirstOrDefault().Month)  - @Html.DisplayFor(a => a.FirstOrDefault().Year) )
+                        </h3>
+                        <div class="pull-right">
+                            <button type="button" id="btnPrint" class="btn btn-info" onclick=" javascript: printDiv('dvContainer')">
+                                <i class="fa fa-print"></i> Print
+                            </button>
+
+                        </div>
+                    </div>
+                    <div>
+                        <div id="dvContainer" class="box-body chat">
+                            <div class="table-responsive">
+                                <table style="width: 99%;" class="MyBorder">
+                                    <tr>
+                                        <td colspan="2" style="border: none;">
+                                            <table style="width: 100%">
+                                                <tr>
+                                                    <td style="width: 20%; border: none;">
+                                                        <img src="~/FirmLogo/@Model.FirstOrDefault().Logo" width="130px" />
+                                                    </td>
+                                                    <td style="text-align: right; border: none; width: 80%;">
+                                                        <b style="text-decoration: underline; font-size: 18px">
+                                                            @Model.FirstOrDefault().FirmName
+                                                        </b>
+
+                                                        <br /> @Model.FirstOrDefault().Address<br />@Model.FirstOrDefault().AddressPart<br /> @Model.FirstOrDefault().Contact (<i class="fa fa-phone"></i>)
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                 
+                                    <tr>
+                                        <td colspan="2" style="text-align: center; font-size: large; font-weight: bolder">PAY SLIP (@Html.DisplayFor(a => a.FirstOrDefault().Month) - @Html.DisplayFor(a => a.FirstOrDefault().Year))</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 50%;">
+                                           
+                                            <p>CODE OF EMPLOYEE : @Html.DisplayFor(a => a.FirstOrDefault().EmployeeCode)</p>
+                                            <p>NAME OF EMPLOYEE : @Html.DisplayFor(a => a.FirstOrDefault().EmployeeName)</p>
+                                            <p>DESIGNATION : @Html.DisplayFor(a => a.FirstOrDefault().Designation)</p>
+                                            <p>DEPARTMENT : @Html.DisplayFor(a => a.FirstOrDefault().DeptName)</p>
+                                            <p>PAN NO : @Html.DisplayFor(a => a.FirstOrDefault().PAN)</p>
+                                        </td>
+                                        <td style="width: 50%;">
+                                        
+                                            @*<p>JOINING DATE : @Html.DisplayFor(a => a.FirstOrDefault().JoiningDate)</p>*@
+                                            <p>JOINING DATE : @Convert.ToDateTime(Model.FirstOrDefault().JoiningDate).ToString("dd MMM yyyy")</p>
+                                            <p>WEEKENDS / HOLIDAYS : @Html.DisplayFor(a => a.FirstOrDefault().TotalWoHolidays)</p>
+                                            <p>TOTAL WORKING DAYS : @Html.DisplayFor(a => a.FirstOrDefault().TotalWorkingDays)</p>
+                                            <p>LEAVES TAKEN : @Html.DisplayFor(a => a.FirstOrDefault().PaidLeaves)</p>
+                                            <p>ABSENT : @Html.DisplayFor(a => a.FirstOrDefault().Absence)</p>
+                                           
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;"><b>EARNING</b></td>
+                                        <td style="text-align: center;"><b>DEDUCTION</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: top">
+                                       
+                                            <table style="width: 100%;" class="table">
+                                                @foreach (var head in Model.Where(a => a.IsEarnings == true))
+                                                {
+                                                    <tr>
+                                                        <td style="border-bottom: 1px solid gray;">@head.HeadName</td>
+                                                        <td style="text-align: right; border-bottom: 1px solid gray;">@head.HeadAmount</td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td colspan="2" style="height: 50px; border: none;"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="vertical-align: top">
+                                         
+                                            <table style="width: 100%;" class="table">
+                                                @foreach (var head in Model.Where(a => a.IsDuductions == true))
+                                                {
+                                                    <tr>
+                                                        <td style="border-bottom: 1px solid gray;">@head.HeadName</td>
+                                                        <td style="text-align: right; border-bottom: 1px solid gray;">@head.HeadAmount</td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td colspan="2" style="height: 50px; border: none;"></td>
+                                                </tr>
+
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <b>Gross Total :</b> @Model.Where(a => a.IsEarnings == true).Sum(f => f.HeadAmount)
+                                        </td>
+                                        <td style="text-align: right;">
+                                            <b>Gross Total :</b> @Model.Where(a => a.IsDuductions == true).Sum(f => f.HeadAmount)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align: right; padding-right: 20px;">
+                                            <b>NET PAYABLE : @Html.Raw(Model.Where(a => a.IsEarnings == true).Sum(f => f.HeadAmount) - Model.Where(a => a.IsDuductions == true).Sum(f => f.HeadAmount))</b>
+                                            <input id="netPaybleAmt" value="@Html.Raw(Model.Where(a => a.IsEarnings == true).Sum(f => f.HeadAmount) - Model.Where(a => a.IsDuductions == true).Sum(f => f.HeadAmount))" readonly="true" style="display: none" />
+                                            @*@Html.Display((Model.Where(a => a.IsEarnings == true).Sum(f => f.HeadAmount) - Model.Where(a => a.IsDuductions == true).Sum(f => f.HeadAmount)), new { Id = "netPaybleAmt" })*@
+                                            @*<input id="netPaybleAmt" value="452000" />*@
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <p id="demo" style="font-weight: bold"></p>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+}
+@*else
+{
+     <script>
+                $.noConflict();
+                jQuery(document).ready(function () {
+                    if (true) {
+                        $.notify("This Month salary not generated.! ", "warn");
+                    }
+                });
+            </script>
+}*@
+
+
+<script type="text/javascript">
+    $(function () {
+        $(".select2").select2();
+        //var sadfsf = $("#netPaybleAmt").value;
+        var dfsf = document.getElementById("netPaybleAmt").value;
+        //console.log(parseInt(dfsf));
+        document.getElementById("demo").innerHTML = inWords(parseInt(dfsf));
+    });
+    var a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
+    var b = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+
+    function inWords(num) {
+
+        if ((num = num.toString()).length > 9) return "overflow";
+        n = ("000000000" + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+        if (!n) return;
+        var str = "";
+
+        str += (n[1] !== "00") ? (a[Number(n[1])] || b[n[1][0]] + " " + a[n[1][1]]) + "crore " : "";
+        str += (n[2] !== "00") ? (a[Number(n[2])] || b[n[2][0]] + " " + a[n[2][1]]) + "lakh " : "";
+        str += (n[3] !== "00") ? (a[Number(n[3])] || b[n[3][0]] + " " + a[n[3][1]]) + "thousand " : "";
+        str += (n[4] !== "0") ? (a[Number(n[4])] || b[n[4][0]] + " " + a[n[4][1]]) + "hundred " : "";
+        str += (n[5] !== "00") ? ((str !== "") ? "and " : "") + (a[Number(n[5])] || b[n[5][0]] + " " + a[n[5][1]]) : "";
+
+        return str.toUpperCase() + " ONLY.";
+    }
+
+    function printDiv(divId) {
+        //Get the HTML of div
+        var divElements = document.getElementById(divId).innerHTML;
+        //Get the HTML of whole page
+        var oldPage = document.body.innerHTML;
+
+        //Reset the page's HTML with div's HTML only
+        document.body.innerHTML =
+         "<!DOCTYPE html><head><title>fd</title></head><body>" +
+         divElements + '<div style="position: relative"><p style="position: fixed; bottom: 0; width:100%; text-align: center"> </br>SYSTEM GENERATED DOCUMENT, NO SIGNATURE REQUIRED.</p></body></html>';
+        //Print Page
+        window.print();
+        //Restore orignal HTML
+        document.body.innerHTML = oldPage;
+    }
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "salarygenerate") {
+                $.notify(" Your this month salary not generated , please contact HR department ", "warn");
+            }
+            if ('@TempData["notice"]' === "ModelNull") {
+                $.notify("");
+            }
+            if ('@TempData["notice"]' === "SalaryNotGenerate") {
+                $.notify("salary not generated or assign structure with pay heads! ", "warn");
+            }
+        }
+
+    });
+</script>

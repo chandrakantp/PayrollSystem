@@ -1,0 +1,165 @@
+﻿@model IEnumerable<edueTree.Models.EvaluatorratingModel>
+@{
+    ViewBag.Title = "AllEmployeeRatingReport";
+}
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> All Employee Rating Report</a></li>
+        <li class="active">List</li>
+    </ol>
+</section>
+
+
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Search Employee for rating</h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("AllEmployeeRatingReport", "Performance", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @*<select id="empId" name="empId" class="form-control select2"></select>*@
+                                @Html.DropDownList("empId", (IEnumerable<SelectListItem>)ViewBag.staffid, "Select Employee", new { @class = "form-control select2" })
+
+
+                            </div>
+
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-user"></i>
+                    <h3 class="box-title"> All Employee Rating Report</h3>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="StructureTable" class="table table-fixed">
+                            <thead>
+                                <tr>
+                                    <th>Sr No.</th>
+                                    <th>Self & Evaluator Name</th>
+                                    <th>Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var group in Model.GroupBy(x => x.EvaluatorFName))
+                                {
+                                    <tr>
+                                        <td>
+                                            <center><h4>@group.Key</h4></center>
+                                            
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    int index = 1;
+                                    decimal countperemp = 0;
+                                    foreach (var qus in group)
+                                    {
+                                        <tr>
+                                            <td> @index</td>
+                                            <td>
+
+
+                                                @Html.DisplayFor(modelItem => qus.EmpFName)
+                                            </td>
+                                            <td>
+                                                @{
+                                        countperemp = countperemp + Convert.ToDecimal(qus.Rating);
+                                                }
+                                                <a href="@Url.Action("EmployeeRatingDetailsForHr", "Performance", new { empid = qus.Staffid, evaluteid = qus.Evalutid })"> @Html.DisplayFor(modelItem => qus.Rating) %</a>
+                                            </td>
+                                        </tr>
+                                        index++;
+                                    }
+                                    <tr>
+                                        <td></td>
+                                        <td>Total:</td>
+                                        <td><b> @countperemp %</b></td>
+                                    </tr>
+                                }
+                            </tbody>
+
+
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</section>
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $(".select2").select2();
+            $(".table").DataTable({
+                "ordering": false,
+                dom: "Bfrtip",
+                buttons: [
+                    "copy", "csv", "excel", "pdf", "print"
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "error");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this Shift used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>
+
+
+

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<edueTree.Models.StaffModel>
+
+@{
+    Layout = null;
+}
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Upcoming Anniversary Tenure</h3>
+                </div>
+
+                @if (!Model.Any())
+                {
+                    <hr />
+                    <span class="" style="color: red"><h4> &nbsp;No any employee Anniversary Tenure in next 10 days.</h4></span>
+                    <br />
+                }
+
+                @foreach (var item in Model)
+                {
+                    <div class="panel-body">
+                        <div class="col-md-3">
+                            @if (item.PassportPhoto == null)
+                            {
+                                <img src="~/Images/profile.jpg" width="80" class="img-rounded responsive" />
+                            }
+                            else
+                            {
+                                <img src="~/StaffDocument/@item.PassportPhoto" width="80" class="img-rounded responsive" />
+                            }
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.DisplayName("Name : ")
+                        </div>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                                @Html.DisplayFor(modelItem => item.LastName)<br />
+                            </td>
+                            <div class="col-md-3">
+                                @Html.DisplayName("Joining Date: ")
+                            </div>
+                            <td>
+                                @if (item.Dob >= DateTime.UtcNow.Date)
+                                {
+                                    <b style="color: red;">@Html.DisplayName("Today")</b>
+
+                                }
+                                else
+                                {
+                                    @Convert.ToDateTime(item.JoiningDate).ToString("dd MMM yyyy")
+                                }
+
+                            </td>
+                        </tr>
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</section>

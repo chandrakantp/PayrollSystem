@@ -1,0 +1,391 @@
+﻿@using System.Web.Mvc.Html
+@using edueTree.Models
+@model edueTree.Models.StaffModel
+
+<style type="text/css">
+    .help-block {
+        color: #BC3C3C;
+    }
+
+    .has-feedback .form-control {
+        padding-right: 0.5px;
+    }
+</style>
+
+<section class="content-header">
+    <h1>
+        @*Employee Registration*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Employee</a></li>
+        <li class="active">Add</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                <div class="box box-success">
+
+                    <div class="box-header">
+                        <i class="fa fa-user"></i>
+                        <h3 class="box-title"> Employee Registration</h3>
+                    </div>
+                    <div class="box-body">
+
+                        @Html.HiddenFor(model => model.UserId)
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                    <div class="col-md-12">
+                        
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>First name:</label>
+                                @Html.TextBoxFor(model => model.FirstName, new {id = "FirstName", @class = "form-control", placeholder = "enter first name", @maxlength = "25"})
+                                @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new {@class = "help-block"})
+                                <span class="help-block" id="FirstNameMessage" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Father / Husband Name:</label>
+                                @Html.TextBoxFor(model => model.MiddleName, new {id = "MiddleName", @class = "form-control", placeholder = "enter middle name", @maxlength = "25"})
+                                @Html.ValidationMessageFor(model => model.MiddleName, string.Empty, new {@class = "help-block"})
+                                <span class="help-block" id="MiddleNameMessage" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Last Name:</label>
+                                @Html.TextBoxFor(model => model.LastName, new {id = "LastName", @class = "form-control", placeholder = "enter last name", @maxlength = "25"})
+                                @Html.ValidationMessageFor(model => model.LastName, string.Empty, new {@class = "help-block"})
+                                <span class="help-block" id="LastNameMessage" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Gender:</label><br/>
+                                @Html.RadioButtonFor(model => model.Gender, 1, new {name = "gender", id = "Gender"}) Male
+                                @Html.RadioButtonFor(model => model.Gender, 2, new {name = "gender", id = "Gender"}) Female
+                                <span class="help-block" id="GenderMessage"></span>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Marital Status:</label><br />
+                                    @Html.RadioButtonFor(model => model.IsMarried, true, new { name = "Married", id = "martialstatus" }) Married
+                                    @Html.RadioButtonFor(model => model.IsMarried, false, new { name = "Unmarried", id = "martialstatus" }) Unmarried
+                                    <span class="help-block" id="GenderMessage"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Birth date:</label>
+                                    @Html.TextBoxFor(model => model.Dob, new { id = "Dob", @class = "form-control datepicker", placeholder = "select date of birth" })                                   
+                                    <span class="help-block" id="dobMessage" />
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Contact:</label>
+                                    @Html.TextBoxFor(model => model.Contact, new { id = "Contact", @class = "form-control", placeholder = "Enter contact number", @maxlength = "15" })
+                                    @Html.ValidationMessageFor(model => model.Contact, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="ContactMessage"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Company Email:</label>
+                                    @Html.TextBoxFor(model => model.Email, new { id = "Email", @class = "form-control", placeholder = "enter Company e-mail Address", @maxlength = "50", onblur = "checkEmail(this.value)", @required = "required" })
+                                    @Html.ValidationMessageFor(model => model.Email, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="EmailMessage"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Personal Email:</label>
+                                    @Html.TextBoxFor(model => model.Personalmail, new { id = "PersonalEmail", @class = "form-control", placeholder = "Personal e-mail address", @maxlength = "50", onblur = "checkEmail(this.value)" })                                    
+                                    <span class="help-block" id="PersonalEmailmsg" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group ">
+                                    <label>Temp address:</label>
+                                    @Html.TextBoxFor(model => model.TempAddress, new { id = "TempAddress", @class = "form-control", placeholder = "Enter Temporary Address", @maxlength = "200" })
+                                    @Html.ValidationMessageFor(model => model.TempAddress, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="TempAddressMessage"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Temp area:</label>
+                                    @Html.TextBoxFor(model => model.TempArea, new { id = "TempArea", @class = "form-control", placeholder = "Enter Temporary Area" ,@maxlength = "200"})
+                                    @Html.ValidationMessageFor(model => model.TempArea, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="TempAreaMessage"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label>Temp Pincode:</label>
+                                    @Html.TextBoxFor(model => model.TempPincode, new { id = "TempPincode", @class = "form-control", placeholder = "enter temporary pincode", maxlength = 6 })
+                                    @Html.ValidationMessageFor(model => model.TempPincode, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="TempPincodeMessage"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Per address</label>
+                                    @Html.TextBoxFor(model => model.PerAddress, new { id = "PerAddress", @class = "form-control", placeholder = "enter permanent address",@maxlength = "200"  })
+                                    @Html.ValidationMessageFor(model => model.PerAddress, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="PerAddressMessage"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label>Per Area</label>
+                                    @Html.TextBoxFor(model => model.PerArea, new { id = "PerArea", @class = "form-control", placeholder = "Enter Permanent Area", @maxlength = "200" })
+                                    @Html.ValidationMessageFor(model => model.PerArea, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="PerAreaMessage"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label>Per Pincode</label>
+                                    @Html.TextBoxFor(model => model.PerPincode, new { id = "PerPincode", @class = "form-control", placeholder = "enter permanent pincode", maxlength = 6 })
+                                    @Html.ValidationMessageFor(model => model.PerPincode, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="PerPincodeMessage"></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>City</label>
+                                    @Html.TextBoxFor(model => model.City, new { id = "City", @class = "form-control", placeholder = "Enter City", @maxlength = "25" })
+                                    <span class="help-block" id="Citymsg"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>State</label>
+                                    @Html.TextBoxFor(model => model.State, new { id = "State", @class = "form-control", placeholder = "Enter State", @maxlength = "25" })
+                                    <span class="help-block" id="Statemsg" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label>Designation</label>
+                                    @Html.DropDownListFor(model => model.DesignationId, Model.DesignationList, " - Select Designation - ", new { id = "DesignationId", @class = "form-control", placeholder = "select designation" })
+                                    @Html.ValidationMessageFor(model => model.DesignationId, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="DesignationIdMessage" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Date of joining:</label>
+                                    @Html.TextBoxFor(model => model.JoiningDate, new { id = "JoiningDate", @class = "form-control datepicker", placeholder = "select joining date" })
+                                    <span class="help-block" id="JoiningDateMessage" />
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Department</label>
+                                    @Html.DropDownListFor(model => model.DeptId, Model.DepartmentList, " - Select Department - ", new { id = "DeptId", @class = "form-control", placeholder = "select department" })
+                                    @Html.ValidationMessageFor(model => model.DeptId, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="DeptIdMessage" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label>Emergency Contact</label>
+                                    @Html.TextBoxFor(model => model.EmergencyContact1, new { id = "EmergencyContact1", @class = "form-control", placeholder = "enter emergency contact-I", @maxlength = "200" })
+                                    @Html.ValidationMessageFor(model => model.EmergencyContact1, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="EmergencyContact1Message" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label>Languages Known</label>
+                                    @Html.TextBoxFor(model => model.Languageknown, new { id = "Languageknown", @class = "form-control", placeholder = "Enter Languages Known", @maxlength = "200" })
+                                    <span class="help-block" id="Languageknownmsg" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label>Voter Id No</label>
+                                    @Html.TextBoxFor(model => model.VoteridNo, new { id = "VoteridNo", @class = "form-control", placeholder = "Enter Voter Id No", @maxlength = "50" })
+                                    <span class="help-block" id="VoteridNomsg" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label>Aadhar No</label>
+                                    @Html.TextBoxFor(model => model.AdharNo, new { id = "AdharNo", @class = "form-control", placeholder = "Enter Aadhar No", @maxlength = "50" })
+                                    <span class="help-block" id="AdharNomsg" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Driving License No</label>
+                                    @Html.TextBoxFor(model => model.Licence, new { id = "Licence", @class = "form-control", placeholder = "Enter Driving License No", @maxlength = "200" })
+                                    <span class="help-block" id="AdharNomsg" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label>Reference Details</label>
+                                    @Html.TextAreaFor(model => model.ReferalDetail, new { id = "ReferalDetail", @class = "form-control", placeholder = "Reference Details", @maxlength = "200" })
+                                    <span class="help-block" id="ReferalDetailmsg" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label>Nationality</label>
+                                    @Html.TextBoxFor(model => model.Nationality, new { id = "Nationality", @class = "form-control", placeholder = "Nationality", @maxlength = "50" })
+                                    <span class="help-block" id="Nationalitymsg" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label> Blood Group</label>
+                                    @Html.TextBoxFor(model => model.Bloodgroup, new { id = "Bloodgroup", @class = "form-control", placeholder = "Blood Group", @maxlength = "20" })
+                                    <span class="help-block" id="Bloodgroupmsg" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Pan No</label>
+                                    @Html.TextBoxFor(model => model.PAN, new { id = "PAN", @class = "form-control", placeholder = "Enter PAN No", @maxlength = "20" })
+                                    <span class="help-block" id="PANmsg" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <label>Assign Role</label>
+                                    @Html.DropDownListFor(model => model.RoleId, Model.RoleListnew, " - Select Role - ", new { id = "Id", @class = "form-control", placeholder = "select Role" })
+                                    @Html.ValidationMessageFor(model => model.RoleId, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="RoleIdmsg" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                @Html.LabelFor(m => m.CompanyId, new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.CompanyId, new { @class = "form-control", placeholder = "Company Id", @maxlength = "50" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <label for="chkPassport">
+                                    <input type="checkbox" id="chkPassportNew" />
+                                    Please Select Probation Period Date
+                                </label>
+
+
+                            </div>
+                            <div class="col-md-3">
+                                <div id="autoUpdate" style="display: none">
+                                    <div class="form-group">
+                                        <label>Probation Period</label>
+                                        @Html.TextBoxFor(model => model.Probation, new { id = "Probation", @class = "form-control datepicker ", placeholder = "Select Last Date Of Probation Period" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("Index")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+
+                </div>
+            }
+        </section>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $('#chkPassportNew').change(function () {
+            debugger;
+            if (this.checked)
+                $('#autoUpdate').fadeIn('slow');
+            else
+                $('#autoUpdate').fadeOut('slow');
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "error");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this Shift used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "emailnotexit") {
+                $.notify("Email not configure. Please configure email ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "existEmailAddress") {
+                $.notify("Email address already exist ! ", "warn");
+            }
+        }
+    });
+</script>

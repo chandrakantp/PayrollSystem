@@ -1,0 +1,82 @@
+﻿@model IEnumerable<edueTree.Models.PayrollConfig>
+@{
+    Layout = null;
+}
+@using edueTree.Helpers
+@using PagedList.Mvc;
+<style type="text/css">
+    div.DTTT_container {
+        float: none;
+        text-align: center;
+    }
+</style>
+
+<div class="callout callout-warning">
+    <h4>Important Note !</h4>
+    <p>
+        Average full day duration in company. Average Half day duration in company.
+    </p>
+
+    <p>
+        If employee is not assigned a shift , This time duration will be considered from "Average full day duration"
+        similar for half Day calculations.
+    </p>
+    <p>
+        Shift duration + 4 Hours = Workload time = 14 Hours. Please do not change this value until required. If company shift duration is 12 hours. Shift duration + 4 Hours = Workload time = 16 Hours.
+        Keep optimum value to 14 hours for better performance.
+    </p>
+    <p> If you don't set any Value for working Hours per day and half day working hr per day , we will Consider 13 hr</p>
+</div>
+
+
+<div class="row">
+    <section class="col-md-12">
+        <div class="box box-success">
+            <div class="box-header">
+                <i class="fa fa-calendar"></i>
+                <h3 class="box-title">Average Time Setting</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("Working Hours Per Day")
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.WorkingHoursDay)
+                                </td>
+
+                                <td>
+                                    @Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "EditPayrollSystem", "MasterSetting", new { id = item.Id }, null)
+                                </td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#myModalDeptDelete" href='@Url.Action("DeletePayroll", new {id = item.Id})'><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="modal fade" id="myModalDeptDelete" role="dialog"></div>
+            </div>
+
+
+        </div>
+
+        @{Html.RenderAction("AverageTimeIndex", "LeaveRequest");}
+
+        @{Html.RenderAction("AverageTimeForAttendanceSheetIndex", "LeaveRequest");}
+
+    </section>
+
+</div>
+
+

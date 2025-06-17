@@ -1,0 +1,69 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.FeedbackFormMaster>
+@{
+    Layout = null;
+}
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Form List</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table class="table table-fixed">
+                <thead>
+                    <tr>
+                        <th>Form Title</th>
+                        <th>Time Duration(In Days)</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Duration)
+                            </td>
+
+                            <td>
+                                @*@Html.ActionLink("Edit", "FeedFormEdit", "Performance", new { id = item.FeedbackId }, null)*@
+                                <a href="@Url.Action("FeedFormEdit", "Performance", new { id = item.FeedbackId })"> <i class="fa fa-pencil-square"></i></a>
+
+                            </td>
+                            <td>
+                                <a data-toggle="modal" data-target="#myModalFormDelete" href='@Url.Action("DeleteForm", new {id = item.FeedbackId})'><i class="fa fa-trash"></i></a>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="myModalFormDelete" role="dialog"></div>
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

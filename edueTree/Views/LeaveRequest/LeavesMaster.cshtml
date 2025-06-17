@@ -1,0 +1,140 @@
+﻿@using iTextSharp.text.xml.simpleparser.handler
+@model IEnumerable<edueTree.Models.LeaveRequest>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<div id="updateTragetIdLR">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="col-xs-1">
+                        @Html.DisplayName("Staffcode")
+                    </th>
+                    <th class="col-xs-2">
+                        @Html.DisplayName("Username")
+                    </th>
+                    <th class="col-xs-2">
+                        @Html.DisplayName("From date")
+                    </th>
+
+                    <th class="col-xs-2">
+                        @Html.DisplayName("To date")
+                    </th>
+                    <th class="col-xs-2">
+                        @Html.DisplayName("Leave Type")
+                    </th>
+                    <th class="col-xs-2">
+                        @Html.DisplayName("Leave Apply Date")
+                    </th>
+                    <th class="col-xs-2">
+                        @Html.DisplayName("Leave count")
+                    </th>
+                   
+                    @*<th class="col-xs-2">
+                        @Html.DisplayName("Rejoining date")
+                    </th>*@
+                    <th class="col-xs-1">
+                        @Html.DisplayName("Status")
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="col-xs-1">
+                            @Html.DisplayFor(modelItem => item.Staff.staffCode)
+                        </td>
+                        <td class="col-xs-2">
+
+                            @Html.DisplayFor(modelItem => item.Staff.firstName)
+                            @Html.DisplayFor(modelItem => item.Staff.middleName)
+                            @Html.DisplayFor(modelItem => item.Staff.lastName)
+
+                        </td>
+                        <td class="col-xs-3">
+                            @Convert.ToDateTime(item.dateFrom).ToString("dd MMM yyyy")
+                            (@Html.DisplayFor(modelItem => item.sesionDateFrom))
+
+                        </td>
+
+                        <td class="col-xs-3">
+                            @Convert.ToDateTime(item.dateTo).ToString("dd MMM yyyy")
+                            (@Html.DisplayFor(modelItem => item.sesionDateTo))
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LeaveType.LeaveType1)
+                        </td>
+
+                        <td class="col-xs-1">
+                            @Convert.ToDateTime(item.createdDate).ToString("dd MMM yyyy")
+
+                        </td>
+
+                        <td class="col-xs-1">
+                            @Convert.ToDecimal(item.totalCounts).ToString("0.##")
+
+                        </td>
+                        @*<td class="col-xs-1">
+                            @Convert.ToDateTime(item.rejoing).ToString("dd MMM yyyy")
+
+                        </td>*@
+                        @if (item.status == "Approved")
+                        {
+                            <td class="col-xs-1">
+                                <span class="" style="color: green"> @Html.DisplayName("Approved")</span>
+                            </td>
+                        }
+                        else if (item.status == "Rejected")
+                        {
+                            <td class="col-xs-1">
+                                <span class="" style="color: red"> @Html.DisplayName("Rejected")</span>
+                            </td>
+                        }
+                        else if (item.status == "Planned")
+                        {
+                            <td class="col-xs-1">
+                                <span class="" style="color: blue"> @Html.DisplayName("Planned")</span>
+                            </td>
+                        }
+                        else if (item.status == "Requested")
+                        {
+                            <td class="col-xs-1">
+                                <span class="" style="color: blue"> @Html.DisplayName("Requested")</span>
+                            </td>
+                        }
+
+                        @if (item.status == "Planned" || item.status == "Requested")
+                        {
+                            <td>
+                                <a data-toggle="modal" data-target="#myModalLeaveApproved" href='@Url.Action("Edit", new { id = item.tranId, status = true, ActionName = "LeaveRequestList" })'>
+                                    <i class="fa fa-check" style="color: green"></i> <span class="hidden-sm hidden-xs"></span>
+                                </a>
+                                <div class="modal fade" id="myModalLeaveApproved" role="dialog"></div>
+                            </td>
+
+                            <td>
+                                <a data-toggle="modal" data-target="#myModalLeaveRejected" href='@Url.Action("Edit", new {id = item.tranId, ActionName = "LeaveRequestList"})'>
+                                    <i class="fa fa-times" style="color: red"></i><span class="hidden-sm hidden-xs"></span>
+                                </a>
+                                <div class="modal fade" id="myModalLeaveRejected" role="dialog"></div>
+                            </td>
+                            <td>
+                                <a data-toggle="modal" data-target="#myModalLeaveEdit" href='@Url.Action("LeaveMasterEdit", new { id = item.tranId, actionName = "LeaveRequestList" })'>
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true" style="color: skyblue"></i><span class="hidden-sm hidden-xs"></span>
+                                </a>
+                                <div class="modal fade" id="myModalLeaveEdit" role="dialog"></div>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

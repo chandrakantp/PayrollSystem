@@ -1,0 +1,130 @@
+﻿@model edueTree.Models.EPFModel
+
+@{
+    ViewBag.Title = "EpfinfoEdit";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("EpfinfoEdit", "staffs"))
+            {
+                <div class="box box-success">
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="box-header">
+                        <h4>Edit EPF Info</h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">
+
+                            @Html.HiddenFor(model => model.staffid)
+                            @Html.HiddenFor(model => model.staffcode)
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Staff / Emp code:</label>
+                                    @Html.TextBoxFor(model => model.staffcode, new { id = "staffId", @class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.staffcode, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="StaffCodeMessage"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Name:</label>
+                                    @Html.TextBoxFor(model => model.Name, new { id = "EnrollNumber", @class = "form-control", placeholder = "Enter full Name", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Name, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="enrollNumberMessage"></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Father name:</label>
+                                    @Html.TextBoxFor(model => model.fathername, new { id = "fathername", @class = "form-control", placeholder = "enter Father Name", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.fathername, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="FirstNameMessage"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Date of Birth:</label>
+                                    @Html.TextBoxFor(model => model.dob, new { id = "dateofbirth", @class = "form-control", placeholder = "Date of Birth", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.dob, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="dateofbirth"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Martial Status:</label>
+                                    @Html.RadioButtonFor(model => model.marriedstatus, true, new { name = "martialstatus", id = "Martialstatus" }) Married
+
+                                    @Html.RadioButtonFor(model => model.marriedstatus, false, new { name = "martialstatus", id = "Martialstatus" }) Unmarried
+                                    <span class="help-block" id="LastNameMessage"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Gender:</label>
+                                    @Html.RadioButtonFor(model => model.gender, 1, new { name = "gender", id = "Gender" }) Male
+                                    @Html.RadioButtonFor(model => model.gender, 0, new { name = "gender", id = "Gender" }) Female
+                                    <span class="help-block" id="GenderMessage"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+
+                                    <label>Permanent Address</label>
+                                    @Html.TextBoxFor(model => model.perAddress, new { id = "peraddress", @class = "form-control", placeholder = "permanant Address", @readonly = "readonly" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Temporary Address:</label>
+                                    @Html.TextBoxFor(model => model.tempAddress, new { id = " tempaddress", @class = "form-control", placeholder = "Temp Address", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.tempAddress, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="TempAddress"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Date of Joining:</label>
+                                    @Html.TextBoxFor(model => model.doj, new { id = "Date of Joining", @class = "form-control", placeholder = "Enter Branch Office", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.doj, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="doj"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>EPF Account No:</label>
+                                    @Html.TextBoxFor(model => model.EPFAccountNo, new { id = "EPF AccountNo", @class = "form-control", placeholder = "EPF Account No" })
+                                    @Html.ValidationMessageFor(model => model.EPFAccountNo, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="EPFAccountNo"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("StaffDashboard", "Staffs", new { staffid =Model.staffid })' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

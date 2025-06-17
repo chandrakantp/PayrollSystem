@@ -1,0 +1,177 @@
+﻿
+@using System.Activities.Expressions
+@model edueTree.Models.StaffEducation
+@{
+    ViewBag.Title = "SelfEduCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-8 col-md-offset-2">
+            <div class="box box-success">
+                <div class="box-header">
+                    @*<i class="fa fa-plus-square"></i>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                    <h4 class="box-title">Add</h4>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal" id="defaultForm">
+                                <hr />
+                                <br />
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(m => m.staffId)
+                                <div class="form-group">
+                                    @Html.Label("Degree:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.DropDownList("degreeId", (IEnumerable<SelectListItem>)ViewBag.degreeId, new { id = "degreeId", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.degreeId)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Subject:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.DropDownList("degreeSubId", (IEnumerable<SelectListItem>)ViewBag.degreeSubId, new { id = "degreeSubId", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.degreeSubId)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Admission year:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.addmissionYear, new { id = "addmissionYear", @class = "form-control", placeholder = "enter admission year ..." })
+                                        <span class="help-block" id="addmissionYearMessage" />
+                                        @*@Html.ValidationMessageFor(model => model.addmissionYear)*@
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Passing year:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.passingYear, new { id = "passingYear", @class = "form-control", placeholder = "enter passing year ..." })
+                                        <span class="help-block" id="passingYearMessage" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Percentage (%):", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.persentage, new { id = "persentage", @class = "form-control", placeholder = "enter percentage (%) ..." })
+                                        <span class="help-block" id="persentageMessage" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("University:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.university, new { id = "university", @class = "form-control", placeholder = "enter university name ..." })
+                                        <span class="help-block" id="universityMessage" />
+                                    </div>
+                                </div>
+                                <hr /><br />
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+                                        <input type="submit" value="Create" class="btn btn-default"/>
+                                        <a href="@Url.Action("StaffProfile", "Staffs")" class="btn btn-default">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>             
+            </div>
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#addmissionYear").focus();
+        $("#defaultForm").bootstrapValidator({
+            message: "This value is not valid",
+            feedbackIcons: {
+                //valid: "glyphicon glyphicon-ok",
+                invalid: "glyphicon glyphicon-remove",
+                validating: "glyphicon glyphicon-refresh"
+            },
+            fields: {
+                addmissionYear: {
+                    container: "#addmissionYearMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The addmission year is required and cannot be empty"
+                        },
+                        digits: {
+                            message: 'The value can contain only digits'
+                        },
+                        regexp: {
+                            regexp: /^([0][1-9]|[1-4])(\d{3})$/,
+                            message: 'The input is not a valid year'
+                        }
+                    }
+                },
+                passingYear: {
+                    container: "#passingYearMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The passing year is required and cannot be empty"
+                        },
+                        digits: {
+                            message: 'The value can contain only digits'
+                        },
+                        regexp: {
+                            regexp: /^([0][1-9]|[1-4])(\d{3})$/,
+                            message: 'The input is not a valid year'
+                        }
+                    }
+                },
+                persentage: {
+                    container: "#persentageMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The percentage is required and cannot be empty"
+                        }
+
+                    }
+                },
+                university: {
+                    container: "#universityMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The university is required and cannot be empty"
+                        },
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The last name must consist of a-z, A-Z characters only'
+                        }
+
+                    }
+                },
+
+                degreeSubId: {
+                    container: ".degreeSubIdMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The subject is required and cannot be empty"
+                        }
+                    }
+                },
+                degreeId: {
+                    container: ".staffIdMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The degree is required and cannot be empty"
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+

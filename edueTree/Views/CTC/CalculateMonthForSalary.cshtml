@@ -1,0 +1,183 @@
+﻿@model edueTree.Models.CalMonthModel
+@{
+    ViewBag.Title = "CalculateMonthForSalary";
+}
+
+<section class="content-header">
+    <h1>
+        @*Salary head settings*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> CTC</a></li>
+        <li class="active">Create</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("CalculateMonthForSalary", "CTC"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title">Set Salary Calculation Formula</h3>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <label>Per Day Calculation </label>                               
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <label>Working Day(WD) </label>
+                                <div class="col-md-4">
+                                    @Html.RadioButtonFor(model => model.Title, "WD", true)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <label>Month Days(MD) </label>
+                                <div class="col-md-4">
+                                    @Html.RadioButtonFor(model => model.Title, "MD", true)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <label>Calculate By Other </label>
+                                <div class="col-md-4">
+                                    @Html.RadioButtonFor(model => model.Title, "Other", false)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="col-md-5 col-md-offset-1">
+                                @Html.TextBoxFor(model => model.Title, new { id = "otherTextbox", @class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <label>Salary to be given By </label>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <label>PPR </label>
+                                <div class="col-md-4">
+                                    @Html.RadioButtonFor(model => model.SalaryRule, "formula_a", true)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <label>PR+LV </label>
+                                <div class="col-md-4">
+                                    @Html.RadioButtonFor(model => model.SalaryRule, "formula_b", true)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <label>PR+LV+HD+WO</label>
+                                <div class="col-md-4">
+                                    @Html.RadioButtonFor(model => model.SalaryRule, "formula_c", false)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <label>WDPR+LV</label>
+                                <div class="col-md-4">
+                                    @Html.RadioButtonFor(model => model.SalaryRule, "formula_d", false)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <label>WDPR+LV+HD+WO</label>
+                                <div class="col-md-4">
+                                    @Html.RadioButtonFor(model => model.SalaryRule, "formula_e", false)
+                                </div>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.SalaryRule)
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right" id="AddAccount" />
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-12">
+            @{Html.RenderAction("CalculateMonthIndex", "CTC");}
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#otherTextbox").hide();
+
+        $("input:radio[name=Title]").change(function () {
+            if (this.value == "Other") {
+                $("#otherTextbox").show();
+
+                $('#AddAccount').click(function () {
+                    if (!$.trim($('#otherTextbox').val())) {
+                    }
+                });
+
+            } else {
+                $("#otherTextbox").hide();
+            }
+        });
+
+        $("#otherTextbox").focusout(function () {
+            $("input:radio[name=Title]:checked").attr('value', $("#otherTextbox").val());
+        });
+    });
+
+
+
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify("Record Already Exist ! First Delete record then Create New! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

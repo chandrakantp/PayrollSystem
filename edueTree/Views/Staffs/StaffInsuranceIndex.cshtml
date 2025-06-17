@@ -1,0 +1,62 @@
+﻿@model edueTree.Models.InsuranceinfoModel
+
+@{
+    ViewBag.Title = "StaffInsuranceIndex";
+}
+@{
+    Layout = null;
+}
+
+<div class="col-md-12">
+    @*<section class="content-header">
+        <h1>Insurance Form Detail</h1>
+    </section>*@
+    <div class="box box-primary">
+        <div class="box-header">
+            <i class="fa fa-bars"></i>
+            <h4 class="box-title"> Insurance Form Detail</h4>
+            <div class="pull-right">
+                @if (ViewBag.message==true)
+                {
+                    <a href='@Url.Action("Editinsuranceinfo", "Staffs", new {id = Model.staffid})'><i class="fa fa-pencil"></i></a>
+                }
+                
+            </div>
+            @Html.HiddenFor(model => model.Insid)
+        </div>
+        <div class="box-body">
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <td><label>Universal Id</label></td>
+                    <td>@Html.DisplayFor(model => model.Staffcode)</td>
+                    <td><label>Name</label></td>
+                    <td>@Html.DisplayFor(model => model.Name)</td>
+                </tr>
+                <tr>
+                    <td><label>Policy No</label></td>
+                    <td>@Html.DisplayFor(model => model.Policyno)</td>
+                    <td><label>Policy Date</label></td>
+                    <td>
+                        @Convert.ToDateTime(Model.Policydate).ToString("MMM-dd-yyyy")
+                        @*@Html.DisplayFor(model => model.Policydate)*@
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Policy Expiry Date</label></td>
+
+                    <td>
+                        @Convert.ToDateTime(Model.Expirydate).ToString("MMM-dd-yyyy")
+                        @*@Html.DisplayFor(model => model.Expirydate)*@
+                    </td>
+
+
+                </tr>
+
+
+            </table>
+        </div>
+        <div class="box-footer">
+           <div class="pull-right"><a href='@Url.Action("NomineeCreate", "Staffs", new {@status = "Insurance", @id = Model.staffid})' class="btn btn-default"><i class="fa fa-file-pdf-o"></i> Add Nominee</a></div>
+        </div>
+    </div>
+</div>

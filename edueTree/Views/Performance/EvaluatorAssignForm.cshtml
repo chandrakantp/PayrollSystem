@@ -1,0 +1,109 @@
+﻿@model edueTree.Models.FormEvaluatorModel
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+<style>
+    .help-block {
+        color: red;
+    }
+
+    .select21 {
+        width: 520px !important;
+    }
+</style>
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <a data-toggle="modal" data-target="#myModal" class="btn btn-success pull-right">
+                    <i class="fa fa-plus-square"></i>   Add Evaluator Assignment
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Performance</a></li>
+        <li class="active">Form Assign to Employee</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="myModal" class="modal fade" role="dialog">
+                @using (Html.BeginForm("EvaluatorAssignForm", "Performance"))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header with-border">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"> Evaluator Assignment</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="form-horizontal">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Select Multiple Employee </label>
+                                            @Html.DropDownListFor(model => model.empid, Model.StaffListTwo, "----- Select Employee -----", new { id = "", @class = "form-control select21 select2", @multiple = "multiple", required = "required" })
+                                            @Html.ValidationMessageFor(model => model.empid, string.Empty, new { @class = "help-block" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Select Multiple Evaluator </label>
+                                            @Html.DropDownListFor(model => model.evaluatorEmpid, Model.StaffListOne, new { id = "", @class = "form-control select21 select2", @multiple = "multiple", required = "required" })
+                                            @Html.ValidationMessageFor(model => model.evaluatorEmpid, string.Empty, new { @class = "help-block" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Add" class="btn btn-default pull-right" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+        @{Html.RenderAction("FormEvaluatorResult", "Performance");}
+
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(".select21").select2();
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "SameEntry") {
+                $.notify("Same employee and same evaluator can't assign");
+            }
+        }
+    });
+</script>

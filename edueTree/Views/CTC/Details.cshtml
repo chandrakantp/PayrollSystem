@@ -1,0 +1,67 @@
+﻿@model edueTree.Models.StaffCTC
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StaffCTC</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ctc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ctc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.incrementDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.incrementDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createdBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createdBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createdDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createdDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Staff.staffCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Staff.staffCode)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ctcId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

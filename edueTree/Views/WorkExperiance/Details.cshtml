@@ -1,0 +1,96 @@
+﻿@model edueTree.Models.WorkExperiance
+
+<section class="content-header">
+    <h1>
+        Staff details
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Staff</a></li>
+        <li class="active">Detail</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-comments-o"></i>
+                    <h3 class="box-title">Details</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.organizationName)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.organizationName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.JoiningDate)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.JoiningDate)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.releaseDate)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.releaseDate)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.designation)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.designation)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.attachedCertificate)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.attachedCertificate)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CreatedDate)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Staff.staffCode)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Staff.staffCode)
+                            </dd>
+
+                        </dl>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                        <div class="btn-group" data-toggle="btn-toggle">
+                            <a href='@Url.Action("Edit", new { id = Model.previousId })'><i class="fa fa-pencil-square"></i></a>
+                            <a href='@Url.Action("Index")'><i class="fa fa-arrow-left"></i> Back to list</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

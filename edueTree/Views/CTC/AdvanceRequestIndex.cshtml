@@ -1,0 +1,86 @@
+﻿@model IEnumerable<edueTree.Models.AdvanceRequest>
+@{
+    Layout = null;
+}
+
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Load And Advances Request List</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table class="table table-fixed">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Requested Date")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Amount")
+                        </th>
+                        <th>
+                            @Html.DisplayName("EMI")
+                        </th>
+
+                        <th>@Html.DisplayName("Status")</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Convert.ToDateTime(item.requestedDate).ToString("dd-MMM-yyyy")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.willPayEMI)
+                            </td>
+                            <td>
+                                @switch (item.isApprove)
+                                {
+                                    case null:
+                                        @Html.DisplayName("Pending")
+                                        break;
+                                    case true:
+                                        @Html.DisplayName("Approved")
+                                        break;
+                                    default:
+                                        @Html.DisplayName("Rejected")
+                                        break;
+                                }
+                            </td>
+                         
+                            <td>
+                                <a data-toggle="modal" data-target="#myModalAllowancesDelete" href='@Url.Action("DeleteLoadAndAdvances", new { id = item.requestId , Actionname ="AdvanceRequest"})'><i class="fa fa-trash"></i></a>
+                            </td>
+
+                            <div class="modal fade" id="myModalAllowancesDelete" role="dialog"></div>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+</script>

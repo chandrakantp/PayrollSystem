@@ -1,0 +1,81 @@
+﻿@using System.Collections.Concurrent
+@model edueTree.Models.EmailReportingModel
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+
+<script src="~/plugins/select2/select2.js"></script>
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Reporting</a></li>
+        <li class="active">Email Reporting to Employee</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("EmailReportingEdit", "Reporting"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(s => s.ReportingId)
+                @Html.HiddenFor(s => s.StaffId)
+                @Html.HiddenFor(s => s.firmid)
+                
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title"> Email Reporting Assignment</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-6">
+                            <label>Employee Name </label>
+                            @Html.TextBoxFor(s => s.Empname, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Select Email Reporting </label>
+                                @Html.DropDownListFor(model => model.ReportingManagerId, Model.Reportinglist, " - Choose reporting- ", new { id = "StaffId", @class = "form-control select2", placeholder = "select staff", required = "required" })
+                                @Html.ValidationMessageFor(model => model.ReportingManagerId, string.Empty, new { @class = "help-block" })
+                                <span class="help-block" id="DesignationIdMessage" />
+                                @*@Html.DropDownList("ReportingManagerId", (SelectList)ViewBag.StaffList, "--Choose reporting--", new { @class = "form-control", required = "required" })*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("EmailReportingForm")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(".select2").select2();
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

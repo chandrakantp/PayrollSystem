@@ -1,0 +1,99 @@
+﻿@using System.Linq.Dynamic
+@using edueTree.Models
+@model edueTree.Models.permissionViewModel
+
+
+
+<div class="col-md-9">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Permissions</h3>
+            <div class="box-tools pull-right">
+                <div class="has-feedback">
+                </div>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <div class="mailbox-controls">
+                <div class="pull-right">
+                </div>
+            </div>
+            <div class="table-responsive mailbox-messages">
+                <table class="table table-hover table-striped">
+                    <tbody>
+                        @{ int count = 1; }
+                        <tr>
+                            <td> <label>Sr No.</label></td>
+                            <td>
+                                @*<input type="checkbox">*@
+                            </td>
+
+                            <td><label>Menu Item</label></td>
+                        </tr>
+                        @foreach (var item in Model.PermissionsList1)
+                        {
+                            @Html.HiddenFor(s => s.roleId, new { id = "roleid", @class = "role" })
+                            {
+                                dbContainer db = new dbContainer();
+                                var succresult = db.Permissions.FirstOrDefault(a => a.RoleId == Model.roleId && a.menuItemId == item.menuItemId);
+
+                                if (succresult != null)
+                                {
+                                    <tr>
+                                        <td>@count .</td>
+                                        <td><input class="searchType" type="checkbox" name="chkIsManuallyCheckIn" id="@item.menuItemId" checked="@succresult.IsActive" />
+
+                                        <td class="mailbox-subject">
+                                            <b>@item.Menu.MainMenu </b> >> @item.itemName
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>@count. </td>
+                                        <td><input class="searchType" type="checkbox" name="chkIsManuallyCheckIn" id="@item.menuItemId" />
+                                        <td class="mailbox-subject">
+                                            <b>@item.Menu.MainMenu </b> >> @item.itemName
+                                        </td>
+                                    </tr>
+                                }
+                                count++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="box-footer no-padding">
+            <div class="mailbox-controls">
+                <div class="pull-right">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $('.searchType').click(function () {
+        var permid = $(this).attr('id');
+        var status = $(this).is(":checked");
+        var roleid = $('.role').val();       
+        $.ajax({
+            type: "POST",
+            url: "/permissions/_Changepermissions",
+            data: { Attendid: permid, Status: status, Roleid: roleid }, 
+            success: function (data) {
+                if (data === "true") {
+                    $.notify(" Record Updated  Successfully! ", "success");
+                }
+            },
+            error: function () {
+                if (data === "false") {
+                    $.notify(" Something Went wrong ! ", "error");
+                }
+            }
+        });
+    });
+</script>

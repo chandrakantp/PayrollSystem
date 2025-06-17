@@ -1,0 +1,290 @@
+﻿@model IEnumerable<edueTree.Models.AttendanceSheetModel>
+@{
+    ViewBag.Title = "AttendanceSheet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<section class="content-header">
+    <h1>
+        @*Attendance sheet*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Attendance</a></li>
+        <li class="active">All Emp</li>
+    </ol>
+</section>
+
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Attendance Search Options - You can search Daily,Weekly & Monthly </h3>
+        </div>
+
+        <div class="box-body">
+            <div class="item">
+                @using (Html.BeginForm("AttendanceSheet", "Attendance", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @Html.Label("From Date:", new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBox("datepicker", null, new { id = "datepicker1", @class = "form-control" })
+                                </div>
+
+                                @Html.Label("To Date:", new { @class = "control-label col-md-1" })
+                                <div class="col-md-4">
+                                    @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">My attendance sheet</h3>
+
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+
+                            @{
+                                foreach (var group in Model.GroupBy(x => x.EmployeeName))
+                                {
+                                    var i = 0;
+                                    var absent = 0; var sandwich = 0;
+                                    var compansationBalance = @group.Sum(a => a.Componensation);
+                                    var totaltime = new TimeSpan();
+
+
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayName("Tran date")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Check In")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Check Out")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Total duration")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Status")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Holiday / Weekends")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Leaves status")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Shift Name")
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    foreach (var item in group)
+                                    {
+                                        if (i == 0)
+                                        {
+                                            compansationBalance = compansationBalance + item.ComponensationBalance;
+                                            i = 1;
+                                        }
+
+                                        if (item.TotalTime != null)
+                                        {
+                                            totaltime = (TimeSpan)(totaltime + item.TotalTime);
+                                        }
+                                        if (item.HolidayStatus == null && item.ThatDayStatus == null && item.Sesssion == null)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Convert.ToDateTime(item.TranDate).ToString("dd-MMM-yyyy")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ChekIn)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ChekOut)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TotalTime)
+                                                </td>
+                                                <td>
+                                                    @{
+
+                                            if (item.Sesssion == "Informed Absent")
+                                            {
+                                                absent++;
+                                            }
+                                            @Html.DisplayName("Absent")
+                                            absent++;
+
+                                                    }
+                                                    @*@if (compansationBalance != 0)
+                                                        {
+                                                            @Html.DisplayName("compensation")
+                                                            compansationBalance--;
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.DisplayName("Absent")
+                                                            absent++;
+                                                        }*@
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.HolidayStatus)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Sesssion)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ShiftName)
+                                                </td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Convert.ToDateTime(item.TranDate).ToString("dd-MMM-yyyy")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ChekIn)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ChekOut)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TotalTime)
+                                                </td>
+                                                <td>
+                                                    @if (item.sandwitch != null)
+                                                    {
+                                                        sandwich++;
+                                                    }
+                                                    @Html.DisplayFor(modelItem => item.sandwitch)
+                                                    @Html.DisplayFor(modelItem => item.ThatDayStatus)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.HolidayStatus)
+                                                </td>
+                                                <td>
+                                                    @{
+                                            if (item.Sesssion == "Informed Absent")
+                                            {
+                                                absent++;
+                                            }
+                                                    }
+                                                    @Html.DisplayFor(modelItem => item.Sesssion)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ShiftName)
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    <tfoot>
+                                        <tr>
+                                            <td><span class="label label-info">@group.Key</span></td>
+                                            <td><span class="label label-primary">Present Day: @group.Count(a => a.ThatDayStatus != null && a.HolidayStatus == null)</span> </td>
+                                            <td><span class="label label-success">Total Physically Present : @group.Count(a => a.ThatDayStatus != null)</span></td>
+                                            <td> <span id="Timetotalspan" class="label label-default">Total time: @Html.Raw(totaltime.Days * 24 + Convert.ToDecimal(totaltime.ToString(@"hh\.mm")))</span></td>
+                                            <td><span class="label label-success">Earn comp: @group.Sum(a => a.Componensation)</span></td>
+                                            <td><span class="label label-warning">Leaves: @group.Where(a => a.Sesssion != "Informed Absent").Sum(a => a.LeaveDays)</span></td>
+                                            <td><span class="label label-danger">Absent: @Html.Raw(absent + sandwich)</span></td>
+                                            <td><span class="label label-primary">WDPR: @group.Sum(a => a.PresentFlag)</span> </td>
+                                        </tr>
+                                    </tfoot>
+
+
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</section>
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                //"displayLength": 31,
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+<script type="text/javascript">
+    var totalTileFunction = function (e) {
+        document.getElementById("Timetotalspan").innerHTML("Total time:" + e);
+    }
+
+
+    $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm//yy",
+            orientation: "bottom auto",
+            autoclose: true,
+        });
+
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            orientation: "bottom auto",
+            autoclose: true,
+        });
+
+    });
+
+
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "date") {
+                $.notify("Please select From Date and To Date ", "warn");
+            }
+        }
+
+    });
+</script>

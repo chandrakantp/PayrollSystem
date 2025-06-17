@@ -1,0 +1,124 @@
+﻿@model edueTree.Models.TrainingFeedbackModel
+@{
+    ViewBag.Title = "Employeefeedback";
+}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Training</a></li>
+        <li class="active">Invitation Feedback</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+
+        <div class="col-md-12">
+            @using (Html.BeginForm("Employeefeedbackpost", "Training"))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="box box-success">
+                    <div class="box-header">
+                        @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                        <h4 class="box-title"> Add Training</h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            @Html.ValidationSummary(true)
+                            @Html.HiddenFor(model => model.TrainingId)
+                            @Html.HiddenFor(model => model.Id)
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Topic:</label>
+
+                                    @Html.DisplayFor(model => model.Topic, new { @class = "form-control" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Trainer Name:</label>
+
+                                    @Html.DisplayFor(model => model.TrainerName, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Trainer Department:</label>
+
+                                    @Html.DisplayFor(model => model.Deptname, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Duration:</label>
+
+                                    @Html.DisplayFor(model => model.Duration, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Write Feedback:</label>
+                                    @Html.TextAreaFor(model => model.Feedback, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Feedback, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="Feedback" />
+                                  
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="box-footer">
+                      
+                        <input type="submit" value="Submit Feedback" class="btn btn-default pull-right"/>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+    
+    </div>
+</section>
+<script type="text/javascript">
+
+    jQuery(document).ready(function () { $(".select2").select2(); });
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

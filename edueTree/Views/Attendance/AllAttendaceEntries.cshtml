@@ -1,0 +1,112 @@
+﻿@model IEnumerable<edueTree.Models.AttendanceSheetModel>
+@{
+    ViewBag.Title = "All Atteendance Entries";
+}
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title">All Employee Machine Data </h3>
+                </div>
+
+                <div class="box-body chat">
+                    <div class="item">
+                        @using (Html.BeginForm("AllAttendaceEntries", "Attendance", FormMethod.Get))
+                        {
+                            <div class="form-horizontal">
+
+                                <div class="form-group">
+                                    @Html.Label("From Date:", new {@class = "control-label col-md-2"})
+                                    <div class="col-md-2">
+                                        @Html.TextBox("datepicker", null, new { id = "datepicker", @class = "form-control datepicker" })
+                                    </div>
+
+                                    @Html.Label("To Date:", new {@class = "control-label col-md-2"})
+                                    <div class="col-md-2">
+                                        @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control datepicker" })
+                                    </div>
+                                    <div class="col-md-3">
+                                           @Html.DropDownList("empid", (IEnumerable<SelectListItem>) ViewBag.staffid, "---- Select Employee ----", new {@class = "form-control"})
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">All Emp Attendance Entries</h3>
+
+                    <div class="pull-right">
+                        <a href="#" id="exportexcel" class=" btn btn-success">
+                            <i class="fa fa-file-excel-o"></i> Excel
+                        </a>
+                    </div>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table id="activity" class="table table-fixed">
+                            <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Employee Name</th>
+                                <th>Date </th>
+                                <th>InOut Mode</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td> @item.EmployeeCode </td>
+                                    <td>@item.EmployeeName</td>
+                                    <td>@item.TranDate</td>
+                                    <td>@item.AttendMode</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+</script>
+@*<script src="~/Scripts/tableExport.js"></script>
+<script src="~/Scripts/jquery.base64.js"></script>
+<script src="~/Scripts/jspdf/libs/sprintf.js"></script>
+<script src="~/Scripts/jspdf/jspdf.js"></script>
+<script src="~/Scripts/jspdf/libs/base64.js"></script>
+
+<script type="text/javascript">
+    $(function ($) {
+        $('#exportexcel').bind('click', function (e) {
+            $("#activity").tableExport({ type: 'excel', escape: 'false' });
+        });
+    });
+</script>*@

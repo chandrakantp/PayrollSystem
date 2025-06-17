@@ -1,0 +1,103 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.NomineeDetail>
+@{
+    ViewBag.Title = "NomineeIndex";
+}
+
+@{
+
+    Layout = null;
+}
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Nominee List</h3>
+    </div>
+    <div class="box-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Nominee Name")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Nominee Address")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Nominee Relation")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Nominee Age")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Birth Date")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Share")
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                             @Html.DisplayFor(modelItem=>item.nomineename)
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem=>item.nomineeaddress)
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nomineeralation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.age)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.dob)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.share)
+                        </td>
+                        <td>
+                            @if (ViewBag.message == true)
+                            {
+                                <a href='@Url.Action("Editnominee", "Staffs", new {id = item.nomineeid})'><i class="fa fa-pencil-square"></i></a>
+                            }
+                            @*<a href='@Url.Action("Edit", new {id = item.holidayId})'><i class="fa fa-pencil-square"></i> <span class="hidden-sm hidden-xs"></span></a>*@
+                            @*@Html.EncodedActionLink("Edit", "Editnominee", "Staffs", new { id = item.nomineeid }, null)*@
+                        </td>
+                        <td>
+                            @if (ViewBag.message == true)
+                            {
+                                <a data-toggle="modal" data-target="#myModalnomineeDelete" href='@Url.Action("DeleteNominee", "staffs", new {id = item.nomineeid})'><i class="fa fa-trash"></i></a>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+        <div class="modal fade" id="myModalnomineeDelete" role="dialog"></div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

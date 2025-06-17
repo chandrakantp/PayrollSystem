@@ -1,0 +1,101 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.Permission>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+@*<section class="content-header">
+        <h1>
+            Manage Permission
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Permission</a></li>
+            <li class="active">Index</li>
+        </ol>
+    </section>*@
+
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Permission List</h3>
+    </div>
+    <div class="box-body chat" id="chat-box">
+        <div class="item">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Roles name")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Menu name")
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Model.GroupBy(a => a.AspNetRole.Name))
+                    {
+                        <tr>
+                            <td> @Html.DisplayFor(modelItem => role.Key)</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        foreach (var item in role)
+                        {
+                            <tr>
+                                <td></td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MenuItem.itemName)
+                                </td>
+                                <td>
+                                    @Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "Edit", "Permissions", new { id = item.permissionId }, null)
+                                </td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#myModalPermissionDelete" href='@Url.Action("Delete", new { id = item.permissionId })'><i class="fa fa-trash"></i></a>
+
+                                </td>
+
+
+                            </tr>
+                        }
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalPermissionDelete" role="dialog"></div>
+    @*<div class="box-footer">
+            <div class="input-group box-tools pull-right">
+                <a href='@Url.Action("Create")' class="btn btn-success"><i class="fa fa-plus"></i></a>
+            </div>
+        </div>*@
+</div>
+
+<script>
+    $(function () {
+        //$.noConflict();
+        $(".table").DataTable({ "bSort": false,   dom: 'Bfrtip',
+                    buttons: [
+                        "copy", "csv", "excel", "pdf", "print"
+                    ] });
+        //$(document).ready(function () {
+        //    $('.table').DataTable({
+                
+        //        dom: 'Bfrtip',
+        //        buttons: [
+        //            "copy", "csv", "excel", "pdf", "print"
+        //        ]
+        //    });
+        //});
+
+    });
+
+</script>

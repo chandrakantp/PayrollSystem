@@ -1,0 +1,198 @@
+﻿@model edueTree.Models.LeaveRequest
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LeaveRequest</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <div class="form-group">
+            @Html.Label("Date:", new { @class = "control-label col-md-3" })
+            <div class="col-md-5">
+                @Html.TextBoxFor(model => model.dateFrom, new { id = "dateFrom", @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div id="datepicker" data-date="12/03/2012"></div>
+            <input type="hidden" id="my_hidden_input">
+        </div>
+        <div class="col-md-5">
+            <div id="datepicker1" data-date="12/01/2012"></div>
+            <input type="hidden" id="my_hidden_input1">
+        </div>
+        <div class="form-group">
+            @Html.Label("Date:", new { @class = "control-label col-md-3" })
+            <div class="col-md-5">
+                @Html.TextBoxFor(model => model.dateFrom, new { id = "msg", @class = "form-control" })
+            </div>
+        </div>
+</dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {id = Model.tranId}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<script type="text/javascript">
+    $(function() {
+        $('#datepicker').datepicker({
+            multidate: true,
+            
+        });
+     
+
+        $('#datepicker1').datepicker({
+            multidate: true,
+            onSelect: function (value) {
+                $('#msg').text(value);
+            }
+        });
+
+
+        $('#datepicker').on("changeDate", function () {
+            $('#my_hidden_input').val(
+                $('#datepicker').datepicker('getFormattedDate')
+            );
+        });
+
+        $('#datepicker1').on("changeDate", function () {
+            $('#msg').val(
+                $('#datepicker').datepicker('getFormattedDate')
+            );
+        });
+
+
+    
+
+        //var last = new Date(currentTime.getFullYear(), currentTime.getMonth() + 1, 0);
+        //alert(last);
+
+        $('#dateFrom').datepicker({
+            multidate: true,
+            startDate:'+30D',
+            //endDate: '+60D',
+            viewMode: "months"
+        });
+
+    });
+   
+</script>
+
+
+@*@model edueTree.Models.LeaveRequest
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LeaveRequest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <div class="form-group">
+            @Html.Label("Date:", new { @class = "control-label col-md-3" })
+            <div class="col-md-5">
+                @Html.TextBoxFor(model => model.dateFrom, new { id = "dateFrom", @class = "form-control" })
+            </div>
+        </div>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sesionDateFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sesionDateFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sesionDateTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sesionDateTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.totalCounts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.totalCounts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createdDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createdDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.approvalDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.approvalDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LeaveType.LeaveType1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LeaveType.LeaveType1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Staff.staffCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Staff.staffCode)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.tranId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

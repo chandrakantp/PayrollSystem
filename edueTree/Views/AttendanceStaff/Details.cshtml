@@ -1,0 +1,75 @@
+﻿@model edueTree.Models.AttendanceStaff
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AttendanceStaff</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.enrollNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.enrollNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.attendDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.attendDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.verifyMode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.verifyMode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.inOutMode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.inOutMode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.worCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.worCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.attendTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.attendTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isManuallyCheckOut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isManuallyCheckOut)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.attendId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

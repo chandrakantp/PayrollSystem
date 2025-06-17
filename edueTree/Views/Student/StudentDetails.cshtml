@@ -1,0 +1,541 @@
+﻿@using System.Data.Entity.ModelConfiguration.Configuration
+@model edueTree.Models.Student
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .dl-horizontal dt {
+        width: 145px;
+    }
+
+    hr {
+        margin-bottom: 4px;
+        margin-top: 5px;
+    }
+
+    .img-thumbnail {
+        height: 160px;
+    }
+    /*input[type='file'] {
+        opacity: 0;
+    }*/
+    .file-input-wrapper {
+        height: 162px;
+        margin: 5px;
+        overflow: hidden;
+        position: relative;
+        width: 162px;
+        background-color: #fff;
+        cursor: pointer;
+    }
+
+        .file-input-wrapper > input[type="file"] {
+            font-size: 110px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-input-wrapper > .btn-file-input {
+            background-color: #494949;
+            border-radius: 4px;
+            color: #fff;
+            display: inline-block;
+            height: 34px;
+            margin: 0 0 0 -1px;
+            padding-left: 0;
+            width: 121px;
+            cursor: pointer;
+        }
+
+
+    .bg-teal-gradient {
+        color: #000000;
+    }
+
+    .modal {
+        top: 38px;
+    }
+
+    .modal {
+        background: rgba(0, 0, 0, 0.0) none repeat scroll 0 0;
+    }
+</style>
+
+
+<section class="content-header">
+    <h1>
+        Student dashboard
+        <small>
+            <div style="margin-left: 270px;">
+                <a href="@Url.Action("Index", "Student")"> Back to list</a>
+            </div>
+        </small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Student</a></li>
+        <li class="active">Detail</li>
+    </ol>
+</section>
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-user"></i>
+        <h3 class="box-title">Details</h3>
+        @*<div class="pull-right">
+            <td>
+                <a data-toggle="modal" data-target="#myModalstaffEdit" href='@Url.Action("Edit", new { id = Model.studentId })'><i class="fa fa-pencil-square fa-2x"></i></a>
+            </td>
+            <div class="modal fade" id="myModalstaffEdit" role="dialog"></div>
+            <a href='@Url.Action("Edit", new {id = Model.staffId})'><i class="fa fa-pencil-square fa-2x"></i></a>
+
+        </div>*@
+    </div>
+    <div class="col-md-2">
+        <div class="">
+            <div class="item">
+                <dl class="">
+                    <dd>
+                        @if (Model.studentPhoto == null)
+                        {
+                            <img src="~/Images/profile.jpg" class="img-rounded responsive" />  <br /> <br />
+                            using (Html.BeginForm("UploadStudentImage", "Student", new { studentId = Model.studentId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <input id="files" title="Upload a image" type="file" name="file" multiple />
+                                <img id="image" height="150" width="150" style="display: none;" alt="" />
+
+                                <div class="form-group">
+                                    <input type="submit" value="Upload" class="btn btn-default" />
+                                </div>
+                            }
+
+                        }
+
+                        else
+                        {
+                            using (Html.BeginForm("UploadStudentImage", "Student", new { studentId = Model.studentId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div class="file-input-wrapper">
+                                    <img src="~/StudentPhoto/@Model.studentPhoto" width="180" class="img-thumbnail" />
+                                    <input id="files" title="" type="file" name="file" multiple />
+                                    <img id="image" height="150" width="150" alt="" style="" />
+                                    <span id="img_text" style="float: right; margin-right: -80px; margin-top: -14px;"></span>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <input type="submit" value="Save Change" class="btn btn-default btn-sm" />
+                                </div>
+                            }
+
+                        }
+
+
+
+                    </dd>
+                    <br />
+
+
+                    <b> @Html.Label("Emergency Contact ", new { style = "color:maroon;" })</b>
+                    <hr />
+
+                    <font size="2">
+                        @Html.DisplayFor(model => model.emergencyContact1)
+                        @Html.DisplayFor(model => model.emergencyContact1Relation),<br />
+                        @Html.DisplayFor(model => model.emergencyContact2)
+                        @Html.DisplayFor(model => model.emergencyContact2Relation),
+
+                    </font>
+
+                </dl>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+        <div class="">
+            <div class="item">
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Students Details</div>
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayName("Roll Number :")
+                            </dt>
+
+                            <dd>
+                                <b>    @Html.DisplayFor(model => model.rollNo)</b>
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Name :")
+                            </dt>
+
+                            <dd>
+                                <b>
+                                    @Html.DisplayFor(model => model.firstName)
+                                    @Html.DisplayFor(model => model.middleName)
+                                    @Html.DisplayFor(model => model.lastName)
+                                </b>
+                            </dd>
+                            <dt>
+                                @Html.DisplayName("Gender :")
+                            </dt>
+
+                            <dd>
+                                @if (Model.gender == "1")
+                                {
+                                    @Html.DisplayName("Male")
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("Female")
+                                }
+                            </dd>
+                            <dt>
+                                @Html.DisplayName("DOB :")
+                            </dt>
+
+                            <dd>
+                                @Convert.ToDateTime(Model.dob).ToString("dd MMM yyyy")
+                            </dd>
+
+
+                          <dt>
+                                    @Html.DisplayName("Nationality :")
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.nationality)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayName("Admission Year :")
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.addmissionYear)
+                                </dd>
+
+                                @*<dt>
+                                    @Html.DisplayName("Body Marks :")
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.bodyMarks)
+                                </dd>*@
+
+
+                            <dt>
+                                @Html.DisplayName("Cast :")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Cast.cast1)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Sub cast :")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.SubCast.subCast1)
+                            </dd>
+                        
+                            <dt>
+                                @Html.DisplayName("Mother Toungh :")
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.motherTongue)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="">
+            <div class="item">
+                <div class="bs-example">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"> Medical Details</div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+
+                                <dt>
+                                    @Html.DisplayName("BloodGroup:")
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.bloodGroup)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayName("Body Marks:")
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.bodyMarks)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayName("Medical Details :")
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.medicalDetails)
+                                </dd>
+
+
+
+                            </dl>
+                        </div>
+                    </div>
+
+                    @*<div class="panel panel-primary">
+                        <div class="panel-heading">Last School Information</div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayName("Leaving Date:")
+                                </dt>
+                                <dd>
+                                    @Convert.ToDateTime(Model.leavingDate).ToString("dd MMM yyyy")                                    
+                                </dd>
+                                <dt>
+                                    @Html.DisplayName("Leaving Reason:")
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.leavingReason)
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>*@
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+        <div class="">
+            <div class="item">
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Parents/Gardian Information</div>
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+
+                            <dt>
+                                @Html.DisplayName("Father Name :")
+                            </dt>
+
+                            <dd>
+                                <b>
+                                    @Html.DisplayFor(model => model.fatherFirstName)
+                                    @Html.DisplayFor(model => model.fatherMiddleName)
+                                    @Html.DisplayFor(model => model.fatherLastName)
+                                </b>
+                            </dd>
+                            <dt>
+                                @Html.DisplayName("Mother Name :")
+                            </dt>
+
+                            <dd>
+                                <b>
+                                    @Html.DisplayFor(model => model.motherName)
+                                </b>
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Conatct 1:")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.contact1)
+                            </dd>
+                            <dt>
+                                @Html.DisplayName("Conatct 2:")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.contact2)
+                            </dd>
+                            <dt>
+                                @Html.DisplayName("E-m@ail :")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.email)
+                            </dd>
+
+
+                            <dt>
+                                @Html.DisplayName(" Pancard No:")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.pancardNo)
+                            </dd>
+                            <dt>
+                                @Html.DisplayName("Occupation:")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.fatherOccupation)
+                            </dd>
+
+                            @if (Model.passportNo != null)
+                            {
+
+                                <dt>
+                                    @Html.DisplayName("Passport No :")
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.passportNo)
+                                </dd>
+                            }
+                            
+                              @*<dt>
+                                @Html.DisplayName("Sibling Brother:")
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.siblingBrothers)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Sibling Sister:")
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.siblingSisters)
+                            </dd>*@
+
+                            @*<dt>
+                                @Html.DisplayName("Student Medical Details :")
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.medicalDetails)
+                            </dd>*@
+                          
+
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+        <div class="">
+            <div class="item">
+                <div class="bs-example">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Temporarily Address</div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                @Html.DisplayFor(model => model.tempAddress)
+                                @Html.DisplayFor(model => model.tempArea)
+                                @Html.DisplayFor(model => model.City.CityName)
+                                @Html.DisplayFor(model => model.tempPincode)
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Permonant Address</div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                @Html.DisplayFor(model => model.perAddress)
+                                @Html.DisplayFor(model => model.perArea)
+                                @Html.DisplayFor(model => model.City1.CityName)
+                                @Html.DisplayFor(model => model.perPincode)
+                            </dl>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    @*<div class="col-md-12">
+        <div class="">
+            <div class="item">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"> Sibling info</div>
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">                                                
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+<div class="box-footer">
+        <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+            <div class="btn-group" data-toggle="btn-toggle">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    document.getElementById("files").onchange = function () {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            document.getElementById("image").src = e.target.result;
+        };
+        reader.readAsDataURL(this.files[0]);
+    };
+
+    (function ($) {
+        $('input[type="file"]').bind('change', function () {
+            $("#img_text").html($('input[type="file"]').val());
+        });
+    })(jQuery);
+    //$('#button').click(function () {
+    //    $("input[type='file']").trigger('click');
+    //})
+
+    //$("input[type='file']").change(function () {
+    //    $('#val').text(this.value.replace(/C:\\fakepath\\/i, ''))
+    //})
+</script>
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

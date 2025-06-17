@@ -1,0 +1,302 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.StaffModel>
+<script type="text/javascript">
+    function onchangeevent() {
+        var value = $("#txtid").val();
+        jQuery.ajax({
+            type: "POST",
+            url: "../Staffs/Index",
+            data: { str: value },
+            datatype: "json",
+            success: function (response) {
+                alert(response);
+            }
+        });
+
+    }
+</script>
+<style type="text/css">
+    .jumbotron {
+        background-color: #ffffff;
+        padding-bottom: 46px;
+        padding-top: 0;
+    }
+
+    .box-header {
+        padding: 5px;
+    }
+</style>
+
+<br />
+<section class="content-header">
+    <h1>
+        @*Manage staff*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Staff</a></li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+
+@if (Model.Any())
+{
+    <section class="col-lg-12 connectedSortable">
+        <div class="box box-success">
+            <div class="box-header">
+                <i class="fa fa-search"></i>
+                <h3 class="box-title">Search Employee</h3>
+            </div>
+            <div class="box-body chat">
+                <div class="item">
+                    @using (Html.BeginForm("Index", "Staffs", FormMethod.Get))
+                    {
+                        <div class="form-horizontal">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group ">
+                                        @Html.Label("First name:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBox("searchString", null, new { @placeholder = "Enter First name, Last Name, Emp code...", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group ">
+                                        @Html.Label("Designation:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.DropDownList("designationId", (IEnumerable<SelectListItem>)ViewBag.degreeId, "---- Select Designation ----", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="content">
+        <div class="row">
+            <section class="col-lg-12 connectedSortable">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-list"></i>
+                        <h3 class="box-title">Employee List</h3>
+                        <div class="pull-right">
+                            <a href='@Url.Action("Index", "Staffs")' class="btn btn-success" data-toggle="tooltip" title="Page Refresh">
+                                <i class="fa fa-refresh"></i>
+                            </a>
+                            <a href="#" id="exportexcel" class=" btn btn-success">
+                                <i class="fa fa-file-excel-o"></i> Excel
+                            </a>
+
+                            <button type="button" id="btnPrint" class="btn btn-info">
+                                <i class="fa fa-print"></i> Print
+                            </button>
+                        </div>
+                    </div>
+                   
+                        <div id="dvContainer">
+                            <div class="box-body chat" id="chat-box">
+                                <div class="item">
+                                    <div class="table-responsive">
+                                        <table id="activity" class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        @Html.DisplayName("Emp Code")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Enroll No")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("User Name")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Full Name")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Reporting")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Gender")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Contact")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Email")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Design")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Dept")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Birth Date")
+                                                    </th>
+                                                    @*<th></th>*@
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            @foreach (var item in Model)
+                                            {
+
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.StaffCode)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.EnrollNumber)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SchoolCode)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.FirstName)
+                                                        @Html.DisplayFor(modelItem => item.MiddleName)
+                                                        @Html.DisplayFor(modelItem => item.LastName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ReportingTo)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.GenderSet)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Contact)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Email)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Designation.designation1)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Department.deptName)
+                                                    </td>
+                                                    <td>
+                                                        @Convert.ToDateTime(item.Dob).ToString("dd-MM-yyyy")
+                                                    </td>
+                                                    @*<td>
+                                                            <a href='@Url.Action("StaffDashboard", new {staffId = item.StaffId})'><i class="fa fa-pencil-square"></i> </a>
+                                                        </td>*@
+
+                                                    <td>
+                                                        @*<a href='@Url.Action("StaffDashboard", new {staffId = item.StaffId})'><i class="fa fa-cog"></i> </a>*@
+                                                        @Html.EncodedActionLink("Detail", "StaffDashboard", "Staffs", new { staffId = item.StaffId }, null)
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                  
+                    <div class="box-footer">
+                        <div class="input-group box-tools pull-right">
+                            <a href='@Url.Action("Create")' class="btn btn-success"><i class="fa fa-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+}
+else
+{
+
+    <section class="col-lg-6 connectedSortable">
+        <div class="box box-success">
+            <div class="box-header" style="background-color: ghostwhite">
+                <i class="fa fa-search"></i>
+                <h3 class="box-title">Search result</h3>
+                <div class="pull-right">
+                    <a href='@Url.Action("InactiveEmployeeList", "Staffs")' class="btn btn-info">
+                        <i class="fa fa-refresh"></i>
+
+                    </a>
+                </div>
+            </div>
+            <div class="box-body chat" id="chat-box">
+                <div class="item">
+                    <div class="table-responsive">
+                        <table class="table table-hover"></table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="jumbotron">
+                <p> No record found !!!</p>
+            </div>
+
+        </div>
+    </section>
+
+
+
+}
+
+<script src="~/Scripts/tableExport.js"></script>
+<script src="~/Scripts/jquery.base64.js"></script>
+<script src="~/Scripts/jspdf/libs/sprintf.js"></script>
+<script src="~/Scripts/jspdf/jspdf.js"></script>
+<script src="~/Scripts/jspdf/libs/base64.js"></script>
+
+
+<script type="text/javascript">
+    $(function ($) {
+        $('#exportexcel').bind('click', function (e) {
+            $("#activity").tableExport({ type: 'excel', escape: 'false' });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $("#btnPrint").bind("click", function () {
+        var divContents = $("#dvContainer").html();
+        var printWindow = window.open('', '', 'height=400,width=800');
+        printWindow.document.write('<html><head><title>DIV Contents</title>');
+        printWindow.document.write('</head><body >');
+        printWindow.document.write(divContents);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    });
+</script>
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

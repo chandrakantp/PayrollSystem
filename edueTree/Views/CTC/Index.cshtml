@@ -1,0 +1,154 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.StaffCTC>
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <a href='@Url.Action("Create")' class="btn btn-success pull-right">
+                    <i class="fa fa-plus-square"></i> Add CTC
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Staff CTC </a></li>
+        <li class="active">List</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Staff CTC List</h3>
+                </div>
+                <div class="box-body">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Staff Code")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Staff Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Structure Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Department")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("CTC")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Increment Date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Status")
+                                        </th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Staff.staffCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Staff.firstName)
+                                                @Html.DisplayFor(modelItem => item.Staff.middleName)
+                                                @Html.DisplayFor(modelItem => item.Staff.lastName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SalaryStructure.StuctureName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Staff.Department.deptName)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ctc)
+                                            </td>
+                                            <td>
+                                                @Convert.ToDateTime(item.incrementDate).ToString("dd MMM yyyy")                                            
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.status)
+                                            </td>
+                                            <td>
+                                                @Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "Edit", "CTC", new { id = item.ctcId }, null)
+                                            </td>
+                                            <td>
+                                                <a data-toggle="modal" data-target="#myModalDeptDelete" href='@Url.Action("Delete", new { id = item.ctcId})'><i class="fa fa-trash"></i></a>
+                                            </td>                                                                                    
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+                </div>
+                @*<div class="box-footer">
+                    <div class="input-group box-tools pull-right">
+                        <a href='@Url.Action("Create")' class="btn btn-success  pull-right"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>*@
+            </div>
+        </section>
+    </div>
+</section>
+<div class="modal fade" id="myModalDeptDelete" role="dialog"></div>
+
+<!--Datatable Searching Sorting-->
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        $(".select2").select2();
+        if (true) {
+
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+    });
+
+
+
+$(function() {
+        $(document).ready(function() {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+</script>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Bootstrap-Validation</id>
+    <version>1.0.0</version>
+    <title>Bootstrap-Validation</title>
+    <authors>Mike Osborn</authors>
+    <owners>Mike Osborn</owners>
+    <licenseUrl>http://github.com/MikeOsborn/bootstrap-validation/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://github.com/MikeOsborn/bootstrap-validation</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Bootstrap-Validation converts MVC input validation messages into Bootstrap popovers.</description>
+    <dependencies>
+      <dependency id="jQuery" version="1.7.2" />
+      <dependency id="jQuery.Validation" version="1.8" />
+      <dependency id="Microsoft.jQuery.Unobtrusive.Validation" version="2.0.20505.0" />
+      <dependency id="Twitter.Bootstrap" version="2.1.1" />
+    </dependencies>
+  </metadata>
+</package>

@@ -1,0 +1,71 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.QuestionMaster>
+@{
+    Layout = null;
+}
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Question List</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table class="table table-fixed">
+                <thead>
+                    <tr>
+                        <th>Section</th>
+                        <th>Question</th>
+                        <th>weightage</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TblSection.SectionName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.QuestionName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.weightage)
+                            </td>
+                            <td>
+                                @*@Html.ActionLink("Edit", "QuestionEdit", "Performance", new { id = item.QuestionId }, null)*@
+                                <a href="@Url.Action("QuestionEdit", "Performance", new { id = item.QuestionId })"> <i class="fa fa-pencil-square"></i></a>
+                            </td>
+                            <td>
+                                <a data-toggle="modal" data-target="#myModalPermissionDelete" href='@Url.Action("DeleteQuestion", new {id = item.QuestionId})'><i class="fa fa-trash"></i></a>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="myModalPermissionDelete" role="dialog"></div>
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

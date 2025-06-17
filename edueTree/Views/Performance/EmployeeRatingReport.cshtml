@@ -1,0 +1,143 @@
+﻿@model IEnumerable<edueTree.Models.EmpQuestionlistModel>
+@{
+    ViewBag.Title = "EmpQuestionlistModel";
+}
+@{
+
+    var rating = new SelectList(new[]
+        {
+           // new SelectListItem { Value = null , Text =  "----  Select Rating ----", Selected = true},
+            new SelectListItem {Text = "0", Value = "0",Selected = true},
+            new SelectListItem {Text = "1", Value = "1"},
+            new SelectListItem {Text = "2", Value = "2"},
+            new SelectListItem {Text = "3", Value = "3"},
+            new SelectListItem {Text = "4", Value = "4"},
+            new SelectListItem {Text = "5", Value = "5"},
+            new SelectListItem {Text = "6", Value = "6"},
+            new SelectListItem {Text = "7", Value = "7"},
+            new SelectListItem {Text = "8", Value = "8"},
+            new SelectListItem {Text = "9", Value = "9"},
+            new SelectListItem {Text = "10", Value = "10"},
+        }, "Value", "Text");
+}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Question List</a></li>
+        <li class="active">List</li>
+    </ol>
+</section>
+
+
+
+<section class="content">
+    <div class="row">
+     
+            <section class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-user"></i>
+                        <h3 class="box-title"> Employee Question Rating</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            @foreach (var group in Model.GroupBy(x => x.Title))
+                            {
+                                <center>
+                                    <tr class="group-header">
+                                        <td>
+                                            <span style="color: green;"> <h4>@group.Key</h4></span>
+                                        </td>
+                                    </tr>
+                                </center>
+                            }
+                            <table id="StructureTable" class="table table-fixed">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Questions</th>
+                                        <th>Weightage</th>
+                                        <th>Rating</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    @{
+                            int index = 1;
+                            foreach (var qus in Model)
+                            {
+                                <tr>
+                                    <td> @index</td>
+                                    <td> @Html.DisplayFor(modelItem => qus.Questions)</td>
+                                    <td> @Html.DisplayFor(modelItem => qus.Wightage) %</td>
+                                    <td> @Html.DisplayFor(modelItem => qus.Rating) %</td>
+                                </tr>
+                                index++;
+                            }
+                                    }
+                                </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td>Total :</td>
+                                        <td><b> @Model.Sum(s => s.Wightage) % </b></td>
+                                        <td><b> @Model.Sum(s => s.Rating) %</b></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        
+    </div>
+</section>
+
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $(".table").DataTable({
+                "ordering": false,
+                dom: "Bfrtip",
+                buttons: [
+                    "copy", "csv", "excel", "pdf", "print"
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "error");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this Shift used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>
+
+
+

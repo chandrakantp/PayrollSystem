@@ -1,0 +1,76 @@
+﻿
+@model IEnumerable<edueTree.Models.BufferTimeSetting>
+@{
+    Layout = null;
+}
+@using edueTree.Helpers
+@using PagedList.Mvc;
+<style type="text/css">
+    div.DTTT_container {
+        float: none;
+        text-align: center;
+    }
+</style>
+<div class="callout callout-warning">
+    <h4>Important Note !</h4>
+    <p>
+        This time is used for Using buffer time during check in as per the shift assign this time is declared in minutes for 1 hour 60 min is the value.
+
+
+    </p>
+    <p>If you dont set any value for buffer time . The value considered would be 30 minutes</p>
+</div>
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">BufferTime Setting</h3>
+    </div>
+    <div class="box-body">
+
+        
+
+        <table class="table table-striped">
+            <tr>
+                <th>
+
+                    @Html.DisplayName("Buffer Time")
+
+                </th>
+                <th></th>
+                <th></th>
+
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EarlyIn)
+                    </td>
+                    <td>
+                        @Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "Edit", "MasterSetting", new {id = item.BufferId}, null)
+                    </td>
+                    <td>
+                        <a data-toggle="modal" data-target="#myModalDeptDelete" href='@Url.Action("Delete", new {id = item.BufferId})'><i class="fa fa-trash"></i></a>
+                    </td>
+
+                </tr>
+            }
+        </table>
+        <div class="modal fade" id="myModalDeptDelete" role="dialog"></div>
+
+    </div>  
+</div>
+<script>
+    $(function () {       
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

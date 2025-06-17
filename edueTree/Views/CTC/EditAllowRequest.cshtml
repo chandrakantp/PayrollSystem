@@ -1,0 +1,137 @@
+﻿@model edueTree.Models.AllowRequestModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+@{
+    var StatusList = new SelectList(new[]
+        {
+            
+              new SelectListItem {Text = "Pending", Value = "Pending"},
+              new SelectListItem {Text = "Approved", Value = "Approved"},
+              new SelectListItem {Text = "Rejected", Value = "Rejected"}
+
+         }, "Value", "Text");
+}
+
+
+@{
+    var aboutsite = new SelectList(new[]
+        {
+            new SelectListItem { Value = null , Text =  "----  Select Choice ----", Selected = true},
+            new SelectListItem {Text = "Credit", Value = "Credit"},
+            new SelectListItem {Text = "Debit", Value = "Debit"},
+        }, "Value", "Text");
+}
+
+
+<section class="content-header">
+    <h1>       
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/CTC/AllowancesRequestApprovalList"><i class="fa fa-list"></i>Allowances</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.AllowTranId)
+                @Html.HiddenFor(model => model.AllowId)
+                @Html.HiddenFor(model => model.staffid)
+                @Html.HiddenFor(model => model.firmid)
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h4 class="box-title">Allowance Request </h4>
+                    </div>
+                    <hr />
+                    <div class="box-body">
+
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Allowances Type:</label>
+                                    @Html.TextBoxFor(model => model.Allowancename, new {id = "Amount", @class = "form-control", placeholder = "Amount", disabled = "disabled"})
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Amount:</label>
+                                    @Html.TextBoxFor(model => model.Amount, new { id = "Amount", @class = "form-control", placeholder = "Amount", required = "required", @maxlength = "9" })
+                                    @Html.ValidationMessageFor(s=>s.Amount)
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Staff Remark:</label>
+                                    @Html.TextBoxFor(model => model.StaffRemark, new { id = "StaffRemark", @class = "form-control", placeholder = "StaffRemark" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Expense date:</label>
+                                    @Html.TextBoxFor(model => model.Expensedate, new { id = "Expensedate", @class = "form-control", placeholder = "Expense date", })
+                                </div>
+                            </div>
+
+
+                            @*<div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Transaction Type:</label>
+                                    @Html.TextBoxFor(model => model.transactionType, new { id = "transactionType", @class = "form-control", placeholder = "transactionType" })
+                                </div>
+                            </div>*@
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Transaction:</label>
+                                    @Html.DropDownList("transactionType", aboutsite, new { id = "duration", @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Remark:</label>
+                                    @Html.TextAreaFor(model => model.AdminRemark, new { id = "AdminRemark", @class = "form-control", placeholder = "Remark" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    @Html.DropDownListFor(model => model.status, StatusList, new {id = "statuslist", @class = "form-control"})
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("AllowancesRequestApprovalList")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>             
+            }
+        </section>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Expensedate').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true,
+        });
+    });
+</script>

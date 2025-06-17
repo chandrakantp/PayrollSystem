@@ -1,0 +1,175 @@
+﻿@model IEnumerable<edueTree.Models.AttendanceRequest>
+
+<section class="content header">
+    <div class="row">
+        <div class="col-md-12">
+
+            <a href='@Url.Action("AttendanceRequest", "AttendanceStaff")' class="btn btn-success pull-right">
+                <i class="fa fa-plus-square"></i> Add Manually Request
+            </a>
+
+        </div>
+    </div>
+</section>
+<section class="content-header">
+    <h1>
+        @*Manage staff Attendance*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Staff Attendance</a></li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Manually Attendance Request List</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Staff Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Request Date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Attendance Date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Check In/Check Out")
+                                        </th>
+                                        <th>@Html.DisplayName("Status")</th>
+                                        <th></th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+
+                                    @foreach (var item in Model)
+                                    {
+                                        @Html.HiddenFor(modelItem => item.Staff.staffId)
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Staff.firstName)
+                                                @Html.DisplayFor(modelItem => item.Staff.middleName)
+                                                @Html.DisplayFor(modelItem => item.Staff.lastName)
+
+                                            </td>
+                                            <td>
+                                                @Convert.ToDateTime(item.transDate).ToString("dd MMM yyyy")
+                                            </td>
+                                            <td>
+                                                @Convert.ToDateTime(item.attendDate).ToString("dd MMM yyyy HH:mm:ss")
+                                                @*@Convert.ToDateTime(item.attendDate).ToString("dd MMM yyyy hh:mm:ss")*@
+                                            </td>
+
+                                            @if (item.inOutMode == 0)
+                                            {
+                                                <td>
+                                                    <span class="" style="color: green"><b>@Html.DisplayName("Check In")</b></span>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <span class="" style="color: red"><b>@Html.DisplayName("Check Out")</b></span>
+                                                </td>
+                                            }
+
+
+                                            @if (item.isApproved == null)
+                                            {
+                                                <td>
+                                                    <span class="" style="color: orange"><b>@Html.DisplayName("Pending")</b></span>
+                                                </td>
+                                            }
+                                            else if (item.isApproved == true)
+                                            {
+                                                <td>
+                                                    <span class="" style="color: green"><b>@Html.DisplayName("Approved")</b></span>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <span class="" style="color: red"><b>@Html.DisplayName("Rejected")</b></span>
+                                                </td>
+                                            }
+                                            @if (item.isApproved == null)
+                                            {
+                                                <td>
+                                                    <a href='@Url.Action("EditAttendRequestMember", new { id = item.transId, actionName = "AttendRequestList" })'><i class="fa fa-pencil-square"></i> <span class="hidden-sm hidden-xs"></span></a>
+                                                </td>
+                                            }
+                                            <td>
+                                                <a href='@Url.Action("DeleteAttendRequest", new { id = item.transId, date = item.attendDate, actionName = "AttendRequestList" })'><i class="fa fa-trash"></i> <span class="hidden-sm hidden-xs"></span></a>
+                                            </td>
+
+                                        </tr>
+
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

@@ -1,0 +1,117 @@
+﻿@model edueTree.Models.StructurepermissionModel
+
+<link href="~/plugins/select2/select2.min.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+<style type="text/css">
+    .help-block {
+        color: #BC3C3C;
+    }
+</style>
+
+<style>
+    .select2 {
+        width: 570px !important;
+    }
+</style>
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <a data-toggle="modal" data-target="#myModal" class="btn btn-success pull-right">
+                    <i class="fa fa-plus-square"></i> Add Structure Permission
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Structure Permission</a></li>
+        <li class="active">Create</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div id="myModal" class="modal fade" role="dialog">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"> Add Structure Permission</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="item">
+
+                                    <div class="form-horizontal">
+                                        
+                                        @Html.ValidationSummary(true)
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Structure Name</label>
+                                                @Html.DropDownList("StructId", (IEnumerable<SelectListItem>) ViewBag.structlist, " Select Structure Permission", new {@class = "form-control", required = "required"})
+                                                @*@Html.DropDownList("StructId", null, "Select Structure Permission", new { @class = "col-md-10 form-control", required = "required" })*@
+                                                @Html.ValidationMessageFor(model => model.StructId)
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Select multiple Employee </label>
+                                                @Html.DropDownList("staffid", (IEnumerable<SelectListItem>) ViewBag.stafflist, new {@class = "form-control select2", @multiple = "multiple", required = "required"})
+                                                @*@Html.DropDownList("staffid", null, "Select Employee", new { @class = " col-md-10 form-control select2", @multiple = "multiple", required = "required" })*@
+                                                @Html.ValidationMessageFor(model => model.staffid)
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <input type="submit" value="Add" class="btn btn-default pull-right"/>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+            @{Html.RenderAction("Index", "Structureassignment");}
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(".select2").select2();
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+    });
+</script>

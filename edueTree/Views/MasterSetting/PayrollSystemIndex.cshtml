@@ -1,0 +1,77 @@
+﻿@model IEnumerable<edueTree.Models.PayrollConfig>
+@{
+    Layout = null;
+}
+
+@using edueTree.Helpers
+@using PagedList.Mvc;
+<style type="text/css">
+    div.DTTT_container {
+        float: none;
+        text-align: center;
+    }
+</style>
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Payroll Configure Setting</h3>
+    </div>
+    <div class="box-body">
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayName("Monthly Leaves")
+                </th>
+                <th>@Html.DisplayName("Working Hours Per Day")</th>
+                <th>@Html.DisplayName("Min Hour Work Per Day")</th>
+                <th>@Html.DisplayName("Working Days Per Month")</th>
+
+                <th></th>
+                <th></th>
+
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MonthlyLeaves)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkingHoursDay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HalfDayMinWorkHours)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkingdaysPermonth)
+                    </td>
+
+                    <td>
+                        @Html.EncodedActionLink("Edit", "EditPayrollSystem", "MasterSetting", new { id = item.Id }, null)
+                    </td>
+                    <td>
+                        <a data-toggle="modal" data-target="#myModalDeptDelete" href='@Url.Action("DeletePayrollSetting", new { id = item.Id })'><i class="fa fa-trash"></i></a>
+                    </td>
+
+                </tr>
+            }
+        </table>
+        <div class="modal fade" id="myModalDeptDelete" role="dialog"></div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

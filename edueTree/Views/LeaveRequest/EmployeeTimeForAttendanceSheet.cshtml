@@ -1,0 +1,54 @@
+﻿@model edueTree.Models.TblAverageTimeModel
+@{
+    Layout = null;
+}
+
+<a data-toggle="modal" data-target="#myModalAveNew" class="btn btn-success pull-right">
+    <i class="fa fa-plus-square"></i>   Add Average Time For Attendance
+</a>
+
+<section class="">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="myModalAveNew" class="modal fade" role="dialog">
+                @using (Html.BeginForm("EmployeeTimeForAttendanceSheet", "LeaveRequest"))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header with-border">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"> Add Average Time For Attendance Sheet</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="form-horizontal">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Select Employee </label>
+
+                                            @Html.DropDownListFor(model => model.empid, Model.StaffListTime, new { id = "", @class = "form-control select22",required = "required" })
+                                            @Html.ValidationMessageFor(model => model.empid, string.Empty, new { @class = "help-block" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Working Hr Per Day</label>
+                                            @Html.TextBoxFor(model => model.hourtime, new { @class = "form-control", placeholder = "hh:mm:ss", @required = "required" })
+                                            @Html.ValidationMessageFor(model => model.hourtime)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Add" class="btn btn-default pull-right" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div> 
+    </div>
+</section>

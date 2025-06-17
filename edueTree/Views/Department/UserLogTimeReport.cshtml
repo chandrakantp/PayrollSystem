@@ -1,0 +1,117 @@
+﻿@model IEnumerable<edueTree.Models.LogTimeModel>
+@{
+    ViewBag.Title = "AttendanceSheet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> LogTimeModel</a></li>
+        <li class="active"> LogTime</li>
+    </ol>
+</section>
+
+<section class="col-lg-11 connectedSortable">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Search Options </h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("UserLogTimeReport", "Department", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @Html.Label("To Date:", new {@class = "control-label col-md-2"})
+                                <div class="col-md-4">
+                                    @Html.TextBox("datepicker", null, new {id = "datepicker1", @class = "form-control"})
+                                </div>
+
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                                </div>
+                            </div>
+                          
+                        </div>
+                       
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-lg-11 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">My Log-time sheet</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <table class="table table-bordered">
+
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Machine Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Unlock Time")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Lock Time")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Total Duration")
+                                </th>
+
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MachineName)
+                                    </td>
+                                    <td>
+                                        @Convert.ToDateTime(item.unLockTime).ToString("dd-MMM-yyyy hh:mm:ss")
+                                    </td>
+                                    <td>
+                                        @Convert.ToDateTime(item.lockTime).ToString("dd-MMM-yyyy hh:mm:ss")
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.totalDuration)
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</section>
+<script type="text/javascript">
+  $(document).ready(function () {
+      $('#datepicker1').datepicker({
+            dateFormat: "dd/mm//yy",
+            autoclose: true,
+        });      
+    });
+
+    
+  </script>

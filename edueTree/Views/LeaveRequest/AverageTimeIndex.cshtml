@@ -1,0 +1,71 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.TblAverageTime>
+@{
+    Layout = null;
+}
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Average Time For Generate Attendance</h3>
+        @{Html.RenderAction("EmployeeAverageTime", "LeaveRequest");}
+    </div>
+
+    <div class="box-body">
+        <table class="table table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName("Employee Name")
+                </th>
+                <th>
+                    @Html.DisplayName("Working hr per day")
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Staff.staffCode) -
+                            @Html.DisplayFor(modelItem => item.Staff.firstName)
+                            @Html.DisplayFor(modelItem => item.Staff.lastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.hourtime)
+                        </td>
+
+                        <td>
+                            @Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "EditAverageTime", "LeaveRequest", new { id = item.AverageId }, null)
+                        </td>
+
+                        <td>
+                            <a data-toggle="modal" data-target="#myModalDeptDeletefade" href='@Url.Action("DeleteAverageTime", new {id = item.AverageId})'><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            <tbody>
+</table>
+        <div class="modal fade" id="myModalDeptDeletefade" role="dialog"></div>
+    </div>
+</div>
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                "ordering": false,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

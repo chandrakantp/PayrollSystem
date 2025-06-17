@@ -1,0 +1,172 @@
+﻿@model edueTree.Models.WeekendsModel
+
+
+<script type="text/javascript">
+    function datastore() {
+        var Dates = new Array();
+        var result = Dates.split(',');
+
+        jQuery.ajax({
+            type: "POST",
+            url: "/LeaveRequest/Weekends/",
+            data: { Dates: JSON.stringify(Dates) },
+            datatype: "json",
+            success: function (result) { }
+        });
+    }
+</script>
+
+
+<style>
+    .help-block {
+        color: red;
+    }
+</style>
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <a data-toggle="modal" data-target="#myModal" class="btn btn-success pull-right">
+                    <i class="fa fa-plus-square"></i> Add Weekends
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content-header">
+    <h1>
+        @*Manage Weekends*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/LeaveRequest/Index"><i class="fa fa-list"></i>Weekends</a></li>
+        <li class="active">Manage</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div id="myModal" class="modal fade" role="dialog">
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header with-border">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"> Add Weekends</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+
+                                            <div class="col-md-6">
+                                                <label> Department List</label>
+                                                @Html.DropDownListFor(model => model.DeptId, Model.DepartmentList, " - Select Department - ", new { id = "DeptId", @class = "form-control", placeholder = "select department" })
+                                                @Html.ValidationMessageFor(model => model.DeptId, string.Empty, new { @class = "help-block" })
+                                                <span class="help-block" id="DeptIdMessage" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label> Date</label>
+                                                @Html.TextBoxFor(model => model.Dates1, new { id = "Dates", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Dates1, string.Empty, new { @class = "help-block" })
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Add" class="btn btn-default pull-right" onclick=" datastore();" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </section>
+
+        <section class="col-md-12">
+            @{Html.RenderAction("WeekendReport", "LeaveRequest");}
+        </section>
+    </div>
+
+</section>
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#datepicker').datepicker({
+            multidate: true,
+            autoclose: false,
+
+        });
+
+
+        $('#datepicker1').datepicker({
+            multidate: true,
+            onSelect: function (value) {
+                $('#msg').text(value);
+            }
+        });
+
+
+        $('#datepicker').on("changeDate", function () {
+            $('#my_hidden_input').val(
+                $('#datepicker').datepicker('getFormattedDate')
+            );
+        });
+
+        $('#datepicker1').on("changeDate", function () {
+            $('#msg').val(
+                $('#datepicker').datepicker('getFormattedDate')
+            );
+        });
+
+
+        $('#Dates').datepicker({
+            multidate: true,
+            format: "mm/dd/yyyy",
+            viewMode: "months"
+        });
+
+    });
+
+</script>
+
+<!-- Success Notice-->
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

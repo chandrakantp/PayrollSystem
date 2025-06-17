@@ -1,0 +1,99 @@
+﻿@using edueTree.Models
+@model edueTree.Models.FeedbackFormModel
+@{
+    ViewBag.Title = "CreateForm";
+}
+
+@{
+
+    var aboutsite = new SelectList(new[]
+        {
+            new SelectListItem { Value = null , Text =  "----  Select Choice ----", Selected = true},
+            new SelectListItem {Text = "Monthly", Value = "Monthly"},
+            new SelectListItem {Text = "Quarterly", Value = "Quarterly"},
+            new SelectListItem {Text = "Half Yearly", Value = "Half Yearly"},
+            new SelectListItem {Text = "Annually", Value = "Annually"},
+        }, "Value", "Text");
+}
+
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Question</a></li>
+        <li class="active">Add</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                <div class="box box-success">
+
+                    <div class="box-header">
+                        <i class="fa fa-user"></i>
+                        <h3 class="box-title"> Update Form Info</h3>
+                    </div>
+                    <div class="box-body">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(s => s.FeedbackId)
+                        @Html.HiddenFor(s => s.firmid)
+
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Form Title:</label>
+                                    @Html.TextBoxFor(model => model.Title, new { id = "Title", @class = "form-control", placeholder = "enter Title ", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.Title, string.Empty, new { @class = "help-block" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Time duration(In Days):</label>
+                                    @*@Html.DropDownList("Duration", aboutsite, new { id = "duration", @class = "form-control", required = "required" })*@
+                                    @Html.DropDownListFor(model => model.Duration, new SelectList(Enumerable.Range(1, 365).Select(x => new { Value = x, Text = x }), "Value", "Text"), new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right"/>
+                        <a href='@Url.Action("FeedbackFormCreate")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+
+                </div>
+            }
+        </section>      
+    </div>
+</section>
+
+
+<script type="text/javascript">
+        $.noConflict();
+        jQuery(document).ready(function () {
+            if (true) {
+                if ('@TempData["notice"]' === "success") {
+                    $.notify(" Record Inserted  Successfully ! ", "success");
+                }
+                if ('@TempData["notice"]' === "update") {
+                    $.notify(" Record Updated  Successfully ! ", "success");
+                }
+                if ('@TempData["notice"]' === "exist") {
+                    $.notify(" Record Already Exist ! ", "warn");
+                }
+                if ('@TempData["notice"]' === "delete") {
+                    $.notify(" Record Deleted Successfully ! ", "error");
+                }
+                if ('@TempData["notice"]' === "cantdelete") {
+                    $.notify(" Can't delete, because this Shift used some where. ! ", "warn");
+                }
+            }
+
+        });
+</script>

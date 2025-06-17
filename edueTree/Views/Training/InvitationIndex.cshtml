@@ -1,0 +1,202 @@
+﻿@model IEnumerable<edueTree.Models.TrainingFeedbackModel>
+
+@{
+    ViewBag.Title = "InvitationIndex";
+}
+@{
+
+    Layout = null;
+}
+
+@*<section class="content-header">
+        <h1>
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Training/Index"><i class="fa fa-dashboard"></i></a>Training</li>
+            <li class="active">Invitation List</li>
+        </ol>
+    </section>*@
+
+
+
+<section class="content">
+
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Training Invitation List</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+
+                                            <input type="checkbox" id="checkAll" />
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Staff Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Trainer Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Topic")
+                                        </th>
+
+                                        <th>
+                                            @Html.DisplayName("Duration ")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Status")
+                                        </th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <tr>
+
+                                            <td>
+                                                @if (item.Status == "Invited")
+                                                {
+                                                    <input type="checkbox" class="checkBox" value="@item.Id" />
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.StaffNamea)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TrainerName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Topic)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Duration)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Status)
+                                            </td>
+
+
+                                            <td>
+                                                <a href='@Url.Action("EditInvitation", "Training", new { id = item.Id })'><i class="fa fa-pencil"></i></a>
+
+                                            </td>
+                                            <td>
+                                                <a data-toggle="modal" data-target="#myModalInvitationDelete" href='@Url.Action("DeleteInvitation", new {@id = item.Id})'><i class="fa fa-trash"></i></a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                            <div class="pull-left">
+                                <input type="button" id="delete" value="Absent" class="btn btn-danger" />
+                                &nbsp;
+                                <input type="button" id="delete1" value="Present" class="btn btn-success" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    @*<div class="input-group box-tools pull-right">
+                            <a href='@Url.Action("Create")' class="btn btn-success"><i class="fa fa-plus"></i></a>
+                        </div>*@
+                </div>
+                <div class="modal fade" id="myModalInvitationDelete" role="dialog"></div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $(".table").DataTable({
+                dom: "Bfrtip",
+                buttons: [
+                        "copy", "csv", "excel", "pdf", "print"
+                ]
+            });
+        });
+
+    });
+
+
+    $("#checkAll").click(function () {
+        debugger;
+        $(".checkBox").prop('checked',
+            $(this).prop('checked'));
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#delete").click(function() {
+            debugger;
+            var selectedIDs = new Array();
+
+            $('input:checkbox.checkBox').each(function() {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+            });
+
+            var options = {};
+            options.url = "/Training/AppOrRejectMultiple";
+            options.type = "POST";
+            options.data = JSON.stringify(selectedIDs);
+            options.contentType = "application/json";
+            options.dataType = "json";
+            options.success = function(msg) {
+                alert(msg);
+                location.reload();
+                document.getElementById("msg").innerText = msg;
+
+            }
+            $.ajax(options);
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#delete1").click(function () {
+            debugger;
+            var selectedIDs = new Array();
+
+            $('input:checkbox.checkBox').each(function () {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+            });
+
+            var options = {};
+            options.url = "/Training/AppOrPresentMultiple";
+            options.type = "POST";
+            options.data = JSON.stringify(selectedIDs);
+            options.contentType = "application/json";
+            options.dataType = "json";
+            options.success = function (msg) {
+                alert(msg);
+                location.reload();
+                document.getElementById("msg").innerText = msg;
+
+            }
+            $.ajax(options);
+        });
+    });
+</script>

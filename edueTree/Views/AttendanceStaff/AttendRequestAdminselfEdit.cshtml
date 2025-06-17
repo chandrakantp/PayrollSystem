@@ -1,0 +1,213 @@
+﻿@model edueTree.Models.AttendanceRequestModel
+@{
+    var HourList=new SelectList(new[]{
+      new SelectListItem {Text = " Select Minute ", Value = null, Selected = true},
+                new SelectListItem {Text = "0", Value = "0"},
+                new SelectListItem {Text = "1", Value = "1"},
+                new SelectListItem {Text = "2", Value = "2"},
+                new SelectListItem {Text = "3", Value = "3"},
+                new SelectListItem {Text = "4", Value = "4"},
+                new SelectListItem {Text = "5", Value = "5"},
+                new SelectListItem {Text = "6", Value = "6"},
+                new SelectListItem {Text = "7", Value = "7"},
+                new SelectListItem {Text = "8", Value = "8"},
+                new SelectListItem {Text = "9", Value = "9"},
+                new SelectListItem {Text = "10", Value = "10"},
+                new SelectListItem {Text = "11", Value = "11"},
+                new SelectListItem {Text = "12", Value = "12"},
+                new SelectListItem {Text = "13", Value = "13"},
+                new SelectListItem {Text = "14", Value = "14"},
+                new SelectListItem {Text = "15", Value = "15"},
+                new SelectListItem {Text = "16", Value = "16"},
+                new SelectListItem {Text = "17", Value = "17"},
+                new SelectListItem {Text = "18", Value = "18"},
+                new SelectListItem {Text = "19", Value = "19"},
+                new SelectListItem {Text = "20", Value = "20"},
+                new SelectListItem {Text = "21", Value = "21"},
+                new SelectListItem {Text = "22", Value = "22"},
+                new SelectListItem {Text = "23", Value = "23"},
+                new SelectListItem {Text = "24", Value = "24"}
+    }, "Value", "Text");
+    var MinuteList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "Select Minute ", Value = null, Selected = true},
+                new SelectListItem {Text = "0", Value = "0"},
+                new SelectListItem {Text = "1", Value = "1"},
+                new SelectListItem {Text = "2", Value = "2"},
+                new SelectListItem {Text = "3", Value = "3"},
+                new SelectListItem {Text = "4", Value = "4"},
+                new SelectListItem {Text = "5", Value = "5"},
+                new SelectListItem {Text = "6", Value = "6"},
+                new SelectListItem {Text = "7", Value = "7"},
+                new SelectListItem {Text = "8", Value = "8"},
+                new SelectListItem {Text = "9", Value = "9"},
+                new SelectListItem {Text = "10", Value = "10"},
+                new SelectListItem {Text = "11", Value = "11"},
+                new SelectListItem {Text = "12", Value = "12"},
+                new SelectListItem {Text = "13", Value = "13"},
+                new SelectListItem {Text = "14", Value = "14"},
+                new SelectListItem {Text = "15", Value = "15"},
+                new SelectListItem {Text = "16", Value = "16"},
+                new SelectListItem {Text = "17", Value = "17"},
+                new SelectListItem {Text = "18", Value = "18"},
+                new SelectListItem {Text = "19", Value = "19"},
+                new SelectListItem {Text = "20", Value = "20"},
+                new SelectListItem {Text = "21", Value = "21"},
+                new SelectListItem {Text = "22", Value = "22"},
+                new SelectListItem {Text = "23", Value = "23"},
+                new SelectListItem {Text = "24", Value = "24"},
+                new SelectListItem {Text = "25", Value = "25"},
+                new SelectListItem {Text = "26", Value = "26"},
+                new SelectListItem {Text = "27", Value = "27"},
+                new SelectListItem {Text = "28", Value = "28"},
+                new SelectListItem {Text = "29", Value = "29"},
+                new SelectListItem {Text = "30", Value = "30"},
+                new SelectListItem {Text = "31", Value = "31"},
+                new SelectListItem {Text = "32", Value = "32"},
+                new SelectListItem {Text = "33", Value = "33"},
+                new SelectListItem {Text = "34", Value = "34"},
+                new SelectListItem {Text = "35", Value = "35"},
+                new SelectListItem {Text = "36", Value = "36"},
+                new SelectListItem {Text = "37", Value = "37"},
+                new SelectListItem {Text = "38", Value = "38"},
+                new SelectListItem {Text = "39", Value = "39"},
+                new SelectListItem {Text = "40", Value = "40"},
+                new SelectListItem {Text = "41", Value = "41"},
+                new SelectListItem {Text = "42", Value = "42"},
+                new SelectListItem {Text = "43", Value = "43"},
+                new SelectListItem {Text = "44", Value = "44"},
+                new SelectListItem {Text = "45", Value = "45"},
+                new SelectListItem {Text = "46", Value = "46"},
+                new SelectListItem {Text = "47", Value = "47"},
+                new SelectListItem {Text = "48", Value = "48"},
+                new SelectListItem {Text = "49", Value = "49"},
+                new SelectListItem {Text = "50", Value = "50"},
+                new SelectListItem {Text = "51", Value = "51"},
+                new SelectListItem {Text = "52", Value = "52"},
+                new SelectListItem {Text = "53", Value = "53"},
+                new SelectListItem {Text = "54", Value = "54"},
+                new SelectListItem {Text = "55", Value = "55"},
+                new SelectListItem {Text = "56", Value = "56"},
+                new SelectListItem {Text = "57", Value = "57"},
+                new SelectListItem {Text = "58", Value = "58"},
+                new SelectListItem {Text = "59", Value = "59"},
+                new SelectListItem {Text = "60", Value = "60"}
+            }, "Value", "Text");
+}
+
+<section class="content-header">
+    <h1>
+        @*Staff Attendance*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Attendance</a></li>
+        <li class="active">Request</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <section class="col-md-6">
+            @using (Html.BeginForm("AttendRequestAdminselfEdit", "AttendanceStaff"))
+            {
+                @Html.AntiForgeryToken()
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-calendar-plus-o"></i>
+                        <h3 class="box-title">Edit Manually Attendance Request</h3>
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                            @Html.HiddenFor(model=>model.StaffId)
+                            @Html.HiddenFor(model=>model.AttendId)
+                            <div class="form-horizontal">
+                                <hr />
+                                @Html.ValidationSummary(true)
+                                <br />
+                                <div class="form-group">
+                                    @Html.Label("Attend Date:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.AttendanceDate, null, new { id = "AttendDate", @class = "form-control", placeholder = "select attend date " })
+                                        @Html.ValidationMessageFor(model => model.AttendanceDate)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Check In/Check Out:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.RadioButtonFor(model => model.InOutMode, 0, new { name = "InOutMode", id = "InOutMode" }) Check In
+                                        @Html.RadioButtonFor(model => model.InOutMode, 1, new { name = "InOutMode", id = "InOutMode" }) Check Out
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Hour:", new { @id = "Hour", @class = "control-label col-md-3" })
+                                    <div class="col-md-3">
+                                        @Html.DropDownListFor(model => model.Hour, HourList, new {id = "Hour", @class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.Hour)
+                                    </div>
+
+                                    @Html.Label("Minute:", new { @id = "Minute", @class = "control-label col-md-3" })
+                                    <div class="col-md-3">
+                                        @Html.DropDownListFor(model => model.Minute, MinuteList, new { id = "Minute", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Minute)                                          
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                    @Html.Label("Narattion:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextAreaFor(model => model.Narration, new { @class = "form-control", placeholder = "enter narration" })
+                                        @Html.ValidationMessageFor(model => model.Narration)
+                                    </div>
+                                </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="">
+                            <input type="submit" value="Update" class="btn btn-default pull-right" />
+                            <a href='@Url.Action("AttendRequestAdminselfList")' class="btn btn-default pull-left">Back to list</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </section>
+        <div class="col-md-3"></div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        $('#AttendDate').datepicker({
+            format: "mm/dd/yyyy",
+            orientation: "bottom auto",
+            minDate: 0
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

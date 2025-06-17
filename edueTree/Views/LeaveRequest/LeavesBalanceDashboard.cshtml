@@ -1,0 +1,60 @@
+﻿@model IEnumerable<edueTree.Models.LeaveRequestModel>
+
+@{ Layout = null; }
+
+<div class="box box-info">
+    <div class="box-header">
+        <i class="fa fa-briefcase"></i>
+        <h3 class="box-title">Leaves Sheet</h3>
+
+    </div>
+    <div class="box-body">
+        <table class="table responsive">
+            <tr>
+
+                <th>
+                    @Html.DisplayName("Leave Type")
+                </th>
+                <th>
+                    @Html.DisplayName("Added leaves")
+                </th>
+                <th>
+                    @Html.DisplayName("Used Leaves")
+                </th>
+                <th>
+                    @Html.DisplayName("Available Balance")
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LeaveTyp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LeaveBalance)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UsedBalance)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RemainingBalance)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="box-footer">
+        <div class="input-group box-tools pull-right" title="Add Experience">
+            <a data-toggle="modal" data-target="#myModalExperience" href='@Url.Action("AddLeaveBalance", new { staffId = ViewData["staffId"] })' class="btn btn-success"><i class="fa fa-plus"></i></a>
+            <div class="modal fade" id="myModalExperience" role="dialog"></div>
+        </div>
+    </div>
+</div>
+
+
+

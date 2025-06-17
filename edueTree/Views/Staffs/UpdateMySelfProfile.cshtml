@@ -1,0 +1,288 @@
+﻿@model edueTree.Models.Staff
+@{
+    ViewBag.Title = "Add";  
+}
+
+<style type="text/css">
+    .datepicker {
+        z-index: 100000;
+    }
+</style>
+@{
+    var activeList = new SelectList(new[]
+    {
+        new SelectListItem {Text = "Active", Value = true.ToString()},
+        new SelectListItem {Text = "Inactive", Value = false.ToString()},
+
+    }, "Value", "Text");
+}
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-7 col-md-offset-1">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-pencil-square"></i>
+                    <h4 class="box-title">Edit</h4>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                <hr /><br />
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.staffId)
+                                @Html.HiddenFor(model => model.passportPhoto)
+                                @Html.HiddenFor(model => model.designationId)
+                                @Html.HiddenFor(model => model.reportingId)
+                                @Html.HiddenFor(model => model.leavesOpeningBalance)
+                                @Html.HiddenFor(model => model.deptId)
+                                @Html.HiddenFor(model => model.dob)
+
+                                @Html.HiddenFor(model => model.staffCode)
+                                @Html.HiddenFor(model => model.enrollNumber)
+                                @Html.HiddenFor(model => model.firstName)
+                                @Html.HiddenFor(model => model.middleName)
+                                @Html.HiddenFor(model => model.lastName)
+                                @Html.HiddenFor(model => model.email)
+                                @Html.HiddenFor(model => model.gender)
+                                @*@Html.HiddenFor(model => model.isMarried)*@
+                                @Html.HiddenFor(model => model.reportingId)
+                                @Html.HiddenFor(model => model.isActive)
+                            <div class="form-group">
+                                    @Html.Label("Staff code:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.staffCode, new { @class = "form-control", @disabled = "disabled" })
+                                        @Html.ValidationMessageFor(model => model.staffCode)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.Label("Enroll Number:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.enrollNumber, new { @class = "form-control", @disabled = "disabled" })                                    
+                                        <span class="help-block" id="enrollNumberMessage" />
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    @Html.Label("First name:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.firstName, new { @class = "form-control", @disabled = "disabled" })                                   
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Middle name:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.middleName, new { @class = "form-control", @disabled = "disabled" })                                    
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Last name:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.lastName, new { @class = "form-control", @disabled = "disabled" })
+                                        
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group">
+                                    @Html.Label("Temp address:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.tempAddress, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.tempAddress)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Temp pincode:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.tempPincode, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.tempPincode)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Temp area:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.tempArea, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.tempArea)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Per address:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.perAddress, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.perAddress)
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                        @Html.Label("Per city:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.DropDownList("perCityId", (IEnumerable<SelectListItem>)ViewBag.perCityId, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.perCityId)
+                                        </div>
+                                    </div>*@
+
+                                <div class="form-group">
+                                    @Html.Label("Per pincode:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.perPincode, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.perPincode)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Per area:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.perArea, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.perArea)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Gender:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                       @if (Model.gender == 1)
+                                       {
+                                           <p>Male</p>
+                                       }
+                                       else
+                                       {
+                                           <p>Female</p>
+                                       }
+                                    </div>
+                                </div>
+
+                                
+                                @*<div class="form-group">
+                                    @Html.Label("Marital Status:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @if (Model.isMarried == true)
+                                        {
+                                            <p>Married</p>
+                                        }
+                                        else
+                                        {
+                                            <p>UnMarried</p>
+                                        }
+                                    </div>
+                                </div>*@
+
+                                <div class="form-group">
+                                    @Html.Label("Contact:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.contact, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.contact)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("E-m@il:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.email, new { @class = "form-control", @disabled = "disabled" })                                      
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("DOB:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.dob, new { id = "dob", @class = "form-control datepicker", @disabled = "disabled"})
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                        @Html.Label("Designation:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+
+                                            @Html.DropDownListFor(model => model.designationId, Model.DesignationList, " - Select Designation - ", new { id = "DesignationId", @class = "form-control", placeholder = "select designation" })
+                                            <span class="help-block" id="DesignationIdMessage" />
+                                        </div>
+                                    </div>*@
+
+
+
+
+                                <div class="form-group">
+                                    @Html.Label("Emergency 1:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.emergencyContact1, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.emergencyContact1)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Emergency 2:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.emergencyContact2, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.emergencyContact2)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Emergency 3:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.emergencyContact3, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.emergencyContact3)
+                                    </div>
+                                </div>
+                               
+                                <hr /><br />
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+                                        <input type="submit" value="Update" class="btn btn-default" />
+                                        <a href="@Url.Action("StaffProfile","Staffs")" class="btn btn-default">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                @*<div class="box-footer">
+                        <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                            <div class="btn-group" data-toggle="btn-toggle">
+
+                                <a href='@Url.Action("StaffDashboard", "Staffs", new { staffid = Model.staffId })'><i class="fa fa-arrow-left"></i> Back to list</a>
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+        </section>
+    </div>
+</section>
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+<script type="text/javascript">
+
+    $('#dob').datepicker({
+        dateFormat: 'dd-mm-yy',
+        minDate: '+5d',
+        changeMonth: true,
+        changeYear: true,
+        autoclose: true,
+        dob: "#dob",
+        altFormat: "yy-mm-dd"
+    }).on('changeDate', function (ev) {
+        $(this).datepicker('hide');
+    });;
+
+
+    $(document).ready(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-red',
+            radioClass: 'iradio_flat-red'
+        });
+    });
+
+
+</script>

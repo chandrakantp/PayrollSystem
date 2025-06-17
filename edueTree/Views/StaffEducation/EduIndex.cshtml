@@ -1,0 +1,109 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.StaffEducation>
+
+@{ Layout = null; }
+
+
+<style type="text/css">
+    .bg-teal-gradient {
+        color: #000000;
+    }
+
+    .modal {
+        top: 38px;
+    }
+
+    .modal {
+        background: rgba(0, 0, 0, 0.0) none repeat scroll 0 0;
+    }
+</style>
+
+<div class="box box-primary">
+    <div class="box-header">
+        <i class="fa fa-university"></i>
+        <h3 class="box-title">Education detail</h3>
+        <div class="pull-right" title="Add Education">
+            @if (ViewBag.message==true)
+            {
+                <a href='@Url.Action("EduCreate", new {staffId = ViewData["staffId"]})' class="btn btn-primary"><i class="fa fa-plus"></i> Add Education Details</a>
+            }                       
+        </div>
+    </div>
+    <div class="box-body chat" id="chat-box">
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    @*<th>
+                        @Html.DisplayName("Staff code")
+                    </th>*@
+                    <th>
+                        @Html.DisplayName("Degree")
+                    </th>
+                    @*<th>
+                        @Html.DisplayName("Specialization")
+                    </th>*@
+                    <th>
+                        @Html.DisplayName("Admission")
+                    </th>
+                   
+                    <th>
+                        @Html.DisplayName("Percentage")
+                    </th>
+                    <th>
+                        @Html.DisplayName("University")
+                    </th>
+                    <th>                      
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.Staff.staffCode)
+                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Degree.degreeName) - @Html.DisplayFor(modelItem => item.DegreeSubject.subjectName)
+                        </td>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.DegreeSubject.subjectName)
+                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.addmissionYear) - @Html.DisplayFor(modelItem => item.passingYear)
+                        </td>
+                      
+                        <td>
+                            @Html.DisplayFor(modelItem => item.persentage)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.university)
+                        </td>
+                        <td>
+                            @if (ViewBag.message)
+                            {
+                                @Html.EncodedActionLink("<i class='fa fa-pencil'></i>", "EduEdit", "StaffEducation", new {id = item.eduId, Staffid = item.staffId}, null)
+                            }
+                            
+
+                        </td>
+                      
+                        <td>
+                            @if (ViewBag.message)
+                            {
+                            <a data-toggle="modal" data-target="#myModalEduDelete" href='@Url.Action("EduDelete", new { id = item.eduId, Staffid = ViewData["staffId"] })'><i class="fa fa-trash"></i></a>
+                            }
+
+
+                        </td>
+                        <div class="modal fade" id="myModalEduDelete" role="dialog"></div>    
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+    <div class="box-footer">
+        
+    </div>
+</div>

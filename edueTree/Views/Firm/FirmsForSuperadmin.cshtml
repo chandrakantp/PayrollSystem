@@ -1,0 +1,232 @@
+﻿@model IEnumerable<edueTree.Models.FirmInfoModel>
+@{
+    Layout = "~/Views/Shared/_LayoutSuperadmin.cshtml";
+}
+
+<style type="text/css">
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .switch input {
+        display: none;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+    }
+
+    /* include generated hidden field here */
+    input[type="checkbox"]:checked + input[type="hidden"] + .slider,
+    input[type="checkbox"]:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    /* include generated hidden field here */
+    input[type="checkbox"]:focus + input[type="hidden"] + .slider,
+    input[type="checkbox"]:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    /* include generated hidden field here */
+    input[type="checkbox"]:checked + input[type="hidden"] + .slider:before,
+    input[type="checkbox"]:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
+
+<br />
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Firm</a></li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Firm Information</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Firm Name")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Logo")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Address")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Contact &  Fax")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Mailing Address")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Status")
+                                    </th>
+                                    <th>                                        
+                                    </th>
+                                </tr>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.firmName)
+                                        </td>
+                                        <td>
+                                            <img src="~/FirmLogo/@item.logo" width="100" class="img-thumbnail" />
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.flatNo)&nbsp;
+                                            @Html.DisplayFor(modelItem => item.street) &nbsp;
+                                            <br />
+                                            @Html.DisplayFor(modelItem => item.area) &nbsp;
+
+                                            @Html.DisplayFor(modelItem => item.city) &nbsp;
+                                            <br />
+                                            @Html.DisplayFor(modelItem => item.state) &nbsp;
+                                            @Html.DisplayFor(modelItem => item.pincode) 
+                                        </td>
+                                        <td>
+                                            <b>Phone No.:</b> @Html.DisplayFor(modelItem => item.contact)
+                                            <br />
+                                            <b>Fax No.</b> @Html.DisplayFor(modelItem => item.fax)
+                                        </td>
+                                        <td>
+                                            <b>Email:</b> @Html.DisplayFor(modelItem => item.email)<br />
+                                        </td>
+                                        @*<td>
+                                            @if (item.isActivefirm == true)
+                                            {
+                                                <span style="color: green"> @Html.Label("Active")</span>
+                                            }
+                                            else
+                                            {
+                                                <span style="color: red">@Html.Label("Inactive")</span>
+                                            }
+                                        </td>*@
+
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="switch">
+                                                    @Html.CheckBoxFor(modelItem => item.isActivefirm, new {@class = "searchType", id = item.firmId})
+                                                    <div class="slider round"></div>
+                                                </label>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <a href="@Url.Action("SuperAdminFirmLogin", "Firm", new { id = item.firmId })"> <i class="fa fa-user fa-2x"></i></a>
+                                        </td>
+
+                                        @*<td>
+                                            <i class="fa fa-eye fa-2x loginType" id=@item.firmId></i>
+                                        </td>*@
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    $('.searchType').click(function () {
+        var attendid = $(this).attr('id');
+        var status = $(this).is(":checked");
+
+        $.ajax({
+            type: "POST",
+            url: "/Firm/FirmSubmitStatus",
+            data: { Attendid: attendid, Status: status },
+            success: function (data) {
+                if (data === "true") {                  
+                    //location.reload();
+                    $.notify(" Record Updated  Successfully! ", "success");
+                }
+            },
+            error: function () {
+                if (data === "false") {
+                    $.notify(" Something Went wrong ! ", "error");
+                }
+            }
+        });
+    });
+    
+</script>
+
+
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>
+

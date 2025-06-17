@@ -1,0 +1,242 @@
+﻿
+@{
+    ViewBag.Title = "Pricingcomparison";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .fa {
+        padding-top: 3px;
+    }
+
+
+
+    .nav-tabs > li > a {
+        margin-right: -6px;
+        line-height: 1.42857143;
+        border: 0px solid transparent;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .pricing-tab {
+        max-width: 318px;
+    }
+
+        .pricing-tab > li.active {
+            background: #00add5;
+            color: #fff;
+        }
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+        color: #fff;
+        background-color: #00add5;
+    }
+
+    .pricesize {
+        font-size: 40px;
+        color: #00add5;
+        font-weight: bold;
+        margin-left: 18px;
+    }
+
+
+    
+</style>
+
+<link href="~/Content/14296.css" rel="stylesheet" />
+       <link href="~/Content/zohocustom.css" rel="stylesheet" />
+       <link href="~/Content/9906.css" rel="stylesheet" />
+       <script type="text/javascript" src="//jz.zohostatic.com/sites/all/themes/zoho/scripts/zohocustom.js?"></script>
+       <script type="text/javascript" src="//jz.zohostatic.com/sites/default/files/cpn/9906.js?"></script>
+       <script type="text/javascript" src="https://iplocation.zoho.com/"></script>
+       <script src="~/Scripts/zoho1.js"></script>
+
+
+
+<div class="main-container-wrapper">
+    <div class="main-container blog">
+
+    <div class="row nomargin">
+    <section>
+    <div class="region region-content">
+    <section id="block-panels-mini-people-request-demo" class="block block-panels-mini clearfix">
+    
+    </section><section id="block-system-main" class="block block-system clearfix">
+            <div class="field-body">
+                <div class="pricing-part">
+                    <div class="tar changePrice">
+                        <div class="prcCont" id="changeUSD">
+                            <div class="cusd">
+
+                                <ul class="nav nav-tabs">
+                                    <li><a href="#tab3" data-toggle="tab" onclick=" return show(); ">$</a></li>
+                                    <li class="active"><a href="#tab4" data-toggle="tab" onclick=" return hide(); "><i class="fa fa-inr" aria-hidden="true"></i></a></li>
+                                </ul>
+
+                                @*<span class="one" onclick=" changeUSD() ">$</span>
+                        <span class="two action" onclick=" changeINR() "><i class="fa fa-inr"></i></span><span class="priceBgm"> </span>*@
+                            </div>
+                        </div>
+                    </div>
+                    <h1 class="pricing-heading">HRMS People - Editions &amp; Pricing <span><a class="usd-pdf" href="#" style="display: none;" target="_blank">Download as PDF</a><a class="inr-pdf" href="#" style="display: inline;">Download as PDF</a></span></h1>
+                    <p><span class="sub-title">Choose a plan that's right for your organization</span></p>
+
+                    <div class="tab-pane" id="tab3">
+                        <div class="price-holder pricing-five-col">
+                            <div class="phead-wrap" style="height: auto;">
+                                <div class="phead-inner-wrap pheadfix">
+                                    <div class="phead">
+                                        <p id="prcot"><span class="tit"> </span><span>FREE<b class="newprice-fixed"><i name="priceChange">$0</i>/month</b></span><span>STARTUP<b class="newprice-fixed"><i name="priceChange">$9</i>/month</b></span><span>BASIC<b class="newprice-fixed"><i name="priceChange">$19</i>/month</b></span><span>STANDARD<b class="newprice-fixed"><i name="priceChange">$49</i>/month</b></span><span>PREMIUM<b class="newprice-fixed"><i name="priceChange">$99</i>/month</b></span><span>ENTERPRISE<b class="newprice-fixed"><i name="priceChange">$199</i>/month</b></span></p>
+                                        <p class="ppr"><span class="tit"> </span><span class="pcsignup plan1"><a href="https://people.zoho.com/people/">Try Now</a></span><span class="pcsignup plan2"><a href="https://people.zoho.com/people/">Try Now</a></span><span class="pcsignup plan3"><a href="https://people.zoho.com/people/">Try Now</a></span><span class="pcsignup plan4"><a href="https://people.zoho.com/people/">Try Now</a></span><span class="pcsignup plan5"><a href="https://people.zoho.com/people/">Try Now</a></span><span class="pcsignup plan6"><a href="https://people.zoho.com/people/">Try Now</a></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pdesc four">
+                                <p class="high"><span class="tit ">Pricing</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span> </span></p>
+                                <p class="hign"><span class="tit">Monthly</span><span><i name="priceChange">$0</i></span><span><i name="priceChange">$9</i></span><span><i name="priceChange">$19</i></span><span><i name="priceChange">$49</i></span><span><i name="priceChange">$99</i></span><span><i name="priceChange">$199</i></span></p>
+                                <p class="hign"><span class="tit">Yearly</span><span><i name="priceChange">$0</i></span><span><i name="priceChange">$90</i></span><span><i name="priceChange">$190</i></span><span><i name="priceChange">$490</i></span><span><i name="priceChange">$990</i></span><span><i name="priceChange">$1990</i></span></p>
+                                <p class="high"><span class="tit ">Users &amp; Roles</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit">Employee Logins</span><span class="false">5</span><span class="false">5</span><span class="false">10</span><span class="false">25</span><span class="false">50 </span><span>100</span></p>
+                                <p class="normal"><span class="tit ">Employee Profiles (Non-Users)</span><span class="false">10</span><span class="false">50</span><span class="false">50</span><span class="false">125</span><span class="false">250</span><span>500</span></p>
+                                <p class="normal"><span class="tit ">Administrators</span><span class="false">1</span><span class="false">1</span><span class="false">1</span><span class="false">2</span><span class="false">5</span><span>10</span></p>
+                                <p class="high"><span class="tit ">Modules</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">Timesheet</span><span class="yes">-</span><span class="yes">-</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit ">Leave Tracker</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit ">Attendance </span><span class="yes">-</span><span class="yes">-</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit">File Cabinet</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span></p>
+                                <p class="normal"><span class="tit ">Travel</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit ">Training</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit ">Performance Appraisal</span><span class="false">-</span><span class="false">-</span><span class="false">-</span><span class="false">-</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="high"><span class="tit ">Reports</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">Reports</span><span class="false">-</span><span class="false">5</span><span class="false">5</span><span class="false">15</span><span class="false">50</span><span class="false">100</span></p>
+                                <p class="high"><span class="tit ">Customization</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">New Forms</span><span class="false">-</span><span class="false">10</span><span class="false">10</span><span class="false">25</span><span class="false">50</span><span>100</span></p>
+                                <p class="normal"><span class="tit ">Form Customization</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="high"><span class="tit ">Automation</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">Approvals</span><span class="false">-</span><span class="false">Multi-Level</span><span class="false">Multi-Level</span><span class="false">Multi-Level</span><span class="false">Multi-Level</span><span>Multi-Level</span></p>
+                                <p class="normal"><span class="tit ">Checklist Configuration</span><span class="false">2</span><span class="false">10</span><span class="false">10</span><span class="false">10</span><span class="false">20</span><span>100</span></p>
+                                <p class="normal"><span class="tit ">Mail Alert Configuration</span><span class="false">5</span><span class="false">10</span><span class="false">10</span><span class="false">10</span><span class="false">20</span><span>100</span></p>
+                                <p class="normal"><span class="tit ">Webhooks</span><span class="false">-</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span></p>
+                                <p class="normal"><span class="tit ">Template Configuration</span><span class="false">5</span><span class="false">20</span><span class="false">20</span><span class="false">20</span><span class="false">50</span><span>100</span></p>
+                                <p class="normal"><span class="tit ">Custom Functions</span><span class="false">-</span><span class="false">5</span><span class="false">5</span><span class="false">15</span><span class="false">25</span><span class="false">100</span></p>
+                                <p class="high"><span class="tit ">Storage</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span> </span></p>
+                                <p class="normal"><span class="tit ">Default Storage</span><span class="false">250 MB</span><span class="false">1 GB</span><span class="false">1 GB</span><span class="false">3 GB</span><span class="false">5 GB</span><span>10 GB</span></p>
+                                <p class="high"><span class="tit ">Developer API</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">API</span><span class="false">-</span><span class="false">1000 calls/day</span><span class="false">1000 calls/day</span><span class="false">1000 calls/day</span><span class="false">2500 calls/day</span><span>10000 calls/day</span></p>
+                                <p class="high"><span class="tit ">Others</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">Mobile Apps for iPhone/iPad &amp; Android</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit ">Website Integration</span><span class="false">-</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="high"><span class="tit ">Add-ONs</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit">Employee Logins</span><span class="false">-</span><span class="false"><i name="priceChange">$2</i>/month/additional user</span><span class="false"><i name="priceChange">$2</i>/month/additional user</span><span class="false"><i name="priceChange">$2</i>/month/additional user</span><span class="false"><i name="priceChange">$2</i>/month/additional user</span><span class="false"><i name="priceChange">$2</i>/month/additional user</span></p>
+                                <p class="normal"><span class="tit ">Reports (Unlimited)</span><span class="false">-</span><span class="false"><i name="priceChange">$15</i>/month</span><span class="false"><i name="priceChange">$15</i>/month</span><span class="false"><i name="priceChange">$15</i>/month</span><span class="false"><i name="priceChange">$15</i>/month</span><span class="false"><i name="priceChange">$15</i>/month</span></p>
+                                <p class="normal"><span class="tit ">New Forms</span><span class="false">-</span><span class="false"><i name="priceChange">$10 </i>/month/10 Forms</span><span class="false"><i name="priceChange">$10 </i>/month/10 Forms</span><span class="false"><i name="priceChange">$10</i>/month/10 Forms</span><span class="false"><i name="priceChange">$10</i>/month/10 Forms</span><span class="false"><i name="priceChange">$10</i>/month/10 Forms</span></p>
+                                <p class="normal"><span class="tit ">Storage</span><span class="false">-</span><span class="false"><i name="priceChange">$4</i>/month/5 GB</span><span class="false"><i name="priceChange">$4</i>/month/5 GB</span><span class="false"><i name="priceChange">$4</i>/month/5 GB</span><span class="false"><i name="priceChange">$4</i>/month/5 GB</span><span class="false"><i name="priceChange">$4</i>/month/5 GB</span></p>
+                                <p class="normal"><span class="tit ">Performance Appraisal</span><span class="false">-</span><span class="false"><i name="priceChange">$15</i>/month</span><span class="false"><i name="priceChange">$15</i>/month</span><span class="false"><i name="priceChange">$15</i>/month</span><span class="false">(Included in plan)</span><span class="false">(Included in plan)</span></p>
+                                <p class="high"><span class="tit ">Live Chat</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit">Live Chat</span><span class="false">-</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane active" id="tab4">
+                        <div class="price-holder pricing-five-col">
+                            <div class="phead-wrap" style="height: auto;">
+                                <div class="phead-inner-wrap pheadfix">
+                                    <div class="phead">
+                                        <p id="prcot"><span class="tit"> </span><span>FREE<b class="newprice-fixed"><i name="priceChange"> <i class="fa fa-inr"></i>0</i>/month</b></span>
+                                            <span>STARTUP<b class="newprice-fixed"><i name="priceChange"><i class="fa fa-inr"></i>540</i>/month</b></span>
+                                            <span>BASIC<b class="newprice-fixed"><i name="priceChange"><i class="fa fa-inr"></i>1140</i>/month</b></span>
+                                            <span>STANDARD<b class="newprice-fixed"><i name="priceChange"><i class="fa fa-inr"></i>2940</i>/month</b></span>
+                                            <span>PREMIUM<b class="newprice-fixed"><i name="priceChange"><i class="fa fa-inr"></i>5940</i>/month</b></span>
+                                            <span>ENTERPRISE<b class="newprice-fixed"><i name="priceChange"><i class="fa fa-inr"></i>11940</i>/month</b></span>
+                                        </p>
+                                        <p class="ppr"><span class="tit"> </span>
+                                            <span class="pcsignup plan1"><a href="#">Try Now</a></span>
+                                            <span class="pcsignup plan2"><a href="#">Try Now</a></span>
+                                            <span class="pcsignup plan3"><a href="#">Try Now</a></span>
+                                            <span class="pcsignup plan4"><a href="#">Try Now</a></span>
+                                            <span class="pcsignup plan5"><a href="#">Try Now</a></span>
+                                            <span class="pcsignup plan6"><a href="#">Try Now</a></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pdesc four">
+                                <p class="high"><span class="tit ">Pricing</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span> </span></p>
+                                <p class="hign"><span class="tit">Monthly</span><span><i name="priceChange"><i class="fa fa-inr"></i>0</i></span><span><i name="priceChange"><i class="fa fa-inr"></i>540</i></span><span><i name="priceChange"><i class="fa fa-inr"></i>1140</i></span><span><i name="priceChange"><i class="fa fa-inr"></i>2940</i></span><span><i name="priceChange"><i class="fa fa-inr"></i>5940</i></span><span><i name="priceChange"><i class="fa fa-inr"></i>11940</i></span></p>
+                                <p class="hign"><span class="tit">Yearly</span><span><i name="priceChange"><i class="fa fa-inr"></i>0</i></span><span><i name="priceChange"><i class="fa fa-inr"></i>5400</i></span><span><i name="priceChange"><i class="fa fa-inr"></i>11400</i></span><span><i name="priceChange"><i class="fa fa-inr"></i>29400</i></span><span><i name="priceChange"><i class="fa fa-inr"></i>59400</i></span><span><i name="priceChange"><i class="fa fa-inr"></i>119400</i></span></p>
+                                <p class="high"><span class="tit ">Users &amp; Roles</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit">Employee Logins</span><span class="false">5</span><span class="false">5</span><span class="false">10</span><span class="false">25</span><span class="false">50 </span><span>100</span></p>
+                                <p class="normal"><span class="tit ">Employee Profiles (Non-Users)</span><span class="false">10</span><span class="false">50</span><span class="false">50</span><span class="false">125</span><span class="false">250</span><span>500</span></p>
+                                <p class="normal"><span class="tit ">Administrators</span><span class="false">1</span><span class="false">1</span><span class="false">1</span><span class="false">2</span><span class="false">5</span><span>10</span></p>
+                                <p class="high"><span class="tit ">Modules</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">Timesheet</span><span class="yes">-</span><span class="yes">-</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit ">Leave Tracker</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit ">Attendance </span><span class="yes">-</span><span class="yes">-</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit">File Cabinet</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span></p>
+                                <p class="normal"><span class="tit ">Travel</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit ">Training</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit ">Performance Appraisal</span><span class="false">-</span><span class="false">-</span><span class="false">-</span><span class="false">-</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="high"><span class="tit ">Reports</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">Reports</span><span class="false">-</span><span class="false">5</span><span class="false">5</span><span class="false">15</span><span class="false">50</span><span class="false">100</span></p>
+                                <p class="high"><span class="tit ">Customization</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">New Forms</span><span class="false">-</span><span class="false">10</span><span class="false">10</span><span class="false">25</span><span class="false">50</span><span>100</span></p>
+                                <p class="normal"><span class="tit ">Form Customization</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="high"><span class="tit ">Automation</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">Approvals</span><span class="false">-</span><span class="false">Multi-Level</span><span class="false">Multi-Level</span><span class="false">Multi-Level</span><span class="false">Multi-Level</span><span>Multi-Level</span></p>
+                                <p class="normal"><span class="tit ">Checklist Configuration</span><span class="false">2</span><span class="false">10</span><span class="false">10</span><span class="false">10</span><span class="false">20</span><span>100</span></p>
+                                <p class="normal"><span class="tit ">Mail Alert Configuration</span><span class="false">5</span><span class="false">10</span><span class="false">10</span><span class="false">10</span><span class="false">20</span><span>100</span></p>
+                                <p class="normal"><span class="tit ">Webhooks</span><span class="false">-</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span></p>
+                                <p class="normal"><span class="tit ">Template Configuration</span><span class="false">5</span><span class="false">20</span><span class="false">20</span><span class="false">20</span><span class="false">50</span><span>100</span></p>
+                                <p class="normal"><span class="tit ">Custom Functions</span><span class="false">-</span><span class="false">5</span><span class="false">5</span><span class="false">15</span><span class="false">25</span><span class="false">100</span></p>
+                                <p class="high"><span class="tit ">Storage</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span> </span></p>
+                                <p class="normal"><span class="tit ">Default Storage</span><span class="false">250 MB</span><span class="false">1 GB</span><span class="false">1 GB</span><span class="false">3 GB</span><span class="false">5 GB</span><span>10 GB</span></p>
+                                <p class="high"><span class="tit ">Developer API</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">API</span><span class="false">-</span><span class="false">1000 calls/day</span><span class="false">1000 calls/day</span><span class="false">1000 calls/day</span><span class="false">2500 calls/day</span><span>10000 calls/day</span></p>
+                                <p class="high"><span class="tit ">Others</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit ">Mobile Apps for iPhone/iPad &amp; Android</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="normal"><span class="tit ">Website Integration</span><span class="false">-</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes ">Yes</span></p>
+                                <p class="high"><span class="tit ">Add-ONs</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+
+                                <p class="normal"><span class="tit">Employee Logins</span><span class="false">-</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>120</i>/month/additional user</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>120</i>/month/additional user</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>120</i>/month/additional user</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>120</i>/month/additional user</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>120</i>/month/additional user</span></p>
+
+                                <p class="normal"><span class="tit ">Reports (Unlimited)</span><span class="false">-</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>900</i>/month</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>900</i>/month</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>900</i>/month</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>900</i>/month</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>900</i>/month</span></p>
+
+                                <p class="normal"><span class="tit ">New Forms</span><span class="false">-</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>600 </i>/month/10 Forms</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>600 </i>/month/10 Forms</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>600 </i>/month/10 Forms</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>600 </i>/month/10 Forms</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>600 </i>/month/10 Forms</span></p>
+
+                                <p class="normal"><span class="tit ">Storage</span><span class="false">-</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>240 </i>/month/5 GB</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>240</i>/month/5 GB</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>240</i>/month/5 GB</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>240</i>/month/5 GB</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>240</i>/month/5 GB</span></p>
+                                <p class="normal"><span class="tit ">Performance Appraisal</span><span class="false">-</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>900</i>/month</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>900</i>/month</span><span class="false"><i name="priceChange"><i class="fa fa-inr"></i>900</i>/month</span><span class="false">(Included in plan)</span><span class="false">(Included in plan)</span></p>
+                                <p class="high"><span class="tit ">Live Chat</span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span><span class="false"> </span></p>
+                                <p class="normal"><span class="tit">Live Chat</span><span class="false">-</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span><span class="yes">Yes</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>
+    </div>
+    </section>
+    </div>
+    </div>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        $("#tab3").hide();
+    });
+
+    function show() {
+        if (document.getElementById('tab3').style.display == 'none') {
+            document.getElementById('tab3').style.display = 'block';
+
+            $("#tab4").hide();
+        }
+        return false;
+    }
+    function hide() {
+        if (document.getElementById('tab3').style.display == 'block') {
+            document.getElementById('tab3').style.display = 'none';
+        }
+        $("#tab4").show();
+        return false;
+    }
+</script> 

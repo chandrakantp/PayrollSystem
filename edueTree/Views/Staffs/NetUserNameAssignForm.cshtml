@@ -1,0 +1,80 @@
+﻿@model edueTree.Models.NetUserNameModel
+@{
+
+    ViewBag.Title = "Create";
+}
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Performance</a></li>
+        <li class="active">Username Assign to Employee</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("NetUserNameAssignForm", "Staffs"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title"> UserName Assignment </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-6">
+                            <label>Select Employee </label>
+                            @Html.DropDownListFor(model => model.empid, Model.StaffListForUser, " - Select Employee - ", new { id = "", @class = "form-control select2" }) 
+                            @Html.ValidationMessageFor(model => model.empid, string.Empty, new { @class = "help-block" })
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Event log UserName </label>
+                              @Html.TextBoxFor(model => model.EmpUsername, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.EmpUsername, string.Empty, new { @class = "help-block" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right" />
+                    </div>
+                </div>
+            }
+        </div>    
+    </div>
+    @{Html.RenderAction("NetUserNameIndex", "Staffs");}
+    @{Html.RenderAction("MemberNotAssignNetUsernameList", "NoAssign");}
+</section>
+
+<script type="text/javascript">
+    $(".select2").select2();
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "SameEntry") {
+                $.notify("Same employee and same evaluator can't assign");
+            }
+        }
+    });
+</script>

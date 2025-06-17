@@ -1,0 +1,251 @@
+﻿@using System.Web.UI.WebControls
+@model List<edueTree.Models.MonthllyAttendanceModel>
+@{
+    ViewBag.Title = "GenerateSalary";
+  //  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+
+    var monthList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "January", Value = "1"},
+                new SelectListItem {Text = "February", Value = "2"},
+                new SelectListItem {Text = "March", Value = "3"},
+                new SelectListItem {Text = "April", Value = "4"},
+                new SelectListItem {Text = "May", Value = "5"},
+                new SelectListItem {Text = "June", Value = "6"},
+                new SelectListItem {Text = "July", Value = "7"},
+                new SelectListItem {Text = "August", Value = "8"},
+                new SelectListItem {Text = "September", Value = "9"},
+                new SelectListItem {Text = "October", Value = "10"},
+                new SelectListItem {Text = "November", Value = "11"},
+                new SelectListItem {Text = "December", Value = "12"},
+            }, "Value", "Text");
+
+
+
+    var yearList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "2016", Value = "2016"},
+                new SelectListItem {Text = "2017", Value = "2017"},
+                new SelectListItem {Text = "2018", Value = "2018"},
+                new SelectListItem {Text = "2019", Value = "2019"},
+            }, "Value", "Text");
+}
+
+
+
+
+
+<section class="content-header">
+    <h1>
+        @*Generate salary*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Salary</a></li>
+        <li class="active">All emp</li>
+    </ol>
+</section>
+
+
+@if (TempData["SuccessModel"] != null)
+{
+    <div id="note1">
+        <h4>
+            <font color="black">
+                <p>@TempData["SuccessModel"]</p>
+                <a id="close"><font color="black">[close]</font></a>
+            </font>
+        </h4>
+    </div>
+}
+@*<h4>
+    <font color="black">
+        <p id="msg" style="background-color: lightgreen" class="col-lg-11"></p>
+    </font>
+</h4>*@
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title">Search Options - For Generate Salary (Select Month & Year)</h3>
+                    <div class="pull-right">
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <div class="item">
+                        <form action="/Attendance/GenerateSalary" method="get" id="form1">
+                            <div class="form-horizontal">
+                                <div class="col-md-10">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.Label("Month:", new { @id = "month", @class = "control-label col-md-3" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("month", monthList, new { id = "month", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.Label("Year:", new {@class = "control-label col-md-3"})
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("year", yearList, new {id = "year", @class = "form-control"})
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" form="form1" value="Submit" class="btn btn-default">Generate</button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+@*@if (!Request.QueryString["month"].IsEmpty())
+{*@
+    <section class="content">
+        <div class="row">
+            <section class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-calendar"></i>
+                        <h3 class="box-title">
+                            Pre salary report month of
+                            (@Html.DisplayFor(a => a.FirstOrDefault().MonthString, new { id = "intmonth" }) - @Html.DisplayFor(a => a.FirstOrDefault().Year, new { id = "intyear" }))
+                        </h3>
+                        @*<div class="pull-right">
+                            <td>
+                                <a href='@Url.Action("GeneratedReport", new { month = Request.QueryString["month"], year = Request.QueryString["year"] })'><i class="fa fa-pencil-square fa-2x"></i></a>
+                            </td>
+                        </div>*@
+                    </div>
+
+                    <div class="box-body chat">
+                        <div class="table-responsive">
+                            <table id="StructureTable" class="table table-bordered">
+                                <tr>
+                                    <th></th>
+                                    <th>CTC id</th>
+                                    <th>Employee Name</th>
+                                    <th>Month</th>
+                                    <th>Year</th>
+                                    <th>MD</th>
+                                    <th>Payable Day</th>
+                                    <th>Total Salary</th>
+                                    <th>AB</th>
+                                    <th>AB AMT</th>
+                                    <th>Leaves</th>
+                                    <th>Staff Id</th>
+                                    <th>Bonus</th>
+                                    <th>Narration</th>
+
+                                </tr>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.MonthlyAttenDetailId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.CtcId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.EmployeeName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Month)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Year)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MonthDays)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.PaybleDays)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.TotalAmount)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Absent)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.AbsentAmount)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.PaidLeaves)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.StaffId)</td>
+                                        <td>@Html.TextBoxFor(modelItem => item.Bonus, new { @id = "staffBonus", @class = "form-control", placeholder = "Bonus" })</td>
+                                        <td>@Html.TextBoxFor(modelItem => item.Narration, new { @id = "BonusNarration", @class = "form-control", placeholder = "Bonus Narration" })</td>
+                                    </tr>
+                                }
+                            </table>
+                            <center><input type="submit" value="Store generated salary" class="btn btn-default" onclick=" dataStore(); " /></center>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+
+@*}*@
+<script type="text/javascript">
+    function dataStore() {
+
+        var table = document.getElementById("StructureTable");
+        var rowCount = table.rows.length;
+
+        var ctcId = new Array();
+        var monthlyAttenDetailId = new Array();
+        var month = new Array();
+        var year = new Array();
+        var monthDays = new Array();
+        var paybleDays = new Array();
+        var totalAmount = new Array();
+        var absents = new Array();
+        var absentsAmount = new Array();
+        var paidLeaves = new Array();
+        var staffId = new Array();
+        var staffBonus = new Array();
+        var bonusNarration = new Array();
+       
+
+        var j = 0;
+        for (var i = 1; i < rowCount; i++) {
+            var row = table.rows[i];
+            var idbox = row.cells[0].childNodes[0].textContent;
+            if (idbox !== "0") {
+
+                monthlyAttenDetailId[j] = idbox;
+                ctcId[j] = row.cells[1].childNodes[0].textContent;
+                month[j] = row.cells[3].childNodes[0].textContent;
+                year[j] = row.cells[4].childNodes[0].textContent;
+                monthDays[j] = row.cells[5].childNodes[0].textContent;
+                paybleDays[j] = row.cells[6].childNodes[0].textContent;
+                totalAmount[j] = row.cells[7].childNodes[0].textContent;
+                absents[j] = row.cells[8].childNodes[0].textContent;
+                absentsAmount[j] = row.cells[9].childNodes[0].textContent;
+                paidLeaves[j] = row.cells[10].childNodes[0].textContent;
+                staffId[j] = row.cells[11].childNodes[0].textContent;
+                staffBonus[j] = row.cells[12].childNodes[0].value;
+                bonusNarration[j] = row.cells[13].childNodes[0].value;
+              
+                j += 1;
+            }
+        }
+        jQuery.ajax({
+            type: "POST",
+            url: "/Attendance/GenerateSalaryDataStore",
+            data: { monthlyAttenDetailId: JSON.stringify(monthlyAttenDetailId), ctcId: JSON.stringify(ctcId), month: JSON.stringify(month), year: JSON.stringify(year), monthDays: JSON.stringify(monthDays), paybleDays: JSON.stringify(paybleDays), totalAmount: JSON.stringify(totalAmount), absents: JSON.stringify(absents), absentsAmount: JSON.stringify(absentsAmount), paidLeaves: JSON.stringify(paidLeaves), staffId: JSON.stringify(staffId), staffBonus: JSON.stringify(staffBonus), bonusNarration: JSON.stringify(bonusNarration) },
+            datatype: "json",
+            success: function(response) {
+                var p = JSON.stringify(response);
+                var q = JSON.parse(p);              
+                if (q.message != null) {
+                    document.getElementById("msg").innerText = q.message;
+                }
+            }
+        });
+    }
+
+</script>
+
+
+

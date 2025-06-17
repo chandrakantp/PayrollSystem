@@ -1,0 +1,71 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.StaffEducation>
+
+@{
+    Layout = null;
+}
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-university"></i>
+        <h3 class="box-title">Education detail</h3>
+
+       
+            <div class="btn-group pull-right">
+                <a href="@Url.Action("SelfEduCreate","staffEducation")" class="btn btn-success"><i class="fa fa-plus"></i></a>             
+            </div>
+        
+
+    </div>
+    <div class="box-body chat" id="chat-box">
+        <div class="table-responsive">
+            <table class="table">
+                <tr>                  
+                    <th>
+                        @Html.DisplayName("Degree")
+                    </th>
+                 
+                    <th>
+                        @Html.DisplayName("Admission")
+                    </th>
+
+                    <th>
+                        @Html.DisplayName("Percentage")
+                    </th>
+                    <th>
+                        @Html.DisplayName("University")
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>                       
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Degree.degreeName) - @Html.DisplayFor(modelItem => item.DegreeSubject.subjectName)
+                        </td>
+                       
+                        <td>
+                            @Html.DisplayFor(modelItem => item.addmissionYear) - @Html.DisplayFor(modelItem => item.passingYear)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.persentage)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.university)
+                        </td>
+
+                        <td>
+                            @Html.EncodedActionLink("<i class='fa fa-pencil'></i>", "SelfEduEdit", "StaffEducation", new { id = item.eduId}, null)
+                          </td>                   
+                        <td>
+                            <a data-toggle="modal" data-target="#myModalEduDelete" href='@Url.Action("SelfEduDelete", new { id = item.eduId, Staffid = item.staffId })'><i class="fa fa-trash"></i></a>
+                        </td>
+                        <div class="modal fade" id="myModalEduDelete" role="dialog"></div>    
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

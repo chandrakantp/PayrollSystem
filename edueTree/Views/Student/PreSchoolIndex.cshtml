@@ -1,0 +1,81 @@
+﻿@model IEnumerable<edueTree.Models.PreviousEduInfo>
+
+@{ Layout = null; }
+
+
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-university"></i>
+        <h3 class="box-title">Prevoius school detail</h3>       
+    </div>
+    <div class="box-body chat" id="chat-box">
+        <div class="table-responsive">
+            <table class="table">
+                <tr>                 
+                    <th>
+                        @Html.DisplayName("School")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Contact")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Passing Year")
+                    </th>                  
+                    <th>
+                        @Html.DisplayName("Leaving Reason")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Address")
+                    </th>
+                    <th>
+                        @Html.DisplayName("City")
+                    </th>
+                    <th>
+                        @Html.DisplayName("State")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Pincode")
+                    </th>                  
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nameOfSchool)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.contact)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.passingYear)
+                        </td>                    
+                        <td>
+                            @Html.DisplayFor(modelItem => item.resonOfLeaving)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.city)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.state)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.pincode)
+                        </td>                                            
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+    @*<div class="box-footer">
+        <div class="input-group box-tools pull-right" title="Add Education">
+            <a data-toggle="modal" data-target="#myModalEduCreate" href='@Url.Action("EduCreate", new { staffId = ViewData["staffId"] })' class="btn btn-success"><i class="fa fa-plus"></i></a>
+            <div class="modal fade" id="myModalEduCreate" role="dialog"></div>
+        </div>
+    </div>*@
+</div>

@@ -1,0 +1,245 @@
+﻿@using edueTree.Helpers
+@model edueTree.Models.TrainingModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script type="text/javascript">
+    $(function () {
+        jQuery.ajax({
+            type: 'POST',
+            url: '/Training/GetAllDept',
+            data: {},
+            datatype: 'json',
+
+            success: function (response) {
+
+                var items = "";
+                $(response.deptid).each(function (i, item) {
+
+                    items += "<option value=\"" + item + "\">" + response.deptname[i] + "</option>";
+
+                });
+
+             
+            },
+            error:
+                           function () {
+
+                               $.notify("Please select any Department! ", "error");
+                           }
+        });
+    });
+</script>
+@{
+    var monthList = new SelectList(new[]
+    {
+        new SelectListItem {Text = "Select Month", Value = null, Selected = true},
+        new SelectListItem {Text = "January", Value = "1"},
+        new SelectListItem {Text = "February", Value = "2"},
+        new SelectListItem {Text = "March", Value = "3"},
+        new SelectListItem {Text = "April", Value = "4"},
+        new SelectListItem {Text = "May", Value = "5"},
+        new SelectListItem {Text = "June", Value = "6"},
+        new SelectListItem {Text = "July", Value = "7"},
+        new SelectListItem {Text = "August", Value = "8"},
+        new SelectListItem {Text = "September", Value = "9"},
+        new SelectListItem {Text = "October", Value = "10"},
+        new SelectListItem {Text = "November", Value = "11"},
+        new SelectListItem {Text = "December", Value = "12"},
+    }, "Value", "Text");
+
+
+
+    var yearList = new SelectList(new[]
+    {
+        new SelectListItem {Text = "Select Year", Value = null, Selected = true},
+        new SelectListItem {Text = "2016", Value = "2016"},
+        new SelectListItem {Text = "2017", Value = "2017"},
+        new SelectListItem {Text = "2018", Value = "2018"},
+        new SelectListItem {Text = "2019", Value = "2019"},
+        new SelectListItem {Text = "2020", Value = "2020"},
+        new SelectListItem {Text = "2021", Value = "2021"},
+        new SelectListItem {Text = "2022", Value = "2022"},
+        new SelectListItem {Text = "2023", Value = "2023"},
+        new SelectListItem {Text = "2024", Value = "2024"},
+        new SelectListItem {Text = "2025", Value = "2025"},
+
+    }, "Value", "Text");
+}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Training/Index"><i class="fa fa-dashboard"></i></a>Training</li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+
+
+<section class="content">
+
+    <div class="row">
+        <section class="col-md-12">
+            @*@using (Html.BeginForm("", "Attendance"))
+            {*@
+            @Html.ValidationSummary(true)
+                <div class="box box-success">
+                    <div class="box-header">
+
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                            <div class="table-responsive">
+                                <div class="col-md-12">
+                                    <div class="col-md-6"></div>
+                                        <div class="col-md-3">
+                                            @Html.DropDownList("month", monthList, new { id = "month", @class = "form-control", required = "required" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.DropDownList("year", yearList, new { id = "Year", @class = "form-control", required = "required" })
+                                        </div>
+                                    </div>
+                                <table id="StructureTable" class="table table-hover">
+                                    <thead>
+                                    <tr>
+
+                                        <th>@Html.DisplayName("Sr.No ") </th>
+                                        <th style="display: none"></th>
+                                        <th>@Html.DisplayName("Department Name ")</th>
+                                       
+                                        <th>@Html.DisplayName("Set Man Hour Target")</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @{
+                                        int index = 1;
+                                    }
+
+
+                                    @foreach (var tt in Model.deptList)
+                                    {
+                                        <tr>
+                                            <td>@index</td>
+                                            <td style="display: none"> @tt.deptId</td>
+                                            <td>@tt.deptName</td>
+                                            <td class="getdata">
+                                                @Html.TextBox("settarget", null, new {@class = "form-control", required = "required", @type = "number"})                                                
+                                            </td>
+                                        </tr>
+                                        index++;
+                                    }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <a href='@Url.Action("GetManHrIndex")' class="btn btn-default pull-left">
+                            Back to List
+                        </a>
+
+                        <div class="">
+                            <input type="submit" value="Add" class="btn btn-default  pull-right" onclick=" dataStore(); " />
+                            @*<input type="submit" value="Save" class="btn btn-success pull-right" onclick=" datastore(); "/>*@
+                        </div>
+                    </div>
+
+                </div>
+            @*}*@
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    function dataStore() {
+        debugger;
+        var table = document.getElementById("StructureTable");
+
+        var month = $('#month').val();
+        var year = $('#Year').val();
+        var rowCount = table.rows.length;
+        var srnos = new Array();
+        var deptnames = new Array();
+        var deptids = new Array();
+       // var manhourtargets = new Array();
+        var manhourtargets = [];
+        var test_arr = $("input[name*='settarget']");
+        $.each(test_arr, function (i, item) {  //i=index, item=element in array
+            manhourtargets[i] = $(item).val();
+         //   alert($(item).val());
+        });
+        //console.log(month, year);
+        // console.log(staffIds, monthDays, usedCompansation, currentMonthCompansation, currentMonthCompansation);
+        var j = 0;
+        for (var i = 1; i < rowCount; i++) {
+            var row = table.rows[i];
+            var idbox = row.cells[0].childNodes[0].textContent;
+            if (idbox !== "0") {
+                srnos[j] = idbox;
+                deptnames[j] = row.cells[2].childNodes[0].textContent;
+                deptids[j] = row.cells[1].childNodes[0].textContent;
+                // manhourtargets[j] = row.cells[2].childNodes[0].textContent;
+
+                j += 1;
+            }
+        }
+        jQuery.ajax({
+            type: "POST",
+            url: "/Training/GetManHrTargetpost",
+            data: { srnos: JSON.stringify(srnos), deptids: JSON.stringify(deptids), deptnames: JSON.stringify(deptnames), manhourtargets: JSON.stringify(manhourtargets), month: month, year: year },
+            datatype: "json",
+            success: function (data) {
+                $('#month').val("");
+                $('#Year').val("");
+                $("input[name*='settarget']").val("");
+                $.notify(data.Message, "success");
+            }
+        });
+    }
+
+</script>
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $(".").DataTable({
+                dom: "Bfrtip",
+                buttons: [
+                        "copy", "csv", "excel", "pdf", "print"
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

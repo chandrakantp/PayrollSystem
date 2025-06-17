@@ -1,0 +1,15 @@
+﻿@model IEnumerable<edueTree.Models.EmployeebucketModel>
+@{
+    ViewBag.Title = "EmployeeLeaveBucketUpdated";
+    Layout = null;
+}
+
+
+@foreach (var item in Model)
+{
+    <button type="button" class="btn btn-warning disabled" style="width: 200px; opacity: 1.65; margin-bottom: 10px;">
+        @item.LeavesType : @item.LeavesTypeAndTotalLeaves
+    </button>
+    
+}
+<p>&nbsp;</p>

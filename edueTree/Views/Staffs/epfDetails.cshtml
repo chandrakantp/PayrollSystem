@@ -1,0 +1,77 @@
+﻿@model edueTree.Models.EPFModel
+
+
+@{
+    Layout = null;
+}
+<div class="col-md-12">
+    @*<section class="content-header">
+        <h1>EPF Form Detail</h1>
+    </section>*@
+    <div class="box box-primary">
+        <div class="box-header"><i class="fa fa-bars"></i>
+            <h4 class="box-title"> EPF Form Detail</h4>
+            <div class="pull-right">
+              @if (ViewBag.message == true)
+              {
+                  <a href='@Url.Action("epfinfoedit", "Staffs", new {id = Model.staffid})'><i class="fa fa-pencil"></i></a>
+              }
+            </div>
+            @Html.HiddenFor(model => model.EpFid)
+        </div>
+        <div class="box-body">
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <td><label>Universal Id</label></td>
+                    <td>@Html.DisplayFor(model => model.staffcode)</td>
+                    <td><label>Name</label></td>
+                    <td>@Html.DisplayFor(model => model.Name)</td>
+                </tr>
+
+                <tr>
+                    <td><label>Father Name</label></td>
+                    <td>@Html.DisplayFor(model => model.fathername)</td>
+                    <td><label>Permanent Address</label></td>
+                    <td>@Html.DisplayFor(model => model.perAddress)</td>
+                </tr>
+
+                <tr>
+                    <td><label>Date of Joining</label></td>
+
+                    <td>
+                        @Convert.ToDateTime(Model.doj).ToString("MMM-dd-yyyy")
+                        @*@Html.DisplayFor(model => model.doj)*@
+                    </td>
+                    <td><label>EPF Account No.</label></td>
+                    <td>@Html.DisplayFor(model => model.EPFAccountNo)</td>
+
+                </tr>
+
+                <tr>
+                    <td><label>Gender</label></td>
+
+                    <td>
+                        @(Model.gender == 1 ? Html.DisplayName("Male") : Html.DisplayName("Female"))
+                    </td>
+                    <td><label>Married Status</label></td>
+                    <td>
+                        @(Model.marriedstatus == true ? Html.DisplayName("Married") : Html.DisplayName("UnMarried"))
+                    </td>
+
+                </tr>
+                <tr>
+                    <td><label>Temp Address</label></td>
+                    <td>
+                        @Html.DisplayFor(model => model.tempAddress)
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="box-footer">
+        
+            <div class="pull-right"><a href='@Url.Action("NomineeCreate", "Staffs", new {@status = "EPF", @id = Model.staffid})' class="btn btn-default"><i class="fa fa-file-pdf-o"></i> Add Nominee</a>
+           </div>
+         </div>
+    </div>
+</div>

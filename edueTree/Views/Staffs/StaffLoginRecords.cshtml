@@ -1,0 +1,132 @@
+﻿@model IEnumerable<edueTree.Models.LoginRecordModel>
+
+@{
+    ViewBag.Title = "LoginRecord's";
+}
+
+<br />
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Search Options - You can search Daily,Weekly & Monthly</h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("StaffLoginRecords", "Staffs", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Date - From:", new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker", null, new { @id = "datepicker", @class = "form-control datepickerNew" })
+                            </div>
+                            @Html.Label("To:", new { @class = "control-label col-md-1" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control" })
+                            </div>
+
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Employee's Login Record</h3>
+                </div>
+                <div class="box-body">
+                    <br />
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Employee Name
+                                </th>
+                                <th>
+                                    Login Date
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @*@Html.DisplayFor(modelitem => item.FullnameLogin)*@
+                                            @Html.DisplayFor(modelitem => item.StaffcodeLogin) :
+                                            @Html.DisplayFor(modelitem => item.FirstLogin)
+                                            @Html.DisplayFor(modelitem => item.MiddleLogin)
+                                            @Html.DisplayFor(modelitem => item.LastLogin)
+                                        </td>
+
+                                        <td>
+                                            @Convert.ToDateTime(item.CreatedDateLogin).ToString("dd-MM-yyyy HH:mm")
+                                        </td>
+                                        <td>
+                                            <a href='@Url.Action("StaffLoginDetails", new { Logid = item.loginid})'>
+                                                <i class="fa fa-list" aria-hidden="true"></i><span class="hidden-sm hidden-xs"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+            $('#datepicker').datepicker
+            ({
+                format: "mm/dd/yy",         
+                startDate: "-3m",
+                autoclose: true
+            });
+
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true,
+        });
+
+    });
+
+</script>
+
+
+
+<script>
+    $(function () {
+
+        $(document).ready(function () {
+            $('.table').DataTable({
+                //'ordering' : false,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

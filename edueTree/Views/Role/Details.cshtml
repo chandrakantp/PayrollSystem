@@ -1,0 +1,56 @@
+﻿@model edueTree.Models.AspNetRole
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<section class="content-header">
+    <h1>
+        Manage Role
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Role</a></li>
+        <li class="active">Detail</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-comments-o"></i>
+                    <h3 class="box-title">Details</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayName("Role name:")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Name)
+                            </dd>
+
+                        </dl>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                        <div class="btn-group" data-toggle="btn-toggle">
+
+                            <a href='@Url.Action("Edit", new { id = Model.Id })'><i class="fa fa-pencil-square"></i></a>
+                            @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@ |
+                            @*@Html.ActionLink("Back to List", "Index")*@
+                            <a href='@Url.Action("Index")'><i class="fa fa-arrow-left"></i> Back to list</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+

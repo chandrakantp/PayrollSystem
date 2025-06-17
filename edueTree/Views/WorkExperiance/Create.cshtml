@@ -1,0 +1,155 @@
+﻿@using edueTree.Helpers
+@model edueTree.Models.WorkExperiance
+@{
+    ViewBag.Title = "Add";    
+}
+
+<style type="text/css">
+    .datepicker {
+        z-index: 100000;
+    }
+</style>
+
+<style type="text/css">
+    a[type="button"] {
+        border-radius: 3px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid transparent;
+        background-color: #f4f4f4;
+        cursor: pointer;
+        padding: 7px;
+        margin-right: 8px;
+        width: auto;
+        text-decoration: none;
+        color: #444;
+        border-color: #ddd;
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        touch-action: manipulation;
+        user-select: none;
+        background-image: none;
+    }
+</style>
+<section class="content">
+    <div class="row">
+        <section class="col-md-7 col-md-offset-3">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-plus-square"></i>                   
+                    <h4 class="box-title">Add</h4>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal" id="defaultForm3">
+                               
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(mo => mo.staffId)
+                                <div class="form-group">
+                                    @Html.Label("Organization:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.organizationName, new { id = "organizationName", @class = "form-control", placeholder = "Enter organization name" ,required = "required"})
+                                        @Html.ValidationMessageFor(model => model.organizationName)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Joining Date:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.JoiningDate, new { id = "JoiningDate", @class = "form-control datepicker", placeholder = "Select joining date" ,required = "required"})
+                                  @Html.ValidationMessageFor(model => model.JoiningDate)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Release Date:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.releaseDate, new { id = "releaseDate", @class = "form-control datepicker", placeholder = "Select release date" ,required = "required"})
+                                        @Html.ValidationMessageFor(model => model.releaseDate)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Designation:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.designation, new { id = "designation", @class = "form-control", placeholder = "Enter designation",required = "required" })
+                                        @Html.ValidationMessageFor(model => model.designation)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Certificate:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.attachedCertificate, new { id = "attachedCertificate", @class = "form-control", placeholder = "Enter certificate" ,required = "required"})
+                                        @Html.ValidationMessageFor(model => model.attachedCertificate)
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+                                        <input type="submit" value="Add" class="btn btn-default"/>
+                                        @Html.EncodedActionLink("Cancel", "StaffDashboard", "Staffs", new { staffid = Model.staffId }, new { Type = "button" })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            
+            </div>
+        </section>
+    </div>
+</section>
+
+
+
+<script type="text/javascript">
+    
+    $(function () {
+        $("#releaseDate").on('change', function () {          
+            var startDate = document.getElementById("JoiningDate").value;
+            var endDate = document.getElementById("releaseDate").value;
+
+            if ((Date.parse(startDate) >= Date.parse(endDate))) {
+                alert("Release date should be greater than Joining date");
+                document.getElementById("releaseDate").value = "";
+            }
+        });
+    });
+
+
+    $('#JoiningDate').datepicker({
+        dateFormat: 'dd-mm-yy',
+        minDate: '+5d',
+        changeMonth: true,
+        changeYear: true,
+        autoclose: true,
+        JoiningDate: "#JoiningDate",
+        altFormat: "yy-mm-dd"
+    }).on('changeDate', function (ev) {
+        $(this).datepicker('hide');
+    });;
+
+    $('#releaseDate').datepicker({
+        dateFormat: 'dd-mm-yy',
+        minDate: '+5d',
+        changeMonth: true,
+        changeYear: true,
+        autoclose: true,
+        releaseDate: "#releaseDate",
+        altFormat: "yy-mm-dd"
+    }).on('changeDate', function (ev) {
+        $(this).datepicker('hide');
+    });;
+
+</script>

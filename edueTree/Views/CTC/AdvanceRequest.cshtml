@@ -1,0 +1,95 @@
+﻿@model edueTree.Models.AdvanceRequestModel
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <a data-toggle="modal" data-target="#myModal" class="btn btn-success pull-right">
+                    <i class="fa fa-plus-square"></i> Load And Advances Request 
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Advance Loan</a></li>
+        <li class="active">Request</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="myModal" class="modal fade" role="dialog">
+                @using (Html.BeginForm())
+                {
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"> Load And Advances Request</h4>
+                            </div>
+
+                            <div class="modal-body">
+                              
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-horizontal">
+                                        @Html.ValidationSummary(true)
+
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+                                                <label>Loan Amount</label>
+                                                @Html.TextBoxFor(model => model.Amount, new { @id = "ctcTxt", @class = "form-control", placeholder = "Enter load or advance amount" })
+                                                @Html.ValidationMessageFor(model => model.Amount)
+                                            </div>
+                                        </div>
+
+                                            <div class="form-group">
+                                                <div class="col-md-10">
+                                                    <label>No of EMI to Return</label>
+                                                    @Html.TextBoxFor(model => model.willPayEMI, new {@id = "ctcTxt", @class = "form-control", placeholder = "how many EMI's to return that loan amount?"})
+                                                    @Html.ValidationMessageFor(model => model.willPayEMI)
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Request" class="btn btn-default pull-right"/>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            @{Html.RenderAction("AdvanceRequestIndex", "CTC");}            
+            </div>                   
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

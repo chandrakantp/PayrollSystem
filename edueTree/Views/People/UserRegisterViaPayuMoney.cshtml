@@ -1,0 +1,175 @@
+﻿@using System.Web.UI.WebControls
+@using edueTree.Helpers
+@{
+    ViewBag.Title = "Sign Up | Innovative Fusion";
+    ViewBag.MetaKeywords = "hrms,hr software, employee database, web based hr software, cloud based hr software, hr software";
+    ViewBag.MetaDescription = "Innopeople HRMS easy simple cost effective solution.";
+}
+
+@model edueTree.Models.UserRegistreModel
+
+<section class="content-header">
+    <h1>
+        @*Employee Registration*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Company </a></li>
+        <li class="active">Registration</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <section id="loginForm">
+                @using (Html.BeginForm("Plans", "People", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.package)
+                    @Html.HiddenFor(model => model.price)
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <i class="fa fa-sign-in"></i>
+                            <h2 class="box-title">Firm Register Here </h2>
+                        </div>
+                        <hr />
+                        <div class="box-body">
+                            <div class="item">
+
+                                @*@Html.ValidationSummary(true)*@
+
+                                <div class="col-md-12">
+                                    <span class="" style="color: red;">@Html.ValidationMessage("CustomError")  </span>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First name" })
+                                        @Html.ValidationMessageFor(m => m.FirstName)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(m => m.MiddleName, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", placeholder = "Middle name" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Last name" })
+                                        @Html.ValidationMessageFor(m => m.LastName)
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(m => m.Contact, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.Contact, new { @class = "form-control", placeholder = "Contact number", @maxlength = "15" })
+                                        @Html.ValidationMessageFor(m => m.Contact)
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
+                                        @Html.ValidationMessageFor(m => m.Email)
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(m => m.FirmName, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.FirmName, new { @class = "form-control", placeholder = "Firm/Organization name" })
+                                        @Html.ValidationMessageFor(m => m.FirmName)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    @if (string.IsNullOrEmpty(Model.NoOfEmployees))
+                                    {
+                                        <div class="col-md-4">
+                                            @Html.LabelFor(m => m.NoOfEmployees, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.NoOfEmployees, new { @class = "form-control", placeholder = "No Of Employee" })
+                                            @Html.ValidationMessageFor(m => m.NoOfEmployees)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-4">
+                                            @Html.LabelFor(m => m.NoOfEmployees, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.NoOfEmployees, new { @class = "form-control", placeholder = "No Of Employee", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.NoOfEmployees)
+                                        </div>
+                                    }
+                                    @if (string.IsNullOrEmpty(Model.NoOfEmployees))
+                                    {
+                                        <div class="col-md-4">
+                                            @Html.LabelFor(m => m.Amount, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", placeholder = "Enter Amount" })
+                                            @Html.ValidationMessageFor(m => m.Amount)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-4">
+                                            @Html.LabelFor(m => m.Amount, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", placeholder = "Enter Amount", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.Amount)
+                                        </div>
+                                    }
+
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                                        @Html.ValidationMessageFor(m => m.Password)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                                    </div>
+                                    @*<div class="col-md-4">
+                                            @Html.LabelFor(m => m.CompanyId, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.CompanyId, new { @class = "form-control", placeholder = "Company Id" })
+                                            @Html.ValidationMessageFor(m => m.CompanyId)
+                                        </div>*@
+                                </div>
+                                <div class="">
+                                    <div class="col-md-6" style="font-size: 14px;">
+                                        @Html.RadioButton("Payment", "payumoney", new { @checked = true })  <img src="~/Images/PayUmoney.png" alt="Check out with Pyumoney" />(Indian Rupees)
+                                    </div><br />
+                                    <div class="col-md-6" style="font-size: 14px;">
+                                        @Html.RadioButton("Payment", "paypal")  <img src="~/Images/paypal.png" alt="Check out with PayPal" />&nbsp;(US Dollar)
+                                    </div>
+                                </div>
+
+                                @*<img src="~/Images/paypal.png" alt="Check out with PayPal" /><br />
+                                <img src="~/Images/PayUmoney.png" alt="Check out with Pyumoney" />*@
+                                 
+                                
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="box-footer"><input type="submit" name="submit" id="submitRecord" value="Proceed" class="btn btn-info pull-right" /></div>
+                    </div>  }
+            </section>
+        </div>
+    </div>
+</section>
+
+@*<script type="text/javascript">
+        document.getElementById("submitRecord").onclick = function () {
+            //disable
+            this.disabled = true;
+
+            //do some validation stuff
+        }
+    </script>*@
+@*<script>
+    function validateForm() {
+        var x = document.forms["myForm"]["fname"].value;
+        if (x == "") {
+            alert("Name must be filled out");
+            return false;
+        }
+    }
+</script>*@

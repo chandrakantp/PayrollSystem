@@ -1,0 +1,281 @@
+﻿@model edueTree.Models.FirmModel
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+    <section class="content-header">
+        <h1>          
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Firm</a></li>
+            <li class="active">Add</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <section class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-building"></i>
+                        <h3 class="box-title">New Firm Add</h3>
+
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                          @using (Html.BeginForm("Create", "Firm", null, FormMethod.Post,new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-horizontal" id="defaultForm">
+                                    @Html.ValidationSummary(true)
+                                    <div class="form-group">
+                                        @Html.Label("Firm Name:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.FirmName, new { id = "FirmName", @class = "form-control", placeholder = "enter firm name" })
+                                            @Html.ValidationMessageFor(model => model.FirmName)
+                                            <span class="help-block" id="FirmNameMessage" />
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        @Html.Label("Firm Logo:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            <input id="files" title="Upload a image" type="file" name="file" multiple />
+                                            <img id="image" style="height: 100px; width: 100px;"/>
+                                            @Html.ValidationMessage("File")
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.Label("Address:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.FlatNo, new { id = "FlatNo", @class = "form-control", placeholder = "Address" })
+                                            @Html.ValidationMessageFor(model => model.FlatNo)
+                                            <span class="help-block" id="FlatNoMessage" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Street, new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.Street, new { id = "Street", @class = "form-control", placeholder = "enter street" })
+                                            @Html.ValidationMessageFor(model => model.Street)
+                                            <span class="help-block" id="StreetMessage" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Area, new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.Area, new { id = "Area", @class = "form-control", placeholder = "enter area" })
+                                            @Html.ValidationMessageFor(model => model.Area)
+                                            <span class="help-block" id="AreaMessage" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.City, new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.City, new { id = "City", @class = "form-control", placeholder = "enter city" })
+                                            @Html.ValidationMessageFor(model => model.City)
+                                            <span class="help-block" id="CityMessage" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.State, new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.State, new { id = "State", @class = "form-control", placeholder = "enter state" })
+                                            @Html.ValidationMessageFor(model => model.State)
+                                            <span class="help-block" id="StateMessage" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Pincode, new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.Pincode, new { id = "Pincode", @class = "form-control", placeholder = "enter pincode",maxlength=6 })
+                                            @Html.ValidationMessageFor(model => model.Pincode)
+                                            <span class="help-block" id="PincodeMessage" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Contact, new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.Contact, new { id = "contact", @class = "form-control", placeholder = "enter contact number", maxlength = 12})
+                                            @Html.ValidationMessageFor(model => model.Contact)
+                                            <span class="help-block" id="ContactMessage" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.Email, new { id = "email", @class = "form-control", placeholder = "enter email" })
+                                            @Html.ValidationMessageFor(model => model.Email)
+                                            <span class="help-block" id="EmailMessage" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Fax, new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.Fax, new { id = "Fax", @class = "form-control", placeholder = "enter fax number" })                                            
+                                            <span class="help-block" id="FaxMessage" />
+                                        </div>
+                                    </div>
+
+                                    @*<div class="form-group">
+                                        @Html.LabelFor(model => model.Website, new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            @Html.TextBoxFor(model => model.Website, new { id = "website", @class = "form-control", placeholder = "enter website" })
+                                            <span class="help-block" id="WebsiteMessage" />
+                                        </div>
+                                    </div>*@
+                                    <hr />   
+                                    <div class="form-group">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <input type="submit" value="Add" class="btn btn-default"/>
+                                            <a href='@Url.Action("Index")' class="btn btn-default"> Back to list</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+<script type="text/javascript">
+    
+    document.getElementById("files").onchange = function () {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            document.getElementById("image").src = e.target.result;
+        };
+        reader.readAsDataURL(this.files[0]);
+    };
+
+
+    //$(document).ready(function () {
+    //    $("#FirmName").focus();
+    //    $("#defaultForm").bootstrapValidator({
+    //        message: "This value is not valid",
+    //        feedbackIcons: {
+    //            valid: "glyphicon glyphicon-ok",
+    //            invalid: "glyphicon glyphicon-remove",
+    //            validating: "glyphicon glyphicon-refresh"
+    //        },
+    //        fields: {
+    //            FirmName: {
+    //                container: "#FirmNameMessage",
+    //                validators: {
+    //                    notEmpty: {
+    //                        message: "The firm name is required and cannot be empty"
+    //                    }
+    //                }
+    //            },
+
+    //            FlatNo: {
+    //                container: "#FlatNoMessage",
+    //                validators: {
+    //                    notEmpty: {
+    //                        message: "The flat no is required and cannot be empty"
+    //                    }
+    //                }
+    //            },
+
+    //            Street: {
+    //                container: "#StreetMessage",
+    //                validators: {
+    //                    notEmpty: {
+    //                        message: "The street is required and cannot be empty"
+    //                    }
+    //                }
+    //            },
+
+    //            Area: {
+    //                container: "#AreaMessage",
+    //                validators: {
+    //                    notEmpty: {
+    //                        message: "The area is required and cannot be empty"
+    //                    }
+    //                }
+    //            },
+
+    //            City: {
+    //                container: "#CityMessage",
+    //                validators: {
+    //                    notEmpty: {
+    //                        message: "The city is required and cannot be empty"
+    //                    }
+    //                }
+    //            },
+    //            State: {
+    //                container: "#StateMessage",
+    //                validators: {
+    //                    notEmpty: {
+    //                        message: "The state is required and cannot be empty"
+    //                    }
+    //                }
+    //            },
+    //            Pincode: {
+    //                container: "#PincodeMessage",
+    //                validators: {
+    //                    notEmpty: {
+    //                        message: "The pin code is required and cannot be empty"
+    //                    },
+    //                    digits: {
+    //                        message: 'The value can contain only digits'
+    //                    },
+    //                    regexp: {
+    //                        regexp: /^([0][1-9]|[1-6])(\d{5})$/,
+    //                        message: 'The input is not a valid pin code'
+    //                    }
+    //                }
+    //            },
+    //            Contact: {
+    //                container: "#ContactMessage",
+    //                validators: {
+    //                    notEmpty: {
+    //                        message: "The contact is required and cannot be empty"
+    //                    },
+    //                    digits: {
+    //                        message: 'The value can contain only digits'
+    //                    }
+    //                }
+    //            },
+
+    //            Email: {
+    //                validators: {
+    //                    emailAddress: {
+    //                        message: 'The input is not a valid email address'
+    //                    }
+    //                }
+    //            },
+    //            Fax: {
+    //                validators: {
+    //                    blank: {
+    //                        message: 'entered fax number '
+    //                    }
+    //                }
+    //            },
+    //            Website: {
+    //                validators: {
+    //                    blank: {
+    //                        message: 'entered website '
+    //                    }
+    //                }
+    //            },
+    //        }
+    //    });
+    //});
+</script>

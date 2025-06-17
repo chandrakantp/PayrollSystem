@@ -1,0 +1,291 @@
+﻿@using iTextSharp.text.xml.simpleparser.handler
+@*@model IEnumerable<edueTree.Models.LeaveRequest>*@
+
+
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>        
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/LeaveRequest/LeaveRequestList"><i class="fa fa-dashboard"></i>LeaveRequest</a></li>
+        <li class="active">LeaveRequestList</li>
+    </ol>
+</section>
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Attendance Search Options - You can search Daily,Weekly & Monthly</h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("LeaveRequestList", "LeaveRequest", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            @Html.Label("Date - From:", new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker", null, new { id = "datepicker1", @class = "form-control datepicker" })
+                            </div>
+
+                            @Html.Label("To:", new { @class = "control-label col-md-1" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control datepicker" })
+                            </div>
+                            <div class="col-md-4">
+                                <select id="empId" name="empId" class="form-control"></select>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#home">
+                                Leaves request
+                                @*<span class="label label-warning">@TempData["Balanceleaves"]</span>*@
+                            </a>
+                        </li>
+                        @*<li>
+                            <a data-toggle="tab" href="#menu1">
+                                Optional holiday request
+                               
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu2">
+                                Compensatory leave                              
+                            </a>
+                        </li>*@
+                    </ul>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+                            <h3>Leave Request</h3>
+                            @{ Html.RenderAction("LeavesMaster", "LeaveRequest"); }
+
+                        </div>
+                        <div id="menu1" class="tab-pane fade">
+                            <h3>Optional holiday request</h3>
+                            <p>
+                                @{ Html.RenderAction("OptionalHolidayRequestList", "LeaveRequest"); }
+                            </p>
+                        </div>
+                        <div id="menu2" class="tab-pane fade">
+                            <h3>Compensatory leave</h3>
+                            <p>
+                                @{ Html.RenderAction("CompansationTranList", "LeaveRequest"); }
+
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+@*<section class="content-header">
+    <h1>
+       
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+            <li><a href="~/LeaveRequest/LeaveRequestList"><i class="fa fa-dashboard"></i> Leave Request</a></li>
+            <li class="active">List</li>
+        </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Leave Request List</h3>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Staffcode")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Username")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("From date")
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayName("To date")
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayName("Leave count")
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayName("Status")
+                                    </th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Staff.staffCode)
+                                        </td>
+                                        <td>
+
+                                            @Html.DisplayFor(modelItem => item.Staff.firstName)
+                                            @Html.DisplayFor(modelItem => item.Staff.middleName)
+                                            @Html.DisplayFor(modelItem => item.Staff.lastName)
+
+                                        </td>
+                                        <td>
+                                            @Convert.ToDateTime(item.dateFrom).ToString("dd MMM yyyy")
+                                            (@Html.DisplayFor(modelItem => item.sesionDateFrom))
+
+                                        </td>
+
+                                        <td>
+                                            @Convert.ToDateTime(item.dateTo).ToString("dd MMM yyyy")
+                                            (@Html.DisplayFor(modelItem => item.sesionDateTo))
+
+                                        </td>
+
+                                        <td>
+                                            @Convert.ToDecimal(item.totalCounts).ToString("0.##")
+                                          
+                                        </td>
+
+                                        @if (item.status == "Approved")
+                                        {
+                                            <td>
+                                                <span class="" style="color: green"> @Html.DisplayName("Approved")</span>
+                                            </td>
+                                        }
+                                        else if (item.status == "Rejected")
+                                        {
+                                            <td>
+                                                <span class="" style="color: red"> @Html.DisplayName("Rejected")</span>
+                                            </td>
+                                        }
+                                        else if (item.status == "Planned")
+                                        {
+                                            <td>
+                                                <span class="" style="color: blue"> @Html.DisplayName("Planned")</span>
+                                            </td>
+                                        }
+                                        else if (item.status == "Requested")
+                                        {
+                                            <td>
+                                                <span class="" style="color: blue"> @Html.DisplayName("Requested")</span>
+                                            </td>
+                                        }
+
+                                        @if (item.status == "Planned" || item.status == "Requested")
+                                        {
+                                            <td>
+                                                <a data-toggle="modal" data-target="#myModalLeaveApproved" href='@Url.Action("Edit", new {id = item.tranId, status = true})'>
+                                                    <i class="fa fa-check" style="color: green"></i> <span class="hidden-sm hidden-xs"></span>
+                                                </a>
+                                                <div class="modal fade" id="myModalLeaveApproved" role="dialog"></div>
+                                            </td>
+
+                                            <td>
+                                                <a data-toggle="modal" data-target="#myModalLeaveRejected" href='@Url.Action("Edit", new {id = item.tranId})'>
+                                                    <i class="fa fa-times" style="color: red"></i><span class="hidden-sm hidden-xs"></span>
+                                                </a>
+                                                <div class="modal fade" id="myModalLeaveRejected" role="dialog"></div>
+                                            </td>
+                                        }
+
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>*@
+
+<script>
+    $(function() {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function() {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "leaverequest") {
+                $.notify(" Leave request approved Successfully ! ", "sussess");
+            }
+             if ('@TempData["notice"]' === "reject") {
+                 $.notify("Leave request rejected successfully ! ", "sussess");
+            }
+        }
+
+    });
+</script>

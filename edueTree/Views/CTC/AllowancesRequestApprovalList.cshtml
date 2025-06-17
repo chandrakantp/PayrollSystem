@@ -1,0 +1,265 @@
+﻿@model IEnumerable<edueTree.Models.TblAllowTransaction>
+@{
+    ViewBag.Title = "AllowancesRequestApprovalList";
+}
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <a href="@Url.Action("AllowancesRequestbyadmin", "CTC",new {})" class="btn btn-success pull-right"><i class="fa fa-plus-square"> Add Allowances By Admin </i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm//yy",
+            autoclose: true,
+        });
+
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true,
+        });
+    });
+
+  
+</script>
+
+<br/>
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Search Options - You can search Daily,Weekly & Monthly</h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("AllowancesRequestApprovalList", "CTC", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Date - From:", new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker", null, new { id = "datepicker1", @class = "form-control datepicker" })
+                            </div>
+                            @Html.Label("To:", new { @class = "control-label col-md-1" })
+                            <div class="col-md-2">
+                                @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control datepicker" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownList("empId", (IEnumerable<SelectListItem>)ViewBag.staffid, "All Employee", new { @class = "form-control select2" })                           
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Allowances Request List</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>                                                                    
+                                    <th>
+                                        @Html.DisplayName("Employee Name")
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayName("Allowance Type")
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayName("Amount")
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayName("Expense Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Request Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Transaction Type")
+                                    </th>
+
+                                    @*<th class="col-xs-2">
+                                        @Html.DisplayName("User Remark")
+                                    </th>*@
+
+                                    <th>
+                                        @Html.DisplayName("Status")
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>                                     
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Staff.staffCode) :
+                                      
+                                            @Html.DisplayFor(modelItem => item.Staff.firstName)
+                                            @Html.DisplayFor(modelItem => item.Staff.middleName)
+                                            @Html.DisplayFor(modelItem => item.Staff.lastName)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TblAllowance.AllowanceName)
+                                        </td>
+
+                                        <td>                                        
+                                            @Html.DisplayFor(modelItem => item.Amount)
+                                        </td>
+
+                                        <td >
+                                            @Convert.ToDateTime(item.Expensedate).ToString("dd MMM yyyy")                                            
+                                        </td>
+                                        <td>
+                                            @Convert.ToDateTime(item.createdDate).ToString("dd MMM yyyy")
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.transactionType)
+                                        </td>
+
+                                        @*<td class="col-xs-3">
+                                            @Html.DisplayFor(modelItem => item.StaffRemark)
+                                        </td>*@                                      
+
+                                        @if (item.status == "Approved")
+                                        {
+                                           
+                                            <td>
+                                                <span class="" style="color: green"> @Html.DisplayName("Approved")</span>
+                                            </td>
+                                        }
+                                        else if (item.status == "Rejected")
+                                        {
+                                            
+                                            <td>
+                                                <span class="" style="color: red"> @Html.DisplayName("Rejected")</span>
+                                            </td>
+                                        }
+                                        else if (item.status == "Pending")
+                                        {
+                                          
+                                            <td>
+                                                <span class="" style="color: blue"> @Html.DisplayName("Pending")</span>
+                                            </td>
+                                        }
+                                      
+
+                                        @if (item.status == "Approved")
+                                        {
+                                          
+                                            <td>                                                                                            
+                                            </td>                                                                                     
+                                        }
+                                        @if (item.status == "Rejected")
+                                        {
+
+                                            <td></td>
+                                        }
+                                        @*@if (item.status == "Pending" && item.status == "Approved" && item.status == "Rejected")
+                                        {*@
+
+                                            <td>
+                                                <a href='@Url.Action("EditAllowRequest", new { id = item.AllowTranId, status = true, ActionName = "AllowancesRequestApprovalList" })'>
+                                                    <i class="fa fa-edit" data-toggle="tooltip" title="Approve/Reject/Edit"></i> <span class="hidden-sm hidden-xs"></span>
+                                                </a>
+                                            </td>
+                                        @*}*@
+                                        <td>
+                                            <a data-toggle="modal" data-target="#modaLVDelete" href='@Url.Action("DeleteAllowancesRequest", new { id = item.AllowTranId, ActionName = "AllowancesRequestApprovalList" })'><i class="fa fa-trash"></i></a>
+                                            <div class="modal fade" id="modaLVDelete" role="dialog"></div>
+                                        </td>
+                                                                            
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                      
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                "ordering": false,
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        $(".select2").select2();
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "change") {
+                $.notify(" Password Change Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "notenough") {
+                $.notify(" You do not have enough leave balance ! ", "error");
+            }
+            if ('@TempData["notice"]' === "leaverequest") {
+                $.notify(" Leave request approved Successfully ! ", "sussess");
+            }
+            if ('@TempData["notice"]' === "reject") {
+                $.notify("Leave request rejected successfully ! ", "sussess");
+            }
+        }
+
+    });
+</script>
+

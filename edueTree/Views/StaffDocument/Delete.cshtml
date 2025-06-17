@@ -1,0 +1,58 @@
+﻿@model edueTree.Models.StaffDocument
+
+@{ Layout = null; }
+
+    <section class="content">  
+        <section class="col-md-5 col-md-offset-3">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="box-title"> Are you sure you want to delete?</h4>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                <hr />
+                                @Html.ValidationSummary(true)
+
+                                <div class="form-group">
+                                    @Html.Label("Title :", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(a => a.title)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Document:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-6">
+                                        <img src="~/StaffDocument/@Model.attachedDoc" width="250" class="img-thumbnail" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-3 col-md-10">
+                                    <input type="submit" value="OK" class="btn btn-default" />&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
+            </div>
+        </section>
+
+      
+</section>
+
+
+

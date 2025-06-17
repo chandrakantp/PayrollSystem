@@ -1,0 +1,302 @@
+﻿.newprice-fixed {
+    display: block !important;
+    padding: 0;
+    border: 0;
+    text-align: center;
+    width: 100%;
+    line-height: normal;
+    font-size: 14px;
+    padding-top: 10px;
+    font-weight: normal;
+}
+
+.phead p#prcot {
+    padding: 30px 0 0;
+}
+
+    .phead p#prcot span:nth-last-child(2) {
+        position: relative;
+    }
+
+        .phead p#prcot span:nth-last-child(2):before {
+            content: 'Most Popular';
+            position: absolute;
+            left: -1px;
+            top: -30px;
+            width: 100%;
+            height: 26px;
+            line-height: 26px;
+            background: #fff;
+            color: #e19533;
+            font-size: 11px;
+            font-weight: 400;
+            border-left: 1px solid rgba(0,0,0,0.1);
+            border-right: 1px solid rgba(0,0,0,0.1);
+            border-top: 4px solid #00add5;
+        }
+
+.pcsignup a {
+    background: #00add5;
+    color: #fff;
+    display: block;
+    float: none;
+    font-size: 12px;
+    font-weight: 600;
+    height: 28px;
+    line-height: 28px;
+    margin: 0 auto;
+    text-transform: uppercase;
+    width: 98%;
+    padding: 0;
+}
+
+i {
+    font-style: initial;
+    display: inline-flex;
+}
+
+.main {
+    background: #fff;
+}
+
+.pricing-part {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0px 30px;
+}
+
+.changePrice {
+    display: none;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.prcCont {
+    overflow: hidden;
+    float: right;
+    position: relative;
+}
+
+.cusd {
+    overflow: hidden;
+}
+
+.pricing-part .phead p {
+    float: left;
+    font-size: 15px;
+    line-height: 40px;
+    padding: 0;
+}
+
+.cusd span {
+    color: #999;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 30px;
+    padding-bottom: 2px;
+    -webkit-box-shadow: 0 -2px 0 #e8e8e8 inset;
+    -moz-box-shadow: 0 -2px 0 #e8e8e8 inset;
+    -o-box-shadow: 0 -2px 0 #e8e8e8 inset;
+    box-shadow: 0 -2px 0 #e8e8e8 inset;
+    -webkit-transition: all 300ms ease 0;
+    -moz-transition: all 300ms ease 0;
+    -o-transition: all 300ms ease 0;
+    transition: all 300ms ease 0;
+}
+
+    .cusd span.one, .cusd span.two {
+        float: left;
+        position: relative;
+    }
+
+.cusd .priceBgm {
+    background: #333;
+    height: 2px;
+    left: 30px;
+    position: absolute;
+    bottom: 0;
+    top: auto;
+    z-index: 4;
+    padding-bottom: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: all 300ms ease 0;
+    -moz-transition: all 300ms ease 0;
+    -o-transition: all 300ms ease 0;
+    transition: all 300ms ease 0;
+}
+
+.priceBgm.swap {
+    left: 0;
+}
+
+.cusd .action {
+    color: #333;
+    cursor: default;
+}
+
+h1.pricing-heading {
+    margin-bottom: 5px;
+}
+
+.pricing-part h1 {
+    color: #333;
+    font-size: 30px;
+    font-weight: 300;
+    letter-spacing: -.5px;
+    line-height: 40px;
+    padding: 0;
+    text-align: center;
+}
+
+.pricing-heading span {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+}
+
+.pricing-heading a {
+    background: url(https://www.zoho.com/images/download-pdf.png) no-repeat;
+    text-indent: -999em;
+    width: 103px;
+    height: 24px;
+    display: block;
+    float: left;
+}
+
+    .pricing-heading a.inr-pdf {
+        display: none;
+    }
+
+.sub-title {
+    text-align: center;
+    display: block;
+    margin-bottom: 50px;
+}
+
+.price-holder {
+    margin-bottom: 100px;
+    max-width: 1280px;
+    width: 100%;
+}
+
+.pheadfix {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+    .pheadfix.sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(255,255,255,0.95);
+        left: 0;
+    }
+
+        .pheadfix.sticky .phead {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+.pdesc p, .phead p {
+    display: table !important;
+    width: 100% !important;
+}
+
+    .pdesc p span, .phead p span {
+        display: table-cell !important;
+        vertical-align: middle;
+    }
+
+    .phead p span {
+        border-right: 1px solid rgba(0,0,0,0.1);
+        border-top: 1px solid #F2F3F4;
+        border-bottom: 1px solid #F2F3F4;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .phead p#prcot span {
+        border-bottom: none;
+        padding: 15px 5px 10px;
+    }
+
+    .phead p.ppr span {
+        padding: 5px 5px 20px;
+    }
+
+    .phead p.ppr span, .phead p#prcot span.tit {
+        border-top: none;
+    }
+
+.pdesc p {
+    border-bottom: 1px solid #F2F3F4;
+}
+
+    .pdesc p span {
+        padding: 10px 0;
+        border-right: 1px solid rgba(0,0,0,0.1);
+        background: #fcfcfc;
+        text-align: center;
+    }
+
+        .pdesc p span.tit {
+            background: #FFF;
+            text-align: left;
+            padding: 10px 10px 10px 0;
+        }
+
+.pdesc p {
+    font-size: 13px;
+}
+
+    .pdesc p.high span.tit {
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #00add5;
+    }
+
+.pricing-five-col .phead p span, .pricing-five-col .pdesc p span {
+    width: 105px;
+}
+
+    .pricing-five-col .phead p span.tit, .pricing-five-col .pdesc p span.tit {
+        width: 21%;
+    }
+
+.pricing-four-col .phead p span, .pricing-four-col .pdesc p span {
+    width: 28%;
+}
+
+    .pricing-four-col .phead p span.tit, .pricing-four-col .pdesc p span.tit {
+        width: 40%;
+    }
+
+.pricing-three-col .phead p span, .pricing-three-col .pdesc p span {
+    width: 30%;
+}
+
+    .pricing-three-col .phead p span.tit, .pricing-three-col .pdesc p span.tit {
+        width: 40%;
+    }
+
+.pdesc p span.yes, .pdesc p span.no {
+    background-image: url(/Images/tick.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    text-indent: -999em;
+}
+
+i p {
+    margin: 0px -2px 0px;
+    border: none !important;
+}

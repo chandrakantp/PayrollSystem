@@ -1,0 +1,190 @@
+﻿@model edueTree.Models.PayrollConfigModel
+
+
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                @if (ViewBag.visible == true)
+                {
+                    <a data-toggle="modal" data-target="#myModal" class="btn btn-success pull-right">
+                        <i class="fa fa-plus-square"></i> Add Payroll Configuration Setting
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-header">
+    <h1>
+        @*Setting*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/LeaveRequest/UpdateSetting"><i class="fa fa-list"></i>PayrollConfig</a></li>
+        <li class="active">Update</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="myModal" class="modal fade" role="dialog">
+                @using (Html.BeginForm())
+                {
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"> Payroll Configuration Setting</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-horizontal">
+                                    @Html.AntiForgeryToken()
+                                    <div id="defaultForm">                                        
+                                        @Html.ValidationSummary(true)                                        
+                                          @Html.HiddenFor(model => model.FirmId)
+
+                                        <div class="form-group">
+                                            @*<div class="col-md-8">
+                                                <label>Monthly Leaves:</label>
+                                                @Html.TextBoxFor(model => model.MonthlyLeaves, new { id = "MonthlyLeaves", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.MonthlyLeaves)
+                                                <span class="help-block" id="MonthlyLeavesMessage" />
+                                            </div>*@
+
+                                            <div class="col-md-8">
+                                                <label>Working Hours Per Day</label>
+                                                @Html.TextBoxFor(model => model.WorkingHoursDay, new { id = "WorkingHoursDay", @class = "form-control", placeholder = "hh:mm:ss" })
+                                                @Html.ValidationMessageFor(model => model.WorkingHoursDay, string.Empty, new { @class = "help-block" })
+                                            </div>
+                                            @*<div class="col-md-8">
+                                                <label> Half Day Working Hr Per Day</label>
+                                                @Html.TextBoxFor(model => model.HalfDayMinWorkHours, new { @class = "form-control", placeholder = "hh:mm:ss" })
+                                                @Html.ValidationMessageFor(model => model.HalfDayMinWorkHours)
+                                            </div>*@
+                                            @*<div class="col-md-8">
+                                                <label>Working days Per Month</label>
+                                                @Html.TextBoxFor(model => model.WorkingdaysPermonth, new { @class = "form-control", placeholder = "hh:mm:ss" })
+                                                @Html.ValidationMessageFor(model => model.WorkingdaysPermonth)
+                                            </div>*@
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                </div>
+
+                       
+                            <div class="modal-footer">
+                                <input type="submit" value="Add" class="pull-right btn btn-default"/>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @{Html.RenderAction("PayrollSettingIndex", "LeaveRequest");}
+
+
+           
+        </div>
+            </div>
+    </section>
+
+
+@*<script>
+        $(function () {
+            $(document).ready(function () {
+                $('.table').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            });
+
+        });
+
+    </script>*@
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#defaultForm").bootstrapValidator({
+            message: "This value is not valid",
+            feedbackIcons: {
+                valid: "glyphicon glyphicon-ok",
+                invalid: "glyphicon glyphicon-remove",
+                validating: "glyphicon glyphicon-refresh"
+            },
+            fields: {
+                MonthlyLeaves: {
+                    container: "#MonthlyLeavesMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The monthly leaves not be empty"
+                        },
+                        digits: {
+                            message: 'The value can contain only digits'
+                        }
+                    }
+                },
+                MinHoursCountsADays: {
+                    container: "#MinHoursCountsADaysMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The minimum hours counts a days not be empty"
+                        },
+                        digits: {
+                            message: 'The value can contain only digits'
+                        }
+                    }
+                },
+            }
+        });
+    });
+
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "error") {
+                $.notify(" Something went wrong Plz check ! ", "error");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. !", "warn");
+            }
+            if ('@TempData["notice"]' === "wrong") {
+                $.notify(" Something went wrong plz check ! ", "error");
+            }
+        }
+
+    });
+
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+</script>

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<edueTree.Models.OptionalHolidayTran>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+
+}
+
+
+<div class="table-responsive">
+    <table class="table table-fixed">
+        <thead>
+            <tr>
+                <th class="col-xs-2">
+                    @Html.DisplayName("Staff Code")
+                </th>
+                <th class="col-xs-1">
+                    @Html.DisplayName("Employee Name")
+                </th>
+                <th class="col-xs-2">
+                    @Html.DisplayName("Holiday Name")
+                </th>
+                <th class="col-xs-1">
+                    @Html.DisplayName("Request Date")
+                </th>
+                <th class="col-xs-1">
+                    @Html.DisplayName("Status")
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="col-xs-3">
+                        @Html.DisplayFor(modelItem => item.Staff.staffCode)
+                    </td>
+                    <td class="col-xs-3">
+                        @Html.DisplayFor(modelItem => item.Staff.firstName)
+                        @Html.DisplayFor(modelItem => item.Staff.middleName)
+                        @Html.DisplayFor(modelItem => item.Staff.lastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OptionalHoliday.optionalHolidayName)
+                    </td>
+
+                    <td class="col-xs-3">
+                        @Convert.ToDateTime(item.requestDate).ToString("dd MMM yyyy")
+                    </td>
+                    @if (item.isApprove == true)
+                    {
+                        <td>
+                            <span class="" style="color: green"> @Html.DisplayName("Approved")</span>
+                        </td>
+                    }
+                    else if (item.isApprove == false)
+                    {
+                        <td>
+                            <span class="" style="color: red"> @Html.DisplayName("Rejected")</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <span class="" style="color:blue"> @Html.DisplayName("Pending")</span>
+                        </td>
+                    }
+
+                    @if (item.isApprove == null)
+                    {
+                        <td>
+                            <a data-toggle="modal" data-target="#myModalLeaveApproved2" data-toggle="tooltip" title="Approve" href='@Url.Action("EditOptional", new {id = item.TranId, status = true})'>
+                                <i class="fa fa-check" style="color: green"></i> <span class="hidden-sm hidden-xs"></span>
+                            </a>
+                            <div class="modal fade" id="myModalLeaveApproved2" role="dialog"></div>
+                        </td>
+
+                        <td>
+                            <a data-toggle="modal" data-target="#myModalLeaveRejected2" data-toggle="tooltip" title="Reject" href='@Url.Action("EditOptional", new { id = item.TranId })'>
+                                <i class="fa fa-times" style="color: red"></i><span class="hidden-sm hidden-xs"></span>
+                            </a>
+                            <div class="modal fade" id="myModalLeaveRejected2" role="dialog"></div>
+                        </td>
+                    }
+
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,23 @@
+﻿@model edueTree.Models.EditPermissionModel
+<table class="table">
+    <thead>
+    <tr>
+        <th>General Information</th>
+        <th>App Attendance</th>
+        <th>Manual Attendance</th>
+        <th>IsActive</th>
+        <th>In Probation Leave App</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>@Html.CheckBoxFor(modelItem => Model.GeneralInfo)</td>
+        <td>@Html.CheckBoxFor(modelItem => Model.AppAttendance)</td>
+        <td>@Html.CheckBoxFor(modelItem => Model.ManualAttendance)</td>
+        <td>@Html.CheckBoxFor(modelItem => Model.IsActive)</td>
+        <td>@Html.CheckBoxFor(modelItem => Model.IsProbationLeaveApp)</td>
+       
+    </tr>
+    </tbody>
+</table>

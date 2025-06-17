@@ -1,0 +1,151 @@
+﻿@model IEnumerable<edueTree.Models.AttendanceSheetModel>
+@{
+    ViewBag.Title = "MachineData";
+
+}
+
+
+<script type="text/javascript">
+    $(function () {
+        jQuery.ajax({
+            type: 'POST',
+            url: '/Attendance/GetStaff',
+            data: {},
+            datatype: 'json',
+            error:
+                            function () {
+                                alert("Not any Staff");
+                            },
+            success: function (response) {
+
+                var items = "";
+                $(response.SubcatId).each(function (i, item) {
+                    items += "<option value=\"" + item + "\">" + response.Subcat[i] + "</option>";
+                });
+
+                $("#empId").html(items);
+                console.log(items);
+            }
+        });
+    });
+</script>
+<section class="content-header">
+    <h1>
+        @*Attendance sheet*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Machine</a></li>
+        <li class="active">Data</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Machine data List</h3>
+                    
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="">
+                            @using (Html.BeginForm("AllEmpMachineData", "Attendance", FormMethod.Get))
+                            {
+                                <div class="form-horizontal">
+                                   
+                                  
+                                    @Html.Label("Date :", new {@class = "control-label col-md-4"})
+                                    <div class="col-md-3 col-sm-6">
+                                        @Html.TextBox("datepicker", null, new {id = "datepicker1", @class = "form-control"})
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    </div> 
+                   
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Dates</th>
+                                <th>Check-IN</th>
+                                <th>Check-OUT</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model.GroupBy(a => a.EmployeeName))
+                            {
+                                <tr>
+                                    <td>@item.Key </td>
+                                    <td style="text-align: center; font-weight: bold;">@Model.FirstOrDefault().UserName </td>
+                                    <td>
+                                        @foreach (var ii in item.Where(a => a.Sesssion == "IN"))
+                                        {
+                                            @Convert.ToDateTime(ii.TranDate).ToString("HH:mm tt")
+                                        }
+                                    </td>
+                                    <td>
+                                        @foreach (var ii in item.Where(a => a.Sesssion != "IN"))
+                                        {
+                                            @Convert.ToDateTime(ii.TranDate).ToString("HH:mm tt")
+                                         
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    var totalTileFunction = function (e) {
+        document.getElementById("Timetotalspan").innerHTML("Total time:" + e);
+    }
+
+
+    $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm//yy",
+            orientation: "bottom auto",
+            autoclose: true,
+        });
+
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            orientation: "bottom auto",
+            autoclose: true,
+        });
+
+    });
+
+
+</script>
+
+<script>
+    $(function () {
+   
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

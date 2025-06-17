@@ -1,0 +1,158 @@
+﻿@model edueTree.Models.AttendanceRequest
+
+@{ Layout = null; }
+@{   
+         var statusList = new SelectList(
+    new List<SelectListItem>
+    {      
+        new SelectListItem { Selected = true, Text = "Approved", Value = true.ToString()},
+        new SelectListItem { Selected = false, Text = "Rejected", Value = false.ToString()}
+    }, "Value", "Text");
+}
+
+
+
+
+<style type="text/css">
+    .help-block {
+        color: #BC3C3C;
+    }
+
+    .has-feedback .form-control {
+        padding-right: 0.5px;
+    }
+</style>
+
+
+<br />
+<section class="content-header">
+    <h1>     
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Attendance</a></li>
+        <li class="active">Request</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-5 col-md-offset-3">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="box-title"> Are you sure you want @TempData["Approve"] this request?</h4>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal">
+                                <hr />
+                                @Html.ValidationSummary(true)
+                                <br />
+                                @Html.HiddenFor(a => a.transId)
+                                @Html.HiddenFor(a => a.staffId)
+                                @Html.HiddenFor(a => a.attendDate)
+                                @Html.HiddenFor(a => a.inOutMode)
+                                @Html.HiddenFor(a => a.narration)
+                                @Html.HiddenFor(a => a.transDate)
+                                @Html.HiddenFor(a => a.firmId)
+                                
+
+                                @*<div class="form-group">
+                                    @Html.Label("Staff Name:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.FullName,null, new { @class = "form-control",@readonly=true})
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Request Date:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.transDate, null, new {@class = "form-control", @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Attend Date:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.attendDate, null, new { id = "AttendDate", @class = "form-control", @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Check In/Check Out:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.RadioButtonFor(model => model.inOutMode, 1, new { name = "InOutMode", id = "InOutMode", @readonly = true }) Check In
+                                        @Html.RadioButtonFor(model => model.inOutMode, 0, new { name = "InOutMode", id = "InOutMode", @readonly = true }) Check Out
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Narration:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextAreaFor(model => model.narration, new { @class = "form-control", @readonly = true })
+                                        @Html.ValidationMessageFor(model => model.narration)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Status:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.DropDownListFor(model => model.isApproved, statusList, new {@class = "form-control" })
+                                    </div>
+                                </div>*@
+
+
+                                @*<br />
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+                                        <input type="submit" value="Add" class="btn btn-default" />
+                                        <a href='@Url.Action("AttendRequestList")' class="btn btn-default">Back to list</a>
+                                    </div>
+                                </div>*@
+
+
+                                    <div class="col-md-10">
+                                        <input type="submit" value="OK" class="btn btn-default" />&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
+                                    
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(function() {
+        $('#AttendDate').datepicker({
+            format: "mm/dd/yyyy",
+            minDate: 0
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

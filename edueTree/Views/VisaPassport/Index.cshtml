@@ -1,0 +1,109 @@
+﻿@model IEnumerable<edueTree.Models.VisaPassport>
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+
+<div class="box box-primary">
+    <div class="box-header">
+        <i class="fa fa-history"></i>
+        <h3 class="box-title">Visa Passport Information</h3>
+        <div class="pull-right" title="Add Visa Passport Information">
+            @if (ViewBag.message == true)
+            {
+                <a href='@Url.Action("Create", new {StaffId = TempData["staffId"]})' class="btn btn-primary"><i class="fa fa-plus"></i> Add Visa Passport</a>
+            }  <div class="modal fade" id="myModalvisaCreate" role="dialog"></div>
+        </div>
+    </div>
+    @{
+
+        <!-- /.box-header -->
+        <div class="box-body">
+
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+
+                        <th>
+                            @Html.DisplayName("Visa Number")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Expiry Date")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Country")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Type")
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Num)
+                            </td>
+                            <td>
+                                @Convert.ToDateTime(item.ExpiryDate).ToString("MMM-dd-yyyy")
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Country)
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+
+                            </td>
+                            <td>
+                                @if (ViewBag.message == true)
+                                {
+                                    <a href='@Url.Action("Edit", new {id = item.PassVisaId})'><i class="fa fa-pencil-square"></i></a>
+                                }
+                            </td>
+                            <td>
+                                @if (ViewBag.message == true)
+                                {
+                                    <a data-toggle="modal" data-target="#myModalVisaDelete" href='@Url.Action("Delete", new {id = item.PassVisaId})'><i class="fa fa-trash"></i></a>
+                                }
+                        </td>
+
+                    </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="box-footer">
+
+            <div class="modal fade" id="myModalVisaDelete" role="dialog"></div>
+        </div>
+    }
+</div>
+@*@{
+        TempData.Keep("staffId");
+    }*@
+
+
+@*<script>
+        $(function () {
+            $(document).ready(function () {
+                $('.table').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                });
+            });
+
+        });
+
+    </script>*@

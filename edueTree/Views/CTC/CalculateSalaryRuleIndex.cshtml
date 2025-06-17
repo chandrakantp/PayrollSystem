@@ -1,0 +1,61 @@
+﻿@model IEnumerable<edueTree.Models.tblSalaryCalculateRule>
+@{
+    Layout = null;
+}
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Calculate Salary By</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table class="table table-fixed">
+                <thead>
+                    <tr>
+                        <th>Calculate Salary By:</th>
+                        <th></th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @if (item.CalculateBy == "FormA")
+                                {
+                                    @Html.DisplayName("PPR")    
+                                }
+                                else if (item.CalculateBy == "FormB")
+                                {
+                                    @Html.DisplayName("PR+LV")    
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("PR+LV+HD+MO")    
+                                }
+                                
+                            </td>
+
+                            @*<td>
+                                    <a href="@Url.Action("EditAllowances", "CTC", new { id = item.AllowanceId })"> <i class="fa fa-pencil-square"></i></a>
+                                </td>*@
+                            <td>
+                                <a data-toggle="modal" data-target="#myModalCalculateSADelete" href='@Url.Action("DeleteCalculateSalaryRule", new { id = item.CalculateId })'><i class="fa fa-trash"></i></a>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="myModalCalculateSADelete" role="dialog"></div>
+
+

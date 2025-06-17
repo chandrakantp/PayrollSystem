@@ -1,0 +1,108 @@
+﻿@model IEnumerable<edueTree.Models.NetDurationModel>
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<section class="content-header">
+    <h1>
+
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Self Employee</a></li>
+        <li class="active">Event Log Data</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title">Event Log Data [self] Search Options - You can search Daily,Weekly & Monthly</h3>
+                </div>
+
+                <div class="box-body chat">
+                    <div class="item">
+                        @using (Html.BeginForm("GetNetDurationEmployeeself", "Attendance", FormMethod.Get))
+                        {
+                            <div class="form-horizontal">
+
+                                <div class="form-group">
+                                    @Html.Label("From Date:", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-2">
+                                        @Html.TextBox("fromDate", null, new { id = "fromDate", @class = "form-control datepicker" })
+                                    </div>
+
+                                    @Html.Label("To Date:", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-2">
+                                        @Html.TextBox("toDate", null, new { id = "toDate", @class = "form-control datepicker" })
+                                    </div>
+                                    @*<div class="col-md-3">
+
+                                        @Html.DropDownList("staffid", (IEnumerable<SelectListItem>)ViewBag.staffid, "---- Select Employee ----", new { @class = "form-control" })
+                                    </div>*@
+                                    <div class="col-md-1">
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Manage Event Log Data [self]</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <table class="table">
+                            <thead>
+                                <tr><th>@Html.DisplayName("User Names")</th>
+                                    <th>
+                                        @Html.DisplayName("Transation Date")
+                                    </th>
+                                 
+                                    <th>@Html.DisplayName("Transation Time")</th>
+                                    <th>@Html.DisplayName("Log Type")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr><td> @Html.DisplayFor(modelItem => item.UserNames)</td>
+                                        <td> @Convert.ToDateTime(item.Trandate).ToString("dd-MMM-yyyy") </td>
+                                       
+                                        <td> @Html.DisplayFor(modelItem => item.TransactionTime) </td>
+                                        <td>@Html.DisplayFor(modelItem => item.LoginType)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+

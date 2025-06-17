@@ -1,0 +1,890 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Pricing | Innovative Fusion";
+}
+<h1 style="color: red; font-size: 24px;"> @TempData["Message1"]</h1>
+<link href="~/Content/zohocustom.css" rel="stylesheet" />
+<link href="~/Content/14296.css" rel="stylesheet" />
+<link href="~/Content/14294.css" rel="stylesheet" />
+
+<script src="~/Scripts/zoho1.js"></script>
+<script type="text/javascript" src="https://iplocation.zoho.com/"></script>
+<script src="~/Scripts/zoho4.js"></script>
+
+
+<style>
+    .nav-tabs > li > a {
+        margin-right: -6px;
+        line-height: 1.42857143;
+        border: 0px solid transparent;
+        border-radius: 4px 4px 0 0;
+    }
+
+    /*.pricing-tab {
+        max-width: 318px;
+    }*/
+    .pricing-tab {
+        max-width: 148px;
+    }
+
+        .pricing-tab > li.active {
+            background: #00add5;
+            color: #fff;
+        }
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+        color: #fff;
+        background-color: #00add5;
+    }
+
+    .pricesize {
+        font-size: 30px;
+        color: #00add5;
+        font-weight: bold;
+        margin-left: 18px;
+    }
+
+    #block-system-main {
+        margin: 30px 0 0px !important;
+    }
+
+    .content-wrap, .bottom-quick-links .container {
+        position: relative;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    .pricing-wrap {
+        margin: 0px 0px !important;
+        padding: 10px;
+    }
+
+    .product-block span.detail span {
+        min-height: 36px !important;
+    }
+
+    .pricesize {
+        /*font-size: 30px !important;*/
+        margin-left: 0px;
+    }
+
+    .product-block .plan-name {
+        line-height: 3.5;
+    }
+
+    @@media (max-width: 768px) {
+        .pricing-wrap .content-wrap .product-block .main-box, .pricing-wrap .content-wrap .product-block .highlighted-box, .pricing-wrap .content-wrap .product-block .feature-box {
+            padding: 0px;
+        }
+    }
+
+    .pricing-wrap .content-wrap .product-block {
+        margin: 20px 0px;
+    }
+
+    @@media (max-width: 1199px) {
+        .pricing-tab {
+            max-width: 175px;
+        }
+    }
+
+    .product-block.col-sm-6.col-md-3.col-lg-2.col-xs-6 {
+        min-height: 400px !important;
+    }
+</style>
+
+<div class="main-container-wrapper container">
+    <div class="main-container blog">
+        <section>
+            <a id="main-content"></a>
+            <div class="region region-content">
+                <section id="block-system-main" class="block block-system clearfix">
+                    <div class="content-wrap row">
+                        <div class="field-price-plan-header">
+                            <div class="tar changePrice">
+                                <div class="prcCont" id="changeUSD">
+                                    <div class="cusd">
+                                        <ul class="nav nav-tabs row text-center">
+                                            <li><a href="#tab3" data-toggle="tab" onclick=" return show(); ">$</a></li>
+                                            <li class="active"><a href="#tab4" data-toggle="tab" onclick=" return hide(); "><i class="fa fa-inr" aria-hidden="true"></i></a></li>
+                                        </ul>
+
+                                        @*<span class="one" onclick=" changeUSD(); perEmpPricing(); ">$</span>
+                                            <span class="two action" onclick=" changeINR(); perEmpPricing(); "><i class="fa fa-inr" aria-hidden="true"></i></span>
+                                            <span class="priceBgm"></span>*@
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="panel-separator"></div>
+                    <div class="content-wrap row">
+                        <h1 class="field-price-heading">15-day free trial. No credit card required<span>A complete HR solution for every business.</span></h1>
+                        @*<div class="pricing-tab">
+                                <span class="mon active">Monthly</span>
+                                <span class="year">Go yearly<em>Pay only 10 month's price</em></span>
+                            </div>*@
+                    </div>
+
+                    <div class="tab-content ">
+                        <div class="tab-pane active" id="tab4">
+
+                            <ul class="nav nav-tabs pricing-tab  row text-center">
+                                <li class="active"><a href="#tab1" data-toggle="tab">Monthly</a></li>
+                                <li><a href="#tab2" data-toggle="tab">Go yearly</a></li>
+                            </ul>
+                            <div class="tab-content row">
+                                <div class="tab-pane active" id="tab1">
+                                    <div class="panel-separator"></div>
+                                    <section class="pricing-wrap">
+                                        <div class="content-wrap row">
+
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">CUSTOM</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span class="">
+                                                            <i class="fa fa-inr" aria-hidden="true"></i>
+                                                        </span>
+                                                        <span></span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per month</span>
+                                                        <span>For "X" Employees</span>
+                                                        <span></span>
+                                                    </span>
+
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { package = "mon", price = "rupees" })">Sign Up</a>
+
+                                                </div>
+
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3>Addons</h3><ul><li>Reports - $15 </li></ul>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">STARTUP</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            <i class="fa fa-inr" aria-hidden="true"></i>
+                                                        </span>
+                                                        <span>540</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per month</span>
+                                                        <span>5 Employees</span>
+                                                        <span></span>
+                                                    </span>
+
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "540", employee = "5", package = "mon", price = "rupees" })">Sign Up</a>
+
+                                                </div>
+
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3>Addons</h3><ul><li>Reports - $15 </li></ul>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Basic</span>
+                                                    <span class="plan-caption"></span><span class="pricesize">
+                                                        <span><i class="fa fa-inr" aria-hidden="true"></i></span>
+                                                        <span>1140</span>
+                                                    </span>
+
+                                                    <span class="detail">
+                                                        <span>Per month</span><span>10 Employees </span>
+                                                        <span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "1140", employee = "10", package = "mon", price = "rupees" })">Sign Up</a>
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Standard</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            <i class="fa fa-inr"></i>
+                                                        </span><span>2940</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per month</span><span>25 Employees</span><span>
+                                                        </span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "2940", employee = "25", package = "mon", price = "rupees" })">Sign Up</a>
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="popular-plan">Most Popular</div>
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Premium</span>
+                                                    <span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            <i class="fa fa-inr"></i>
+                                                        </span><span>5940</span>
+                                                    </span><span class="detail">
+                                                        <span>Per month</span>
+                                                        <span>50 Employees</span><span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "5940", employee = "50", package = "mon", price = "rupees" })">Sign Up</a>
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Enterprise</span><span class="plan-caption">
+                                                    </span>
+                                                    <span class="pricesize">
+                                                        <span><i class="fa fa-inr"></i></span><span>11940</span>
+                                                    </span><span class="detail">
+                                                        <span>Per month</span><span>100 Employees</span>
+                                                        <span>$2/month/additional employee.</span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "11940", employee = "100", package = "mon", price = "rupees" })">Sign Up</a>
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="tab-pane" id="tab2">
+                                    <div class="panel-separator"></div>
+                                    <section class="pricing-wrap">
+                                        <div class="content-wrap">
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">CUSTOM</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            <i class="fa fa-inr" aria-hidden="true"></i>
+                                                        </span>
+                                                        <span></span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per year</span>
+                                                        <span>For "X" Employees</span>
+                                                        <span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { package = "yer", price = "rupees" })">Sign Up</a>
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3>Addons</h3><ul><li>Reports - $15 </li></ul>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">STARTUP</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            <i class="fa fa-inr" aria-hidden="true"></i>
+                                                        </span>
+                                                        <span>5400</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per year</span>
+                                                        <span>5 Employees</span>
+                                                        <span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "5400", employee = "5", package = "yer", price = "rupees" })">Sign Up</a>
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3>Addons</h3><ul><li>Reports - $15 </li></ul>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Basic</span>
+                                                    <span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span><i class="fa fa-inr" aria-hidden="true"></i></span>
+                                                        <span>11400</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per year</span><span>10 Employees </span>
+                                                        <span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "11400", employee = "10", package = "yer", price = "rupees" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "yearly11400"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Standard</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            <i class="fa fa-inr"></i>
+                                                        </span><span>29400</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per year</span><span>25 Employees</span><span>
+                                                        </span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "29400", employee = "25", package = "yer", price = "rupees" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "yearly29400"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="popular-plan">Most Popular</div>
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Premium</span>
+                                                    <span class="plan-caption">
+
+                                                    </span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            <i class="fa fa-inr"></i>
+                                                        </span><span>59400</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per year</span>
+                                                        <span>50 Employees</span><span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "59400", employee = "50", package = "yer", price = "rupees" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "yearly59400"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Enterprise</span>
+                                                    <span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span><i class="fa fa-inr"></i></span><span>119400</span>
+                                                    </span><span class="detail">
+                                                        <span>Per year</span><span>100 Employees</span>
+                                                        <span>$2/month/additional employee.</span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "119400", employee = "100", package = "yer", price = "rupees" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "yearly119400"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane active" id="tab3">
+                            <ul class="nav nav-tabs pricing-tab">
+                                <li class="active"><a href="#tab6" data-toggle="tab">Monthly</a></li>
+                                <li><a href="#tab7" data-toggle="tab">Go yearly</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab6">
+
+                                    <div class="panel-separator"></div>
+                                    <section class="pricing-wrap">
+                                        <div class="content-wrap">
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">CUSTOM</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            $
+                                                        </span>
+                                                        <span></span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per month</span>
+                                                        <span>For "X" Employees</span>
+                                                        <span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { package = "mon", price = "dollar" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "mondollor9"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3>Addons</h3><ul><li>Reports - $15 </li></ul>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">STARTUP</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            $
+                                                        </span>
+                                                        <span>9</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per month</span>
+                                                        <span>5 Employees</span>
+                                                        <span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "9", employee = "5", package = "mon", price = "dollars" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "mondollor9"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3>Addons</h3><ul><li>Reports - $15 </li></ul>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Basic</span>
+                                                    <span class="plan-caption"></span><span class="pricesize">
+                                                        $
+                                                        <span>19</span>
+                                                    </span><span class="detail">
+                                                        <span>Per month</span><span>10 Employees </span>
+                                                        <span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "19", employee = "10", package = "mon", price = "dollars" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "mondollor19"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Standard</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            $
+                                                        </span><span>49</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per month</span><span>25 Employees</span><span>
+                                                        </span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "49", employee = "25", package = "mon", price = "dollars" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "mondollor49"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="popular-plan">Most Popular</div>
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Premium</span>
+                                                    <span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            $
+                                                        </span><span>99</span>
+                                                    </span><span class="detail">
+                                                        <span>Per month</span>
+                                                        <span>50 Employees</span><span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "99", employee = "50", package = "mon", price = "dollars" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "mondollor99"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Enterprise</span><span class="plan-caption">
+                                                    </span>
+                                                    <span class="pricesize">
+                                                        <span>$</span><span>199</span>
+                                                    </span><span class="detail">
+                                                        <span>Per month</span><span>100 Employees</span>
+                                                        <span>$2/month/additional employee.</span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "199", employee = "100", package = "mon", price = "dollars" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "mondollor199"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="tab-pane" id="tab7">
+                                    <div class="panel-separator"></div>
+                                    <section class="pricing-wrap">
+                                        <div class="content-wrap">
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">CUSTOM</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            $
+                                                        </span>
+                                                        <span></span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per year</span>
+                                                        <span>For "X" Employees</span>
+                                                        <span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { package = "yer", price = "dollars" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("UserRegister", "Account")">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3>Addons</h3><ul><li>Reports - $15 </li></ul>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">STARTUP</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            $
+                                                        </span>
+                                                        <span>90</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per year</span>
+                                                        <span>5 Employees</span>
+                                                        <span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "90", employee = "5", package = "yer", price = "dollars" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "yerdollor90"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3>Addons</h3><ul><li>Reports - $15 </li></ul>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Basic</span>
+                                                    <span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>$</span>
+                                                        <span>190</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per year</span><span>10 Employees </span>
+                                                        <span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "190", employee = "10", package = "yer", price = "dollars" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "yerdollor190"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Standard</span><span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            $
+                                                        </span><span>490</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per year</span><span>25 Employees</span><span>
+                                                        </span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "490", employee = "25", package = "yer", price = "dollars" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "yerdollor490"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="popular-plan">Most Popular</div>
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Premium</span>
+                                                    <span class="plan-caption">
+
+                                                    </span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            $
+                                                        </span><span>990</span>
+                                                    </span>
+                                                    <span class="detail">
+                                                        <span>Per year</span>
+                                                        <span>50 Employees</span><span></span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "990", employee = "50", package = "yer", price = "dollars" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "yerdollor990"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-block col-sm-6 col-md-3 col-lg-2 col-xs-6">
+                                                <div class="main-box text-center">
+                                                    <span class="plan-name">Enterprise</span>
+                                                    <span class="plan-caption"></span>
+                                                    <span class="pricesize">
+                                                        <span>
+                                                            $
+                                                        </span><span>1990</span>
+                                                    </span><span class="detail">
+                                                        <span>Per year</span><span>100 Employees</span>
+                                                        <span>$2/month/additional employee.</span>
+                                                    </span>
+                                                    <a class="getstart-plan" href="@Url.Action("UserRegisterViaPayuMoney", "People", new { plan = "1990", employee = "100", package = "yer", price = "dollars" })">Sign Up</a>
+                                                    @*<a class="trynow-plan" href="@Url.Action("Plans","People", new { plan = "yerdollor1990"})">Try Now</a>*@
+                                                </div>
+                                                <div class="feature-wrap">
+                                                    <div class="feature-box">
+                                                        <h3></h3>
+                                                        <div class="addons-box">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-separator"></div>
+                    <div class="panel-pane pane-entity-field pane-node-field-pricing-table-html-block">
+                        <div class="pane-content">
+                            <div class="field-pricing-table-html-block">
+                                <div class="pricing-hint-promo">
+                                    <div class="content-wrap animated">
+                                        <div class="next-actions">
+                                            <p>Can't decide which plan is right for you?</p>
+                                            <h4><a href="@Url.Action("Pricingcomparison", "Home")">See our complete feature comparison.</a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-separator"></div>
+                    <section class="pricing-faq">
+                        <div class="content-wrap">
+                            <h2>Frequently asked questions </h2><ul>
+                                <li class="">
+                                    <h3>Can I get a demo of HRMS People?</h3>
+                                    <p></p>
+                                    <p>
+                                        Yes, we would be happy to demonstrate HRMS People through a web-conference at your convenience. To schedule your 1-2-1 session( or 1 on 1 session), please contact <a href="mailto:info@innovative-fusion.com" marked="1">info@innovative-fusion.com.</a>
+                                    </p>
+                                </li>
+                                <li class="">
+                                    <h3>What types of payment do you accept?</h3>
+                                    <p></p>
+                                    <p>
+                                        We accept payment via Visa, MasterCard, American Express and PayPal. We also accept payment via bank transfer or check transfer for yearly subscriptions. For more details, please contact <a href="mailto:info@innovative-fusion.com" marked="1">info@innovative-fusion.com.</a>
+                                    </p>
+                                </li>
+                                <li class="">
+                                    <h3>Does HRMS People support multiple languages?</h3>
+                                    <p></p>
+                                    <p>Yes, we support the following languages: English (USA), English (UK), French, German, Dutch, Swedish, Portuguese, Italian, Korean, Spanish, Russian, Chinese, Vietnamese, Hebrew, Turkish, and Arabic.</p>
+                                </li>
+                                <li class="">
+                                    <h3>Is my data safe?</h3>
+                                    <p></p>
+                                    <p>We’re fervent about keeping your data safe and secure. Our facilities feature stringent 24/7/365 security with video monitoring, biometric access, and advanced fire, flood, and theft monitoring systems. Our network security system employs the latest encryption and intrusion detection and prevention technologies.</p>
+                                </li>
+                                <li class="">
+                                    <h3>How do I buy more than 500 user licenses?</h3>
+                                    <p></p>
+                                    <p>
+                                        If you wish to purchase licenses for more than 500 employees, please write to <a href="mailto:info@innovative-fusion.com" marked="1">info@innovative-fusion.com</a> and we will assist you with the purchase.
+                                    </p>
+                                </li>
+                                <li class="">
+                                    <h3>Are you US/EU Safe Harbor Compliant?</h3>
+                                    <p></p>
+                                    <p>
+                                        Yes. We comply with the EU Safe Harbor framework as set forth by the Department of Commerce (USA). This also applies to the collection, use, and retention of user data from the European Union. For more information, please read our <a href="#" marked="1">US/EU Safe Harbor Privacy Policy</a>
+                                    </p>
+                                </li>
+                                <li class="">
+                                    <h3>Can I switch plans?</h3>
+                                    <p></p>
+                                    <p>Of course you can! Log in to HRMS People, click the Upgrade link on the Home page, and follow the steps on the Subscription page to switch to the plan of your choice.</p>
+                                </li>
+                                <li class="">
+                                    <h3>Have more questions?</h3>
+                                    <p></p>
+                                    <p>
+                                        Our support team is available 24/5, Monday through Friday to assist you. Visit our <a href="#" marked="1">Support Center</a> to contact us.
+                                    </p>
+                                </li>
+                                <li class="">
+                                    <h3>How does the purchase of Employee Profiles (Non-Users) work?</h3>
+                                    <p></p>
+                                    <p>When you purchase login users the corresponding employee profile licenses will also be increased in the ratio of 1:5. So, for every additional employee you purchase, you are allowed to add 5 employee profiles to the account.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+
+
+                </section>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#tab3").hide();
+    });
+
+    function show() {
+        if (document.getElementById('tab3').style.display == 'none') {
+            document.getElementById('tab3').style.display = 'block';
+
+        }
+        return false;
+    }
+    function hide() {
+        if (document.getElementById('tab3').style.display == 'block') {
+            document.getElementById('tab3').style.display = 'none';
+        }
+        return false;
+    }
+</script> 

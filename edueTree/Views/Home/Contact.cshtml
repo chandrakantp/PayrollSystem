@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<style>
+    .scrollbar {
+        overflow: auto; /*for horizontal and vertical scroll bars */
+    }
+    /* or you can set scrolling in x and y direction */
+    .scrollbarxy {
+        overflow-x: auto; /*for horizontal scroll bar */
+        overflow-y: auto; /*for vertical scroll bar */
+    }
+    .hscrollbar {
+        overflow-x: auto; /*for horizontal scroll bar */
+        overflow-y: hidden; /*for hiding vertical scroll bar */
+    } 
+</style>
+<div class="scrollbar">
+    <div class="hscrollbar">
+
+        <address>
+            One Microsoft Way<br />
+            Redmond, WA 98052-6399<br />
+            <abbr title="Phone">P:</abbr>
+            425.555.0100
+        </address>
+
+        <address>
+            <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
+            <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+        </address>
+
+    </div>
+    </div>

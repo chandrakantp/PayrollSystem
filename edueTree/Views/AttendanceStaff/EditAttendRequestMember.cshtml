@@ -1,0 +1,137 @@
+﻿@model edueTree.Models.AttendanceRequestEditModel
+
+@{
+
+    var hourList = new SelectList(new[]
+            {
+                new SelectListItem {Text = " Select ", Value = null, Selected = true},
+                new SelectListItem {Text = "1", Value = "1"},
+                new SelectListItem {Text = "2", Value = "2"},
+                new SelectListItem {Text = "3", Value = "3"},
+                new SelectListItem {Text = "4", Value = "4"},
+                new SelectListItem {Text = "5", Value = "5"},
+                new SelectListItem {Text = "6", Value = "6"},
+                new SelectListItem {Text = "7", Value = "7"},
+                new SelectListItem {Text = "8", Value = "8"},
+                new SelectListItem {Text = "9", Value = "9"},
+                new SelectListItem {Text = "10", Value = "10"},
+                new SelectListItem {Text = "11", Value = "11"},
+                new SelectListItem {Text = "12", Value = "12"},
+                new SelectListItem {Text = "13", Value = "13"},
+                new SelectListItem {Text = "14", Value = "14"},
+                new SelectListItem {Text = "15", Value = "15"},
+                new SelectListItem {Text = "16", Value = "16"},
+                new SelectListItem {Text = "17", Value = "17"},
+                new SelectListItem {Text = "18", Value = "18"},
+                new SelectListItem {Text = "19", Value = "19"},
+                new SelectListItem {Text = "20", Value = "20"},
+                new SelectListItem {Text = "21", Value = "21"},
+                new SelectListItem {Text = "22", Value = "22"},
+                new SelectListItem {Text = "23", Value = "23"},
+                new SelectListItem {Text = "24", Value = "24"},
+            }, "Value", "Text");
+}
+<style type="text/css">
+    .help-block {
+        color: #BC3C3C;
+    }
+
+    .has-feedback .form-control {
+        padding-right: 0.5px;
+    }
+</style>
+
+<section class="content-header">
+    <h1>
+        @*Staff Attendance*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Attendance</a></li>
+        <li class="active">Request</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-lg-7 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar-plus-o"></i>
+                    <h3 class="box-title">Edit Manually Attendance Request</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.HiddenFor(m=>m.TransId)      
+                            @Html.HiddenFor(m=>m.StaffId)   
+                            @Html.HiddenFor(m => m.HiddenAttendDate)                               
+                            @Html.HiddenFor(m=>m.firmid)   
+                                                                                 
+                            <div class="form-horizontal">
+                                <hr />
+                                @Html.ValidationSummary(true)
+                                <br />
+                                <div class="form-group">
+                                    @Html.Label("Attend Date:", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.AttendDate, "{0:MM/dd/yyyy}", new {id = "AttendDate", @class = "form-control", placeholder = "select attend date ", required = "required"})
+                                        @Html.ValidationMessageFor(model => model.AttendDate)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Check In/Check Out:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.RadioButtonFor(model => model.InOutMode, 0, new { name = "InOutMode", id = "InOutMode" }) Check In
+                                        @Html.RadioButtonFor(model => model.InOutMode, 1, new { name = "InOutMode", id = "InOutMode" }) Check Out
+                                    </div>
+                                    <span class="" style="color: red;">@Html.ValidationMessage("CustomError")  </span>
+                                </div>
+
+                                <div class="form-group">
+                                        @Html.Label("Hour:", new {@id = "Hour", @class = "control-label col-md-3"})
+                                        <div class="col-md-3">
+                                            @Html.DropDownListFor(model => model.Hour, hourList, new {id = "Hour", @class = "form-control", required = "required"})
+                                        </div>
+                                        @Html.Label("Minute:", new {@id = "month", @class = "control-label col-md-2"})
+                                        <div class="col-md-2">
+                                            @Html.DropDownListFor(model => model.Minute, new SelectList(Enumerable.Range(1, 60).Select(x => new {Value = x, Text = x}), "Value", "Text"), new {@class = "form-control", required = "required"})
+                                        </div>
+                                    </div>
+                                
+                                <div class="form-group">
+                                    @Html.Label("Narration:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextAreaFor(model => model.Narration, new { @class = "form-control", placeholder = "enter narration" })
+                                        @Html.ValidationMessageFor(model => model.Narration)
+                                    </div>
+                                </div>
+
+                                <br />
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+                                        <input type="submit" value="Update" class="btn btn-default"/>
+                                        
+                                        <a href='@Url.Action(@Model.ActionNameBack)' class="btn btn-default">Back to List</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        $('#AttendDate').datepicker({
+            format: "mm/dd/yyyy",
+            orientation: "bottom auto",
+            minDate: 0
+        });
+    });
+</script>
+

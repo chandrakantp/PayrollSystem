@@ -1,0 +1,153 @@
+﻿@using System.Collections.Concurrent
+@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.FirmInfo>
+
+<br />
+<section class="content-header">
+    <h1>
+        @*Manage Firm Info*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Firm</a></li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Firm Information</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Firm Name")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Logo")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Address")
+                                    </th>
+                                    @*<th>
+                                       @Html.DisplayName("Street")
+                                    </th>
+                                    <th>
+                                       @Html.DisplayName("Area")
+                                    </th>
+                                    <th>
+                                      @Html.DisplayName("City")
+                                    </th>
+                                    <th>
+                                      @Html.DisplayName("State")
+                                    </th>
+                                    <th>
+                                      @Html.DisplayName("Pincode")
+                                    </th>*@
+                                    <th>
+                                        @Html.DisplayName("Contact &  Fax")
+                                    </th>
+                                    @*<th>
+                                        @Html.DisplayName("Fax No")
+                                    </th>*@
+                                    <th>
+                                        @Html.DisplayName("Mailing Address")
+                                    </th>
+                                    <th>@Html.DisplayName("Status")</th>
+                                    <th></th>
+                                </tr>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.firmName)
+                                        </td>
+                                        <td>
+                                            <img src="~/FirmLogo/@item.logo" width="180" class="img-thumbnail"/>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.flatNo),
+                                            @Html.DisplayFor(modelItem => item.street),
+                                            <br/>
+                                            @Html.DisplayFor(modelItem => item.area),
+
+                                            @Html.DisplayFor(modelItem => item.city),
+                                            <br/>
+                                            @Html.DisplayFor(modelItem => item.state) ,
+                                            @Html.DisplayFor(modelItem => item.pincode)
+                                        </td>
+                                        <td>
+                                            <b>Phone No.:</b> @Html.DisplayFor(modelItem => item.contact)
+                                            <br/>
+                                            <b>Fax No.</b> @Html.DisplayFor(modelItem => item.fax)
+                                        </td>
+                                        <td>
+                                            <b>Email:</b> @Html.DisplayFor(modelItem => item.email)<br/>
+                                        </td>
+                                        <td>
+                                            @if (item.isActive == true)
+                                            {
+                                                @Html.Label("Active")
+                                            }
+                                            else
+                                            {
+                                                @Html.Label("In-Active")
+                                            }
+                                        </td>
+                                        <td>
+                                            @*<a href='@Url.Action("Edit", new {id = item.firmId})'><i class="fa fa-pencil-square"></i> <span class="hidden-sm hidden-xs"></span></a>*@
+                                            @Html.EncodedActionLink("Edit", "HappysheetDetail", "Firm", new { id = item.Id }, null)
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </table>
+                            @*@if (Model.Count() < 1)
+                            {
+                                <div class="box-footer">
+                                    <div class="input-group box-tools pull-right">
+                                        <a href='@Url.Action("Create")' class="btn btn-success"><i class="fa fa-plus"></i></a>
+                                    </div>
+                                </div>
+                            }*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

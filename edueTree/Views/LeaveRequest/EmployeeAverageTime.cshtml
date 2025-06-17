@@ -1,0 +1,101 @@
+﻿@model edueTree.Models.TblAverageTimeModel
+
+@{
+    Layout = null;
+}
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+<style>
+    .help-block {
+        color: red;
+    }
+
+    .select21 {
+        width: 520px !important;
+    }
+</style>
+
+
+<a data-toggle="modal" data-target="#myModalAve" class="btn btn-success pull-right">
+    <i class="fa fa-plus-square"></i>   Add Employee Average Time
+</a>
+
+
+<section class="">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="myModalAve" class="modal fade" role="dialog">
+                @using (Html.BeginForm("EmployeeAverageTime", "LeaveRequest"))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header with-border">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"> Add Average Time</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="form-horizontal">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Select Multiple Employee </label>
+
+                                            @Html.DropDownListFor(model => model.empid, Model.StaffListTime, new { id = "", @class = "form-control select21 select2", @multiple = "multiple", required = "required" })
+                                            @Html.ValidationMessageFor(model => model.empid, string.Empty, new { @class = "help-block" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Working Hr Per Day</label>
+                                            @Html.TextBoxFor(model => model.hourtime, new { @class = "form-control", placeholder = "hh:mm:ss", @required = "required" })
+                                            @Html.ValidationMessageFor(model => model.hourtime)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Add" class="btn btn-default pull-right" />
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+        @*@{Html.RenderAction("EmailReportingResult", "Reporting");}*@
+
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(".select2").select2();
+    $.noConflict();
+    @*jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "notassign") {
+                $.notify(" You can not assign Same employee to same evaluator ", "warn");
+            }
+        }
+    });*@
+</script>

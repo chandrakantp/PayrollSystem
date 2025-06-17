@@ -1,0 +1,118 @@
+﻿@model edueTree.Models.EditPermissionModel
+@{
+  
+}
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+
+<script src="~/plugins/select2/select2.js"></script>
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Permission</a></li>
+        <li class="active">Manage</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title"> Manage Edit Permission </h3>
+                    </div>
+                    <div class="box-body">
+                      
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label>select Staff </label>
+                                    @Html.DropDownListFor(model => model.StaffId, Model.StaffList, " - Select Employee - ", new { id = "dropStaffId", @class = "form-control select2" })
+                                    @Html.ValidationMessageFor(model => model.StaffId, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="staffListMsg"></span>
+                                </div>
+                        </div>
+
+                        <div id="partialPlaceHolder" style="display:none;"> </div>
+                        @*<table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Genaral Information</th>
+                                    <th>App Attendance</th>
+                                    <th>Manual Attendance</th>
+                                    <th>IsActive</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Html.CheckBoxFor(modelItem => Model.GeneralInfo)</td>
+                                    <td>@Html.CheckBoxFor(modelItem => Model.AppAttendance)</td>
+                                    <td>@Html.CheckBoxFor(modelItem => Model.ManualAttendance)</td>
+                                    <td>@Html.CheckBoxFor(modelItem => Model.IsActive)</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>*@
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right"/>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    @{Html.RenderAction("Index", "EditPermission");}
+
+
+</section>
+
+<script type="text/javascript">
+    // assuming you're using jQuery
+    $('#dropStaffId').change(function () {
+
+        /* Get the selected value of dropdownlist */
+        var selectedID = $(this).val();
+
+        /* Request the partial view with .get request. */
+        $.get('/EditPermission/Getuserpermission/' + selectedID, function (data) {
+
+            /* data is the pure html returned from action method, load it to your page */
+            $('#partialPlaceHolder').html(data);
+            /* little fade in effect */
+            $('#partialPlaceHolder').fadeIn('fast');
+        });
+
+    });
+</script>
+
+
+<!-- Success Notice-->
+<script type="text/javascript">
+    $(".select2").select2();
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

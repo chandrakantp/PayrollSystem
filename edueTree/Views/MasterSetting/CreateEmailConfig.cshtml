@@ -1,0 +1,136 @@
+﻿
+@model edueTree.Models.TblEmailConfigModel
+
+<style type="text/css">
+    .help-block {
+        color: #BC3C3C;
+    }
+</style>
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="">
+                @if (ViewBag.visible == true)
+                {
+                    <a data-toggle="modal" data-target="#myModal1" class="btn btn-success pull-right">
+                        <i class="fa fa-plus-square"></i> Add Email Config 
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Email Config Setting</a></li>
+        <li class="active">Setting</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="myModal1" class="modal fade" role="dialog">
+                @using (Html.BeginForm())
+                {
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Email Configure Setting</h4>
+                                
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-horizontal">
+                                    @Html.ValidationSummary(true)
+                                    <div class="form-group">
+
+                                        <div class="col-md-12">
+                                            <label>Configure Email:</label>
+
+                                            @Html.TextBoxFor(model => model.EmailAddress, new { id = "EmailAddress", @class = "form-control", placeholder = "Enter Configure Email Address" })
+                                            @Html.ValidationMessageFor(model => model.EmailAddress)
+                                            <span class="help-block" id="EmailAddressmsg" />
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <label>Configure Password</label>
+                                            @Html.TextBoxFor(model => model.Password, new { id = "Password", @class = "form-control", placeholder = "Enter configure Password" })
+                                            @Html.ValidationMessageFor(model => model.Password)
+                                            <span class="help-block" id="Passwordsmsg" />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>SMTP Port No</label>
+                                            @Html.TextBoxFor(model => model.SMTPPortNo, new { @class = "form-control", placeholder = "Enter SMTP Port No" })
+                                            @Html.ValidationMessageFor(model => model.SMTPPortNo)
+                                            <span class="help-block" id="SMTPPortNomsg" />
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <label>Host Name</label>
+                                            @Html.TextBoxFor(model => model.HostName, new { @class = "form-control", placeholder = "Enter Host Name" })
+                                            @Html.ValidationMessageFor(model => model.HostName)
+                                            <span class="help-block" id="HostNamemsg" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Submit" class="pull-right btn btn-default" />
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+            @{Html.RenderAction("EmailConfigIndex", "MasterSetting");}
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Please check your and click configuration link !!! ", "success");
+            }
+            if ('@TempData["notice"]' === "error") {
+                $.notify(" Something went wrong Plz check ! ", "error");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. !", "warn");
+            }
+            if ('@TempData["notice"]' === "wrong") {
+                $.notify(" Something went wrong plz check ! ", "error");
+            }
+        }
+
+    });
+
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+</script>
+

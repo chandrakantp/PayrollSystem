@@ -1,0 +1,125 @@
+﻿@model IEnumerable<edueTree.Models.InsuranceinfoModel>
+@{
+    ViewBag.Title = "Index";
+                                            //Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<section class="content-header">
+    <h1>
+        @*Leave Request*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~//Index"><i class="fa fa-dashboard"></i>Insurance Info</a></li>
+        <li class="active">Report</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Insurance Nominee Details Report</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table class="table table-fixed">
+                            <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Staff Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Policy No")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Policy Date")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Expiry Date")
+                                </th>
+
+                                <th>
+                                    @Html.DisplayName("Nominees Name")
+                                </th>
+
+                                <th>
+                                    @Html.DisplayName("Nominees Address")
+                                </th>
+
+                                <th>
+                                    @Html.DisplayName("Nominees Relation")
+                                </th>
+                                <th>@Html.DisplayName("Birth Date")</th>
+                                <th>@Html.DisplayName("Age")</th>
+                                <th>@Html.DisplayName("Shares")</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Policyno)
+                                    </td>
+                                    <td>@Convert.ToDateTime(item.Policydate).ToString("dd MMM yyyy")
+                                    </td>
+                                    <td>
+                                        @Convert.ToDateTime(item.Expirydate).ToString("dd MMM yyyy")
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nomineename)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nomineeaddress)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nomineeralation)
+                                    </td>
+                                    <td>
+                                        @Convert.ToDateTime(item.Dob).ToString("dd MMM yyyy")
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Age)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Share)
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <section class="col-md-12">
+            @{Html.RenderAction("NotAssignInsuranceInfoToEmployee", "NoAssign");}
+        </section>
+    </div>
+</section>
+<script type="text/javascript">
+    $(function () {
+
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+
+

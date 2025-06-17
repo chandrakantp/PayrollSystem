@@ -1,0 +1,143 @@
+﻿@model IEnumerable<edueTree.Models.AdvanceRequest>
+
+<section class="content-header">
+    <h1>
+        @*Salary head settings*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Advance</a></li>
+        <li class="active">Request</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Load and Advances Request List</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Emp Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Requested Date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Amount")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("EMI")
+                                        </th>
+
+                                        <th>
+                                            @Html.DisplayName("Status")
+                                        </th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Staff.staffCode) : 
+                                                @Html.DisplayFor(modelItem => item.Staff.firstName)
+                                                @Html.DisplayFor(modelItem => item.Staff.middleName)
+                                                @Html.DisplayFor(modelItem => item.Staff.lastName)
+                                            </td>
+                                            <td>
+                                                @Convert.ToDateTime(item.requestedDate).ToString("dd-MMM-yyyy")
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Amount)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.willPayEMI)
+                                            </td>
+                                            <td>
+                                                @switch (item.isApprove)
+                                                {
+                                                    case null:
+                                                        @Html.DisplayName("Pending")
+                                                        break;
+                                                    case true:
+                                                    @Html.DisplayName("Approved")
+                                                        break;
+                                                    default:
+                                                    @Html.DisplayName("Rejected")
+                                                        break;
+                                                }
+                                            </td>
+                                            <td>
+                                                @*@if (item.isApprove == null)
+                                                {*@
+                                                <a href='@Url.Action("AdvanceRequestPendingEdit", new {requestId = item.requestId})'><i class="fa fa-pencil-square" data-toggle="tooltip" title="Approve / Reject" data-placement="left"></i> </a>
+                                                @*}*@
+                                            </td>
+                                            <td>
+                                                <a data-toggle="modal" data-target="#myModalEmiDelete" href='@Url.Action("DeleteLoadAndAdvances", new { id = item.requestId, Actionname = "AdvanceRequestPendingReport" })'><i class="fa fa-trash"></i></a>
+                                            </td>
+
+                                            <div class="modal fade" id="myModalEmiDelete" role="dialog"></div>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    $(function() {
+        $(document).ready(function() {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+</script>
+
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

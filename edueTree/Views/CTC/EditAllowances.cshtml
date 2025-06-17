@@ -1,0 +1,71 @@
+﻿@model edueTree.Models.TblAllowanceModel
+@{
+
+}
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Allowances</a></li>
+        <li class="active">Update Allowances</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("EditAllowances", "CTC"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(s => s.AllowanceId)
+                @Html.HiddenFor(s => s.firmId)
+                
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title">Update Allowances</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-6">
+                            <label>Allowances </label>
+                            @Html.TextBoxFor(model => model.AllowanceName, new {id = "", @class = "form-control ", required = "required"})
+                            @Html.ValidationMessageFor(model => model.AllowanceName, string.Empty, new {@class = "help-block"})
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("CreateAllowances")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(".select2").select2();
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

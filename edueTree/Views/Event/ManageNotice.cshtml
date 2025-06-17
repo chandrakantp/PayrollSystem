@@ -1,0 +1,79 @@
+﻿@model IEnumerable<edueTree.Models.notice>
+
+@{   
+    Layout = null;
+}
+
+
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-calendar"></i>
+            <h3 class="box-title">Notice List</h3>
+        </div>
+            <div class="box-body chat" id="chat-box">
+                <div class="item">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Title")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Narration")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Notice Upto")
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="col-lg-3">
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        <td class="col-lg-3">
+                                            @Html.DisplayFor(modelItem => item.narration)
+                                        </td>
+                                        <td class="col-lg-3">
+                                            @Convert.ToDateTime(item.noticeDisplayUpto).ToString("dd MMM yyyy")
+                                        </td>
+
+                                        <td>
+                                            <a href='@Url.Action("EditNotice", new {id = item.noticeId})'><i class="fa fa-pencil-square"></i> <span class="hidden-sm hidden-xs"></span></a>
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#myModalDeptDelete" href='@Url.Action("DeleteNotice", new { id = item.noticeId })'><i class="fa fa-trash"></i></a>
+                                        </td>
+                                        <div class="modal fade" id="myModalDeptDelete" role="dialog"></div>   
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+      
+</div>
+
+
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

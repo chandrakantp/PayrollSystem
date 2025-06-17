@@ -1,0 +1,126 @@
+﻿@using edueTree.Models
+@model edueTree.Models.PerformModel
+@{
+    ViewBag.Title = "CreateForm";
+}
+
+@*@{
+
+    var aboutsite = new SelectList(new[]
+    {
+        new SelectListItem { Value = null , Text =  "----  Select Choice ----", Selected = true},
+        new SelectListItem {Text = "Monthly", Value = "Monthly"},
+        new SelectListItem {Text = "Quarterly", Value = "Quarterly"},
+        new SelectListItem {Text = "Half Yearly", Value = "Half Yearly"},
+        new SelectListItem {Text = "Annually", Value = "Annually"},
+    }, "Value", "Text");
+}*@
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Question</a></li>
+        <li class="active">Add</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                <div class="box box-success">
+
+                    <div class="box-header">
+                        <i class="fa fa-user"></i>
+                        <h3 class="box-title"> Add Questions</h3>
+                    </div>
+                    <div class="box-body">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <div class="col-md-12">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Section:</label>
+                                    @Html.DropDownListFor(model => model.SectionsId, Model.SectionList, " - Select Section - ", new {id = "SectionsId", @class = "form-control select2", placeholder = "select Sections", required = "required"})
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>weightage:</label>
+                                    @Html.TextBoxFor(model => model.weightage, new {id = "weightage", @class = "form-control", placeholder = "enter weightage in %", required = "required"})
+                                    @Html.ValidationMessageFor(model => model.weightage, string.Empty, new {@class = "help-block"})
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Question:</label>
+                                    @Html.TextAreaFor(model => model.QuestionName, new {id = "Question", @class = "form-control", placeholder = "enter question", required = "required"})
+                                    @Html.ValidationMessageFor(model => model.QuestionName, string.Empty, new {@class = "help-block"})
+                                </div>
+                            </div>
+
+                           
+
+                            @*<div class="col-md-10">
+                                <div class="form-group">
+                                    <label>Time duration:</label>
+                                    @Html.DropDownList("Duration", aboutsite, new { id = "duration", @class = "form-control" })
+                                </div>
+                            </div>*@
+
+
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right"/>
+                        @*<a href='@Url.Action("QuestionIndex")' class="btn btn-default pull-left">Back to list</a>*@
+                    </div>
+
+                </div>
+            }
+        </section>
+        <div class="col-md-12">
+            @{Html.RenderAction("QuestionIndex", "Performance");}
+        </div>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        $(".select2").select2();
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "error");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

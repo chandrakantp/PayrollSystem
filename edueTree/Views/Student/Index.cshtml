@@ -1,0 +1,266 @@
+﻿@model IEnumerable<edueTree.Models.StudentModel>
+
+<script type="text/javascript">
+    function onchangeevent() {
+        var value = $("#txtid").val();
+        jQuery.ajax({
+            type: "POST",
+            url: "../Staffs/Index",
+            data: { str: value },
+            datatype: "json",
+            success: function(response) {
+                alert(response);
+            }
+        });
+
+    }
+</script>
+<style type="text/css">
+    .jumbotron {
+        background-color: #ffffff;          
+        padding-bottom: 46px;
+        padding-top: 0;
+    }
+    .box-header {     
+        padding: 5px;     
+    }
+</style>
+<br />
+<section class="content-header">
+    <h1>
+        Manage Student
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Student</a></li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+
+@if (Model.Any())
+{
+
+    <section class="content">
+        <div class="row">
+            <section class="col-lg-11 connectedSortable">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-search"></i>
+                        <h3 class="box-title">Search Options</h3>
+                    </div>
+
+                    <div class="box-body chat">
+                        <div class="item">
+                            @using (Html.BeginForm("Index", "Student", FormMethod.Get))
+                            {
+                                <div class="form-horizontal">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group ">
+                                                @Html.Label("Student name:", new {@class = "control-label col-md-2"})
+                                                <div class="col-md-9">
+                                                    @Html.TextBox("searchString", null, new {@placeholder = "Enter First name, Last Name, Roll No...", @class = "form-control"})
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                @Html.Label("Class:", new {@class = "control-label col-md-2"})
+                                                <div class="col-md-4">
+                                                    @Html.DropDownList("classId", (IEnumerable<SelectListItem>) ViewBag.classId, "----- Select Class ------ ", new {@class = "form-control"})
+                                                </div>
+
+                                                @Html.Label("Division:", new {@class = "control-label col-md-1"})
+                                                <div class="col-md-4">
+                                                    @Html.DropDownList("divisionId", (IEnumerable<SelectListItem>) ViewBag.divisionId, "----- Select Division ------", new {@class = "form-control"})
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*<div class="col-md-10">
+                                            <div class="form-group">
+                                                @Html.Label("To Date:", new { @class = "control-label col-md-2" })
+                                                <div class="col-md-4">
+                                                    @Html.TextBox("datepicker", null, new { id = "datepicker", @class = "form-control datepicker" })
+                                                </div>
+
+                                                @Html.Label("From Date:", new { @class = "control-label col-md-1" })
+                                                <div class="col-md-4">
+                                                    @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control datepicker" })
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                      
+                                      
+                                        <div class="col-md-1">
+                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+
+
+<section class="content">
+        <div class="row">
+            <section class="col-lg-11 connectedSortable">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-list"></i>
+                        <h3 class="box-title">Index</h3>
+                        <div class="pull-right">
+                            <a href='@Url.Action("Index","Student" )' class="btn btn-info">
+                                <i class="fa fa-refresh"></i>
+                            </a>
+                        </div>
+                    </div>
+
+@if (Model.Any())
+{
+    <div class="box-body chat" id="chat-box">
+        <div class="item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr class="active">
+                        <th>
+                            @Html.DisplayName("Roll No")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Full Name")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Class/Div")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Gender")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Birth Date")
+                        </th>
+
+                        <th>
+                            @Html.DisplayName("Contact")
+                        </th>
+
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RollNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                                @Html.DisplayFor(modelItem => item.MiddleName)
+                                @Html.DisplayFor(modelItem => item.LastName)
+
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ClassDivName)
+
+                            </td>
+
+                            <td>
+                                @if (item.Gender == "1")
+                                {
+                                    @Html.DisplayName("M")
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("F")
+                                }
+                            </td>
+                            <td>
+                                @Convert.ToDateTime(item.Dob).ToString("dd MMM yyyy")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Contact1)
+                            </td>
+
+                            @*<td>
+                                                <a href='@Url.Action("Edit", new {id = item.StaffId})'><i class="fa fa-pencil-square"></i> </a>
+                                            </td>*@
+
+                            <td>
+                                <a href='@Url.Action("StudentDashboard", new {studentId = item.StudentId})'>
+                                    <i class="fa fa-cog"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    
+      <div class="jumbotron">
+                        <p> No record found !!!</p>
+                    </div>
+}
+
+                    <div class="box-footer">
+                        <div class="input-group box-tools pull-right">
+                            <a href='@Url.Action("Create")' class="btn btn-success">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    }
+else
+{
+    <section class="content">
+        <div class="row">
+            <section class="col-lg-6 connectedSortable">
+                <div class="box box-success">
+                    <div class="box-header" style="background-color:ghostwhite">
+                        <i class="fa fa-search"></i>
+                        <h3 class="box-title">Search result</h3>
+                        <div class="pull-right">
+                            <a href='@Url.Action("Index","Student" )' class="btn btn-info">
+                                <i class="fa fa-refresh"></i>
+
+                            </a>
+                        </div>
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                            <div class="table-responsive">
+                                <table class="table table-hover">                                                   
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="jumbotron">
+                        <p> No record found !!!</p>
+                    </div>
+                   
+                </div>
+            </section>
+        </div>
+    </section>
+    
+   
+
+}

@@ -1,0 +1,1363 @@
+﻿@model edueTree.Models.StudentModel
+
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<style type="text/css">
+    .help-block {
+        color: #ff0000;
+    }
+</style>
+<style type="text/css">
+    body {
+        margin-top: 40px;
+    }
+
+    .stepwizard-step p {
+        margin-top: 10px;
+    }
+
+    .stepwizard-row {
+        display: table-row;
+    }
+
+    .stepwizard {
+        display: table;
+        width: 100%;
+        position: relative;
+    }
+
+    .stepwizard-step button[disabled] {
+        opacity: 1 !important;
+        filter: alpha(opacity=100) !important;
+    }
+
+    .stepwizard-row:before {
+        top: 14px;
+        bottom: 0;
+        position: absolute;
+        content: " ";
+        width: 100%;
+        height: 1px;
+        background-color: #ccc;
+        z-order: 0;
+    }
+
+    .stepwizard-step {
+        display: table-cell;
+        text-align: center;
+        position: relative;
+    }
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+    }
+
+    .setup-content {
+        padding-left: 15px;
+    }
+</style>
+@{
+
+    var occupationList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "Employee", Value = "Employee"},
+                new SelectListItem {Text = "Entrepreneur", Value = "Entrepreneur"},
+                new SelectListItem {Text = "Doctor", Value = "Doctor"},
+                new SelectListItem {Text = "Police officer", Value = "Police officer"},
+                new SelectListItem {Text = "Professors", Value = "Professors"},
+                new SelectListItem {Text = "Engineer", Value = "Engineer"},
+                new SelectListItem {Text = "Industrialist", Value = "Industrialist"},
+                new SelectListItem {Text = "Electrician", Value = "Electrician"},
+                new SelectListItem {Text = "Fisherman", Value = "Fisherman"},
+                new SelectListItem {Text = "Farmer", Value = "Farmer"},
+            }, "Value", "Text");
+
+
+
+    var bloodgroupList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "A+", Value = "A+"},
+                new SelectListItem {Text = "B+", Value = "B+"},
+                new SelectListItem {Text = "A-", Value = "A-"},
+                new SelectListItem {Text = "B-", Value = "B-"},
+                new SelectListItem {Text = "O+", Value = "O+"},
+                new SelectListItem {Text = "O-", Value = "O-"},
+                new SelectListItem {Text = "AB+", Value = "AB+"},
+                new SelectListItem {Text = "AB-", Value = "AB-"},
+
+            }, "Value", "Text");
+}
+
+<section class="content-header">
+    <h1>
+        Add New Student
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Student</a></li>
+        <li class="active">Add</li>
+    </ol>
+</section>
+
+<br />
+<div class="col-md-7">
+    <div class="stepwizard">
+        <div class="stepwizard-row setup-panel">
+            <div class="stepwizard-step">
+                <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
+                <p>Step 1</p>
+            </div>
+            <div class="stepwizard-step">
+                <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                <p>Step 2</p>
+            </div>
+            <div class="stepwizard-step">
+                <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                <p>Step 3</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(a => a.StudentId)
+    @Html.HiddenFor(model => model.UserId)
+    @Html.HiddenFor(a => a.InfoId)
+
+
+    <section class="content">
+        <div class="row">
+            <section class="col-md-12">
+                <div class="box box-success">
+                    <br />
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                            <div class="form-horizontal" id="defaultform1">
+                                <div class="row setup-content" id="step-1">
+
+                                    <div class="form-group">
+                                        @Html.Label("Roll No :", new { @class = "control-label col-md-offset-1 col-md-2" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.RollNo, new { id = "RollNo", @class = "form-control", placeholder = "enter roll number", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="rollmessage">
+                                                <div id="err_RollNo"></div>
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group" style="margin-bottom: 0px;">
+                                        @Html.Label("Student Name:", new { @class = "control-label col-md-3" })
+
+                                        <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.FirstName, new { id = "FirstName", @class = "form-control", placeholder = "First name", onfocus = "rollcheck(this.id);" })
+
+                                            <span class="help-block" id="FirstNameMessage">
+                                                <div id="err_FirstName"></div>
+                                            </span>
+                                        </div>
+                                        <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.MiddleName, new { id = "MiddleName", @class = "form-control", placeholder = "Middle name", onfocus = "rollcheck(this.id);" })
+
+                                            <span class="help-block" id="MiddleNameMessage">
+                                                <div id="err_MiddleName"></div>
+                                            </span>
+                                        </div>
+
+                                        <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.LastName, new { id = "LastName", @class = "form-control", placeholder = "Last name", onfocus = "rollcheck(this.id);" })
+
+                                            <span class="help-block" id="LastNameMessage">
+                                                <div id="err_LastName"></div>
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.Label("Gender:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.RadioButtonFor(model => model.Gender, 1, new { name = "gender", id = "gender" }) Male
+                                            @Html.RadioButtonFor(model => model.Gender, 2, new { name = "gender", id = "gender" }) Female
+                                            @Html.ValidationMessageFor(model => model.Gender)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Date of birth:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.Dob, new { id = "Dob", @class = "form-control datepicker", placeholder = " select date of birth", onfocus = "rollcheck(this.id);" })
+                                            @Html.ValidationMessageFor(model => model.Dob, string.Empty, new { @class = "help-block" })
+                                            <span class="help-block" id="dobMessage"><div id="err_Dob"></div>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Nationality :", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.Nationality, new { id = "Nationality", @class = "form-control", placeholder = "enter nationality", onfocus = "rollcheck(this.id);" })
+
+                                            <span class="help-block" id="NationalityMessage">
+                                                <div id="err_Nationality"></div>
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.Label("Blood Group:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.DropDownList("BloodGroup", bloodgroupList, new { id = "BloodGroup", @class = "form-control", onfocus = "rollcheck(this.id);" })
+
+                                            <span class="help-block" id="BloodGroupMessage">
+                                                <div id="err_BloodGroup"></div>
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.Label("Body Marks:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextAreaFor(model => model.BodyMarks, new { id = "BodyMarks", @class = "form-control", placeholder = "enter body marks" })
+                                            <span class="help-block" id="BodyMarksMessage" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Mother Tongue:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.MotherTongue, new { id = "MotherTongue", @class = "form-control", placeholder = "enter mother tongue", onfocus = "rollcheck(this.id);" })
+
+                                            <span class="help-block" id="MotherTongueMessage">
+                                                <div id="err_MotherTongue"></div>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.DivisionId, "Class division:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(a => a.DivisionId, Model.DivisionList, "-- Select Class and Divisions --", new { id = "DivisionId", @Class = "form-control", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="divisionIdMessage">
+                                                <div id="err_DivisionId"></div>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Admission Year :", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.AddmissionYear, new { id = "AddmissionYear", @class = "form-control", placeholder = "enter addmission year", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="addmissionYearMessage">
+                                                <div id="err_AddmissionYear"></div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-offset-3 col-md-9">
+                                        @*<div class="tab-pane active" id="tab1">
+                                                <a class="btn btn-primary btnNext">Next&nbsp;<i class="fa fa-forward"></i></a>
+                                            </div>*@
+                                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row setup-content" id="step-2">
+                                    <div class="form-group">
+                                        @Html.Label("Pancard No :", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.PancardNo, new { id = "PancardNo", @class = "form-control", placeholder = "enter pancard number", maxlength = "10", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="PancardNoMessage"><div id="err_PancardNo"></div></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="margin-bottom: 0px;">
+                                        @Html.Label("Father Name:", new { @class = "control-label col-md-3" })
+
+                                        <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.FatherFirstName, new { id = "FatherFirstName", @class = "form-control", placeholder = "First name", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="FatherFirstNameMessage"><div id="err_FatherFirstName"></div></span>
+                                        </div>
+                                        <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.FatherMiddleName, new { id = "FatherMiddleName", @class = "form-control", placeholder = "Middle name", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="FatherMiddleNameMessage"><div id="err_FatherMiddleName"></div></span>
+                                        </div>
+
+                                        <div class="form-group col-md-3" style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.FatherLastName, new { id = "FatherLastName", @class = "form-control", placeholder = "Last name", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="FatherLastNameMessage"><div id="err_FatherLastName"></div></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Mother Name :", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.MotherName, new { id = "MotherName", @class = "form-control", placeholder = "enter mother name", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="MotherNameMessage"><div id="err_MotherName"></div></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("E-mail :", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.Email, new { id = "Email", @class = "form-control", placeholder = "enter email address", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="EmailMessage"><div id="err_Email"></div></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="margin-bottom: 0px;">
+                                        @Html.Label("Contact Number:", new { @class = "control-label col-md-3" })
+
+                                        <div class="form-group col-md-4 " style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.Contact1, new { id = "Contact1", @class = "form-control", placeholder = "contact first", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="Contact1Message"><div id="err_Contact1"></div></span>
+                                        </div>
+                                        <div class="form-group col-md-4" style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.Contact2, new { id = "Contact2", @class = "form-control", placeholder = "contact second", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="Contact2Message"><div id="err_Contact2"></div></span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.Label("Occupation:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.DropDownList("FatherOccupation", occupationList, new { id = "FatherOccupation", @class = "form-control", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="FatherOccupationMessage"><div id="err_FatherOccupation"></div></span>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        @Html.Label("Passport No :", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.PassportNo, new { id = "PassportNo", @class = "form-control", placeholder = "enter passport number " })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Temporary Address :", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextAreaFor(model => model.TempAddress, new { id = "TempAddress", @class = "form-control", placeholder = "enter temporary address", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="TempAddressMessage"><div id="err_TempAddress"></div></span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.Label("Temp city:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.TempCityId, Model.CityList, " - Select City - ", new { id = "TempCityId", @class = "form-control", placeholder = "enter temporary city", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="TempCityIdMessage"><div id="err_TempCityId"></div></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Pincode:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.TempPincode, new { id = "TempPincode", @class = "form-control", placeholder = "enter temporary pincode", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="TempPincodeMessage"><div id="err_TempPincode"></div></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Area:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.TempArea, new { id = "TempArea", @class = "form-control", placeholder = "enter temporary area", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="TempAreaMessage"><div id="err_TempArea"></div></span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.Label("Permanent Address :", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextAreaFor(model => model.PerAddress, new { id = "PerAddress", @class = "form-control", placeholder = "enter permonant address", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="PerAddressMessage"><div id="err_PerAddress"></div></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Per city:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.PerCityId, Model.CityList, " - Select City - ", new { id = "PerCityId", @class = "form-control", placeholder = "enter permanent city", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="PerCityIdMessage"><div id="err_PerCityId"></div></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Pincode:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.PerPincode, new { id = "PerPincode", @class = "form-control", placeholder = "enter permanent pincode", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="PerPincodeMessage"><div id="err_PerPincode"></div></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Area:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.PerArea, new { id = "PerArea", @class = "form-control", placeholder = "enter permanent area", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="PerAreaMessage"><div id="err_PerArea"></div></span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.Label("Main Cast:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.CastId, Model.CastList, " - Select Cast - ", new { id = "CastId", @class = "form-control", placeholder = "select cast", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="CastIdMessage"><div id="err_CastId"></div></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Sub Cast:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.SubCastId, Model.SubCastList, " - Select Sub Cast - ", new { id = "SubCastId", @class = "form-control", placeholder = "select sub-cast", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="SubCastIdMessage"><div id="err_SubCastId"></div></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="margin-bottom: 0px;">
+                                        @Html.Label("Emergency Contact 1:", new { @class = "control-label col-md-3" })
+                                        <div class="form-group col-md-4 " style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.EmergencyContact1, new { id = "EmergencyContact1", @class = "form-control", placeholder = "contact number", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="EmergencyContact1Message"><div id="err_EmergencyContact1"></div></span>
+                                        </div>
+                                        <div class="form-group col-md-4 " style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.EmergencyContact1Relation, new { id = "EmergencyContact1Relation", @class = "form-control", placeholder = "contact relation", onfocus = "rollcheck(this.id);" })
+                                            <span class="help-block" id="EmergencyContact1RelationMessage"><div id="err_EmergencyContact1Relation"></div></span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group" style="margin-bottom: 0px;">
+                                        @Html.Label("Emergency Contact 2:", new { @class = "control-label col-md-3" })
+
+                                        <div class="form-group col-md-4 " style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.EmergencyContact2, new { id = "EmergencyContact2", @class = "form-control", placeholder = "contact number" })
+                                            <span class="help-block" id="EmergencyContact2Message" />
+                                        </div>
+                                        <div class="form-group col-md-4 " style="padding-left: 29px; padding-right: 18px;">
+                                            @Html.TextBoxFor(model => model.EmergencyContact2Relation, new { id = "EmergencyContact2Relation", @class = "form-control", placeholder = "contact relation" })
+                                            <span class="help-block" id="EmergencyContact2RelationMessage" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-offset-3 col-md-9">
+                                        @*<div class="tab-pane" id="tab2">
+                                                <a class="btn btn-primary btnPrevious"><i class="fa fa-backward"></i>&nbsp;Previous</a>
+                                                <a class="btn btn-primary btnNext">Next&nbsp;<i class="fa fa-forward"></i></a>
+                                            </div>*@
+                                        <button class="btn btn-primary nextBtn1 btn-lg pull-right" type="button">Next</button>
+                                    </div>                                  
+                                </div>
+
+                                <div class="row setup-content" id="step-3">
+                                    <div class="form-group">
+                                        @Html.Label("Name Of School:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.NameOfSchool, new { id = "NameOfSchool", @class = "form-control", placeholder = "previous school name" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Class:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.ClassId, Model.ClassList,new { id = "ClassId", @class = "form-control", placeholder = "enter permanent city" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.Label("Passing Year:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.PassingYear, new { id = "PassingYear", @class = "form-control", placeholder = "passing year" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Reason Of Leaving:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextAreaFor(model => model.PreresonOfLeaving, new { id = "PreresonOfLeaving", @class = "form-control", placeholder = "reason of leaving" })
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.Label("Contact:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.Precontact, new { id = "Precontact", @class = "form-control", placeholder = "contact number" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("Address:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextAreaFor(model => model.Preschooladdress, new { id = "Preschooladdress", @class = "form-control", placeholder = "address" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("City:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.Preschoolcity, new { id = "Preschoolcity", @class = "form-control", placeholder = "city" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.Label("State:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.Prestate, new { id = "Prestate", @class = "form-control", placeholder = "state" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.Label("Pincode:", new { @class = "control-label col-md-3" })
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.Prepincode, new { id = "Prepincode", @class = "form-control", placeholder = "pincode" })
+                                            <span class="help-block" id="PrePincodeMessage" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <div class="tab-pane" id="tab3">
+                                            @*<a class="btn btn-primary btnPrevious"><i class="fa fa-backward"></i>&nbsp;Previous</a>
+                                                <input id="AddStudent" type="submit" value="Submit" class="btn btn-default" />*@
+                                            <button class="btn btn-success btn-lg pull-right" id="AddStudent" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+}
+<script type="text/javascript">
+
+    function rollcheck(id) {
+        //alert(id);
+        $('#err_' + id).html("");
+
+
+    }
+
+    $(document).ready(function () {
+        var navListItems = $('div.setup-panel div a'),
+            allWells = $('.setup-content'),
+            allNextBtn = $('.nextBtn');
+        allNextBtn1 = $('.nextBtn1');
+
+        allWells.hide();
+
+        navListItems.click(function (e) {
+            e.preventDefault();
+            var $target = $($(this).attr('href')),
+                $item = $(this);
+
+            if (!$item.hasClass('disabled')) {
+                navListItems.removeClass('btn-primary').addClass('btn-default');
+                $item.addClass('btn-primary');
+                allWells.hide();
+                $target.show();
+                $target.find('input:eq(0)').focus();
+            }
+        });
+
+        allNextBtn.click(function () {
+
+            var btnroll = document.getElementById("RollNo").value;
+            var btnroll1 = document.getElementById("FirstName").value;
+            var btnroll2 = document.getElementById("MiddleName").value;
+            var btnroll3 = document.getElementById("LastName").value;
+            var btnroll4 = document.getElementById("Nationality").value;
+            var btnroll5 = document.getElementById("BloodGroup").value;
+            var btnroll6 = document.getElementById("MotherTongue").value;
+            var btnroll7 = document.getElementById("DivisionId").value;
+            var btnroll9 = document.getElementById("Dob").value;           
+            var btnroll8 = document.getElementById("AddmissionYear").value;
+           
+
+            if (btnroll == "") {
+                $('#err_RollNo').html("The roll number is required");
+                //throw new Error();
+            }
+            if (btnroll1 == "") {
+                $('#err_FirstName').html("The first name required");
+                // throw new Error();
+            }
+            if (btnroll2 == "") {
+                $('#err_MiddleName').html("The middle name required");
+                //throw new Error();
+            }
+            if (btnroll3 == "") {
+                $('#err_LastName').html("The last name required");
+                // throw new Error();
+            }
+            if (btnroll4 == "") {
+                $('#err_Nationality').html("The nationality is required");
+                // throw new Error();
+            }
+            if (btnroll5 == "") {
+                $('#err_BloodGroup').html("The blood group is required");
+                // throw new Error();
+            }
+            if (btnroll6 == "") {
+                $('#err_MotherTongue').html("The mother tongue is required");
+                //throw new Error();
+            }
+            if (btnroll7 == "") {
+                $('#err_DivisionId').html("The class division is required");
+                //throw new Error();
+            }
+            if (btnroll9 == "") {
+                $('#err_Dob').html("The date of birth is required");               
+            }
+         
+            if (btnroll8 == "") {
+                $('#err_AddmissionYear').html("The admission year is required");
+                throw new Error();
+            }
+
+            var curStep = $(this).closest(".setup-content"),
+                curStepBtn = curStep.attr("id"),
+                nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+                curInputs = curStep.find("input[type='text'],input[type='url']"),
+                isValid = true;
+
+
+            $(".form-group").removeClass("has-error");
+            for (var i = 0; i < curInputs.length; i++) {
+                if (!curInputs[i].validity.valid) {
+                    isValid = false;
+                    $(curInputs[i]).closest(".form-group").addClass("has-error");
+                }
+            }
+
+            if (isValid)
+                nextStepWizard.removeAttr('disabled').trigger('click');
+
+
+
+
+            allNextBtn1.click(function () {
+                var btnroll11 = document.getElementById("PancardNo").value;
+                var btnroll12 = document.getElementById("FatherFirstName").value;
+                var btnroll13 = document.getElementById("FatherMiddleName").value;
+                var btnroll14 = document.getElementById("FatherLastName").value;
+                var btnroll15 = document.getElementById("MotherName").value;
+                var btnroll16 = document.getElementById("Email").value;
+                var btnroll17 = document.getElementById("Contact1").value;
+                var btnroll18 = document.getElementById("Contact2").value;
+                var btnroll19 = document.getElementById("FatherOccupation").value;
+                var btnroll20 = document.getElementById("TempAddress").value;
+                var btnroll21 = document.getElementById("TempCityId").value;
+                var btnroll22 = document.getElementById("TempPincode").value;
+                var btnroll23 = document.getElementById("TempArea").value;
+                var btnroll24 = document.getElementById("PerAddress").value;
+                var btnroll25 = document.getElementById("PerCityId").value;
+                var btnroll26 = document.getElementById("PerPincode").value;
+                var btnroll27 = document.getElementById("PerArea").value;
+                var btnroll28 = document.getElementById("CastId").value;
+                var btnroll29 = document.getElementById("SubCastId").value;
+                var btnroll30 = document.getElementById("EmergencyContact1").value;
+                var btnroll31 = document.getElementById("EmergencyContact1Relation").value;
+
+
+                if (btnroll11 == "") {
+                    $('#err_PancardNo').html("The pancard number is required");
+
+                }
+                if (btnroll12 == "") {
+                    $('#err_FatherFirstName').html("The father first name is required");
+
+                }
+                if (btnroll13 == "") {
+                    $('#err_FatherMiddleName').html("The father middle name is required");
+
+                }
+                if (btnroll14 == "") {
+                    $('#err_FatherLastName').html("The father last name is required");
+
+                }
+                if (btnroll15 == "") {
+                    $('#err_MotherName').html("The mother name is required");
+
+                }
+                if (btnroll16 == "") {
+                    $('#err_Email').html("The email is required");
+
+                }
+                if (btnroll17 == "") {
+                    $('#err_Contact1').html("The contact number is required");
+
+                }
+                if (btnroll18 == "") {
+                    $('#err_Contact2').html("The contact number is required");
+
+                }
+                if (btnroll19 == "") {
+                    $('#err_FatherOccupation').html("The father occupation is required");
+
+                }
+                if (btnroll20 == "") {
+                    $('#err_TempAddress').html("The temporary address is required");
+
+                }
+                if (btnroll21 == "") {
+                    $('#err_TempCityId').html("The temporary city is required");
+
+                }
+                if (btnroll22 == "") {
+                    $('#err_TempPincode').html("The temporary pincode is required");
+
+                }
+                if (btnroll23 == "") {
+                    $('#err_TempArea').html("The temporary area is required");
+
+                }
+                if (btnroll24 == "") {
+                    $('#err_PerAddress').html("The permanent address is required");
+
+                }
+                if (btnroll25 == "") {
+                    $('#err_PerCityId').html("The permanent city is required");
+
+                }
+                if (btnroll26 == "") {
+                    $('#err_PerPincode').html("The permanent pincode is required");
+
+                }
+                if (btnroll27 == "") {
+                    $('#err_PerArea').html("The permanent area is required");
+
+                }
+                if (btnroll28 == "") {
+                    $('#err_CastId').html("The cast is required");
+
+                }
+                if (btnroll29 == "") {
+                    $('#err_SubCastId').html("The sub cast is required");
+
+                }
+                if (btnroll30 == "") {
+                    $('#err_EmergencyContact1').html("The emergency contact is required");
+
+                }
+                if (btnroll31 == "") {
+                    $('#err_EmergencyContact1Relation').html("The emergency contact relation is required");
+                    throw new Error();
+                }
+
+                var curStep = $(this).closest(".setup-content"),
+            curStepBtn = curStep.attr("id"),
+            nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+            curInputs = curStep.find("input[type='text'],input[type='url']"),
+            isValid = true;
+
+
+                $(".form-group").removeClass("has-error");
+                for (var i = 0; i < curInputs.length; i++) {
+                    if (!curInputs[i].validity.valid) {
+                        isValid = false;
+                        $(curInputs[i]).closest(".form-group").addClass("has-error");
+                    }
+                }
+
+                if (isValid)
+                    nextStepWizard.removeAttr('disabled').trigger('click');
+            });
+
+
+
+        });
+
+        $('div.setup-panel div a.btn-primary').trigger('click');
+
+        $("#defaultform1").bootstrapValidator({
+
+            //message: "This value is not valid",
+            feedbackIcons: {
+                valid: "glyphicon glyphicon-ok",
+                invalid: "glyphicon glyphicon-remove",
+                validating: "glyphicon glyphicon-refresh"
+            },
+
+            fields: {
+                RollNo: {
+                    container: "#rollmessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The roll number is required"
+                        }
+                    }
+                },
+
+                FirstName: {
+                    container: "#FirstNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The first name is required"
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The first name must consist of a-z, A-Z characters only'
+                        }
+                    }
+
+                },
+                MiddleName: {
+                    container: "#MiddleNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The middle name is required"
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The middle name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+                LastName: {
+                    container: "#LastNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The last name is required"
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The last name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+
+                gender: {
+                    feedbackIcons: false,
+                    validators: {
+                        notEmpty: {
+                            message: 'The gender is required'
+                        }
+                    }
+                },
+
+                Dob: {
+                    container: "#dobMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The date of birth is required "
+                        }
+                    }
+                },
+
+                Nationality: {
+                    container: "#NationalityMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The nationality is required "
+                        },
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The last name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+
+
+                BloodGroup: {
+                    container: "#BloodGroupMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The blood group is required "
+                        }
+
+                    }
+                },
+
+                BodyMarks: {
+                    container: "#BodyMarksMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The body marks is required "
+                        }
+
+                    }
+                },
+
+                MotherTongue: {
+                    container: "#MotherTongueMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The mother tongue is required"
+                        },
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The last name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+
+
+                AddmissionYear: {
+                    container: "#addmissionYearMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The admission year is required "
+                        }
+
+                    }
+                },
+                DivisionId: {
+                    container: "#DivisionIdMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The Class and Division is required "
+                        }
+
+                    }
+                },
+
+                FatherFirstName: {
+                    container: "#FatherFirstNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The first name is required "
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The first name must consist of a-z, A-Z characters only'
+                        }
+                    }
+
+                },
+                FatherMiddleName: {
+                    container: "#FatherMiddleNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The middle name is required "
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The middle name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+                FatherLastName: {
+                    container: "#FatherLastNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The last name is required "
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The last name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+                MotherName: {
+                    container: "#MotherNameMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The mothrt name is required "
+                        },
+
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'The last name must consist of a-z, A-Z characters only'
+                        }
+                    }
+                },
+
+
+                Email: {
+                    validators: {
+                        emailAddress: {
+                            message: 'The input is not a valid email address'
+                        }
+                    }
+                },
+
+
+                Contact1: {
+                    container: "#Contact1Message",
+                    validators: {
+                        notEmpty: {
+                            message: "The contact is required"
+                        },
+                        digits: {
+                            message: 'The value can contain only digits'
+                        }
+                    }
+                },
+                FatherOccupation: {
+                    container: "#FatherOccupationMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The father occupation is required "
+                        }
+
+                    }
+                },
+
+                PancardNo: {
+                    container: "#PancardNoMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The  Pancard number is required "
+                        }
+
+                    }
+                },
+
+
+                PassportNo: {
+                    validators: {
+                        blank: {
+                            message: 'The Passport No not a valid'
+                        }
+                    }
+                },
+
+
+                LeavingReason: {
+                    validators: {
+                        blank: {
+                            message: 'entered leaving reason'
+                        }
+                    }
+                },
+
+                SiblingBrothers: {
+                    validators: {
+                        blank: {
+                            message: 'entered sibling brothers '
+                        }
+                    }
+                },
+
+
+                SiblingSisters: {
+                    validators: {
+                        blank: {
+                            message: 'entered sibling sisters '
+                        }
+                    }
+                },
+                MedicalDetails: {
+                    validators: {
+                        blank: {
+                            message: 'entered medical details '
+                        }
+                    }
+                },
+
+                TempAddress: {
+                    container: "#TempAddressMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The Temp Address is required "
+                        }
+                    }
+                },
+                TempPincode: {
+                    container: "#TempPincodeMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The temp. pin code is required and cannot be empty"
+                        },
+                        //digits: {
+                        //    message: 'The value can contain only digits'
+                        //},
+                        regexp: {
+                            regexp: /^([0][1-9]|[1-6])(\d{5})$/,
+                            message: 'The input is not a valid pin code'
+                        }
+                    }
+                },
+                TempArea: {
+                    container: "#TempAreaMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The Temp Area is required "
+                        }
+                    }
+                },
+
+                PerAddress: {
+                    container: "#PerAddressMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The per address is required "
+                        }
+                    }
+                },
+
+                EmergencyContact1: {
+                    container: "#EmergencyContact1Message",
+                    validators: {
+                        notEmpty: {
+                            message: "The emergency contact is required "
+                        }
+                    }
+                },
+                EmergencyContact1Relation: {
+                    container: "#EmergencyContact1RelationMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The emergency contact is required "
+                        }
+                    }
+                },
+
+                EmergencyContact2: {
+                    container: "#EmergencyContact2Message",
+                    validators: {
+                        notEmpty: {
+                            message: "The emergency contact is required "
+                        }
+                    }
+                },
+                EmergencyContact2Relation: {
+                    container: "#EmergencyContact2RelationMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The emergency contact is required "
+                        }
+                    }
+                },
+
+                CastId: {
+                    container: "#CastIdMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The cast is required "
+                        }
+                    }
+                },
+                SubCastId: {
+                    container: "#SubCastIdMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The sub cast is required "
+                        }
+                    }
+                },
+
+
+                TempCityId: {
+                    container: "#TempCityIdMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The city is required"
+                        }
+                    }
+                },
+
+                PerCityId: {
+                    container: "#PerCityIdMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The city is required"
+                        }
+                    }
+                },
+                PerPincode: {
+                    container: "#PerPincodeMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The Per. Pin code is required"
+                        },
+                        //digits: {
+                        //    message: 'The value can contain only digits'
+                        //},
+                        regexp: {
+                            regexp: /^([0][1-9]|[1-6])(\d{5})$/,
+                            message: 'The input is not a valid pin code'
+                        }
+                    }
+                },
+                PerArea: {
+                    container: "#PerAreaMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The per. area is required "
+                        }
+                    }
+                },
+                JoiningDate: {
+                    container: "#JoiningDateMessage",
+                    validators: {
+                        notEmpty: {
+                            message: "The joining date is required "
+                        }
+                    }
+                },
+                NameOfSchool: {
+                    validators: {
+
+                    }
+                },
+                PassingYear: {
+                    validators: {
+
+                    }
+                },
+                ClassId: {
+                    validators: {
+                        blank:{}
+
+                    }
+                },
+
+
+                PreresonOfLeaving: {
+                    validators: {
+
+                    }
+                },
+
+                Precontact: {
+                    validators: {
+
+                    }
+                },
+
+                Preschooladdress: {
+                    validators: {
+
+                    }
+                },
+
+                Preschoolcity: {
+                    validators: {
+
+                    }
+                },
+                Prestate: {
+                    validators: {
+
+                    }
+                },
+                Prepincode: {
+                    validators: {
+
+                    }
+                },
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-red',
+            radioClass: 'iradio_flat-red'
+        });
+    });
+
+    $('.btnNext').click(function () {
+        $('.nav-tabs > .active').next('li').find('a').trigger('click');
+    });
+
+    $('.btnPrevious').click(function () {
+        $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+    });
+    function GetMachedParentInfo(panno, contact1, contact2, email) {
+        jQuery.ajax({
+            type: "POST",
+            url: "/Student/SearchPanCard",
+            data: { panno: panno, contactNo1: contact1, contactNo2: contact2, mail: email },
+            datatype: "json",
+            //error:
+            //    function () {
+            //        alert("Please select proper");
+            //    },
+            success: function (result) {
+                //var sd = parseJSON(result);
+                console.log(result);
+                $("#FatherFirstName").val(result.FatherFirstName);
+                $("#FatherMiddleName").val(result.FatherMiddleName);
+                $("#FatherLastName").val(result.FatherLastName);
+                $("#MotherName").val(result.MotherName);
+
+                $("#Email").val(result.Email);
+                $("#Contact1").val(result.Contact1);
+                $("#Contact2").val(result.Contact2);
+                $("#FatherOccupation").val(result.FatherOccupation);
+                $("#PassportNo").val(result.PassportNo);
+                $("#PancardNo").val(result.PancardNo);
+
+                $("#TempAddress").val(result.TempAddress);
+                $("#TempCityId").val(result.TempCityId);
+                $("#TempArea").val(result.TempArea);
+                $("#TempPincode").val(result.TempPincode);
+
+                $("#PerAddress").val(result.PerAddress);
+                $("#PerCityId").val(result.PerCityId);
+                $("#PerArea").val(result.PerArea);
+                $("#PerPincode").val(result.PerPincode);
+
+                $("#CastId").val(result.CastId);
+                $("#SubCastId").val(result.SubCastId);
+
+                $("#EmergencyContact1").val(result.EmergencyContact1);
+                $("#EmergencyContact1Relation").val(result.EmergencyContact1Relation);
+                $("#EmergencyContact2").val(result.EmergencyContact2);
+                $("#EmergencyContact2Relation").val(result.EmergencyContact2Relation);
+
+
+            }
+        });
+    }
+    $(function () {
+        $("#PancardNo").blur(function () {
+            var value = $(this).val();
+            GetMachedParentInfo(value, "", "", "");
+        });
+
+        $("#Contact1").blur(function () {
+            var value = $(this).val();
+            GetMachedParentInfo("", value, "", "");
+        });
+
+        $("#Contact2").blur(function () {
+            var value = $(this).val();
+            GetMachedParentInfo("", "", value, "");
+        });
+
+        $("#Email").blur(function () {
+            var value = $(this).val();
+            GetMachedParentInfo("", "", "", value);
+        });
+    });
+
+
+</script>

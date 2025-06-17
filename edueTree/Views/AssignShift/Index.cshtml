@@ -1,0 +1,152 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.AssignShiftModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<section class="content header">
+        <div class="row">
+            <div class="col-md-12">
+
+                <a href='@Url.Action("Create")' class="btn btn-success pull-right">
+                    <i class="fa fa-plus-square"></i> Assign Shift to Employee
+                </a>
+
+            </div>
+        </div>
+    </section>
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Training/Index"><i class="fa fa-dashboard"></i></a>List</li>
+        <li class="active">Assign Employee Shift</li>
+    </ol>
+</section>
+
+
+
+<section class="content">
+
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Employee shift List</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Employee Name")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("From Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("To Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Shift ")
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StaffName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Fromdate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Todate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ShiftName)
+
+                                        </td>
+
+
+
+                                        <td>
+                                            <a data-toggle="tooltip" data-placement="top" title="Edit" href='@Url.Action("Edit", "AssignShift", new {id = item.ShiftassignId})'><i class="fa fa-pencil-square"></i></a>
+
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#myModalTraingDelete" href='@Url.Action("Delete", new {id = item.ShiftassignId})'><i class="fa fa-trash"></i></a>
+
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    @*<div class="input-group box-tools pull-right">
+                            <a href='@Url.Action("Create")' class="btn btn-success"><i class="fa fa-plus"></i></a>
+                        </div>*@
+                </div>
+                <div class="modal fade" id="myModalTraingDelete" role="dialog"></div>
+            </div>
+        </section>
+
+        <section class="col-md-12">
+            @{Html.RenderAction("MemberNotAssignShiftList", "NoAssign");}
+        </section>
+    </div>
+
+   
+</section>
+
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $(".table").DataTable({
+                dom: "Bfrtip",
+                buttons: [
+                        "copy", "csv", "excel", "pdf", "print"
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

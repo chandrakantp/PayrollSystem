@@ -1,0 +1,59 @@
+﻿@model edueTree.Models.StaffDesignation
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StaffDesignation</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.isActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fromDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fromDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.endDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.endDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Designation.designation1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Designation.designation1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Staff.staffCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Staff.staffCode)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.tranId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,149 @@
+﻿
+@model IEnumerable<edueTree.Models.EsiFamily>
+@{
+    ViewBag.Title = "ESI Family Index";
+}
+@{
+    Layout = null;
+}
+
+
+@*<section class="content-header">
+    <h1>
+
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Manage</a></li>
+        <li class="active">Esi Family</li>
+    </ol>
+</section>*@
+<section class="content">
+
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Esi Family List</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("RelationShip")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Reside")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("State")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Town")
+                                        </th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.name)
+                                            </td>
+                                            <td>
+                                                @Convert.ToDateTime(item.dob).ToString("dd MMM yyyy")
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.relationship)
+                                            </td>
+                                            <td>
+                                                @(item.reside == true ? Html.DisplayName("Yes") : Html.DisplayName("No"))
+                                              
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.state)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.town)
+                                            </td>
+                                            <td>
+                                             @if (ViewBag.message == true)
+                                             {
+                                                 <a href='@Url.Action("EsiFamilyEdit", "Staffs", new {id = item.esifamid})'><i class="fa fa-pencil-square"></i></a>
+                                             }
+                                             
+                                              
+                                             
+                                            </td>
+                                            <td>
+                                                @if (ViewBag.message == true)
+                                                {
+                                                    <a data-toggle="modal" data-target="#myModalEsiFamDelete" href='@Url.Action("EsiFamilyDelete", new {id = item.esifamid})'><i class="fa fa-trash"></i></a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    @*<div class="input-group box-tools pull-right">
+                            <a href='@Url.Action("Create")' class="btn btn-success"><i class="fa fa-plus"></i></a>
+                        </div>*@
+                </div>
+                <div class="modal fade" id="myModalEsiFamDelete" role="dialog"></div>
+            </div>
+        </section>
+    </div>
+</section>
+<script>
+    $(function () {
+
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            });
+        });
+
+    });
+
+</script>
+@*<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>*@

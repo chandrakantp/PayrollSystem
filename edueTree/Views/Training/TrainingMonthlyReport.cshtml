@@ -1,0 +1,346 @@
+﻿@model IEnumerable<edueTree.Models.TrainingModel>
+@{
+    ViewBag.Title = "MachineData";
+
+}
+@{
+    var monthList = new SelectList(new[]
+    {
+        new SelectListItem {Text = "Select Month", Value = null, Selected = true},
+        new SelectListItem {Text = "January", Value = "1"},
+        new SelectListItem {Text = "February", Value = "2"},
+        new SelectListItem {Text = "March", Value = "3"},
+        new SelectListItem {Text = "April", Value = "4"},
+        new SelectListItem {Text = "May", Value = "5"},
+        new SelectListItem {Text = "June", Value = "6"},
+        new SelectListItem {Text = "July", Value = "7"},
+        new SelectListItem {Text = "August", Value = "8"},
+        new SelectListItem {Text = "September", Value = "9"},
+        new SelectListItem {Text = "October", Value = "10"},
+        new SelectListItem {Text = "November", Value = "11"},
+        new SelectListItem {Text = "December", Value = "12"},
+    }, "Value", "Text");
+
+
+
+    var yearList = new SelectList(new[]
+    {
+        new SelectListItem {Text = "Select Year", Value = null, Selected = true},
+        new SelectListItem {Text = "2016", Value = "2016"},
+        new SelectListItem {Text = "2017", Value = "2017"},
+        new SelectListItem {Text = "2018", Value = "2018"},
+        new SelectListItem {Text = "2019", Value = "2019"},
+        new SelectListItem {Text = "2020", Value = "2020"},
+        new SelectListItem {Text = "2021", Value = "2021"},
+        new SelectListItem {Text = "2022", Value = "2022"},
+        new SelectListItem {Text = "2023", Value = "2023"},
+        new SelectListItem {Text = "2024", Value = "2024"},
+        new SelectListItem {Text = "2025", Value = "2025"},
+
+    }, "Value", "Text");
+}
+<section class="content-header">
+    <h1>
+        @*Leave Request*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Training Report monthly</a></li>
+        <li class="active">Monthly Training Report</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title">Monthly Training Report - You can search Monthly </h3>
+                </div>
+
+                <div class="box-body chat">
+                    <div class="item">
+                        @using (Html.BeginForm("TrainingMonthlyReport", "Training", FormMethod.Get))
+                        {
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    @Html.DropDownList("month", monthList, new { id = "month", @class = "form-control", required = "required" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownList("year", yearList, new { id = "month", @class = "form-control", required = "required" })
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Training Monthly Report</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table id="StructureTable" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Department Name")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Total manpower")
+                                    </th>
+                                    <th>@Html.DisplayName("Trg Man Hr") </th>
+                                    <th>@Html.DisplayName("Shortage/ Excess")</th>
+                                    <th>@Html.DisplayName("Trg for month (YTD)")</th>
+                                    <th>
+                                        @Html.DisplayName("Week 1")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Week 2")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Week 3")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Week 4")
+                                    </th>
+
+                                    <th>@Html.DisplayName("Month Of Hrs")</th>
+                                    <th>Variance</th>
+                                    <th style="display: none;"></th>
+                                    <th style="display: none;"> </th>
+                                </tr>
+                            </thead>
+                            @{
+                                int? totalMP = 0;
+                                decimal? week1Count = 0;
+                                decimal? week2Count = 0;
+                                decimal? week3Count = 0;
+                                decimal? week4Count = 0;
+                                decimal? weekCount = 0;
+                                int? trgValueCount = 0;
+                                decimal? Varience = 0; decimal? ytdCountDecimal = 0; decimal? shortexcess = 0;
+                                decimal? VarienceCount = 0;
+
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DepartmentName)
+                                            </td>
+                                            <td>
+                                                @if (item.TotalManpower != null)
+                                                {
+                                                    totalMP = totalMP + item.TotalManpower;
+                                                }
+                                                @Html.DisplayFor(modelItem => item.TotalManpower)
+                                            </td>
+                                            <td>
+                                                @if (item.trgValue != null)
+                                                {
+                                                    trgValueCount = trgValueCount + item.trgValue;
+                                                }
+
+                                                @Html.DisplayFor(modelItem => item.trgValue)
+                                            </td>
+
+                                            <td>
+                                                @{ shortexcess = shortexcess + item.short_excess;}
+                                                @Html.DisplayFor(modelItem => item.short_excess)
+                                            </td>
+                                            <td>
+                                                @{
+                                        ytdCountDecimal = ytdCountDecimal + item.YTD;
+                                                }
+                                                @Html.DisplayFor(modelItem => item.YTD)
+                                            </td>
+
+                                            <td>
+                                                @if (item.week1 != null)
+                                                {
+                                                    week1Count = week1Count + item.week1;
+                                                }
+
+                                                @Html.DisplayFor(modelItem => item.week1)
+                                            </td>
+                                            <td>
+                                                @if (item.week2 != null)
+                                                {
+                                                    week2Count = week2Count + item.week2;
+                                                }
+                                                @Html.DisplayFor(modelItem => item.week2)
+                                            </td>
+                                            <td>
+                                                @if (item.week3 != null)
+                                                {
+                                                    week3Count = week3Count + item.week3;
+                                                }
+                                                @Html.DisplayFor(modelItem => item.week3)
+                                            </td>
+                                            <td>
+                                                @if (item.week4 != null)
+                                                {
+                                                    week4Count = week4Count + item.week4;
+                                                }
+                                                @Html.DisplayFor(modelItem => item.week4)
+                                            </td>
+                                            <td>
+                                                @if (item.MonthOfHrs != null)
+                                                {
+                                                    weekCount = weekCount + item.MonthOfHrs;
+                                                }
+                                                @Html.DisplayFor(modelItem => item.MonthOfHrs)
+                                            </td>
+                                            <td>
+                                                @{ VarienceCount = VarienceCount + item.Varience;}
+                                                @Html.DisplayFor(modelItem => item.Varience)
+                                            </td>
+                                            <td style="display: none;">@Html.DisplayFor(modelItem => item.Monthno)</td>
+                                            <td style="display: none;">
+                                                @Html.DisplayFor(modelItem => item.YearNo)
+                                            </td>
+                                        </tr>
+                                    }
+
+                                    <tr>
+
+                                        <td><label>Total</label></td>
+                                        <td><label>@totalMP</label></td>
+                                        <td><label>@trgValueCount</label></td>
+                                        <td>
+                                            <label>@shortexcess</label>
+                                        </td>
+                                        <td><label>@ytdCountDecimal</label></td>
+                                        <td><label>@week1Count</label></td>
+                                        <td><label>@week2Count</label></td>
+                                        <td><label>@week3Count</label></td>
+                                        <td><label>@week4Count</label></td>
+
+                                        <td><label>@weekCount</label></td>
+                                        <td><label>@VarienceCount</label></td>
+                                        <td style="display: none;"></td>
+                                        <td style="display: none;"></td>
+                                    </tr>
+
+                                </tbody>
+
+                            }
+                        </table>
+                        <center><input type="submit" value="Generate Monthly Report" class="btn btn-default" onclick=" dataStore(); " /></center>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm//yy",
+            autoclose: true
+        });
+
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true
+        });
+
+    });
+
+
+</script>
+
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+<script type="text/javascript">
+    function dataStore() {
+        debugger;
+        var table = document.getElementById("StructureTable");
+        var rowCount = table.rows.length;
+        var departmentNames = new Array();
+        var trgValue = new Array();
+        var totalManpower = new Array();
+        var shortExcesses = new Array();
+        var ytDs = new Array();
+        var week1S = new Array();
+        var week2S = new Array();
+        var week3S = new Array();
+        var week4S = new Array();
+        var monthOfHrs = new Array();
+        var variences = new Array();
+        var yearNo = new Array();
+        var monthno = new Array();
+
+        var j = 0;
+        for (var i = 1; i < rowCount - 1; i++) {
+            var row = table.rows[i];
+            var idbox = row.cells[0].childNodes[0].textContent;
+            if (idbox !== "0") {
+
+                departmentNames[j] = row.cells[0].childNodes[0].textContent;
+                totalManpower[j] = row.cells[1].childNodes[0].textContent;
+                trgValue[j] = row.cells[2].childNodes[0].textContent;
+                shortExcesses[j] = row.cells[3].childNodes[0].textContent;
+
+                ytDs[j] = row.cells[4].childNodes[0].textContent;
+                week1S[j] = row.cells[5].childNodes[0].textContent;
+                week2S[j] = row.cells[6].childNodes[0].textContent;
+                week3S[j] = row.cells[7].childNodes[0].textContent;
+                week4S[j] = row.cells[8].childNodes[0].textContent;
+                monthOfHrs[j] = row.cells[9].childNodes[0].textContent;
+                variences[j] = row.cells[10].childNodes[0].textContent;
+                monthno[j] = row.cells[11].childNodes[0].textContent;
+                yearNo[j] = row.cells[12].childNodes[0].textContent;
+
+                j += 1;
+            }
+        }
+        jQuery.ajax({
+            type: "POST",
+            url: "/Training/StoreTrainingMonthlyReport",
+            data: { departmentNames: JSON.stringify(departmentNames), totalManpower: JSON.stringify(totalManpower), trgValue: JSON.stringify(trgValue), shortExcesses: JSON.stringify(shortExcesses), ytDs: JSON.stringify(ytDs), week1S: JSON.stringify(week1S), week2S: JSON.stringify(week2S), week3S: JSON.stringify(week3S), week4S: JSON.stringify(week4S), monthOfHrs: JSON.stringify(monthOfHrs), variences: JSON.stringify(variences), monthno: JSON.stringify(monthno), yearNo: JSON.stringify(yearNo) },
+            datatype: "json",
+            success: function (data) {
+                //debugger;
+
+                //alert(data.Success);
+                //  alert(data.Message);
+                $.notify(data.Message, "success");
+
+
+
+            }
+        });
+    }
+
+</script>

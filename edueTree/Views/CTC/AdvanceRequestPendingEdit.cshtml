@@ -1,0 +1,93 @@
+﻿@model edueTree.Models.AdvancePendingRequestModel
+@{
+    ViewBag.Title = "AdvanceRequestPendingEdit";
+}
+
+<section class="content-header">
+    <h1>
+        @*Salary head settings*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Advance</a></li>
+        <li class="active">Request</li>
+    </ol>
+</section>
+
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-inr"></i>
+                        <h3 class="box-title">Load And Advance Request Edit</h3>
+                        <hr />
+                    </div>
+                    <div class="box-body">
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true)
+                            @Html.HiddenFor(a => a.requestId)
+                            @Html.HiddenFor(a => a.FirmId)
+                            @Html.HiddenFor(a => a.staffId)
+
+                            <div class="form-group">
+                                <label class="col-md-2">Employee Name</label>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.fullName, new { @class = "form-control", @readonly = true })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2">Loan Amount</label>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.Amount, new { @id = "ctcTxt", @class = "form-control", placeholder = "Enter Load Or Advance amount." })
+                                    @Html.ValidationMessageFor(model => model.Amount)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2">No of EMI</label>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.willPayEMI, new { @id = "ctcTxt", @class = "form-control", placeholder = "how many EMI's to return that Load Or Advance amount?" })
+                                    @Html.ValidationMessageFor(model => model.willPayEMI)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2">From Which Month Start EMI</label>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.paidMonth, new { @id = "ctcTxt", @class = "form-control", placeholder = "Please insert month number,which month paid this Load Or Advance amount" })
+                                    @Html.ValidationMessageFor(model => model.paidMonth)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2">From Which Year Start EMI</label>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.paidYear, new { @id = "ctcTxt", @class = "form-control", placeholder = "Please insert year number,which year paid this Load Or Advance amount" })
+                                    @Html.ValidationMessageFor(model => model.paidYear)
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="box-footer">
+                        <div class="col-md-4">
+                            <a href='@Url.Action("AdvanceRequestPendingReport", "CTC")' class="btn btn-default pull-left"> Back to list</a>
+                        </div>
+                        <div class="col-md-5 pull-right">
+                            <input type="submit" value="Approve" name="Approve" class="btn btn-default" />
+                            <input type="submit" value="Rejected" name="Rejected" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,175 @@
+﻿@*@model edueTree.Models.UndertakingModel*@
+@{
+    ViewBag.Title = "Undertaking Details";
+}
+@{
+    Layout = null;
+}
+<div class="col-md-12">
+    @*<section class="content-header">
+        <h3 class="box-title">Payment of Gratuity </h3>
+
+ 
+    </section>*@
+    <div class="box box-primary">
+        <div class="box-header">
+            <i class="fa fa-bars"></i>
+            <h4 class="box-title">  Payment of Gratuity </h4>
+            <div class="pull-right">
+                <div class="pull-right"><a onclick="printDiv();" class="btn btn-default"><i class="fa fa-print"></i> Print</a></div>
+                @*<a data-toggle="modal" data-target="#myModalstaffESI" href='@Url.Action("Edit", new { id = Model.staffid1 })'><i class="fa fa-pencil-square fa-2x"></i></a>*@
+                @*<a href='@Url.Action("esiinfoedit", "Staffs", new { id = Model.Underid })'><i class="fa fa-pencil"></i></a>*@
+            </div>
+            @*@Html.HiddenFor(model => model.Underid)*@
+        </div>
+        <div id="DivIdToPrint" class="box-body">
+            <h3 style="text-align: center;">Payment of Gratuity (Central) Rules </h3><br/>
+            <h3 style="text-align: center">FORM 'F'</h3>
+            <div style="text-align: center"><small>See sub-rule (1) of Rule 6</small>
+            </div>
+            <br/><br/>
+            <b> To:</b> .................................................................................................. ..................................................................................................<br/><br/>
+            [Give here name or description of the establishment with full address]
+
+            <p>
+                1. I,<b> Shri/Smt./Kum.</b> .................................................................................................................................................................. whose particulars are given<br/>
+                <b style="padding-left: 10em;">[Name in full here]</b><br/>
+                in the statement below, hereby nominate the person(s) mentioned below to receive the gratuity payable after my death as also the gratuity standing to my credit in the event of my death before that amount has become payable, or having become payable has not been paid and direct that the said amount of gratuity shall be paid in proportion indicated against the name(s) of the nominee(s).
+            </p>
+            <p>2. I hereby certify that the person(s) mentioned is a /are member(s) of my family within the meaning of clause (h) of section (2) of the Payment of Gratuity Act, 1972.</p>
+            <p>3. I hereby declare that I have no family within the meaning of clause (h) of section (2) of the said Act.</p>
+            <p>
+                4. (a) My father / mother/ parents is/are not dependant on me.<br/>
+                (b) My husband’s father/mother/parents is/are not dependant on my husband.
+            </p>
+            <p>5. I have excluded my husband from my family by a notice dated …...………..…. to the controlling Authority in terms of the proviso to clause (h) of section 2 of the said Act.</p>
+            <p>6. Nomination made herein invalidates my previous nomination.</p>
+            <br/>
+
+
+
+
+            <h3 style="text-align: center">
+                <u>Statement</u>
+            </h3>
+            <table class="table">
+                <tr>
+                    <td>1. Name of employee in full:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2. Sex:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3. Religion:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>4. Whether unmarried/ married/ widow/ widower:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>5. Department/ Branch/ Section where employed:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>6. Post held with Ticket or Serial No., if any:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>7. Date of Appointment:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>8. Permanent Address:</td>
+                    <td></td>
+                </tr>
+            </table>
+            <pre class="pull-right">
+   Village :............ Thana :............
+   Post Office :........ District :......... 
+   State :..............
+</pre>
+            <pre class="pull-left">
+Place :.............
+Date :..............
+</pre>
+            <br/><br/><br/><br/><br/><br/>
+            <div class="pull-right">
+                Signature/ Thumb impression of the employee
+            </div>
+
+            <br/>
+            <br/>
+            <hr/>
+
+            <h3 style="text-align: center">
+                <u>Declaration by Witnesses</u>
+            </h3>
+
+            <pre>
+ Signature signed / thumb impressed before me.
+ Name in full and full address of witnesses.                                                            Signature of Witnesses
+ 1.                                  1.
+                
+ 2.                                   2.
+ Place ............
+ Date .............
+</pre>
+
+            <br/>
+            <br/>
+            <hr/>
+
+            <h3 style="text-align: center">
+                <u> Certificate by the Employer</u>
+            </h3>
+            <p>
+                Certified that the particulars of the above nomination have been verified and recorded in this Company
+            </p>
+            <pre> Emploer’s Reference No., if any.                                                            Signature of the employer /
+                                                                                             Officer authorised   
+                                            
+                                                                                                                  
+ Date...........                                                                             Designation
+</pre>
+            <br/>
+            <br/>
+            <hr/>
+
+            <h3 style="text-align: center;">
+                <u> Acknowledgement by the Employer</u>
+            </h3>
+            <p>Received the duplicate copy of nomination in Form ‘F’ filed by me and duly certified by the Employer.</p>
+
+
+            <pre>
+   Date..........                                                                                Signature of the Employee
+</pre>
+        </div>
+        <div class="box-footer">
+            @*<div class="pull-right"><a href='@Url.Action("NomineeCreate", "Staffs", new { @status = "Gratuity", @id = Model.staffid })' class="btn btn-default"><i class="fa fa-file-pdf-o"></i> Add Nominee</a></div>*@
+        </div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    function printDiv() {
+        debugger;
+        var divToPrint = document.getElementById('DivIdToPrint');
+
+        var newWin = window.open('', 'Print-Window');
+
+        newWin.document.open();
+
+        newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+
+        newWin.document.close();
+
+        setTimeout(function () { newWin.close(); }, 10);
+
+    }
+</script>

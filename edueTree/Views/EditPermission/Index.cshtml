@@ -1,0 +1,91 @@
+﻿@model IEnumerable<edueTree.Models.EditPermissionModel>
+@{
+    Layout = null;
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-header">
+                <i class="fa fa-calendar"></i>
+                <h3 class="box-title">Manage Edit Permission List</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-fixed">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("Staff Name")
+                            </th>
+
+                            <th>
+                                @Html.DisplayName("General Info")
+                            </th>
+                            
+                            <th>
+                                @Html.DisplayName("App Attendance")
+                            </th>
+                            <th>@Html.DisplayName("Mannual Attendance")</th>
+                            <th>
+                                @Html.DisplayName("IsActive")
+                            </th>
+
+                            <th>
+                                @Html.DisplayName("Is Probation Leave App")
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StaffName, new { @disabled = "disabled" })
+
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => item.GeneralInfo, new { @disabled = "disabled" })
+
+                                </td>
+                                
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => item.AppAttendance, new { @disabled = "disabled" })
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => item.ManualAttendance, new { @disabled = "disabled" })
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => item.IsActive, new {@disabled = "disabled"})
+                                </td>
+
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => item.IsProbationLeaveApp, new { @disabled = "disabled" })
+
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

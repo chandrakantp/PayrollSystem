@@ -1,0 +1,97 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.StaffDesignModel>
+@{ Layout = null; }
+<style type="text/css">
+    .bg-teal-gradient {
+        color: #000000;
+    }
+
+    .modal {
+        top: 38px;
+    }
+
+    .modal {
+        background: rgba(0, 0, 0, 0.0) none repeat scroll 0 0;
+    }
+</style>
+<div class="box box-primary">
+    <div class="box-header">
+        <i class="fa fa-history"></i>
+        <h3 class="box-title">Designation history</h3>
+        <div class="pull-right" title="Add Designation">
+            @if (ViewBag.message == true)
+            {
+            <a href='@Url.Action("Create", new {staId = ViewData["staffId"]})' class="btn btn-primary"><i class="fa fa-plus"></i> Add Designation</a>
+            }                        
+        </div>
+    </div>
+    @{
+        int? staffId = null;
+        <!-- /.box-header -->
+        <div class="box-body">
+
+            <table class="table responsive">
+                <tr>
+                    @*<th>
+                        @Html.DisplayName("Staff / Emp Code")
+                    </th>*@
+                    <th>
+                        @Html.DisplayName("From Date")
+                    </th>
+                    <th>
+                        @Html.DisplayName("End Date")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Designation")
+                    </th>
+
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    staffId = item.StaffId;
+                    <tr>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.StaffCode)
+                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateFrom)
+                        </td>
+                        <td>
+                            @(item.DateEnd == null ? Html.DisplayName("Still") : Html.DisplayFor(modelItem => item.DateEnd))
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Designation)
+                        </td>
+
+                        <td>
+                            @if (ViewBag.message == true)
+                            {
+                            @Html.EncodedActionLink("<i class='fa fa-pencil'></i>", "Edit", "StaffDesignation", new {id = item.transId, Staffid = item.StaffId}, null)
+                            }
+                            
+                            @*<a href='@Url.Action("Edit", new {id = item.transId})'><i class="fa fa-pencil"></i></a>*@
+                        </td>
+                        <td>@if (ViewBag.message == true)
+                            {
+                                <a data-toggle="modal" data-target="#myModalDesiDelete" href='@Url.Action("Delete", new {id = item.transId, Staffid = ViewData["staffId"]})'><i class="fa fa-trash"></i></a>
+                            }
+                        </td>
+                        <div class="modal fade" id="myModalDesiDelete" role="dialog"></div> 
+                    </tr>
+                }
+
+            </table>
+
+        </div>
+
+        <div class="box-footer">
+            
+
+        </div>
+    }
+</div>
+

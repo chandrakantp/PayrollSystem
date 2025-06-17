@@ -1,0 +1,132 @@
+﻿@using System.Linq.Dynamic
+@using edueTree.Models
+@model IEnumerable<edueTree.Models.AsignShiftBasedOnAttendaceInTimeModel>
+@{
+    ViewBag.Title = "test";
+
+}
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm("AttendaceChekinCheckOut", "Attendance"))
+            {
+                <div class="box box-success">
+                    <div class="box-header">Search and Sort Option</div>
+                    <div class="box-body">
+                        @Html.Label("Date :", new { @class = "control-label col-md-4" })
+                        <div class="col-md-3 col-sm-6">
+                            @Html.TextBox("selectedDate", null, new { id = "datepicker1", @class = "form-control datepicker" })
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                        </div>
+                    </div>
+                    <div class="box-footer"></div>
+                </div>
+            }
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Manually Attendance Request List</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                   
+                                    <th>
+                                        @Html.DisplayName("Attendace date")
+                                    </th><th>Staff Name</th>
+                                    <th>
+                                        @Html.DisplayName("check In")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Check Out")
+                                    </th>
+                                    <th>Shift</th>
+
+                                </tr>
+                                </thead>
+
+                                <tbody>
+
+
+                                @foreach (var item in Model.GroupBy(a => a.staffName))
+                                {
+
+                                    <tr>
+                                        <td>
+
+                                            @{
+                                                var asignShiftBasedOnAttendaceInTimeModel = Model.FirstOrDefault();
+                                            }
+                                            @if (asignShiftBasedOnAttendaceInTimeModel != null)
+                                            {
+                                                @asignShiftBasedOnAttendaceInTimeModel.attendDate
+                                            }
+                                        </td>
+                                        <td>@item.Key</td>
+
+                                        <td>
+
+                                            @foreach (var ii in item.Where(a => a.Status == "CheckIn"))
+                                            {
+                                                @Convert.ToDateTime(ii.attendDate).ToString("HH:mm:ss")
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @foreach (var ii in item.Where(a => a.Status == "CheckOut"))
+                                            {
+                                                @Convert.ToDateTime(ii.attendDate).ToString("HH:mm:ss")
+                                            }
+                                        </td>
+                                        <td>
+
+                                            @{
+                                                var shiftBasedOnAttendaceInTimeModel = Model.FirstOrDefault();
+                                            }
+                                            @if (shiftBasedOnAttendaceInTimeModel != null)
+                                            {
+                                                @shiftBasedOnAttendaceInTimeModel.ShiftName
+                                            }
+                                        </td>
+
+
+                                    </tr>
+
+
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="input-group box-tools pull-right">
+                        <a href='@Url.Action("AttendanceRequest")' class="btn btn-success"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

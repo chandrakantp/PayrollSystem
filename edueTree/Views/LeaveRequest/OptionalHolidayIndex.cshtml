@@ -1,0 +1,99 @@
+﻿@model IEnumerable<edueTree.Models.OptionalHoliday>
+
+@{
+    Layout = null;
+}
+
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Optional Holiday List</h3>
+    </div>
+    <div class="box-body">
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>optional Holiday Name</th>
+                        <th>Date</th>
+                        <th></th>
+                        <th></th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.optionalHolidayName)
+                            </td>
+
+                            <td>
+                                @Convert.ToDateTime(item.date).ToString("D")
+                            </td>
+
+                            <td>
+                                <a href='@Url.Action("OptionalHolidayEdit", new { id = item.optionalId })'><i class="fa fa-pencil-square"></i> <span class="hidden-sm hidden-xs"></span></a>
+
+                            </td>
+                            <td>
+                                <a data-toggle="modal" data-target="#myModalOptionalDelete" href='@Url.Action("OptionalHolidayDelete", new { id = item.optionalId })'><i class="fa fa-trash"></i></a>
+
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModalOptionalDelete" role="dialog"></div>
+
+
+<script type="text/javascript">
+    $(function() {
+
+        $(document).ready(function() {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "change") {
+                $.notify(" Password Change Successfully ! ", "success");
+            }
+        }
+
+    });
+</script>

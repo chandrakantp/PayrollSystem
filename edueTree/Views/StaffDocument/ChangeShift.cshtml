@@ -1,0 +1,54 @@
+﻿@model edueTree.Models.ShiftHistory
+
+@{
+    ViewBag.Title = "ChangeShift";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ChangeShift</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>ShiftHistory</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.tranId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.staffId, "staffId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("staffId", String.Empty)
+                @Html.ValidationMessageFor(model => model.staffId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.changeDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.changeDate)
+                @Html.ValidationMessageFor(model => model.changeDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.shiftId, "shiftId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("shiftId", String.Empty)
+                @Html.ValidationMessageFor(model => model.shiftId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

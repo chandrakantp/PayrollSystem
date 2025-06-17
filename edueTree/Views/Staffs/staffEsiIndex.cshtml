@@ -1,0 +1,212 @@
+﻿@model IEnumerable<edueTree.Models.EsiinfoModel>
+@{
+    ViewBag.Title = "staffEsiIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Esi Info</a></li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-list"></i>
+                    <h3 class="box-title">Employee ESI Detail</h3>
+                    @*<div class="pull-right">
+                            <a href='@Url.Action("Index", "Staffs")' class="btn btn-success" data-toggle="tooltip" title="Page Refresh">
+                                <i class="fa fa-refresh"></i>
+                            </a>
+                            <a href="#" id="exportexcel" class=" btn btn-success">
+                                <i class="fa fa-file-excel-o"></i> Excel
+                            </a>
+
+                            <button type="button" id="btnPrint" class="btn btn-info">
+                                <i class="fa fa-print"></i> Print
+                            </button>
+                        </div>*@
+                </div>
+
+                <div id="dvContainer">
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayName("Name")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Fathername")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Birth Date")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Per Address ")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Gender")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Maried Status")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("pin ")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("branch Office")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("date of Appoint")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("pre Insuranceno")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Pre Empolyeecode")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Nominee Name")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Nominee Relationship")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Nominee Address")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Birth Date")
+                                            </th>
+
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.fathername)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.dateofbirth)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.peraddress)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.GenderSet)
+
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.marriedset)
+
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.pin)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.branchoffice)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.dateofappoint)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.preinsuranceno)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.preempolyecode)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.nomineename)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.relationship)
+                                                </td>
+
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.nomaddress)
+                                                </td>
+                                                <td></td>
+                                                <td><a href='@Url.Action("EsiinfoEdit", "Staffs", new { id = item.staffid1 })'><i class="fa fa-pencil"></i></a></td>
+                                                @*<td>@Html.EncodedActionLink("Edit", "EsiinfoEdit", "staffs", new { id = item.esiid }, null)</td>*@
+                                              
+                                                <td>
+                                                    <a data-toggle="modal" data-target="#myModalesiDelete" href='@Url.Action("DeleteEsi", new { id = item.esiid })'><i class="fa fa-trash"></i></a>
+                                                </td>
+                                               
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </div>
+</section>
+<div class="modal fade" id="myModalesiDelete" role="dialog"></div>
+<script type="text/javascript">
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

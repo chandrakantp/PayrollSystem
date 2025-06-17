@@ -1,0 +1,130 @@
+﻿@model edueTree.Models.AllowRequestModel
+@{
+    ViewBag.Title = "CreateAllowancesRequest";
+}
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+@{
+
+    var aboutsite = new SelectList(new[]
+        {
+            new SelectListItem { Value = null , Text =  "----  Select Choice ----", Selected = true},
+            new SelectListItem {Text = "Credit", Value = "Credit"},
+            new SelectListItem {Text = "Debit", Value = "Debit"},
+        }, "Value", "Text");
+}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Allowances</a></li>
+        <li class="active">request</li>
+    </ol>
+</section>
+
+<br /><br />
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-user"></i>
+                        <h3 class="box-title"> Allowances Request</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Allowances:</label>
+                                    @Html.DropDownListFor(model => model.AllowId, Model.AllowancesList, " - Select Allowances - ", new {id = "AllowId", @class = "form-control select2", placeholder = "select Allowances"})
+                                    @Html.ValidationMessageFor(model => model.AllowId, string.Empty, new {@class = "help-block"})
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Amount:</label>
+                                    @Html.TextBoxFor(model => model.Amount, new {id = "Amount", @class = "form-control", placeholder = "Amount", required = "required", @maxlength = "9"})
+                                    @Html.ValidationMessageFor(model => model.Amount, string.Empty, new {@class = "help-block"})
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Expense Date</label>
+                                    @Html.TextBoxFor(model => model.Expensedate, new {id = "datepicker1", @class = "form-control"})
+                                    @Html.ValidationMessageFor(model => model.Expensedate)
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Remark:</label>
+                                    @Html.TextAreaFor(model => model.StaffRemark, new {id = "Question", @class = "form-control", placeholder = "enter remark", required = "required"})
+                                    @Html.ValidationMessageFor(model => model.StaffRemark, string.Empty, new {@class = "help-block"})
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Transaction:</label>
+                                    @Html.DropDownList("transactionType", aboutsite, new {id = "duration", @class = "form-control", required = "required"})
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("AllowancesRequestIndex")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </section>     
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true,
+        });
+    });
+
+</script>
+
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        $(".select2").select2();
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "error");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

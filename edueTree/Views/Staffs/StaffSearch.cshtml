@@ -1,0 +1,41 @@
+﻿@model edueTree.Models.Staff
+@{
+    ViewBag.Title = "StaffSearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.TextBoxFor(a => a.firstName, new { @id = "txtid", @onkeyup = "onchangeevent();", @onchange = "onchangeevent();" })
+
+}
+
+@Html.Partial("Index", Model)
+
+<script type="text/javascript">
+    //$(document).ready(function () {
+    //    $('#txtid').change(function () {
+    //        alert();
+    //    });
+    //});
+
+    function onchangeevent() {
+        var value = $("#txtid").val();
+        //$.ajax({
+        //    type: "POST",
+        //    data: $('form').serialize(),
+        //    success: function (response) {
+        //    }
+        //});
+
+        jQuery.ajax({
+            type: "POST",
+            url: "../Staffs/StaffSearch",
+            data: { str: value },
+            datatype: "json",
+            success: function(response) {
+            }
+        });
+        
+    }
+</script>

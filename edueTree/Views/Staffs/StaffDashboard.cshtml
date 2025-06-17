@@ -1,0 +1,255 @@
+﻿@{
+    ViewBag.Title = "View1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Manage</a></li>
+        <li class="active">Employee Dashboard</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="col-md-3">
+                <div class="pad margin no-print">
+                    <div class="callout callout-info" style="margin-bottom: 0 !important;">
+                        <b>Role :</b> @ViewData["RoleName"]
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="pad margin no-print">
+                    <div class="callout callout-info" style="margin-bottom: 0 !important;">
+                        <b>Universal Id : </b> @TempData["stafid"]
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="pad margin no-print">
+                    <div class="callout" style="margin-bottom: 0 !important;">
+                        @Html.DropDownList("Forms", new List<SelectListItem>
+                        {
+                            new SelectListItem {Text = "General Information", Value = "Details"},
+                            new SelectListItem {Text = "ESI FORM", Value = "ESI"},
+                            new SelectListItem {Text = "EPF FORM", Value = "EPF"},
+                            new SelectListItem {Text = "Gratuity", Value = "Gratuaty"},
+                            new SelectListItem {Text = "Insurance", Value = "Insurance"},
+                            new SelectListItem {Text = "Undertaking", Value = "undertaking"},
+                            new SelectListItem {Text = "Passport Visa Detail", Value = "visapassport"},
+                            new SelectListItem {Text = "Bank Info", Value = "bankinfo"},
+                            new SelectListItem {Text = "Finger Enroll Details", Value = "machineenrollDetail"}
+                        }, new {@class = "form-control"})
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="col-md-12">
+            <div id="Details">
+                <div class="">@{Html.RenderAction("Details", "Staffs");}</div>
+                <section class="col-md-6">
+                    @{Html.RenderAction("EduIndex", "StaffEducation");}
+                </section>
+                <div class="col-md-6">@{Html.RenderAction("Index", "StaffDesignation");}</div>
+                <div class="col-md-6">@{Html.RenderAction("Index", "WorkExperiance");}</div>
+                <div class="col-md-6">
+                    @{Html.RenderAction("Index", "StaffDocument");}
+                    @*@{Html.RenderAction("LeavesBalanceDashboard", "LeaveRequest");}*@
+                </div>
+            </div>
+            <div id="ESI" style="display: none">
+                <div class="col-md-12">@{Html.RenderAction("EsiDetails", "staffs");}</div>
+            </div>
+            <div id="EPF" style="display: none">
+                <div class="col-md-12">@{Html.RenderAction("EpfDetails", "staffs");}</div>
+            </div>
+            <div id="Insurance" style="display: none">
+                <div class="col-md-12">@{Html.RenderAction("StaffInsuranceIndex", "staffs");}</div>
+            </div>
+            <div id="undertaking" style="display: none">
+                <div class="col-md-12">@{Html.RenderAction("UndertakingDetails", "staffs");}</div>
+            </div>
+            <div id="Gratuaty" style="display: none">
+                <div class="col-md-12">@{Html.RenderAction("GratuityDetails", "staffs");}</div>
+            </div>
+            <div id="visapassport" style="display: none">@{Html.RenderAction("Index", "VisaPassport");}</div>
+            <div id="bankinfo" style="display: none">
+                <div class="col-md-12"> @{Html.RenderAction("Index", "BankInfo");}</div>
+            </div>
+            <div id="machineenrollDetail" style="display: none">
+                <div class="col-md-12"> @{Html.RenderAction("Details", "MemberEnroll");}</div>
+            </div>
+        </section>
+    </div>
+</section>  
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $("#Forms").change(function () {
+                debugger;
+                if ($(this).val() === "ESI") {
+                    $('#ESI').show();
+                    $("#EPF").hide();
+                    $("#Gratuaty").hide();
+                    $("#Insurance").hide();
+                    $("#Details").hide();
+                    $("#undertaking").hide();
+                    $("#visapassport").hide();
+                    $("#bankinfo").hide();
+                    $("#machineenrollDetail").hide();
+                }
+                if ($(this).val() === "EPF") {
+                    $("#ESI").hide();
+                    $('#EPF').show();
+                    $('#Gratuaty').hide();
+                    $('#Insurance').hide();
+                    $('#Details').hide();
+                    $("#undertaking").hide();
+                    $("#visapassport").hide();
+                    $("#bankinfo").hide();
+                    $("#machineenrollDetail").hide();
+                }
+                if ($(this).val() === "Gratuaty") {
+                    $("#ESI").hide();
+                    $("#EPF").hide();
+                    $("#Gratuaty").show();
+                    $("#Insurance").hide();
+                    $("#Details").hide();
+                    $("#undertaking").hide();
+                    $("#visapassport").hide();
+                    $("#Bankinfo").hide();
+                    $("#machineenrollDetail").hide();
+                }
+                if ($(this).val() === "Insurance") {
+                    $("#Insurance").show();
+                    $("#EPF").hide();
+                    $("#Gratuaty").hide();
+                    $("#ESI").hide();
+                    $("#Details").hide();
+                    $("#undertaking").hide();
+                    $("#visapassport").hide();
+                    $("#bankinfo").hide();
+                    $("#machineenrollDetail").hide();
+                }
+                if ($(this).val() === "Details") {
+                    $("#Details").show();
+                    $("#EPF").hide();
+                    $("#Gratuaty").hide();
+                    $("#Insurance").hide();
+                    $("#ESI").hide();
+                    $("#undertaking").hide();
+                    $("#visapassport").hide();
+                    $("#bankinfo").hide();
+                    $("#machineenrollDetail").hide();
+                }
+                if ($(this).val() === "undertaking") {
+                    $("#undertaking").show();
+                    $("#EPF").hide();
+                    $("#Gratuaty").hide();
+                    $("#ESI").hide();
+                    $("#Details").hide();
+                    $("#Insurance").hide();
+                    $("#visapassport").hide();
+                    $("#bankinfo").hide();
+                    $("#machineenrollDetail").hide();
+                }
+                if ($(this).val() === "visapassport") {
+                    $("#undertaking").hide();
+                    $("#EPF").hide();
+                    $("#Gratuaty").hide();
+                    $("#ESI").hide();
+                    $("#Details").hide();
+                    $("#Insurance").hide();
+                    $("#visapassport").show();
+                    $("#bankinfo").hide();
+                    $("#machineenrollDetail").hide();
+                }
+                if ($(this).val() === "bankinfo") {
+                    $("#undertaking").hide();
+                    $("#EPF").hide();
+                    $("#Gratuaty").hide();
+                    $("#ESI").hide();
+                    $("#Details").hide();
+                    $("#Insurance").hide();
+                    $("#visapassport").hide();
+                    $("#bankinfo").show();
+                    $("#machineenrollDetail").hide();
+                }
+                if ($(this).val() === "machineenrollDetail") {
+                    $("#undertaking").hide();
+                    $("#EPF").hide();
+                    $("#Gratuaty").hide();
+                    $("#ESI").hide();
+                    $("#Details").hide();
+                    $("#Insurance").hide();
+                    $("#visapassport").hide();
+                    $("#bankinfo").hide();
+                    $("#machineenrollDetail").show();
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            });
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    function loadPartial() {
+        var name = $("#selectPartial").val();
+        alert(name);
+        $("#partial").load("/staffs/Allpartial/?name=" + name);
+    }
+</script>
+
+
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function() {
+        if (true) {
+            @*if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "error");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this Shift used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" First fill Form and then add Nominee ", "warn");
+            }*@
+            if ('@TempData["notice"]' === "addform") {
+                $.notify(" First fill Form and then add Nominee ", "warn");
+            }
+        }
+
+    });
+</script>

@@ -1,0 +1,158 @@
+﻿@model edueTree.Models.VariableSetting
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>VariableSetting</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.variableId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.VariableName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.VariableName)
+                @Html.ValidationMessageFor(model => model.VariableName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Status)
+                @Html.ValidationMessageFor(model => model.Status)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.isCalculateFromCTC, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.isCalculateFromCTC)
+                @Html.ValidationMessageFor(model => model.isCalculateFromCTC)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.calculateFrom1, "calculateFrom1", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("calculateFrom1", String.Empty)
+                @Html.ValidationMessageFor(model => model.calculateFrom1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.calculateFrom2, "calculateFrom2", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("calculateFrom2", String.Empty)
+                @Html.ValidationMessageFor(model => model.calculateFrom2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.calculateFrom3, "calculateFrom3", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("calculateFrom3", String.Empty)
+                @Html.ValidationMessageFor(model => model.calculateFrom3)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.persentage, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.persentage)
+                @Html.ValidationMessageFor(model => model.persentage)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.isEarnings, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.isEarnings)
+                @Html.ValidationMessageFor(model => model.isEarnings)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.isDuductions, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.isDuductions)
+                @Html.ValidationMessageFor(model => model.isDuductions)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.graterThanLimit, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.graterThanLimit)
+                @Html.ValidationMessageFor(model => model.graterThanLimit)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.graterLimitAmt, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.graterLimitAmt)
+                @Html.ValidationMessageFor(model => model.graterLimitAmt)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.lessThanLimit, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.lessThanLimit)
+                @Html.ValidationMessageFor(model => model.lessThanLimit)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.lessLimitAmt, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.lessLimitAmt)
+                @Html.ValidationMessageFor(model => model.lessLimitAmt)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.isActive, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.isActive)
+                @Html.ValidationMessageFor(model => model.isActive)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.createdBy, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.createdBy)
+                @Html.ValidationMessageFor(model => model.createdBy)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.createdDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.createdDate)
+                @Html.ValidationMessageFor(model => model.createdDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -1,0 +1,520 @@
+﻿@using edueTree.Controllers
+@using Microsoft.AspNet.Identity
+@using edueTree.Helpers
+@using edueTree.Models
+@model edueTree.Models.Staff
+
+
+<style type="text/css">
+    .dl-horizontal dt {
+        width: 100px;
+    }
+
+    hr {
+        margin-bottom: 4px;
+        margin-top: 5px;
+    }
+
+    .img-thumbnail {
+        height: 160px;
+    }
+    /*input[type='file'] {
+        opacity: 0;
+    }*/
+    .file-input-wrapper {
+        height: 162px;
+        margin: 5px;
+        overflow: hidden;
+        position: relative;
+        width: 162px;
+        background-color: #fff;
+        cursor: pointer;
+    }
+
+        .file-input-wrapper > input[type="file"] {
+            font-size: 110px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-input-wrapper > .btn-file-input {
+            background-color: #494949;
+            border-radius: 4px;
+            color: #fff;
+            display: inline-block;
+            height: 34px;
+            margin: 0 0 0 -1px;
+            padding-left: 0;
+            width: 121px;
+            cursor: pointer;
+        }
+
+    .content {
+        padding: 6px;
+    }
+</style>
+<br />
+<section class="content-header">
+
+    <h1 class="pull-left">
+        Hello, <strong>@User.Identity.GetUserName()</strong>.
+
+    </h1>
+    <div class="pull-right">
+        <a href='@Url.Action("StaffDashboard", "Staffs", new {staffid = Model.staffId})' class="btn btn-success">General Information</a>
+    </div>
+    <br />
+</section>
+<br />
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                @{
+                    dbContainer db = new dbContainer();
+                    var birtdayinfo = db.UpComingBirthday(@Model.firmId);
+                    var countUB = birtdayinfo.Count();
+                }
+                <button type="button" class="btn btn-warning disabled" style="width: 246px; opacity: 1.65;">Upcoming Birthday <span class="badge">@countUB</span></button>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                @{
+                    var Probationinfo = db.UpComingProbation(@Model.firmId);
+                    var countPro = Probationinfo.Count();
+                }
+                <button type="button" class="btn btn-danger disabled" style="width: 246px; opacity: 1.65;">Probation Period <span class="badge">@countPro</span></button>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                @{
+                    var Tenureinfo = db.UpComingAnnivarsoryTenvue(@Model.firmId);
+                    var countTenure = Tenureinfo.Count();
+                }
+                <button type="button" class="btn btn-primary disabled" style="width: 246px; opacity: 1.65;">Anniversary Tenure <span class="badge">@countTenure</span></button>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                @{
+                    var Noticeinfo = db.notices.Where(s => s.isActive == true && s.firmId == @Model.firmId && s.noticeDisplayUpto >= DateTime.UtcNow);
+                    var countNotice = Noticeinfo.Count();
+                }
+                <button type="button" class="btn btn-success disabled" style="width: 246px; opacity: 1.65;">Notice <span class="badge">@countNotice</span></button>
+            </div>
+        </div>
+        <div>
+            <div class="col-md-3">&nbsp;</div>
+        </div>
+        <div class="col-md-12">
+            @{Html.RenderAction("MachineDataForProfile", "staffs");}
+            <div class="clearfix visible-sm-block"></div>
+        </div>
+    </div>
+</div>
+@{
+
+    var userlogbs = User.Identity.GetUserId();
+    var rroles = db.UserRoles.Where(q => q.userId == userlogbs).FirstOrDefault().RoleId;
+    var asprole = db.AspNetRoles.FirstOrDefault(a => a.Id == rroles);
+    string[] words = asprole.Name.Split(' ');
+
+    if (words[0] == "Admin" || words[0] == "HR")
+    {
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="col-md-8">
+                        <div class="box box-success">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Login Counter</h3>
+                            </div>
+
+                            <div class="box-body no-padding">
+                                <div class="row">
+                                    @*<div class="col-md-9 col-sm-8">
+                                            <div class="pad">
+                                                <div id="world-map-markers" style="height: 235px;"></div>
+                                            </div>
+                                        </div>*@
+
+                                    <div class="col-md-3 col-sm-4">
+                                        <div class="pad box-pane-right bg-green" style="min-height: 255px">
+                                            <div class="description-block margin-bottom">
+                                                <i class=" fa fa-bar-chart fa-2x" aria-hidden="true"></i>
+                                                <h5 class="description-header">
+                                                    @{
+                                                        dbContainer dbNew1 = new dbContainer();
+                                                        var userlog1 = User.Identity.GetUserId();
+                                                        var stfirmId = db.Staffs.FirstOrDefault(s => s.userId == userlog1).firmId;
+                                                        var totalCount = dbNew1.TblLoginCounters.Where(s => s.Lfirmid == stfirmId).FirstOrDefault();
+                                                        @totalCount.Lcounter
+                                                    }
+                                                </h5>
+                                                <span class="description-text">Total Logins</span>
+                                            </div>
+
+                                            <div class="description-block margin-bottom">
+                                                <i class=" fa fa-bar-chart fa-2x" aria-hidden="true"></i>
+                                                <h5 class="description-header">
+                                                    @{
+                                                        dbContainer dbNew = new dbContainer();
+                                                        var userlog2 = User.Identity.GetUserId();
+                                                        var stfirmId2 = db.Staffs.FirstOrDefault(s => s.userId == userlog2).firmId;
+                                                        var todayCount = dbNew.GetStaffLoginRecordNew(stfirmId2, null, null).Count();
+                                                        @todayCount
+                                                    }
+
+                                                </h5>
+                                                <a href="@Url.Action("StaffLoginRecords", "Staffs")"> <span class="text-uppercase" style="color: white">Today Login</span></a>
+                                            </div>
+
+
+                                            <div class="description-block margin-bottom">
+                                                <i class=" fa fa-bar-chart fa-2x" aria-hidden="true"></i>
+                                                <h5 class="description-header">
+                                                    @{
+                                                        DateTime date1 = DateTime.Now;
+                                                        var start1 = new DateTime(date1.Year, date1.Month, 1);
+                                                        var end1 = start1.AddMonths(1).AddDays(-1);
+
+                                                        var userlog2123 = User.Identity.GetUserId();
+                                                        var stfirmId2123 = db.Staffs.FirstOrDefault(s => s.userId == userlog2123).firmId;
+                                                        var todayCount123 = db.LeaveRequests.Where(a => a.firmId == stfirmId2123 && a.status == "Approved" && (a.dateFrom >= start1 && a.dateFrom <= end1) && a.firmId == stfirmId2123).Count();
+                                                        @todayCount123
+                                                    }
+                                                </h5>
+                                                <a href="@Url.Action("LeaveRequestListForSeniours", "LeaveRequest")"> <span class="text-uppercase" style="color: white">Leave Taken This Month</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-4 pull-right">
+                                        <div class="pad box-pane-left  bg-green" style="min-height: 255px">
+                                            <div class="description-block margin-bottom">
+                                                <i class=" fa fa-bar-chart fa-2x" aria-hidden="true"></i>
+                                                <h5 class="description-header">
+                                                    @{
+                                                        dbContainer dbNewTT = new dbContainer();
+                                                        var userlogTT = User.Identity.GetUserId();
+                                                        var stfirmIdTT = db.Staffs.FirstOrDefault(s => s.userId == userlogTT).firmId;
+                                                        var todayCountTT = dbNewTT.Staffs.Where(s => s.isActive == true && s.firmId == stfirmIdTT).Count();
+                                                        @todayCountTT
+                                                    }
+
+                                                </h5>
+                                                <a href="@Url.Action("Index", "Staffs")"> <span class="text-uppercase" style="color: white">Active Members</span></a>
+                                            </div>
+
+                                            <div class="description-block margin-bottom">
+                                                <i class=" fa fa-bar-chart fa-2x" aria-hidden="true"></i>
+                                                <h5 class="description-header">
+                                                    @{
+                                                        dbContainer dbNewTT1 = new dbContainer();
+                                                        var ulogmale = User.Identity.GetUserId();
+                                                        var stfirmIdmale = db.Staffs.FirstOrDefault(s => s.userId == ulogmale).firmId;
+                                                        var todayCountmale = dbNewTT1.Staffs.Where(s => s.isActive == true && s.firmId == stfirmIdmale && (s.gender == 1)).Count();
+                                                        @todayCountmale
+                                                    }
+
+                                                </h5>
+                                                <a href="@Url.Action("Index", "Staffs")"> <span class="text-uppercase" style="color: white">Male Members</span></a>
+                                            </div>
+
+
+                                            <div class="description-block margin-bottom">
+                                                <i class=" fa fa-bar-chart fa-2x" aria-hidden="true"></i>
+                                                <h5 class="description-header">
+                                                    @{
+                                                        dbContainer dbNewTT2 = new dbContainer();
+                                                        var userlogFemale = User.Identity.GetUserId();
+                                                        var stfirmIdFemale = db.Staffs.FirstOrDefault(s => s.userId == userlogFemale).firmId;
+                                                        var todayCountFemale = dbNewTT2.Staffs.Where(s => s.isActive == true && s.firmId == stfirmIdFemale && (s.gender == 2)).Count();
+                                                        @todayCountFemale
+                                                    }
+                                                </h5>
+                                                <a href="@Url.Action("Index", "Staffs")"> <span class="text-uppercase" style="color: white">Female Members</span></a>
+                                                <br />
+
+                                                <br />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="info-box bg-yellow">
+                            <span class="info-box-icon">
+                                <img src="~/Images/Icon_Leave.png" width="85%" />
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Leave Requests</span>
+                                <a href="@Url.Action("LeaveRequestListForSeniours", "LeaveRequest")">
+                                    <span class="info-box-number" style="color: white">
+                                        @{
+                                            var userlogTwo = User.Identity.GetUserId();
+                                            var stfirmIdTwo = db.Staffs.FirstOrDefault(s => s.userId == userlogTwo).firmId;
+                                            var leavecount = db.LeaveRequests.Where(s => s.firmId == stfirmIdTwo && (s.status == "Planned" || s.status == "Requested") && s.Staff.isActive == true).Count();
+                                            @leavecount
+                                        }
+                                    </span>
+                                </a>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: @leavecount%"></div>
+                                </div>
+                                <span class="progress-description">
+                                    Leave Requests Pending Approval
+                                </span>
+                            </div>
+                        </div>
+                        <div class="info-box bg-green">
+                            <span class="info-box-icon">
+                                <img src="~/Images/shifts-app-icon.png" width="85%" />
+                            </span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Attendance Request</span>
+                                <a href="@Url.Action("AttendApproveOrRejectList", "AttendanceStaff")">
+                                    <span class="info-box-number" style="color: white">
+                                        @{
+                                            var userlogThree = User.Identity.GetUserId();
+                                            var stfirmIdThree = db.Staffs.FirstOrDefault(s => s.userId == userlogThree).firmId;
+                                            var Attendancecount = db.AttendanceRequests.Where(s => s.firmId == stfirmIdThree && (s.isApproved == null) && s.Staff.isActive == true).Count();
+                                            @Attendancecount
+                                        }
+                                    </span>
+                                </a>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: @Attendancecount%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-box bg-red">
+                            <span class="info-box-icon">
+                                <img src="~/Images/trainingNew2.png" width="85%" />
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Training Invitation</span>
+                                <a href="@Url.Action("AllTrainingByEmployee", "Training")">
+                                    <span class="info-box-number" style="color: white">
+                                        @{
+                                            var date = DateTime.UtcNow;
+                                            var start = new DateTime(date.Year, date.Month, 1);
+                                            var end = start.AddMonths(1).AddDays(-1);
+
+                                            var userlogfr = User.Identity.GetUserId();
+                                            var stfirmIdfr = db.Staffs.FirstOrDefault(s => s.userId == userlogfr).firmId;
+                                            //var trainingcount = db.TrainingFeedbacks.Where(s => s.FirmId == stfirmIdfr && (s.Status == "Invited")).Count();
+                                            var trainingcount = db.GetAllTrainingByEmp(stfirmIdfr, start, end).Count();
+                                            @trainingcount
+                                        }
+                                    </span>
+                                </a>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: @trainingcount%"></div>
+                                </div>
+                                <span class="progress-description">
+                                    Training Invitation
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-danger">
+                <div class="box-body">
+                    <div class="col-md-2">
+                        <dd>
+                            @if (Model.passportPhoto == null)
+                            {
+                                <img src="~/Images/profile.jpg" class="img-rounded responsive" />
+                                <br />
+                                <br />
+                                using (Html.BeginForm("UploadStaffProfileImage", "Staffs", new { staffid = Model.staffId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    <input id="files" title="Upload a image" type="file" name="file" multiple />
+                                    <img id="image" height="150" width="150" style="display: none;" alt="" />
+                                    <div class="form-group">
+                                        <input type="submit" value="Upload" class="btn btn-default" />
+                                    </div>
+                                }
+
+                            }
+
+                            else
+                            {
+                                <img src="~/StaffDocument/@Model.passportPhoto" width="180" class="img-thumbnail" />
+                                @*using (Html.BeginForm("UploadStaffProfileImage", "Staffs", new {staffid = Model.staffId}, FormMethod.Post, new {enctype = "multipart/form-data"}))
+                                    {
+                                        <div class="file-input-wrapper">
+                                            <img src="~/StaffDocument/@Model.passportPhoto" width="180" class="img-thumbnail" />.
+                                            <input id="files" title="" type="file" name="file" multiple />
+                                            <img id="image" height="150" width="150" alt="" style="" />
+                                            <span id="img_text" style="float: right; margin-right: -80px; margin-top: -14px;"></span>
+                                        </div>
+                                        @*<div class="form-group">
+                                            <input type="submit" value="Save Change" class="btn btn-default btn-sm" />
+                                        </div>
+                                    }*@
+
+                            }
+                        </dd>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <b>Self Details</b>
+                            </div>
+                            <div class="panel-body">
+                                <dl class="dl-horizontal ">
+                                    <div class="col-md-4">
+                                        @Html.DisplayName("Name:")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.DisplayFor(model => model.firstName)
+                                        @Html.DisplayFor(model => model.middleName)
+                                        @Html.DisplayFor(model => model.lastName)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayName("Gender:")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @if (Model.gender == 1)
+                                        {
+                                            @Html.DisplayName("Male")
+                                        }
+                                        else if (Model.gender == 2)
+                                        {
+                                            @Html.DisplayName("Female")
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayName("N/A")
+                                        }
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        @Html.DisplayName("Dob:")
+                                    </div>
+                                    <div class="col-md-8">
+
+                                        @(Model.dob != null ? Convert.ToDateTime(Model.dob).ToString("dd MMM yyyy") : Html.DisplayName("N/A").ToString())
+                                    </div>  
+
+                                    <div class="col-md-4">
+                                        @Html.DisplayName("Contact:")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @(Model.contact != null ? Html.DisplayFor(model => model.contact) : Html.DisplayName("N/A"))
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        @Html.DisplayName("E-mail:")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @(Model.email != null ? Html.DisplayFor(model => model.email) : Html.DisplayName("N/A"))
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        @Html.DisplayName("Joining Date:")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @(Model.joingDate != null ? Convert.ToDateTime(Model.joingDate).ToString("dd MMM yyyy") : Html.DisplayName("N/A").ToString())
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <b>Address Details</b>
+                            </div>
+                            <div class="panel-body">
+                                <dl class="dl-horizontal">
+
+                                    <div class="">
+                                        @Html.DisplayName("Temporary Address :")
+                                    </div>
+                                    <div class="">
+                                        @Html.DisplayFor(model => model.tempAddress)
+                                        @Html.DisplayFor(model => model.tempArea)
+                                        @Html.DisplayFor(model => model.tempPincode)
+
+                                    </div>
+                                    <br />
+                                    <div class="">
+                                        @Html.DisplayName("Permanent Address :")
+                                    </div>
+                                    <div class="">
+                                        @Html.DisplayFor(model => model.perAddress)
+                                        @Html.DisplayFor(model => model.perArea)
+                                        @Html.DisplayFor(model => model.perPincode)
+
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pull-right">
+
+                        <td>
+                            @*@Html.EncodedActionLink("Update Profile", "UpdateMySelfProfile", "Staffs", new { id = Model.staffId }, null)*@
+                            @*<a href='@Url.Action("UpdateMySelfProfile", new {id = Model.staffId})'>Update My Profile</a>*@
+                        </td>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        @*<div class="col-md-7">
+                @{Html.RenderAction("LeavesBalanceDetails", "LeaveRequest");}
+                @{Html.RenderAction("StaffEduDetails", "StaffEducation");}
+                @{Html.RenderAction("StaffWorkExperienceDetails", "WorkExperiance");}
+
+            </div>
+                <div class="col-md-5">
+                    @{Html.RenderAction("StaffDesignationDetails", "StaffDesignation");}
+                    @{Html.RenderAction("StaffDucumentDetails", "StaffDocument");}
+                    @{Html.RenderAction("MyIncrementReport", "CTC");}
+                </div>*@
+
+    </div>
+</section>
+
+<script type="text/javascript">
+
+    document.getElementById("files").onchange = function () {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            document.getElementById("image").src = e.target.result;
+        };
+        reader.readAsDataURL(this.files[0]);
+    };
+
+    (function ($) {
+        $('input[type="file"]').bind('change', function () {
+            $("#img_text").html($('input[type="file"]').val());
+        });
+    })(jQuery);
+
+</script>

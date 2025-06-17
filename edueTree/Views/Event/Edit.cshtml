@@ -1,0 +1,76 @@
+﻿@model edueTree.Models.EventModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Event</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-check-square"></i>
+                        <h3 class="box-title">Edit</h3>
+
+                    </div>
+                    <div class="box-body">
+                       
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal">
+                                <hr/>
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.eventId)
+                                @Html.HiddenFor(model => model.firmId)
+                                <div class="form-group">
+
+                                    <div class="col-md-3">
+
+                                        <label>Event name</label>
+                                        @Html.TextBoxFor(m => m.event1, new {@class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.event1)
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>From Date</label>
+                                        @Html.TextBoxFor(m => m.dateFrom, new {@class = "form-control datepicker"})
+                                        @Html.ValidationMessageFor(model => model.dateFrom)
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>To Date</label>
+                                        @Html.TextBoxFor(m => m.dateTo, new {@class = "form-control datepicker"})
+                                        @Html.ValidationMessageFor(model => model.dateTo)
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>Total Days</label>
+                                        @Html.TextBoxFor(m => m.totalDays, new {@class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.totalDays)
+                                    </div>
+                                </div>
+
+                            </div>
+
+                       
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("Index")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</section>
+

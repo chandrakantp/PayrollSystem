@@ -1,0 +1,49 @@
+﻿@model edueTree.Models.UndertakingModel
+@{
+    ViewBag.Title = "Undertaking Details";
+}
+@{
+    Layout = null;
+}
+<div class="col-md-12">
+    <section class="content-header">
+        <h1>Undertaking Form Detail</h1>
+    </section>
+    <div class="box box-primary">
+        <div class="box-header"><i class="fa fa-bars"></i>
+            <h4 class="box-title">  Undertaking Form Detail</h4>
+            <div class="pull-right">
+                @*<a data-toggle="modal" data-target="#myModalstaffESI" href='@Url.Action("Edit", new { id = Model.staffid1 })'><i class="fa fa-pencil-square fa-2x"></i></a>*@
+                <a href='@Url.Action("esiinfoedit", "Staffs", new { id = Model.Underid })'><i class="fa fa-pencil"></i></a>
+            </div>
+            @Html.HiddenFor(model => model.Underid)
+        </div>
+    <div class="box-body">
+        <h2>Letter of Undertaking </h2>
+
+        <br/>
+        <div class="pull-left">
+            <b>Mr.</b>John Doe,
+            <br/>
+            Tractor Supply
+            <br/>
+            Laland, Texas
+            <br/>
+            Dear <b>Mr./Mrs.</b> @Html.DisplayFor(model=>model.Name)
+            <p>
+                This letter is to inform you that I wish to accept the position of head landscaper that was offered to me on the day of December 24th, 2009.
+
+
+            </p>
+            <p>As per the agreed upon terms, I will be compensated $10 per hour for my services, and will complete work for 3 hours per day, 5 days per week, I will have no vacation time, and I will be responsible for all my own equipment and supplies. I agree that I can be terminated at any time if I violate the Tractor Supply code of conduct.</p>
+
+            <br/>
+            <br/>
+            <div class="pull-right">Sincerely,</div>
+        </div>
+    </div>
+        <div class="box-footer">
+            <div class="pull-right"><a href='@Url.Action("NomineeCreate", "Staffs", new { status = "undertaking" })' class="btn btn-default"><i class="fa fa-file-pdf-o"></i> Add Nominee</a></div>
+        </div>
+</div>
+</div>

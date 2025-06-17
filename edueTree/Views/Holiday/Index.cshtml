@@ -1,0 +1,102 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.Holiday>
+
+@{
+    //ViewBag.Title = "Index";
+    Layout = null;
+}
+
+
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Holiday List</h3>
+    </div>
+    <div class="box-body">
+        <table class="table table-fixed">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Date")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Day")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Holiday")
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Convert.ToDateTime(item.date).ToString("dd MMM yyyy")
+
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(item.date).ToString("dddd")
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.holidayName)
+                        </td>
+                        <td>
+                            @*<a href='@Url.Action("Edit", new {id = item.holidayId})'><i class="fa fa-pencil-square"></i> <span class="hidden-sm hidden-xs"></span></a>*@
+                            @Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "Edit", "Holiday", new { id = item.holidayId }, null)
+                        </td>
+                        <td>
+                            <a data-toggle="modal" data-target="#myModalHolidayDelete" href='@Url.Action("Delete", new { id = item.holidayId })'><i class="fa fa-trash"></i></a>
+
+                        </td>
+                    </tr>
+                    }
+
+            </tbody>
+
+        </table>
+        <div class="modal fade" id="myModalHolidayDelete" role="dialog"></div>
+    </div>
+</div>
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+          //      buttons: [
+          //{
+          //    extend: 'excelHtml5',
+          //    title: 'Data export'
+          //},
+          //{
+          //    extend: 'csvHtml5',
+          //    title: 'Data export'
+          //},
+          // {
+          //     extend: 'printHtml5',
+          //     title: 'Data export'
+          // },
+          //  {
+          //      extend: 'copyHtml5',
+          //      title: 'Data export'
+          //  }
+
+          //      ]
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+
+

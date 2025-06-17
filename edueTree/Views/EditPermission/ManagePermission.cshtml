@@ -1,0 +1,97 @@
+﻿@model IEnumerable<edueTree.Models.EditPermissionModel>
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Manage Edit Permission List</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-fixed">
+                        <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("Staff Name")
+                            </th>
+                            <th>
+                                @Html.DisplayName("General Info")
+                            </th>
+                            <th>
+                                @Html.DisplayName("App Attendance")
+                            </th>
+                            <th>@Html.DisplayName("Manual Attendance")</th>
+                            <th>
+                                @Html.DisplayName("IsActive")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Is Probation Leave App")
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                 
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StaffName, new {@class = "searchType"})
+                                    @Html.HiddenFor(modelItem => item.StaffId, new {@class = "searchType"})
+                                </td>
+                                <td>
+
+                                    @Html.CheckBoxFor(modelItem => item.GeneralInfo, new {@class = "searchType", id = "generalinfo "+item.StaffId})
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => item.AppAttendance, new { @class = "searchType", id = "AppAttendance "  + item.StaffId })
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => item.ManualAttendance, new { @class = "searchType", id = "ManualAttendance " + item.StaffId })
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => item.IsActive, new { @class = "searchType", id = "IsActive " + item.StaffId })
+                                </td>
+
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => item.IsProbationLeaveApp, new { @class = "searchType", id = "IsProbationLeaveApp " + item.StaffId })
+                                </td>
+                            </tr>
+                        }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $('.searchType').click(function() {        
+        var attendid = $(this).attr('id');
+        var status = $(this).is(":checked");
+         
+        $.ajax({
+            type: "POST",
+            url: "/Editpermission/ManagePermissionpost",
+            data: { Attendid: attendid, Status: status }, //--> send id of checked checkbox on other page
+            success: function(data) {                
+                if (data === "true") {
+                    $.notify(" Record Updated  Successfully! ", "success");
+                }
+            },
+            error: function() {
+                if (data === "false") {
+                    $.notify(" Something Went wrong ! ", "error");
+                }
+            }
+        });
+    });
+
+</script>

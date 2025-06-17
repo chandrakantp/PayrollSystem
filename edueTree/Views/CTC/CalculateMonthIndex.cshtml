@@ -1,0 +1,69 @@
+﻿@model IEnumerable<edueTree.Models.TblCalculateMonth>
+@{
+    Layout = null;
+}
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Manage Salary Calculation Formula</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table class="table table-fixed">
+                <thead>
+                    <tr>
+                        <th>Calculate Month By:</th>
+                        <th>Calculate Salary By:</th>
+                        <th></th>
+                     
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CalculateBy)
+                            </td>
+                            <td>
+                                @if (item.SalaryRule == "formula_a")
+                                {
+                                    @Html.DisplayName("PPR")
+                                }
+                                else if (item.SalaryRule == "formula_b")
+                                {
+                                    @Html.DisplayName("PR+LV")
+                                }
+                               else if (item.SalaryRule == "formula_c")
+                                {
+                                    @Html.DisplayName("PR+LV+HD+WO")
+                                }
+                                else if (item.SalaryRule == "formula_d")
+                                {
+                                    @Html.DisplayName("WDPR+LV")
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("WDPR+LV+HD+WO")
+                                }
+                            </td>
+                         
+                            <td>
+                                <a data-toggle="modal" data-target="#myModalCalculateDelete" href='@Url.Action("DeleteCalculateMonth", new { id = item.CalMonthId })'><i class="fa fa-trash"></i></a>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="myModalCalculateDelete" role="dialog"></div>
+
+

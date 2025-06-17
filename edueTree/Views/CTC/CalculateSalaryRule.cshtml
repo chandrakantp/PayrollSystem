@@ -1,0 +1,100 @@
+﻿@model edueTree.Models.CalMonthModel
+
+@{
+    ViewBag.Title = "CalculateSalaryRule";
+}
+
+<section class="content-header">
+    <h1>
+        @*Salary head settings*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> CTC</a></li>
+        <li class="active">SalaryCalculateRule</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("CalculateSalaryRule", "CTC"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title">Calculate Salary Rule</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="col-md-4">
+                            <label>PPR </label>
+                            <div class="col-md-4">
+                                @Html.RadioButtonFor(model => model.Title, "FormA", true)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="col-md-4">
+                            <label>PR+LV </label>
+                            <div class="col-md-4">
+                                @Html.RadioButtonFor(model => model.Title, "FormB", true)
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="box-body">
+                        <div class="col-md-4">
+                            <label>PR+LV+HD+WO</label>
+                            <div class="col-md-4">
+                                @Html.RadioButtonFor(model => model.Title, "FormC", false)
+                            </div>
+                        </div>
+                    </div>
+
+                  
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right" />
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-12">
+            @{Html.RenderAction("CalculateSalaryRuleIndex", "CTC");}
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+
+
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify("Record Already Exist ! First Delete record then Create New! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "plzselect") {
+                $.notify(" Please select One of this radio button. ! ", "warn");
+            }
+            
+        }
+
+    });
+</script>

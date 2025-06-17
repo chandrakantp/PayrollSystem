@@ -1,0 +1,114 @@
+﻿@model IEnumerable<edueTree.Models.EPFModel>
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<section class="content-header">
+    <h1>
+        @*Leave Request*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~//Index"><i class="fa fa-dashboard"></i>ESI Info</a></li>
+        <li class="active">Report</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> EPF Nominee Details</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table class="table table-fixed">
+                            <thead>
+                            <tr>
+                                <th> @Html.DisplayName("Username")</th>
+                                <th>@Html.DisplayName("Staff Name")</th>
+                                <th>@Html.DisplayName("FatherName")</th>
+
+                                <th>@Html.DisplayName("Temp Address")</th>
+                                <th>@Html.DisplayName("Per Address")</th>
+                                <th>@Html.DisplayName("Joining Date")</th>
+
+                                <th>@Html.DisplayName("Gender")</th>
+                                <th>@Html.DisplayName("Married  Status")</th>
+                                <th>@Html.DisplayName("Epf Account No")</th>
+
+                                <th>@Html.DisplayName("Nominee Name")</th>
+                                <th>@Html.DisplayName("Nominee Add")</th>
+                                <th>@Html.DisplayName("Relation")</th>
+
+                                <th>@Html.DisplayName("Bithdate")</th>
+                                <th>@Html.DisplayName("Shares")</th>
+                                <th>@Html.DisplayName("Age")</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td> @Html.DisplayFor(modelitem => item.staffcode)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.fathername)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.tempAddress) @Html.DisplayFor(modelItem => item.temppin) @Html.DisplayFor(modelItem => item.tempArea)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.perAddress) @Html.DisplayFor(modelItem => item.perpincode) @Html.DisplayFor(modelItem => item.perarea)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.JOD)</td>
+
+                                    <td>@if (item.gender == 1)
+                                        {<label> Male</label>}
+                                        else
+                                        {<label>Female</label>}</td>
+                                    <td>@if (item.marriedstatus == true)
+                                        {<label> Married</label>}
+                                        else
+                                        {<label>Un Married</label>}</td>
+                                    <td>@Html.DisplayFor(modelItem => item.EPFAccountNo)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Nomineename)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Nomineeaddress)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Nomineeralation)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.dob)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Share)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Age)</td>
+                                </tr>
+                            }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <section class="col-md-12">
+            @{Html.RenderAction("NotAssignEpfInfoToEmployee", "NoAssign");}
+        </section>
+    </div>
+</section>
+<script type="text/javascript">
+    $(function () {
+
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+
+
+

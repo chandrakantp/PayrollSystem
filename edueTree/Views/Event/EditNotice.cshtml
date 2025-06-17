@@ -1,0 +1,101 @@
+﻿@model edueTree.Models.NoticeModel
+
+@{
+    ViewBag.Title = "Create";
+    //Layout = null;
+}
+
+<section class="content-header">
+    <h1>
+        @*Event*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Event/Index"><i class="fa fa-dashboard"></i>Notice</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            @using (Html.BeginForm())
+                        {
+                            <div class="box box-success">
+                                <div class="box-header">
+                                    <i class="fa fa-calendar-plus-o"></i>
+                                    <h3 class="box-title">Notice Edit</h3>
+                                </div>
+                                <br/>
+                                <div class="box-body chat" id="chat-box">
+                                    <div class="item">
+
+                                        @Html.AntiForgeryToken()
+                                        <div class="form-horizontal">
+                                            @Html.ValidationSummary(true)
+                                            @Html.HiddenFor(m => m.noticeId)
+                                            @Html.HiddenFor(m => m.StaffId)
+                                            @Html.HiddenFor(m => m.FirmId)
+                                            @Html.HiddenFor(m => m.SystemDatetime)
+                                            <div class="form-group">
+
+                                                <div class="col-md-3">
+                                                    <label>Title</label>
+                                                    @Html.TextBoxFor(model => model.Title, new {@class = "form-control"})
+                                                    @Html.ValidationMessageFor(model => model.Title)
+                                                </div>
+                                               
+                                                <div class="col-md-3">
+                                                    <label>Narration</label>
+                                                    @Html.TextAreaFor(model => model.Narration, new {@class = "form-control"})
+                                                    @Html.ValidationMessageFor(model => model.Narration)
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Notice Display Upto</label>
+                                                    @Html.TextBoxFor(model => model.NoticeDisplayUpto, new {@id = "NoticeDisplayUpto", @class = "form-control datepicker"})
+                                                    @Html.ValidationMessageFor(model => model.NoticeDisplayUpto)
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Active</label>
+                                                    @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.IsActive)
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <input type="submit" value="Update" class="btn btn-default pull-right" />
+                                    <a href='@Url.Action("AddNotice")' class="btn btn-default pull-left">Back to list</a>
+                                </div>
+                            </div>
+                        }
+        </section>
+    </div>
+</section>
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

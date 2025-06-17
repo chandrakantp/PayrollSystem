@@ -1,0 +1,52 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.ComputerAssinged>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Computer Assignment</h3>
+    </div>
+    <div class="box-body">
+        <div class="item">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>@Html.DisplayName("Staff Name")</th>
+                    <th>@Html.DisplayName("User Name")</th>
+                    <th>@Html.DisplayName("IP Address")</th>
+                    <th>@Html.DisplayName("Machine Name")</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Staff.firstName)
+                                @Html.DisplayFor(modelItem => item.Staff.middleName)
+                                @Html.DisplayFor(modelItem => item.Staff.lastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IPAddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MachineName)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+

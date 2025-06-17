@@ -1,0 +1,66 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.AspNetRole>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<div class="box box-success">
+    <div class="box-header">
+        <i class="fa fa-calendar"></i>
+        <h3 class="box-title">Manage Role</h3>
+
+    </div>
+    <div class="box-body chat" id="chat-box">
+        <div class="item">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Role name")
+                        </th>
+                        <th></th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="width: 70%">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+
+                            <td>
+                                @Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "Edit", "Role", new { id = item.Id }, null)
+                            </td>
+                            <td>
+                                <a data-toggle="modal" data-target="#myModalRoleDelete" href='@Url.Action("Delete", new { id = item.Id })'><i class="fa fa-trash"></i></a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="myModalRoleDelete" role="dialog"></div>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

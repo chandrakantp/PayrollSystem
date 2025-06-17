@@ -1,0 +1,82 @@
+﻿@model edueTree.Models.permissionViewModel
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Manage Menu Permission List</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-fixed">
+                        <thead>
+                        <tr>
+                            <th><label> Sr no</label></th>
+                            <th> Menu Item</th>
+                            @foreach (var item in Model.Rolelist)
+                            {
+                                <th>
+                                    @item.Name
+                                </th>
+                            }
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @{
+                            int count = 1;
+                            }
+                            @foreach (var item in Model.MenuItemslist)
+                            {
+                                <tr>
+                                    <td>@count</td>
+                                    <td>
+                                        @item.itemName
+                                    </td>
+                                    @foreach (var item2 in Model.Rolelist)
+                                    {
+                                        <th>
+                                           @Html.CheckBox("isNewlyEnrolled", true)
+                                        </th>
+                                    }
+                                </tr>
+                                count++;
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $('.searchType').click(function () {
+        var attendid = $(this).attr('id');
+        var status = $(this).is(":checked");
+
+        $.ajax({
+            type: "POST",
+            url: "/Editpermission/ManagePermissionpost",
+            data: { Attendid: attendid, Status: status }, //--> send id of checked checkbox on other page
+            success: function (data) {
+                if (data === "true") {
+                    $.notify(" Record Updated  Successfully! ", "success");
+                }
+            },
+            error: function () {
+                if (data === "false") {
+                    $.notify(" Something Went wrong ! ", "error");
+                }
+            }
+        });
+    });
+
+</script>

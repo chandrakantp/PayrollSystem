@@ -1,0 +1,134 @@
+﻿@model IEnumerable<edueTree.Models.MachineConfigure>
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+
+@*<section class="content-header">
+        <div class="row">
+            <div class="col-md-12">
+                <a href='@Url.Action("Create")' class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add MAchine Configure</a>
+            </div>
+        </div>
+    </section>
+    <section class="content-header">
+        <h1>
+
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Event/Index"><i class="fa fa-dashboard"></i>Machine Config</a></li>
+            <li class="active">Manage</li>
+        </ol>
+    </section>*@
+
+<section class="content">
+    <div class="row">
+        <div class="">
+            <div class="box box-success">
+                <div class="box-header">
+                    <div class="box-title">
+                        Manage Machine Config
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table class="table table-responsive">
+                        <thead>
+                        <tr>
+
+                            <th>
+                                @Html.DisplayName("Serial Key")
+                            </th>
+                            <th>
+                                @Html.DisplayName("IP Address")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Port")
+                            </th>
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SerialKey)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IPAddress)
+
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Port)
+
+                                </td>
+
+                                <td>
+
+                                    <a data-toggle="tooltip" data-placement="top" title="Edit" href='@Url.Action("Edit", new {id = item.id})'><i class="fa fa-pencil-square"></i></a>
+                                </td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#myModalconfigDelete" href='@Url.Action("Delete", new {id = item.id})'><i class="fa fa-trash"></i></a>
+                                </td>
+
+                            </tr>
+                        }
+
+                        </tbody>
+
+                    </table>
+                    <div class="modal fade" id="myModalconfigDelete" role="dialog"></div>
+                </div>
+                <div class="box-footer"></div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

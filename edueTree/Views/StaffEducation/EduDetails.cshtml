@@ -1,0 +1,109 @@
+﻿@model edueTree.Models.StaffEducation
+
+<section class="content-header">
+    <h1>
+        Staff details
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Staff</a></li>
+        <li class="active">Detail</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-bars"></i>
+                    <h3 class="box-title">Details</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayName("Staff code")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Staff.staffCode)
+                                
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Degree name")
+
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Degree.degreeName)
+                                
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Specialization")
+
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.DegreeSubject.subjectName)
+                                
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Addmission")
+
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.addmissionYear)
+                                
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Passing")
+
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.passingYear)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Persentage")
+
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.persentage)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("University")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.university)
+                            </dd>
+
+                        </dl>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                        <div class="btn-group" data-toggle="btn-toggle">
+                            @if (ViewBag.message == true)
+                            {
+                                 <a href='@Url.Action("EduEdit", new {id = Model.eduId})'><i class="fa fa-pencil-square"></i></a>
+                           
+                            }
+                            <a href='@Url.Action("EduIndex")'><i class="fa fa-arrow-left"></i> Back to list</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

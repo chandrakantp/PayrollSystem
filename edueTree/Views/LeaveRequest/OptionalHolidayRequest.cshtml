@@ -1,0 +1,45 @@
+﻿@model edueTree.Models.OptinalHolidayModel
+
+@{
+    Layout = null;
+}
+
+
+
+
+@if (TempData["error"] != null)
+{
+    <div class="item">
+        <center>
+            <h4 style="color: Red;">@TempData["error"]</h4>
+        </center>
+    </div>
+    
+     
+                             
+}
+else
+{
+    <form action="/LeaveRequest/OptionalHolidayRequest" method="POST">
+        <div class="form-horizontal" id="defaultForm">
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.Label("Optional Holiday:", new {@class = "control-label col-md-3"})
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.optionalId, Model.OptionalList, " - Select Optional Holiday - ", new {id = "optionalId", @class = "form-control", placeholder = "select optional Holiday"})
+                    @Html.ValidationMessageFor(model => model.optionalId, string.Empty, new {@class = "help-block"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-10">
+                    <input type="submit" value="Send Request" class="btn btn-default"/>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    
+                                
+}

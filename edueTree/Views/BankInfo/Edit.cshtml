@@ -1,0 +1,87 @@
+﻿@model edueTree.Models.StaffModel
+@{
+
+    ViewBag.Title = "Edit";
+}
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-5 col-md-offset-3">
+            <div class="box box-success">
+                @using (Html.BeginForm("Editpost", "BankInfo"))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="box-header">
+                        <i class="fa fa-plus-square"></i>
+                    
+                        <h4 class="box-title">Edit</h4>
+                    </div>
+
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+
+                            <div class="form-horizontal" id="defaultForm">
+                              
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(a => a.BankInfo.StaffId)
+                                @Html.HiddenFor(a => a.BankInfo.BankinfoId)
+                                <div class="form-group">
+                                    @Html.Label("Bank Name", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.BankInfo.BankName, new {id = "BankName", @class = "form-control", placeholder = "Bank Name"})
+                                        @Html.ValidationMessageFor(model => model.BankInfo.BankName)
+                                        <span class="help-block" id="BankNamemsg"></span>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Account Holder name:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.BankInfo.HolderName, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.BankInfo.HolderName)
+                                        <span class="help-block" id="HolderNamemsg"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Account No:", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.BankInfo.AccountNo, new {id = "AccountNo", @class = "form-control", placeholder = "Bank AccountNo"})
+                                        @Html.ValidationMessageFor(model => model.BankInfo.AccountNo)
+                                        <span class="help-block" id="AccountNomsg"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Bank IFSC:", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.BankInfo.BankIfsc, new {id = "BankIfsc", @class = "form-control", placeholder = "Bank Ifsc"})
+                                        @Html.ValidationMessageFor(model => model.BankInfo.BankIfsc)
+                                        <span class="help-block" id="BankIfscmsg"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Branch:", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.BankInfo.Branch, new {@class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.BankInfo.Branch)
+                                        <span class="help-block" id="Branchmsg"></span>
+                                    </div>
+                                </div>
+
+                                
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("StaffDashboard", "Staffs", new { staffid =Model.BankInfo.StaffId })' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                }
+              
+            </div>
+        </section>
+    </div>
+</section>

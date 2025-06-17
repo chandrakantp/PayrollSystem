@@ -1,0 +1,134 @@
+﻿@model IEnumerable<edueTree.Models.AttendanceRequestModel>
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content header">
+    <div class="row">
+        <div class="col-md-12">
+
+            <a href='@Url.Action("AttendanceRequestSelf", "AttendanceStaff")' class="btn btn-success pull-right">
+                <i class="fa fa-plus-square"></i> Add Manually Request Self
+            </a>
+
+        </div>
+    </div>
+</section>
+<section class="content-header">
+    <h1>
+   
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Attendance Request</a></li>
+        <li class="active">Attendance Request List</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+
+           <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Manual Attendance List</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table class="table table-fixed">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Universal Id")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Staff Name")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Attendance Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Attendance Time")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("In Out Mode")
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Schoolcode)
+                                        </td>
+                                        <td>
+
+                                            @Html.DisplayFor(modelItem => item.StaffName)
+                                        </td>
+                                        <td>
+                                            @Convert.ToDateTime(item.AttendanceDate).ToString("dd MMM yyyy")
+
+                                        </td>
+                                        <td>
+
+                                            @Convert.ToDateTime(item.AttendanceDate).ToString("HH:mm:ss")
+                                        </td>
+                                        <td>
+                                            @(item.InOutMode == 0 ? Html.DisplayName("Check In") : Html.DisplayName("Check Out"))
+                                        </td>
+                                   </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</section>
+<script type="text/javascript">
+    $(function () {
+
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "change") {
+                $.notify(" Password Change Successfully ! ", "success");
+            }
+        }
+
+    });
+</script>

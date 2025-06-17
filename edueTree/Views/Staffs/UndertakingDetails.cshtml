@@ -1,0 +1,55 @@
+﻿@model edueTree.Models.UndertakingModel
+@{
+    ViewBag.Title = "Undertaking Details";
+}
+@{
+    Layout = null;
+}
+<div class="col-md-12">
+    @*<section class="content-header">
+        <h1>Undertaking Form Detail</h1>
+    </section>*@
+    <div class="box box-primary">
+        <div class="box-header"><i class="fa fa-bars"></i>
+            <h4 class="box-title"> Undertaking Form Detail</h4>
+            <div class="pull-right">
+               @if (ViewBag.message == true)
+               {
+                   <a href='@Url.Action("EditUndertaking", "staffs", new {id = Model.StaffId})'><i class="fa fa-pencil"></i></a>
+               }
+            </div>
+            @Html.HiddenFor(model => model.Underid)
+            @Html.HiddenFor(model => model.StaffId)
+            @Html.HiddenFor(model => model.Name)
+            @Html.HiddenFor(model => model.CompanyName)
+            @Html.HiddenFor(model => model.Position)
+            @Html.HiddenFor(model => model.JoinDate)
+        </div>
+        <div class="box-body">
+            <h2>Letter of Undertaking </h2>
+
+            <br />
+            <div class="pull-left">
+                Company Name:     <b>@Html.DisplayFor(model => model.CompanyName)</b>,
+
+                <br />
+                Dear <b>Mr./Mrs.</b> @Html.DisplayFor(model => model.Name)
+                <p>
+                    This letter is to inform you that, You wish to accept the position of <b>@Html.DisplayFor(model => model.Position)</b>  and you will join on <b>@Convert.ToDateTime(Model.JoinDate).ToString("MMM-dd-yyyy")</b> .
+
+
+                </p>
+                <p>As per the agreed upon terms, I will be responsible for all incorrect information provided by me I agree that I can be terminated at any time if I violate the company code of Conduct.</p>
+
+                <br />
+                <br />
+                @Html.CheckBoxFor(model => model.Undertakingcheck)  <small> Terms & Conditions Apply</small>
+                <div class="pull-right">Sincerely,</div>
+            </div>
+        </div>
+        <div class="box-footer">
+            @*<div class="pull-right"><a href='@Url.Action("NomineeCreate", "Staffs", new { @status = "Undertaking", @id = Model.StaffId })' class="btn btn-default"><i class="fa fa-file-pdf-o"></i> Add Nominee</a></div>*@
+
+        </div>
+    </div>
+</div>

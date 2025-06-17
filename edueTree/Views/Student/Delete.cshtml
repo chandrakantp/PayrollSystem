@@ -1,0 +1,393 @@
+﻿@model edueTree.Models.Student
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.rollNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rollNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.schoolCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.schoolCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.firstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.firstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.middleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.middleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dob)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dob)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nationality)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nationality)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.motherName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.motherName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fatherFirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fatherFirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fatherMiddleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fatherMiddleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fatherLastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fatherLastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contact1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contact1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contact2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contact2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fatherOccupation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fatherOccupation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pancardNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pancardNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.passportNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.passportNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.studentPhoto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.studentPhoto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emergencyContact1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emergencyContact1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emergencyContact1Relation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emergencyContact1Relation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emergencyContact2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emergencyContact2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emergencyContact2Relation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emergencyContact2Relation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.addmissionYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.addmissionYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tempAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tempAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tempPincode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tempPincode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tempArea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tempArea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.perAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.perAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.perPincode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.perPincode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.perArea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.perArea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bloodGroup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bloodGroup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bodyMarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bodyMarks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.motherTongue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.motherTongue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.leavingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.leavingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.leavingReason)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.leavingReason)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.siblingBrothers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.siblingBrothers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.siblingSisters)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.siblingSisters)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createdDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createdDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.medicalCondition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.medicalCondition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.medicalDetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.medicalDetails)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cast.cast1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cast.cast1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City.CityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.CityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City1.CityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City1.CityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubCast.subCast1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubCast.subCast1)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

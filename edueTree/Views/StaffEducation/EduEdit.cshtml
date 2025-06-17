@@ -1,0 +1,134 @@
+﻿@using edueTree.Helpers
+@model edueTree.Models.StaffEducation
+
+<style type="text/css">
+    .icon:before {
+        font-family: FontAwesome;
+        content: "\f055";
+    }
+</style>
+<style type="text/css">
+    a[type="button"] {
+        border-radius: 3px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid transparent;
+        background-color: #f4f4f4;
+        cursor: pointer;
+        padding: 7px;
+        margin-right: 8px;
+        width: auto;
+        text-decoration: none;
+        color: #444;
+        border-color: #ddd;
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        touch-action: manipulation;
+        user-select: none;
+        background-image: none;
+    }
+</style>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-8">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-comments-o"></i>
+                    <h3 class="box-title">Edit</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                               
+                                <hr />
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.eduId)
+                                @Html.HiddenFor(model => model.staffId)
+                                <div class="form-group">
+                                    @Html.Label("Degree:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">                                    
+                                        @Html.DropDownListFor(m=>m.degreeId, Model.DegreeList, "- Select Degree -", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.degreeId)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Subject:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">                                    
+                                        @Html.DropDownListFor(m=> m.degreeSubId, Model.DegreeSubjectList, "- Select Subject -", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.degreeSubId)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Admission year:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.addmissionYear, new { @class = "form-control", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.addmissionYear)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Passing year:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.passingYear, new { @class = "form-control", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.passingYear)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Persentage (%):", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.persentage, new { @class = "form-control", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.persentage)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("University:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.university, new { @class = "form-control", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.university)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+                                        <input type="submit" value="Update" class="btn btn-default" />
+                                        @Html.EncodedActionLink("Cancel", "StaffDashboard", "Staffs", new { staffid = Model.staffId }, new { Type = "button" })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                @*<div class="box-footer">
+                    <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                        <div class="btn-group" data-toggle="btn-toggle">
+
+                            <a href='@Url.Action("StaffDashboard", "Staffs", new { staffid = Model.staffId })'><i class="fa fa-arrow-left"></i> Back to list</a>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

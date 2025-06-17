@@ -1,0 +1,330 @@
+﻿@using edueTree.Models
+@using iTextSharp.tool.xml.html
+@model IEnumerable<edueTree.Models.MonthlyAttenDetail>
+@{
+    ViewBag.Title = "GeneratedReport";
+    @*Layout = "~/Views/Shared/_Layout.cshtml";*@
+}
+
+@{
+
+    var monthList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "January", Value = "1"},
+                new SelectListItem {Text = "February", Value = "2"},
+                new SelectListItem {Text = "March", Value = "3"},
+                new SelectListItem {Text = "April", Value = "4"},
+                new SelectListItem {Text = "May", Value = "5"},
+                new SelectListItem {Text = "June", Value = "6"},
+                new SelectListItem {Text = "July", Value = "7"},
+                new SelectListItem {Text = "August", Value = "8"},
+                new SelectListItem {Text = "September", Value = "9"},
+                new SelectListItem {Text = "October", Value = "10"},
+                new SelectListItem {Text = "November", Value = "11"},
+                new SelectListItem {Text = "December", Value = "12"},
+            }, "Value", "Text");
+
+
+
+    var yearList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "2016", Value = "2016"},
+                new SelectListItem {Text = "2017", Value = "2017"},
+                new SelectListItem {Text = "2018", Value = "2018"},
+                new SelectListItem {Text = "2019", Value = "2019"},
+                new SelectListItem {Text = "2020", Value = "2020"},
+                new SelectListItem {Text = "2021", Value = "2021"},
+                new SelectListItem {Text = "2022", Value = "2022"},
+                new SelectListItem {Text = "2023", Value = "2023"},
+                new SelectListItem {Text = "2024", Value = "2024"},
+                new SelectListItem {Text = "2025", Value = "2025"},
+
+            }, "Value", "Text");
+}
+
+<style type="text/css">
+    .bg-teal-gradient {
+        color: #000000;
+    }
+
+    .modal {
+        top: 38px;
+    }
+
+    .modal {
+        background: rgba(0, 0, 0, 0.0) none repeat scroll 0 0;
+    }
+</style>
+
+<section class="content-header">
+    <h1>
+        @*Manage Generated Attendance*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Generated Attendance</a></li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title">Search Options - For Generate Attendance & Salary (Select Month & Year)</h3>
+                    <div class="pull-right">
+                    </div>
+                </div>
+                <div class="box-body chat">
+                    <div class="item">
+                        <form action="/Attendance/GeneratedReport" method="get" id="form1">
+                            <div class="form-horizontal">
+                                <div class="col-md-10">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.Label("Month:", new { @id = "month", @class = "control-label col-md-3" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("month", monthList, new { id = "month", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.Label("Year:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("year", yearList, new { id = "year", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" form="form1" value="Submit" class="btn btn-default">Generate</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@if (!Request.QueryString["month"].IsEmpty() && !Request.QueryString["year"].IsEmpty())
+{
+    <section class="content">
+        <div class="row">
+            <section class="col-lg-12 connectedSortable">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-calendar"></i>
+                        <h3 class="box-title">Attendance & Salary List Report</h3>
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+
+                            <div class="table-responsive">
+                                <table id="activity" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayName("Staff Code")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Staff Name")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("MD")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("WD")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("PR")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("AB")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("PMCom")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("CMCom")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("UCom")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("PL")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("WO")
+                                            </th>
+
+                                            <th>
+                                                @Html.DisplayName("HO")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Payable Days")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Deductions")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Net Amt")
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.staffCode)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.firstName)
+                                                    @Html.DisplayFor(modelItem => item.middleName)
+                                                    @Html.DisplayFor(modelItem => item.lastName)
+                                                </td>
+
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.totalMonthDays)
+                                                </td>
+                                                <td>
+                                                    @Html.Raw(item.totalMonthDays - (item.weeklyOff + item.Holidays))
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.PresentDays)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.absent)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.preMonthCompansation)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.currentMonthCompansation)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.usedCompansation)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.paidLeaves)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.weeklyOff)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Holidays)
+                                                </td>
+                                                @if (item.paybleDays == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.paybleDays)
+                                                    </td>
+                                                }
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DiductionAmount)
+                                                </td>
+                                                @if (item.totalAmount == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.Raw(item.totalAmount - item.DiductionAmount)
+                                                    </td>
+                                                }
+
+                                                <td>
+                                                    <a data-toggle="modal" data-target="#myModalAttendDelete" href='@Url.Action("Delete", new {id = item.monthlyAttenDetailId, month = item.tranMonth, year = item.tranYearyear})'><i class="fa fa-trash"></i></a>
+                                                    <div class="modal fade" id="myModalAttendDelete" role="dialog"></div>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><b>Total:</b></td>
+                                            <td><b> @Html.Raw(Model.Sum(a => a.totalAmount) - Model.Sum(a => a.DiductionAmount)) </b></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </section>
+}
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        $(document).ready(function() {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+</script>

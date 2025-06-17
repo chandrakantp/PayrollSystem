@@ -1,0 +1,53 @@
+﻿@model IEnumerable<edueTree.Models.notice>
+<br /><br />
+<section class="content">
+    <div class="row">
+
+        <div class="col-md-8">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Notice</h3>
+                </div>
+                <table style="width: 100%;">
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+
+                            if (item.noticeDisplayUpto >= DateTime.UtcNow.Date && item.isActive == true)
+                            {
+                                <div class="col-sm-6">
+                                    <div class="box box-success box-solid">
+                                        <br />
+                                        <span class="info-box-text" style="color: blue; margin-left: 10px; font-size: medium">@Html.DisplayFor(modelItem => item.Title)</span><br />
+                                        <div class="box-body">
+                                            <span class="" style="margin-left: 30px;"></span>@Html.DisplayFor(modelItem => item.narration)
+                                            <div class="pull-right">
+                                                <br />
+                                                <b> @Convert.ToDateTime(item.systemDatetime).ToString("D")</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+
+        <section class="col-md-4 connectedSortable">
+            @{Html.RenderAction("EmployeeEvent", "Event");}
+        </section>
+
+        <div class="col-md-6">
+           @{Html.RenderAction("EmployeeProbationPeriod", "Event");}
+        </div>
+        <div class="col-md-6">
+            @{Html.RenderAction("EmployeeAnniversaryTenure", "Event");}
+        </div>
+    </div>
+</section>

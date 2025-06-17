@@ -1,0 +1,116 @@
+﻿@model IEnumerable<edueTree.Models.MemberattendanceConfigModel>
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <div class="box-title">
+                        Manage Machine Config
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    @Html.DisplayName("Staff Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Serial Key")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Finger Id")
+                                </th>
+
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StaffName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SerialKey)
+
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FingureId)
+
+                                    </td>
+
+                                    <td>
+
+                                        <a data-toggle="tooltip" data-placement="top" title="Edit" href='@Url.Action("Edit", new {id = item.ConfigId})'><i class="fa fa-pencil-square"></i></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModalconfigDelete" href='@Url.Action("Delete", new {id = item.ConfigId})'><i class="fa fa-trash"></i></a>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                    <div class="modal fade" id="myModalconfigDelete" role="dialog"></div>
+                </div>
+                <div class="box-footer"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+<script type="text/javascript">
+    $(".select2").select2();
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>
+<script>
+    $(function () {    
+        $(document).ready(function () {
+            $('.table').DataTable({
+                "ordering": false,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

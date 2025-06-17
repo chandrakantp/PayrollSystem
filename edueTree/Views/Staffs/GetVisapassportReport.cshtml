@@ -1,0 +1,84 @@
+﻿@model IEnumerable<edueTree.Models.VisaPassportModel>
+@{
+    ViewBag.Title = "Index";   
+}
+
+
+<section class="content-header">
+    <h1>      
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Visa Passport Info</a></li>
+        <li class="active">All Employee Report</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> All Employee Visa passport Report</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table class="table table-fixed">
+                            <thead>
+                            <tr>
+                                <th> @Html.DisplayName("Username")</th>
+                                <th>@Html.DisplayName("Staff Name")</th>
+                                <th>@Html.DisplayName("Visa / Passport no")</th>
+                                <th>@Html.DisplayName("Country")</th>
+                                <th>@Html.DisplayName("ExpiryDate")</th>
+                                <th>@Html.DisplayName("Type")</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td> @Html.DisplayFor(modelitem => item.StaffCode)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Staffname)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Num)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Country)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ExpiryDate) </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Type)</td>
+
+
+                                </tr>
+                            }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <section class="col-md-12">
+            @{Html.RenderAction("NotFillVisaPassportDetailToStaff", "NoAssign");}
+        </section>
+    </div>
+</section>
+<script type="text/javascript">
+    $(function () {
+
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+
+
+
+

@@ -1,0 +1,147 @@
+﻿@using iTextSharp.text.xml.simpleparser.handler
+
+@model IEnumerable<edueTree.Models.TblLeaveRecordModel>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Employee Leave Balance Sheet Upload</h3>
+                    <div class="pull-right">
+                        @*@Html.ActionLink("Download", "ExportExcelSheet", null, new { @class = "btn btn-success" })*@
+                        @*<a href="#" id="exportexcel" class=" btn btn-success">
+                            <i class="fa fa-file-excel-o"></i> Excel
+                        </a>*@
+                    </div>
+                </div>
+                <hr />
+
+                <div class="box-body chat">
+                    <div class="item">
+                        @using (Html.BeginForm("Upload", "LeaveUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label>File Upload :</label>
+                                        <input type="file" name="UploadedFile" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" name="Submit" value="Submit" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">All Emp Leave Sheet</h3>
+
+                    @*<div class="pull-right">
+                        <a href="#" id="exportexcel" class=" btn btn-success">
+                            <i class="fa fa-file-excel-o"></i> Excel
+                        </a>
+                    </div>*@
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table id="activity" class="table table-fixed">
+                            <thead>
+                                <tr>
+                                    <th>Employee Name</th>
+                                    @foreach (var item in Model.GroupBy(a => a.leavetypes))
+                                    {
+                                        <th>@item.Key</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.GroupBy(a => a.staffname))
+                                {
+                                    <tr>
+                                        <td> @item.Key </td>
+
+                                        @foreach (var itemss in item)
+                                        {
+                                            <td>                                             
+                                                @itemss.totalLeaves
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+@*<script src="~/Scripts/tableExport.js"></script>
+<script src="~/Scripts/jquery.base64.js"></script>
+<script src="~/Scripts/jspdf/libs/sprintf.js"></script>
+<script src="~/Scripts/jspdf/jspdf.js"></script>
+<script src="~/Scripts/jspdf/libs/base64.js"></script>
+
+<script type="text/javascript">
+    $(function ($) {
+        $('#exportexcel').bind('click', function (e) {
+            $("#activity").tableExport({ type: 'excel', escape: 'false' });
+        });
+    });
+</script>*@
+
+<script>
+    $(function() {
+        $(document).ready(function() {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "probation") {
+                $.notify("You do not have permission send leave request because you are in probation period");
+            }
+            if ('@TempData["notice"]' === "alreadyleavesend") {
+                $.notify("You have already send leave request.");
+            }
+        }
+    });
+</script>

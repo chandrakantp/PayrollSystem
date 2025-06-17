@@ -1,0 +1,81 @@
+﻿@model edueTree.Models.BufferTimeSetting
+@{
+    ViewBag.Title = "Edit";
+     var activeList = new SelectList(new[]
+    {
+        new SelectListItem {Text = "Active", Value = true.ToString()},
+        new SelectListItem {Text = "Inactive", Value = false.ToString()},
+
+    }, "Value", "Text");
+}
+}
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> BufferTime</a></li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            @using (Html.BeginForm())
+            {
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-check-square"></i>
+                        <h3 class="box-title">Edit Buffer Time </h3>
+
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                            @Html.AntiForgeryToken()
+                            <div class="">
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.BufferId)
+                                @Html.HiddenFor(model => model.firmid)
+                                <div class="form-group">
+
+                                    <div class="col-md-12">
+                                        <label>Set Buffer Time</label>
+                                        @Html.TextBoxFor(m => m.EarlyIn, new { @class = "form-control", onkeypress = "return isNumber(event)" })
+                                        @Html.ValidationMessageFor(model => model.EarlyIn)
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label>Status</label>
+                                      @Html.DropDownListFor(model => model.Isactive, activeList, new { id = "IsActive", @class = "form-control" })
+                                        
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("AddbufferTime")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+</script>

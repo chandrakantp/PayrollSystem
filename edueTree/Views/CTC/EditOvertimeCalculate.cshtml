@@ -1,0 +1,107 @@
+﻿@model edueTree.Models.OvetimeCalculateModel
+@{
+    ViewBag.Title = "OvertimecalculateCreate";
+}
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> CTC</a></li>
+        <li class="active">update</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                
+                @Html.HiddenFor(m=>m.CalMonthId)
+                @Html.HiddenFor(m=>m.OvertimeCalId)
+                @Html.HiddenFor(m=>m.FirmId)
+                @Html.HiddenFor(m=>m.StaffId)
+                
+                
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title"> Employee wise Overtime edit</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Select Employee </label>
+                                @Html.DropDownListFor(model => model.StaffId, Model.StaffListForOvertime, " - Select Employee - ", new { id = "Id", @class = "form-control select2", placeholder = "select Employee", @disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.StaffId, string.Empty, new { @class = "help-block" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Per Hour</label>
+                                @Html.TextBoxFor(model => model.PerHour, new { id = "PerHour", @class = "form-control", placeholder = "Enter Per Hour amount", @required = "required" })
+                                @Html.ValidationMessageFor(model => model.PerHour, string.Empty, new { @class = "help-block" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Overtime Pay</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.CheckBoxFor(m => m.Overtime, new { @checked = "checked" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Under time Deduct</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.CheckBoxFor(m => m.Undertime, new { @checked = "checked" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="update" class="btn btn-default pull-right"/>
+                        <a href='@Url.Action("OvertimecalculateCreate")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+       
+    </div>
+</section>
+
+<script type="text/javascript">
+
+    $.noConflict();
+    jQuery(document).ready(function () {
+        $(".select2").select2();
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify("First Create Calculate Month For Salary! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "falsestatus") {
+                $.notify("Please select at least one checkbox ! ", "warn");
+            }
+        }
+
+    });
+</script>

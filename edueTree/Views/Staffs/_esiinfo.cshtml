@@ -1,0 +1,149 @@
+﻿@model edueTree.Models.EsiinfoModel
+
+<div class="content">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-user"></i>
+            <h3 class="box-title">Details</h3>
+            <div class="pull-right">
+                <div class="modal fade" id="myModalstaffEdit" role="dialog"></div>
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-primary">
+                <div class="panel-heading"> Employee Esi Info</div>
+                <div class="panel-body">
+
+                    <table class="table">
+                        <tr>
+                            <td><b>@Html.DisplayName("Staff code :") </b></td>
+                            <td> @Html.DisplayFor(model => model.staffid1)</td>
+                            <td> <b>@Html.DisplayName("Name :")</b></td>
+                            <td>
+                                @Html.DisplayFor(model => model.Name)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayName("Father Name:") </b></td>
+                            <td> @Html.DisplayFor(model => model.fathername)</td>
+                            <td><b>@Html.DisplayName("Date of birth :")</b></td>
+                            <td>@Convert.ToDateTime(Model.Dob).ToString("dd-MMM-yyyy")</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayName("Gender :")</b></td>
+                            <td>
+                                @if (Model.gender == 1)
+                                {
+                                    @Html.DisplayName("Male")
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("Female")
+                                }
+                            </td>
+                            <td><b>@Html.DisplayName("Married :")</b></td>
+                            <td>
+                                @if (Model.isMarried == true)
+                                {
+                                    @Html.DisplayName("Married")
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("Unmarried")
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayName(" Address :")</b></td>
+                            <td>@Html.DisplayFor(model => model.peraddress)</td>
+                            <td><b>@Html.DisplayName("E-m@ail :")</b></td>
+                            <td>@Html.DisplayFor(model => model.email)</td>
+                        </tr>
+                        <tr>
+
+                            <td><b>@Html.DisplayName("Pin :")</b></td>
+                            <td>@Convert.ToDateTime(Model.pin)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>@Html.DisplayName("Branch office: :")</b>
+                            </td>
+                            <td>
+                                @if (Model.branchoffice != null)
+                                {
+                                    @Html.DisplayFor(model => model.branchoffice)
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("N/A")
+                                }
+                            </td>
+                            <td><b>@Html.DisplayName(" Dispensary :")</b></td>
+                            <td>
+                                @if (Model.dispensary != null)
+                                {
+                                    @Html.DisplayFor(model => model.dispensary)
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("N/A")
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayName("Date of Appointment :")</b></td>
+                            <td>@Html.DisplayFor(model => model.dateofappoint).ToString("dd-MMM-yyyy")</td>
+                            <td><b>@Html.DisplayName(" Name & Address of the employer :")</b></td>
+                            <td>
+                                @if (Model.probation == null)
+                                {
+                                    @Html.DisplayName("Not mention")
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.CurEmployeraddressname)
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <b>
+                                    <label>
+                                        In case of any previous employment
+                                        please fillup the details as under:-
+                                    </label>
+                                </b>
+                            </td>
+                            <td> <b>Previous Ins. No.</b></td>
+                            <td>@Html.DisplayFor(model => model.preinsuranceno)</td>
+                            <td><b><label> Emplrs. Code No.</label></b></td>
+                            <td>@Html.DisplayFor(model => model.preempolyecode)</td>
+                            <td colspan="2">
+                                Name & Address of the employer
+                            </td>
+                            <td colspan="2">@Html.DisplayFor(model => model.CurEmployeraddressname)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>
+                                    <label>
+                                        Name of the Nominee:
+                                    </label>
+                                </b>
+                            </td>
+                            <td>@Html.DisplayFor(model => model.corponame)</td>
+                            <td><b><label> Relationship with insured person:</label></b></td>
+                            <td>@Html.DisplayFor(model => model.relationship)</td>
+                            <td><label>Address</label></td>
+                            <td>@Html.DisplayFor(model => model.nomaddress)</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+      <div class="box-footer"></div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<edueTree.Models.Holiday>
+
+@{
+    ViewBag.Title = "Index";
+    //Layout = null;
+}
+
+<section class="content-header">
+    <h1>
+        Holiday
+        <small></small>
+    </h1>
+    @*<ol class="breadcrumb">
+            <li><a href="~/Class/Index"><i class="fa fa-dashboard"></i>Class</a></li>
+            <li class="active">Index</li>
+        </ol>*@
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar-plus-o"></i>
+                    <h3 class="box-title">Index</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <table class="table table-fixed">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <h4> @Html.DisplayName("Holiday")</h4>
+                                </th>
+                                <th>
+                                    <h4> @Html.DisplayName("Date")</h4>
+                                </th>
+                                <th>
+                                    <h4> @Html.DisplayName("Reason")</h4>
+                                </th>
+                                <th>
+                                    <h4> @Html.DisplayName("Year")</h4>
+                                </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="col-xs-3">
+                                            @Html.DisplayFor(modelItem => item.holidayName)
+                                        </td>
+                                        <td class="col-xs-3">
+                                            @Convert.ToDateTime(item.date).ToString("dd MMM yyyy")
+
+                                        </td>
+                                        <td class="col-xs-3">
+                                            @Html.DisplayFor(modelItem => item.resion)
+                                        </td>
+                                        <td class="col-xs-4">
+                                            @*@Html.DisplayFor(modelItem => item.Year.years)*@
+                                        </td>
+                                     
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+               
+            </div>
+        </section>
+    </div>
+</section>
+

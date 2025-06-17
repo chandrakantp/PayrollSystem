@@ -1,0 +1,128 @@
+﻿@model edueTree.Models.EventModel
+
+@{
+    ViewBag.Title = "Create";
+    //Layout = null;
+}
+
+<section class="content-header">
+    <h1>
+        @*Event*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Event/Index"><i class="fa fa-dashboard"></i>Event</a></li>
+        <li class="active">Create</li>
+    </ol>
+</section>
+
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-calendar-plus-o"></i>
+                        <h3 class="box-title">Add Event </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="">
+                            @Html.ValidationSummary(true)
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Event</label>
+                                        @Html.TextBoxFor(model => model.event1, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.event1)
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>From Date</label>
+                                        @Html.TextBoxFor(model => model.dateFrom, new { @class = "form-control datepicker", @id = "start_date", })
+                                        @Html.ValidationMessageFor(model => model.dateFrom)
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+
+                                        <label>To Date</label>
+                                        @Html.TextBoxFor(model => model.dateTo, new { @class = "form-control datepicker",@id = "EndDate", })
+                                        @Html.ValidationMessageFor(model => model.dateTo)
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Total Days</label>
+                                        @Html.TextBoxFor(model => model.totalDays, new { @class = "form-control",id = "totalDays", @readonly = "readonly"})
+                                        @Html.ValidationMessageFor(model => model.totalDays)
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Add" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("Index")' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    
+    $(function () {       
+
+        $("#EndDate").on('change', function () {
+
+            var x2 = document.getElementById("EndDate").value;
+            var x3 = document.getElementById("start_date").value;
+
+            var msPerDay = 1000 * 60 * 60 * 24;
+            d1 = new Date(x2);
+            d2 = new Date(x3);
+            var x4 = document.getElementById("totalDays");
+            var dd = (((d1 - d2) / msPerDay).toFixed(0));          
+             x4.value = dd;
+
+            var startDate = document.getElementById("start_date").value;
+            var endDate = document.getElementById("EndDate").value;
+
+            if ((Date.parse(startDate) >= Date.parse(endDate))) {
+                alert("To date should be greater than From date");
+                document.getElementById("EndDate").value = "";
+            }
+        });
+    });
+
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

@@ -1,0 +1,342 @@
+﻿@model List<edueTree.Models.MonthllyAttendanceModel>
+@{
+    ViewBag.Title = "GenerateAttendance";
+}
+
+@{
+    var monthList = new SelectList(new[]
+    {
+        new SelectListItem {Text = "Select Month", Value = null, Selected = true},
+        new SelectListItem {Text = "January", Value = "1"},
+        new SelectListItem {Text = "February", Value = "2"},
+        new SelectListItem {Text = "March", Value = "3"},
+        new SelectListItem {Text = "April", Value = "4"},
+        new SelectListItem {Text = "May", Value = "5"},
+        new SelectListItem {Text = "June", Value = "6"},
+        new SelectListItem {Text = "July", Value = "7"},
+        new SelectListItem {Text = "August", Value = "8"},
+        new SelectListItem {Text = "September", Value = "9"},
+        new SelectListItem {Text = "October", Value = "10"},
+        new SelectListItem {Text = "November", Value = "11"},
+        new SelectListItem {Text = "December", Value = "12"}
+    }, "Value", "Text");
+
+
+
+    var yearList = new SelectList(new[]
+    {
+        new SelectListItem {Text = "Select Year", Value = null, Selected = true},
+        new SelectListItem {Text = "2016", Value = "2016"},
+        new SelectListItem {Text = "2017", Value = "2017"},
+        new SelectListItem {Text = "2018", Value = "2018"},
+        new SelectListItem {Text = "2019", Value = "2019"},
+        new SelectListItem {Text = "2020", Value = "2020"},
+        new SelectListItem {Text = "2021", Value = "2021"},
+        new SelectListItem {Text = "2022", Value = "2022"},
+        new SelectListItem {Text = "2023", Value = "2023"},
+        new SelectListItem {Text = "2024", Value = "2024"},
+        new SelectListItem {Text = "2025", Value = "2025"}
+
+    }, "Value", "Text");
+}
+
+
+
+
+
+
+<section class="content-header">
+    <h1>
+
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Attendance</a></li>
+        <li class="active">All employee</li>
+    </ol>
+</section>
+
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title">Search Options - For Generate Attendance (Select Month & Year)</h3>
+                    <div class="pull-right">
+                    </div>
+                </div>
+
+                <div class="box-body chat">
+                    <div class="item">
+                        <form action="/Attendance/GenerateAttendance" method="get" id="form1">
+                            <div class="form-horizontal">
+                                <div class="col-md-10">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.Label("Month:", new { @id = "month", @class = "control-label col-md-3" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("month", monthList, new { id = "month", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.Label("Year:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("year", yearList, new { id = "year", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" form="form1" value="Submit" class="btn btn-default">Generate</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+@if (!Request.QueryString["month"].IsEmpty())
+{
+
+    <section class="content">
+        <div class="row">
+            <section class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-calendar"></i>
+                        <h3 class="box-title">
+                            Pre-Attendance report month of
+                            (@Html.DisplayFor(a => a.FirstOrDefault().MonthString, new { id = "intmonth" }) - @Html.DisplayFor(a => a.FirstOrDefault().Year, new { id = "intyear" }))
+                        </h3>
+
+                    </div>
+
+                    <div class="box-body chat">
+                        <div class="table-responsive">
+
+                            <table id="StructureTable" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Employee Name</th>
+                                        <th>MD</th>
+                                        <th>WD</th>
+                                        <th>WDPR</th>
+                                        <th>PPR</th>
+                                        <th>AB</th>
+
+                                        <th style="display: none;">PMCom</th>
+                                        <th style="display: none;">CMCom</th>
+                                        <th style="display: none;">UCom</th>
+                                        <th style="display: none;">FCom</th>
+                                        <th style="display: none;">PL</th>
+                                        <th>WO</th>
+                                        <th>HD</th>
+                                        <th style="display: none;">Month</th>
+                                        <th style="display: none;">Year</th>
+                                        <th>SC</th>
+                                        <th>PR</th>
+                                        <th>LV</th>
+                                        <th>TT</th>
+                                        <th>MNT</th>
+                                        <th>OT/UT</th>
+                                        @*<th></th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.StaffId)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.EmployeeName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.MonthDays)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.WorkingDays)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.AttendDays)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.PPR)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Absent)</td>
+                                            <td style="display: none;">@Html.DisplayFor(modelItem => item.PreviousMonthEarnComp)</td>
+                                            <td style="display: none;">@Html.DisplayFor(modelItem => item.CurrentMonthEarnComp)</td>
+                                            <td style="display: none;">@Html.DisplayFor(modelItem => item.UsedCompansation)</td>
+                                            <td style="display: none;">@Html.DisplayFor(modelItem => item.ForwordComp)</td>
+                                            <td style="display: none;">@Html.DisplayFor(modelItem => item.PaidLeaves)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.WeeklyOff)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Holidays)</td>
+                                            <td style="display: none;">@Html.DisplayFor(modelItem => item.Month)</td>
+                                            <td style="display: none;">@Html.DisplayFor(modelItem => item.Year)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.SC)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.WorkdayPresent)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.PaidLeaves)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Totaltimestr)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Machinetime)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Overundertime)</td>
+                                            @*<td>@Html.ActionLink("Detail", "GenerateAttendanceself", "Attendance", new { staffId = item.StaffId, dt1 = item.Month, dt2 = item.Year }, null)</td>*@
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <center><input type="submit" value="Store generated attendance sheet" class="btn btn-default" onclick=" dataStore(); " /></center>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+}
+
+
+<script type="text/javascript">
+    function dataStore() {
+        debugger;
+        var table = document.getElementById("StructureTable");
+        var rowCount = table.rows.length;
+        var staffIds = new Array();
+        var monthDays = new Array();
+        var MonthlyWorkingDays = new Array();
+
+        var presents = new Array();
+        var physicalpresents = new Array();
+        var absents = new Array();
+        var paidLeaves = new Array();
+        var weeklyOff = new Array();
+        var usedCompansation = new Array();
+        var ForwordComp = new Array();
+        var currentMonthCompansation = new Array();
+        var preMonthCompansation = new Array();
+        var earnCompansation = new Array();
+        var monthlyPaidLeave = new Array();
+        var month = new Array();
+        var year = new Array();
+        var holidays = new Array();
+        var shiftcount = new Array();
+        var workdaypresent = new Array();
+        var Totaltimestr = new Array();
+        var Machinetime = new Array();
+        var Overundertime = new Array();
+        var j = 0;
+        for (var i = 1; i < rowCount; i++) {
+            var row = table.rows[i];
+            var idbox = row.cells[0].childNodes[0].textContent;
+            if (idbox !== "0") {
+                staffIds[j] = idbox;
+                monthDays[j] = row.cells[2].childNodes[0].textContent;
+                MonthlyWorkingDays[j] = row.cells[3].childNodes[0].textContent;
+                presents[j] = row.cells[4].childNodes[0].textContent;
+                physicalpresents[j] = row.cells[5].childNodes[0].textContent;
+                absents[j] = row.cells[6].childNodes[0].textContent;
+                preMonthCompansation[j] = row.cells[7].childNodes[0].textContent;
+                currentMonthCompansation[j] = row.cells[8].childNodes[0].textContent;
+                // usedCompansation[j] = row.cells[9].childNodes[0].textContent;
+                //ForwordComp[j] = row.cells[10].childNodes[0].textContent;
+                paidLeaves[j] = row.cells[11].childNodes[0].textContent;
+                weeklyOff[j] = row.cells[12].childNodes[0].textContent;
+
+                holidays[j] = row.cells[13].childNodes[0].textContent;
+                month[j] = row.cells[14].childNodes[0].textContent;
+                year[j] = row.cells[15].childNodes[0].textContent;
+                shiftcount[j] = row.cells[16].childNodes[0].textContent;
+                workdaypresent[j] = row.cells[17].childNodes[0].textContent;
+                earnCompansation[j] = row.cells[8].childNodes[0].textContent;
+                monthlyPaidLeave[j] = row.cells[18].childNodes[0].textContent;
+                Totaltimestr[j] = row.cells[19].childNodes[0].textContent;
+                Machinetime[j] = row.cells[20].childNodes[0].textContent;
+                Overundertime[j] = row.cells[21].childNodes[0].textContent;
+                j += 1;
+            }
+        }
+        debugger;
+        jQuery.ajax({
+            type: "POST",
+            url: "/Attendance/GenerateAttendanceDataStore",
+            data: { staffIds: JSON.stringify(staffIds), monthDays: JSON.stringify(monthDays), presents: JSON.stringify(presents), physicalpresents: JSON.stringify(physicalpresents), absents: JSON.stringify(absents), preMonthCompansation: JSON.stringify(preMonthCompansation), currentMonthCompansation: JSON.stringify(currentMonthCompansation), paidLeaves: JSON.stringify(paidLeaves), weeklyOff: JSON.stringify(weeklyOff), holidays: JSON.stringify(holidays), Month: JSON.stringify(month), Year: JSON.stringify(year), shiftcount: JSON.stringify(shiftcount), workdaypresent: JSON.stringify(workdaypresent), earnCompansation: JSON.stringify(earnCompansation), MonthlyWorkingDays: JSON.stringify(MonthlyWorkingDays), monthlyPaidLeave: JSON.stringify(monthlyPaidLeave), Totaltimestr: JSON.stringify(Totaltimestr), Machinetime: JSON.stringify(Machinetime), Overundertime: JSON.stringify(Overundertime) },
+            datatype: "json",
+            success: function (data) {
+                //debugger;
+
+                //alert(data.Success);
+                //  alert(data.Message);
+                $.notify(data.Message, "success");
+
+
+
+            }
+        });
+    }
+
+</script>
+
+
+<!--This code is for Datatable js Serarching sorting and pagination-->
+<script type="text/javascript">
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                "pageLength": 50,
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+</script>
+
+
+
+<!--_This is notify js code.-->
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["message"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["message"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["message"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["message"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["message"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["message"]' === "wrong") {
+                $.notify(" Something went wrong plz check ! ", "error");
+            }
+            if ('@TempData["AlreadyGenerate"]' === "select") {
+                $.notify(" Select From Date and To Date ", "error");
+            }
+        }
+
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm//yy",
+            autoclose: true
+        });
+
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true
+        });
+
+    });
+
+
+</script>

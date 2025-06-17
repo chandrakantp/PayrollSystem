@@ -1,0 +1,71 @@
+﻿@model edueTree.Models.Staff
+
+@{
+    ViewBag.Title = "upload Staff Photo";  
+}
+<br/>
+<section class="content-header">
+    <h1>
+        @*Change Profile Image*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Event/Index"><i class="fa fa-dashboard"></i>Change Profile Image</a></li>
+        <li class="active">Create</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-plus-square"></i>
+                    <h4 class="box-title"> Change Profile Image</h4>
+                </div>
+
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm("UploadStaffProfileImage", "Staffs", null, FormMethod.Post,
+                              new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal" id="defaultForm">
+                                <hr />
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(a => a.staffId)
+                                <br />
+                                <div class="form-group">
+                                    @Html.Label("Profile Image:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        <img id="image" style="height: 100px; width: 146px;" />
+                                        <input id="files" title="Upload a image" type="file" name="file" multiple/>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="form-group">
+                                <div class="col-md-offset-3 col-md-10">
+                                    <input type="submit" value="Add" class="btn btn-default" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<script type="text/javascript">
+    document.getElementById("files").onchange = function () {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            document.getElementById("image").src = e.target.result;
+        };
+        reader.readAsDataURL(this.files[0]);
+    };   
+</script>

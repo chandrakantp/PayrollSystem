@@ -1,0 +1,153 @@
+﻿@model edueTree.Models.StaffCtcModel
+
+<style type="text/css">
+    .help-block {
+        color: #ff0000;
+    }
+</style>
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+<section class="content-header">
+    <h1>
+        @*Salary head settings*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> CTC</a></li>
+        <li class="active">Edit </li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                @using (Html.BeginForm("Edit", "Ctc", FormMethod.Post))
+                {
+                    @Html.HiddenFor(s => s.ctcId)
+                    @Html.HiddenFor(s => s.firmId) 
+                    @Html.HiddenFor(s => s.isActive) 
+                    @Html.HiddenFor(s => s.createdBy) 
+                    @Html.HiddenFor(s => s.structId) 
+                    
+                         
+                    <div class="box-header">
+                        <i class="fa fa-inr"></i>
+                        <h3 class="box-title">Monthly CTC Update</h3>
+                    </div>
+
+                    <div class="box-body">
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+                            @*<div class="form-group col-md-6">                              
+                                @Html.DropDownList("structId", (SelectList)ViewBag.StructureListNEW, "--Choose Structure--", new { @class = "form-control getemp select2", required = "required" })
+                                <label id="structMsgtId" style="display: none; color: red;">Please select Structure</label>
+                            </div>*@
+
+                            <div class="form-group col-md-6">
+                                @*@Html.DropDownListFor(model => model.staffId, Model.StaffList, new { @id = "StaffId", @class = "form-control stlist select2", required = "required" })*@
+                                @Html.DropDownListFor(model => model.staffId, Model.StaffList, "-- Choose Name --", new {@class = "form-control stlist select2", @id = "StaffId", required = "required"})
+                                <label id="empMsgtId" style="display: none; color: red;"> Please Select Employee</label>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="form-horizontal" id="defaultform5">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>CTC</label>
+                                        @Html.TextBoxFor(model => model.ctc, new { @id = "ctcTxt", @class = "form-control", placeholder = "Enter monthly CTC amount." })
+                                        <label id="ctcMsgtId" style="display: none; color: red;">CTC is required!</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Increment / Joining Date</label>
+                                        @Html.TextBoxFor(model => model.incrementDate,"{0:MM/dd/yyyy}", new { @id = "IncrementDate", @class = "form-control", placeholder = "--------- Select date ----------" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Status</label>
+                                        @Html.DropDownListFor(model => model.status, new List<SelectListItem>
+                                    {
+                                        new SelectListItem {Text = "Current", Value = "Current"},
+                                        new SelectListItem {Text = "Previous", Value = "Previous"}
+                                    }, " - What is status ? - ", new { @class = "form-control", id = "Status" })
+                                        <label id="statusMsgtId" style="display: none; color: red;">Please Select Status.</label>
+                                    </div>                                  
+                                </div>
+                            </div>                         
+                        </div>
+                        <div class="item" id="records_table"></div>
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8"></div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("Index", "CTC")' class="btn btn-default pull-left"> Back to list</a>
+                    </div>
+                    <br /> 
+                }
+            </div>
+        </section>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#IncrementDate').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true
+        });
+    });
+
+
+</script>
+
+<!-- Success Notice-->
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        $(".select2").select2();
+       
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#structId").change(function () {
+
+            debugger;
+            $("#StaffId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetStructureEmp")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { id: $("#structId").val() },
+                // here we are get value of selected country and passing same value
+                //as inputto json method GetStates.
+
+                success: function (EmployeeList) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+
+                    $.each(EmployeeList, function (i, variable) {
+                        $("#StaffId").append('<option value="' + variable.Value + '">' +
+                            variable.Text + '</option>');
+                        // here we are adding option for States
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve variables.' + ex);
+                }
+            });
+            return false;
+        });
+    });
+</script>

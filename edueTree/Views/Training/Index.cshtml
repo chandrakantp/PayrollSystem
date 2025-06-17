@@ -1,0 +1,283 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.TrainingModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/plugins/select2/select2.css" rel="stylesheet" />
+<script src="~/plugins/select2/select2.js"></script>
+
+@*<script type="text/javascript">
+    $(function () {
+        jQuery.ajax({
+            type: 'POST',
+            url: '/Training/GetAllDept',
+            data: {},
+            datatype: 'json',
+           
+            success: function (response) {
+
+                var items = "";
+                $(response.deptid).each(function (i, item) {
+
+                    items += "<option value=\"" + item + "\">" + response.deptname[i] + "</option>";
+
+                });
+
+                $("#deptid").html(items);
+                if (strUser !== 0) {
+                    $("#deptid option:selected").text(strUser);
+                }
+            },
+            error:
+                           function () {
+
+                               $.notify("Please select any Department! ", "error");
+                           }
+        });
+    });
+</script>*@
+
+<section class="content header">
+    <div class="row">
+        <div class="col-md-12">
+
+            <a href='@Url.Action("Create")' class="btn btn-success pull-right">
+                <i class="fa fa-plus-square"></i> Add Training
+            </a>
+
+        </div>
+    </div>
+</section>
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Training/Index"><i class="fa fa-dashboard"></i></a>Training</li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title">Attendance Search Options - You can search Daily,Weekly & Monthly</h3>
+                </div>
+
+                <div class="box-body chat">
+                    <div class="item">
+                        @using (Html.BeginForm("Index", "Training", FormMethod.Get))
+                    {
+                            <div class="form-horizontal">
+
+                                <div class="form-group">
+                                    @Html.Label("From Date:", new {@class = "control-label col-md-2"})
+                                    <div class="col-md-2">
+                                        @Html.TextBox("datepicker", null, new {id = "datepicker1", @class = "form-control datepicker"})
+                                    </div>
+
+                                    @Html.Label("To Date:", new {@class = "control-label col-md-2"})
+                                    <div class="col-md-2">
+                                        @Html.TextBox("datepicker2", null, new {id = "datepicker2", @class = "form-control  datepicker"})
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.DropDownList("deptid", (IEnumerable<SelectListItem>)ViewBag.staffid, "Select Department", new { @class = "form-control select2" })
+                                        @*<select id="deptid" name="deptid" class="form-control " required></select>*@
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                    }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<section class="content">
+
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Training List</h3>
+
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Sr.No.</th>
+                                    <th>
+                                        @Html.DisplayName("Training Date Start")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Day")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Topic")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Trainer Name")
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayName("Duration")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("No of Attendant")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("No of Man Hours ")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Training Location ")
+                                    </th>
+                                    <th>@Html.DisplayName("Department ") </th>
+
+                                    <th>
+                                        @Html.DisplayName("Training Date End")
+                                    </th>
+
+                                    <th>@Html.DisplayName("TrainingType")</th>
+                                    <th></th><th></th><th></th><th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @{
+                                    int index = 1;
+                             }
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@index</td>
+                                        <td>
+                                            @Convert.ToDateTime(item.TrainingDateStart).ToString("dd MMM yyyy")
+                                        </td>
+                                        <td>
+
+                                            @Convert.ToDateTime(item.TrainingDateStart).DayOfWeek
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Topic)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TrainerName)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Duration)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NoofAttendant)
+                                        </td>
+                                        <td>
+                                           @{
+                                               decimal a = Convert.ToDecimal(item.Duration);
+                                               decimal b=
+                                               Convert.ToDecimal(item.NoofAttendant);
+                                               decimal c = (a*b)/60;
+                                           }
+                                            @c
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TrainingLocation)
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.DepartmentName)</td>
+                                     
+                                        <td>
+                                            @Convert.ToDateTime(item.TrainingEndDate).ToString("dd MMM yyyy")
+                                        </td>
+                                      
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TrainingType)
+                                        </td>
+                                        <td>
+                                            <a data-toggle="tooltip" data-placement="top" title="Happy Sheet" href='@Url.Action("Happysheet", "Training", new {id = item.TrainigId})'><i class="fa fa-commenting"></i></a>
+                                            @*@Html.EncodedActionLink("Happy Sheet", "Happysheet", "Training", new {id = item.TrainigId}, null)*@
+                                        </td>
+                                        <td>
+                                            <a data-toggle="tooltip" data-placement="top" title="Send Employee Invitation" href='@Url.Action("Invitation", "Training", new {id = item.TrainigId})'><i class="fa fa-envelope"></i></a>
+                                            @*@Html.EncodedActionLink("Send Invitation", "Invitation", "Training", new {id = item.TrainigId}, null)    *@
+                                        </td>
+                                        <td>
+                                            <a data-toggle="tooltip" data-placement="top" title="Feedback and Edit" href='@Url.Action("Edit", "Training", new {id = item.TrainigId})'><i class="fa fa-pencil"></i></a>
+
+                                        </td>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#myModalTraingDelete" href='@Url.Action("Delete", new {id = item.TrainigId})'><i class="fa fa-trash"></i></a>
+
+                                        </td>
+                                    </tr>
+                                    index++;
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    @*<div class="input-group box-tools pull-right">
+                            <a href='@Url.Action("Create")' class="btn btn-success"><i class="fa fa-plus"></i></a>
+                        </div>*@
+                </div>
+                <div class="modal fade" id="myModalTraingDelete" role="dialog"></div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $(".select2").select2();
+            $(".table").DataTable({
+                dom: "Bfrtip",
+                buttons: [
+                        "copy", "csv", "excel", "pdf", "print"
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        $(".select2").select2();
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

@@ -1,0 +1,69 @@
+﻿@model edueTree.Models.LeaveRequestModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = null;
+}
+<section class="content">
+    <div class="row">
+        <section class="col-lg-5  col-md-offset-3 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar-plus-o"></i>
+                    <h3 class="box-title">Leave Request </h3>
+                    @*<div class="pull-right">
+                        <span class="" style="color: red; font-size: 16px">Your Comp.Leave Balance is :<b> @ViewData["result"]</b>&nbsp; days</span>
+                    </div>*@
+                </div>
+             
+                <div class="box-body">
+                  
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal" id="defaultForm">
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(a => a.staffId, new { id = "staffid" })
+                                <div class="form-group">
+                                    @Html.Label("Leave type:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-5">
+                                        @Html.DropDownList("lTypeId", (IEnumerable<SelectListItem>)ViewBag.lTypeId, "--- Please select leave type ---", new { id = "ltype", @class = "form-control", onchange = "getRemainingcnt()" })
+                                        @Html.ValidationMessageFor(model => model.lTypeId)
+                                        <div id="Remainingcnt"></div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("No of Leaves:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-5">
+                                        @Html.TextBoxFor(model => model.NoOfLeaves, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.NoOfLeaves)
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Narration:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-5">
+                                        @Html.TextBoxFor(model => model.Narration, new { @class = "form-control" })
+                                    </div>
+
+                                </div>
+
+                                <br />
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+                                        <input type="submit" value="Add" class="btn btn-default" />
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                   
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+

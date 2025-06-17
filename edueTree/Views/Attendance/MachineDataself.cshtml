@@ -1,0 +1,252 @@
+﻿@model IEnumerable<edueTree.Models.AttendanceSheetModel>
+@{
+    ViewBag.Title = "MachineDataSelf";
+
+}
+
+
+
+@{
+
+    var AttendmodeList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "All", Value = "All Employee", Selected = true},
+                new SelectListItem {Text = "Machine", Value = "Machine"},
+                new SelectListItem {Text = "MisPunch", Value = "MisPunch"},
+                new SelectListItem {Text = "HRorSelf", Value = "HRorSelf"}
+
+            }, "Value", "Text");
+}
+<section class="content-header">
+    <h1>
+        @*Attendance sheet*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Self Machine</a></li>
+        <li class="active">Data</li>
+    </ol>
+</section>
+
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Attendance Search Options - You can search Daily,Weekly & Monthly </h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("MachineDataself", "Attendance", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            @*@Html.Label("From Date:", new { @class = "control-label col-md-2" })*@
+                            <div class="col-md-3">
+                                @Html.TextBox("datepicker", null, new { id = "datepicker1", @class = "form-control", @placeholder = "From Date" })
+                            </div>
+
+                            @*@Html.Label("To Date:", new { @class = "control-label col-md-1" })*@
+                            <div class="col-md-3">
+                                @Html.TextBox("datepicker2", null, new { id = "datepicker2", @class = "form-control", @placeholder = "To Date" })
+                            </div>
+                          
+                            <div class="col-md-2">
+                                @*@Html.DropDownListFor(model => model.AttendMode, Model.RoleListnew, " - Select Role - ", new { id = "Id", @class = "form-control", placeholder = "select Role" })*@
+
+
+                                @Html.DropDownList("AttendmodeList", new List<SelectListItem>
+                                {
+                                    new SelectListItem {Text = "All", Value = "All"},
+                                    new SelectListItem {Text = "Machine", Value = "Machine"},
+                                    new SelectListItem {Text = "MisPunch", Value = "MisPunch"},
+                                    new SelectListItem {Text = "HRorSelf", Value = "HRorSelf"}
+                                }, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Self Machine Data List</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Name")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Date")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Time")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Attendance Mode")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("InOutmode")
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EmployeeName)
+                                        </td>
+                                        <td>
+                                            @Convert.ToDateTime(item.TranDate).ToString("dd-MM-yyyy")
+                                        </td>
+                                        <td>
+                                            @Convert.ToDateTime(item.TranDate).ToString("HH:mm tt")
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.AttendMode)</td>
+                                        <td>
+                                            @if (@item.inOutMode == 0)
+                                            {
+                                                <p> CheckIn</p>
+                                            }
+                                            else
+                                            {
+                                                <p> CheckOut</p>
+                                            }
+                                        </td>
+                                        @*<td>@Html.CheckBox("chkIsManuallyCheckIn", new {@id = "chk"})</td>*@
+                                        @*<td>
+                                            <input class="searchType" type="checkbox" name="chkIsManuallyCheckIn" id="@item.AttendId" checked="@item.isManuallyCheckIn" />
+                                        </td>*@
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+<script>
+
+
+    $('.searchType').click(function () {
+        var attendid = $(this).attr('id');  //-->this will alert id of checked checkbox.
+        var status = $(".searchType").is(":checked");
+        alert(attendid);
+        alert(status);
+        $.ajax({
+            type: "POST",
+            url: "/attendance/ManuallyCheckin",
+            data: { Attendid: attendid, Status: status }, //--> send id of checked checkbox on other page
+            success: function (data) {
+                debugger;
+                if (data === "true") {
+                    $.notify(" Checkin Status Updated ! ", "success");
+                }
+
+
+            },
+            error: function () {
+                if (data === "false") {
+                    $.notify(" Something went wrong ! ", "error");
+                }
+            }
+
+        });
+
+
+    });
+
+</script>
+<script type="text/javascript">
+    var totalTileFunction = function (e) {
+        document.getElementById("Timetotalspan").innerHTML("Total time:" + e);
+    }
+
+
+    $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            dateFormat: "dd/mm//yy",
+            autoclose: true
+        });
+
+        $('#datepicker1').datepicker({
+            dateFormat: "dd/mm/yy",
+            autoclose: true
+        });
+
+    });
+
+
+</script>
+
+<script>
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+
+
+    $('#chk').click(function () {
+
+        debugger;
+        var chkbox = $("#chk").is(":checked") ? 1 : 0;
+        alert(chkbox);
+
+        if (chkbox == 1) {
+            $.ajax({
+                url: '@Url.Action("ManuallyCheckin", "Attendance")',
+                type: "POST",
+                data: { AttendaId: attendaId, Status: status },
+
+                dataType: "json",
+                success: function (data) {
+                    alert('working');
+                },
+                error: function (data) {
+                    alert('Not working');
+                }
+            });
+        }
+
+        //var attendaId = $(this).data('attendId');
+        //var status = $("#chkIsManuallyCheckIn").is(":checked");
+
+    });
+</script>

@@ -1,0 +1,124 @@
+﻿@model edueTree.Models.HolidayModel
+
+@{
+    ViewBag.Title = "Holidayweekend";
+    //Layout = null;
+}
+
+<link rel="stylesheet" href="~/Content/fullcalendar.min.css">
+<link rel="stylesheet" href="~/Content/fullcalendar.print.css" media="print">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Calendar</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+</head>
+
+<script src="~/Scripts/moment.min.js"></script>
+<br />
+
+
+<div class="content">
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-default">
+                <div class="box-header pull-left">
+                    <i class="fa fa-calendar-plus-o"></i>
+                    <h3 class="box-title">Notice Board Calendar</h3>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="label label-success">Birthday</span>
+                    <span class="label label-warning">Prohibition Period</span>
+                    <span class="label label-info">Anniversary Tenure</span>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true)
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="box box-primary">
+                                            <div class="box-body no-padding">
+                                                <div id="calendar"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+        $(function() {
+
+            /* initialize the calendar
+             -----------------------------------------------------------------*/
+            //Date for the calendar events (dummy data)
+            var date = new Date();
+            var d = date.getDate(),
+                m = date.getMonth(),
+                y = date.getFullYear();
+
+            var holidaylist = [];
+
+            var holiday = [];
+            holiday.push({ "title": "New Year", "start": "2016-04-02", "allDay": "false", "backgroundColor": "#FF0000", "borderColor": "#FF0000" });
+            holiday.push({ "title": "Holiday", "start": "2016-04-07", "allDay": "false", "backgroundColor": "#FF0000", "borderColor": "#FF0000" });
+            holiday.push({ "title": "Holiday1", "start": "2016-05-07", "allDay": "false", "backgroundColor": "#FF0000", "borderColor": "#FF0000" });
+            holiday.push({ "title": "Holiday2", "start": "2016-07-07", "allDay": "false", "backgroundColor": "#FF0000", "borderColor": "#FF0000" });
+            $.ajax({
+                type: "POST",
+                //url: "/Holiday/Holidayweekend",
+                url: '@Url.Action("NoticeCalendar1", "Holiday")',
+                // data: { fd: fromdate, td: todate },
+                success: function (result) {
+                    //alert("here" + data.d.toString());
+                    var p = JSON.stringify(result);
+                    //alert(p);
+                    var q = JSON.parse(p);
+                    $('#calendar').fullCalendar({
+                        events: q
+                    });
+                }
+            });
+
+            var currColor = "#3c8dbc"; //Red by default
+            //Color chooser button
+            var colorChooser = $("#color-chooser-btn");
+            $("#color-chooser > li > a").click(function (e) {
+                e.preventDefault();
+                //Save color
+                currColor = $(this).css("color");
+                //Add color effect to button
+                $('#add-new-event').css({ "background-color": currColor, "border-color": currColor });
+            });
+            $("#add-new-event").click(function (e) {
+                e.preventDefault();
+                //Get value and make sure it is not null
+                var val = $("#new-event").val();
+                if (val.length == 0) {
+                    return;
+                }
+
+                //Create events
+                var event = $("<div />");
+                event.css({ "background-color": currColor, "border-color": currColor, "color": "#fff" }).addClass("external-event");
+                event.html(val);
+                $('#external-events').prepend(event);
+
+                //Remove event from text input
+                $("#new-event").val("");
+            });
+        });
+</script>

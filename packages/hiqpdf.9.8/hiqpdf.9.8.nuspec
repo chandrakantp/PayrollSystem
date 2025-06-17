@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>hiqpdf</id>
+    <version>9.8</version>
+    <title>HiQPdf HTML to PDF Converter</title>
+    <authors>HiQPdf Software</authors>
+    <owners>HiQPdf Software</owners>
+    <licenseUrl>http://www.hiqpdf.com/SoftwareLicenseAgreeement.aspx</licenseUrl>
+    <projectUrl>http://www.hiqpdf.com/</projectUrl>
+    <iconUrl>http://www.hiqpdf.com/images/HiQPdf_64x64.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The HiQPdf Library for .NET offers you a modern, simple, fast, flexible and powerful tool to create complex and stylish PDF documents in your applications with just a few lines of code.
+
+This version of the HiQPdf library can run both in 32-bit and 64-bit applications. When you convert very large HTML documents it is possible to run out of memory and in this case you should consider using the special package for x64-based systems.
+
+Using the high quality HTML to PDF conversion engine you can easily design a document in HTML with CSS3, JavaScript, SVG or Canvas and then convert it to PDF preserving the exact content and style.
+
+The HiQPdf Library for .NET offers you the fastest and the most precise HTML to PDF conversion technology to use in your Web and Desktop applications. The HTML to PDF Converter can convert to PDF any HTML document or URL that a modern browser can display, preserving all the CSS styles and executing all the JavaScript scripts found in the HTML document.
+
+Besides the common features a HTML to PDF Converter must have, the HiQPdf component has some unique features on the market like the full support for web fonts, the ability to convert only a selected region of the HTML document or the possibility to overlap multiple HTML documents in the same PDF while preserving the transparent backgrounds and images from the HTML document.
+
+The HiQPdf Library is much more than just a HTML to PDF converter. The HTML to PDF conversion engine is the most important feature, but the HiQPdf software is a complete PDF library for .NET that you can use to create new PDF documents and add text and images at the desired positions in pages in a traditional manner, open and edit external PDF documents by adding new objects, create PDF documents with interactive forms, fill and submit interactive forms, merge and split PDF documents, extract text and images from PDF documents, search text in PDF documents, rasterize PDF pages to images.</description>
+    <summary>The HiQPdf Library for .NET offers you a modern, simple, fast, flexible and powerful tool to create complex and stylish PDF documents in your applications with just a few lines of code.</summary>
+    <tags>HTML PDF Converter Library .NET HTML to HTML-to-PDF PDF HTML-to-PDF-Converter HTML-to-PDF-.NET HTML-to-PDF-Converter-.NET PDF-Library PDF-Library-.NET</tags>
+  </metadata>
+</package>

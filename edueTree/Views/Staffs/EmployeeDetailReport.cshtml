@@ -1,0 +1,392 @@
+﻿@using edueTree.Helpers
+@model IEnumerable<edueTree.Models.StaffModel>
+
+<style type="text/css">
+    .jumbotron {
+        background-color: #ffffff;
+        padding-bottom: 46px;
+        padding-top: 0;
+    }
+
+    .box-header {
+        padding: 5px;
+    }
+
+</style>
+
+<section class="content-header">
+    <h1>
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Staff</a></li>
+        <li class="active">Index</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-list"></i>
+                    <h3 class="box-title">All Employee Detail List</h3>
+                </div>
+                <div id="dvContainer">
+                    <div class="box-body chat" id="chat-box">
+                        <div class="item">
+                            <div class="table-responsive">
+                                <table id="activity" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayName("User Name")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Full Name")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Date Of Joining")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Probation Period")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Permanent Address")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Temporary Address")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Gender")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Design")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Dept")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Contact")
+                                            </th>
+
+                                            <th>
+                                                @Html.DisplayName("City")
+                                            </th>
+
+                                            <th>
+                                                @Html.DisplayName("State")
+                                            </th>
+
+                                            <th>
+                                                @Html.DisplayName("Company Email")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Personal Email")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Birth Date")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Marriage Status")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Blood Group")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Aadhar Card No")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("PAN Number")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("License No")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Voter ID No")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Nationality")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Company Id")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Emergency Contact")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Referral Detail")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Language known")
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SchoolCode)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                                    @Html.DisplayFor(modelItem => item.MiddleName)
+                                                    @Html.DisplayFor(modelItem => item.LastName)
+                                                </td>
+                                                <td>
+                                                    @Convert.ToDateTime(item.JoiningDate).ToString("dd-MM-yyyy")
+                                                </td>
+
+                                                @if (item.Probation == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Convert.ToDateTime(item.Probation).ToString("dd-MM-yyyy")
+                                                    </td>
+                                                }
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.PerAddress)
+                                                    @Html.DisplayFor(modelItem => item.PerArea)
+                                                    @Html.DisplayFor(modelItem => item.PerPincode)
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TempAddress)
+                                                    @Html.DisplayFor(modelItem => item.TempArea)
+                                                    @Html.DisplayFor(modelItem => item.TempPincode)
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.GenderSet)
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Designation.designation1)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Department.deptName)
+                                                </td>
+
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Contact)
+                                                </td>
+
+                                                @if (item.City == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.City)
+                                                    </td>
+                                                }
+
+                                                @if (item.State == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.State)
+                                                    </td>
+                                                }
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Email)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Personalmail)
+                                                </td>
+                                                <td>
+                                                    @Convert.ToDateTime(item.Dob).ToString("dd-MM-yyyy")
+                                                </td>
+
+                                                @if (item.IsMarried == true)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("Married")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                     <td>
+                                                        @Html.DisplayName("Unmarried")
+                                                    </td>
+                                                }
+
+                                                @if (item.Bloodgroup == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Bloodgroup)
+                                                    </td>
+                                                }
+                                                @if (item.AdharNo == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.AdharNo)
+                                                    </td>
+                                                }
+                                                @if (item.PAN == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.PAN)
+                                                    </td>
+                                                }
+                                                @if (item.Licence == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Licence)
+                                                    </td>
+                                                }
+                                                @if (item.VoteridNo == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.VoteridNo)
+                                                    </td>
+                                                }
+                                                @if (item.Nationality == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Nationality)
+                                                    </td>
+                                                }
+                                                @if (item.CompanyId == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CompanyId)
+                                                    </td>
+                                                }
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.EmergencyContact1)
+                                                </td>
+                                                @if (item.ReferalDetail == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ReferalDetail)
+                                                    </td>
+                                                }
+                                                @if (item.Languageknown == null)
+                                                {
+                                                    <td>
+                                                        @Html.DisplayName("N/A")
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Languageknown)
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </div>
+</section>
+<script type="text/javascript">
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+
+    });
+</script>

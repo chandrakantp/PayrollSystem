@@ -1,0 +1,57 @@
+﻿@model IEnumerable<edueTree.Models.WorkExperiance>
+
+@{ Layout = null; }
+
+<div class="box box-info">
+    <div class="box-header">
+        <i class="fa fa-briefcase"></i>
+        <h3 class="box-title">Work experiance</h3>
+  
+    </div>
+    <div class="box-body">
+        <table class="table responsive">
+            <tr>
+              
+                <th>
+                    @Html.DisplayName("Organization")
+                </th>
+                <th>
+                    @Html.DisplayName("Joining Date")
+                </th>
+                <th>
+                    @Html.DisplayName("Release Date")
+                </th>
+                <th>
+                    @Html.DisplayName("Designation")
+                </th>
+               
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.organizationName)
+                    </td>
+                    <td>
+                        @Convert.ToDateTime(item.JoiningDate).ToString("dd MMM yyyy")
+
+                    </td>
+                    <td>
+                        @Convert.ToDateTime(item.releaseDate).ToString("dd MMM yyyy")
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.designation)
+                    </td>
+
+                    
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+
+

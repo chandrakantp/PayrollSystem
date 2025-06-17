@@ -1,0 +1,108 @@
+﻿@model IEnumerable<edueTree.Models.EmployeebucketModel>
+@{
+    ViewBag.Title = "AllEmployeeLeaveBalanceSheet";
+}
+
+
+<section class="content">
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> Employee Leave Balance Sheet</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-1">
+                                        @Html.DisplayName("User Name")
+                                    </th>
+
+                                    <th class="col-xs-2">
+                                        @Html.DisplayName("Leave Balance")
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.GroupBy(a => a.EmployeeCode))
+                                {
+                                    <tr>
+                                        <td>@item.Key </td>
+                                  
+
+
+                                    @foreach (var grd in item.GroupBy(s => s.LeavesTypeAndTotalLeaves))
+                                    {
+                                        <td>@grd.Key</td>
+                                        <td>@grd.Sum(s=>s.TotalLeaves)</td>
+                                    }
+                                  </tr>
+                                    @*@foreach (var ii in item)
+                                        {
+                                            <td>
+                                                @ii.LeavesTypeAndTotalLeaves   <br />
+                                                @ii.TotalLeaves
+                                            </td>
+                                        }*@
+
+
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function () {
+        if (true) {
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "change") {
+                $.notify(" Password Change Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "notenough") {
+                $.notify(" You do not have enough leave balance ! ", "error");
+            }
+        }
+
+    });
+</script>

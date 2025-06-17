@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "SelectAll";
+}
+
+
+<table>
+    <thead>
+        <tr>
+            <th><input type="checkbox" /></th>
+            <th>Column 1</th>
+            <th>Column 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>Tabular Data 1</td>
+            <td>Tabular Data 2</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>Tabular Data 3</td>
+            <td>Tabular Data 4</td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+  
+
+
+    $(function () {
+        $('th > :checkbox').click(function () {
+            $(this).closest('table')
+                .find('td > :checkbox')
+                .attr('checked', $(this).is(':checked'));
+        });
+    });
+
+</script>

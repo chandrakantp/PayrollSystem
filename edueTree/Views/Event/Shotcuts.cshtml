@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Shotcuts";
+    }
+<section class="content-header">
+    <h1>
+
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Shortcut</a></li>
+        <li class="active">List</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">Shortcut List</h3>
+                </div>
+                <div class="box-body">
+                    <div class="item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead><tr><th><h4> @Html.DisplayName("Shortcut")</h4></th><th><h4> @Html.DisplayName("Full form")</h4></th></tr></thead>
+                                <tbody>
+                                    <tr><td>MD</td><td>Monthly Days</td></tr>
+                                    <tr><td>WD</td><td>Working Days</td></tr>
+                                    <tr><td>PR</td><td>Present Days</td></tr>
+                                    <tr><td>AB</td><td>Absent</td></tr>
+                                    <tr><td>PL</td><td>Paid Leaves</td></tr>
+                                    <tr><td>WO</td><td>Weekly Off</td></tr>
+                                    <tr><td>HD</td><td>Holidays</td></tr>
+                                    <tr><td>CMCom</td><td>Current Month Compensation</td></tr>
+                                    <tr><td>PMCom</td><td>Previous Month Compensation</td></tr>
+                                    <tr><td>UCom</td><td>This Month Used Compensation</td></tr>
+                                    <tr><td>ECom</td><td>This Month Earn Compensation</td></tr>
+                                    <tr><td>AB AMT</td><td>Absent Amount</td></tr>
+                                    <tr><td>AMT</td><td>Amount</td></tr>
+                                    <tr><td>comp</td><td>Compensation</td></tr>
+                                    <tr><td>dd</td><td>Day</td></tr>
+                                    <tr><td>D</td><td>Day</td></tr>
+                                    <tr><td>mm</td><td>Month</td></tr>
+                                    <tr><td>M</td><td>Month</td></tr>
+                                    <tr><td>yyyy</td><td>Year</td></tr>
+                                    <tr><td>Y</td><td>Year</td></tr>
+                                    <tr><td>Payable days</td><td>(PR - CMCom) + UCom</td></tr>
+                                    <tr><td>SC </td><td>Shift Count</td></tr>
+                                    <tr><td>WDPR </td><td>Working Days Present</td></tr>
+                                    <tr><td>PPR </td><td>Physically Present</td></tr>
+                                    <tr><td>TT </td><td> Total Time</td></tr>
+                                    <tr><td>LV </td><td> Leaves</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        //$.noConflict();
+        //$("#example1").DataTable();
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+
+</script>

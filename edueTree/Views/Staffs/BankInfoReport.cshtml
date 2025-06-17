@@ -1,0 +1,74 @@
+﻿@model IEnumerable<edueTree.Models.BankInfoModel>
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<section class="content-header">
+    <h1>
+        @*Leave Request*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~//Index"><i class="fa fa-dashboard"></i>Bank Info</a></li>
+        <li class="active">Report</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title"> All Employee Bank Info Details</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="table-responsive">
+                        <table class="table table-fixed">
+                            <thead>
+                            <tr>
+                                <th> @Html.DisplayName("Username")</th>
+                                <th> @Html.DisplayName("Staff Name")</th>
+                                <th>@Html.DisplayName(" Holder Name")</th>
+                                <th>@Html.DisplayName("Bank Name")</th>
+                                <th>@Html.DisplayName("IFSC Code") </th>
+                                <th>@Html.DisplayName("Account No")</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td> @Html.DisplayFor(modelitem => item.StaffCode)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.StaffName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.HolderName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.BankName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.BankIfsc)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.AccountNo) </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="col-md-12">
+            @{Html.RenderAction("NotFillBankInfoToStaff", "NoAssign");}
+        </section>
+    </div>
+</section>
+<script type="text/javascript">
+    $(function () {
+        $(document).ready(function () {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+    });
+</script>

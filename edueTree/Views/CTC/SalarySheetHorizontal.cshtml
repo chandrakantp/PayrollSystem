@@ -1,0 +1,244 @@
+﻿@model IEnumerable<edueTree.Models.PaySlipModel>
+@{
+    ViewBag.Title = "SalarySheetHorizontal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var monthList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "January", Value = "1"},
+                new SelectListItem {Text = "February", Value = "2"},
+                new SelectListItem {Text = "March", Value = "3"},
+                new SelectListItem {Text = "April", Value = "4"},
+                new SelectListItem {Text = "May", Value = "5"},
+                new SelectListItem {Text = "June", Value = "6"},
+                new SelectListItem {Text = "July", Value = "7"},
+                new SelectListItem {Text = "August", Value = "8"},
+                new SelectListItem {Text = "September", Value = "9"},
+                new SelectListItem {Text = "October", Value = "10"},
+                new SelectListItem {Text = "November", Value = "11"},
+                new SelectListItem {Text = "December", Value = "12"},
+            }, "Value", "Text");
+
+    var yearList = new SelectList(new[]
+            {
+                new SelectListItem {Text = "----  Select ----", Value = null, Selected = true},
+                new SelectListItem {Text = "2016", Value = "2016"},
+                new SelectListItem {Text = "2017", Value = "2017"},
+                new SelectListItem {Text = "2018", Value = "2018"},
+                new SelectListItem {Text = "2019", Value = "2019"},
+                new SelectListItem {Text = "2020", Value = "2020"},
+                new SelectListItem {Text = "2021", Value = "2021"},
+                new SelectListItem {Text = "2022", Value = "2022"},
+                new SelectListItem {Text = "2023", Value = "2023"},
+                new SelectListItem {Text = "2024", Value = "2024"},
+                new SelectListItem {Text = "2025", Value = "2025"}
+
+            }, "Value", "Text");
+}
+
+<section class="content-header">
+    <h1>
+        @*Attendance sheet*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Salary</a></li>
+        <li class="active">All emp</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title">Search Options - For salary sheet (Select Month & Year)</h3>
+                    <div class="pull-right">
+                    </div>
+                </div>
+                <div class="box-body chat">
+                    <div class="item">
+                        <form action="/CTC/SalarySheetHorizontal" method="get" id="form1">
+                            <div class="form-horizontal">
+                                <div class="col-md-10">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            @Html.Label("Month:", new { @id = "month", @class = "control-label col-md-3" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("month", monthList, new { id = "month", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            @Html.Label("Year:", new { @class = "control-label col-md-3" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("year", yearList, new { id = "year", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" form="form1" value="Submit" class="btn btn-default">Search</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+@if (!Request.QueryString["month"].IsEmpty() && !Request.QueryString["year"].IsEmpty() && Model != null)
+{
+    <section class="content">
+        <div class="row">
+            <section class="col-lg-12 connectedSortable">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <i class="fa fa-calendar"></i>
+                        <h3 class="box-title">All employee Salary sheet</h3>
+                        <div class="pull-right">
+
+                            <a href="#" id="exportexcel" class=" btn btn-success">
+                                <i class="fa fa-file-excel-o"></i> Excel
+                            </a>
+
+                            <a href="#" id="exportpdf" class="btn btn-warning">
+                                <i class="fa fa-file-pdf-o"></i> PDF
+                            </a>
+
+                            <button type="button" id="btnPrint" class="btn btn-info">
+                                <i class="fa fa-print"></i> Print
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="dvContainer">
+                        <div class="box-body chat">
+                            <div class="table-responsive">
+
+                                <table id="activity" class="table table-striped">
+                                    @foreach (var group in Model.GroupBy(x => x.EmployeeName))
+                                    {
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 20%;">@Html.DisplayName("Name")</th>
+                                            @foreach (var item in group.Where(a => a.IsEarnings == true).OrderBy(a => a.HeadName))
+                                            {
+                                                <th>@Html.DisplayFor(modelItem => item.HeadName)</th>
+                                            }
+                                            @foreach (var item in group.Where(a => a.IsDuductions == true).OrderBy(a => a.HeadName))
+                                            {
+                                                <th>@Html.DisplayFor(modelItem => item.HeadName)</th>
+                                            }
+                                            <th>@Html.DisplayName("Total Earning")</th>
+                                            <th>@Html.DisplayName("Total Deduction")</th>
+                                            <th>@Html.DisplayName("Net Payable")</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <div>@group.Key</div>
+                                            </td>
+
+                                            @foreach (var item in group.Where(a => a.IsEarnings == true).OrderBy(a => a.HeadName))
+                                            {
+                                                <td>@Html.DisplayFor(modelItem => item.HeadAmount)</td>
+                                            }
+                                            @foreach (var item in group.Where(a => a.IsDuductions == true).OrderBy(a => a.HeadName))
+                                            {
+                                                <td>@Html.DisplayFor(modelItem => item.HeadAmount)</td>
+                                            }
+                                            <td>
+                                                @group.Where(a => a.IsEarnings == true).Sum(a => a.HeadAmount)
+                                            </td>
+                                            <td>
+                                                @group.Where(a => a.IsDuductions == true).Sum(a => a.HeadAmount)
+                                            </td>
+                                            <td>
+                                                @Html.Raw(group.Where(a => a.IsEarnings == true).Sum(a => a.HeadAmount) - group.Where(a => a.IsDuductions == true).Sum(a => a.HeadAmount))
+                                            </td>
+                                            <td>
+                                                <a data-toggle="modal" data-target="#myModalDeptDelete" href='@Url.Action("DeleteSalaryVariables", new {id = group.First().Ctcid, month = group.First().tranmonth, tranid = group.First().tranid})'><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>                                                                              
+                                    }
+                                    <tr>                                                                          
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="pull-right">
+                                            <b>
+                                                @Html.Raw(Model.Where(a => a.IsEarnings == true).Sum(a => a.HeadAmount) - Model.Where(a => a.IsDuductions == true).Sum(a => a.HeadAmount))
+                                            </b>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                                @*<table id="activity" class="table table-bordered">
+                                    <tr>
+                                        <td class="" style="text-align: right; padding-right: 25px;"><b>@Html.Raw(Model.Where(a => a.IsEarnings == true).Sum(a => a.HeadAmount) - Model.Where(a => a.IsDuductions == true).Sum(a => a.HeadAmount))</b></td>
+                                    </tr>
+                                </table>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+    <div class="modal fade" id="myModalDeptDelete" role="dialog"></div>
+}
+
+<script>
+    $(function() {
+        $(document).ready(function() {
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    $.noConflict();
+    jQuery(document).ready(function() {
+        $(".select2").select2();
+        if (true) {
+
+            if ('@TempData["notice"]' === "success") {
+                $.notify(" Record Inserted  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "update") {
+                $.notify(" Record Updated  Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "exist") {
+                $.notify(" Record Already Exist ! ", "warn");
+            }
+            if ('@TempData["notice"]' === "delete") {
+                $.notify(" Record Deleted Successfully ! ", "success");
+            }
+            if ('@TempData["notice"]' === "cantdelete") {
+                $.notify(" Can't delete, because this used some where. ! ", "warn");
+            }
+        }
+    });
+
+
+</script>

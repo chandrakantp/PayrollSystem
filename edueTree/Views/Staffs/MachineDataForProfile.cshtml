@@ -1,0 +1,38 @@
+﻿@model IEnumerable<edueTree.Models.AttendanceSheetModel>
+@{
+    ViewBag.Title = "MachineData";
+    Layout = null;
+}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-yellow">
+                                            <img src="~/Images/shifts-app-icon.png" width="100%" />
+                                       </span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">@Convert.ToDateTime(item.TranDate).ToString("dd-MMM-yyyy") </span>
+                                            <span class="info-box-number" style="font-size: 14px;">@Html.DisplayFor(modelItem => item.ChekIn)</span>   
+                                            <span class="info-box-number" style="font-size: 14px;">@Html.DisplayFor(modelItem => item.ChekOut)</span>        
+                                            <span class="info-box-number" style="font-size: 14px;">@Html.DisplayFor(modelItem => item.ThatDayStatus) </span> 
+                                            <span class="info-box-number" style="font-size: 14px;">@Html.DisplayFor(modelItem => item.HolidayStatus) </span> 
+                                            <span class="info-box-number" style="font-size: 14px;">@Html.DisplayFor(m => item.NetDuration)</span> 
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                            }
+                        </table>
+                    </div>
+              
+
+<script type="text/javascript">
+    var totalTileFunction = function (e) {
+        document.getElementById("Timetotalspan").innerHTML("Total time:" + e);
+    }
+
+</script>
+

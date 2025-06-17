@@ -1,0 +1,256 @@
+﻿@model IEnumerable<edueTree.Models.AsignShiftBasedOnAttendaceInTimeModel>
+@{
+    ViewBag.Title = "AttendanceSheet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+
+
+        jQuery.ajax({
+            type: 'POST',
+            url: '/Attendance/GetStaff',
+            data: {},
+            datatype: 'json',
+            error:
+                            function () {
+                                alert("Not any Staff");
+                            },
+            success: function (response) {
+
+                var items = "";
+                $(response.SubcatId).each(function (i, item) {
+                    if (i === 0) {
+                        items += "<option value=\"" + 0 + "\">Select Employee</option>";
+                    }
+                    else {
+                        items += "<option value=\"" + item + "\">" + response.Subcat[i] + "</option>";
+                    }
+                });
+
+                $("#empId").html(items);
+                if (strUser !== 0) {
+                    $("#empId option:selected").text(strUser);
+                }
+            }
+        });
+    });
+</script>
+<section class="content-header">
+    <h1>
+        @*Attendance sheet*@
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Attendance</a></li>
+        <li class="active">All emp</li>
+    </ol>
+</section>
+
+<section class="col-md-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Attendance Search Options - You can search Daily,Weekly & Monthly</h3>
+        </div>
+
+        <div class="box-body chat">
+            <div class="item">
+                @using (Html.BeginForm("GetAllAttendace", "Attendance", FormMethod.Get))
+                {
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            @Html.Label("From Date:", new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.TextBox("fromDate", null, new { id = "fromDate", @class = "form-control datepicker" })
+                            </div>
+
+                            @Html.Label("To Date:", new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.TextBox("toDate", null, new { id = "toDate", @class = "form-control datepicker" })
+                            </div>
+                            <div class="col-md-3">
+                                <select id="empId" name="empId" class="form-control"></select>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3 class="box-title">All employee attendance sheet</h3>
+                    @*<div class="pull-right">
+
+                            <a href="#" id="exportexcel" class=" btn btn-success">
+                                <i class="fa fa-file-excel-o"></i> Excel
+                            </a>
+
+                            <a href="#" id="exportpdf" class="btn btn-warning">
+                                <i class="fa fa-file-pdf-o"></i> PDF
+                            </a>
+
+                            <button type="button" id="btnPrint" class="btn btn-info">
+                                <i class="fa fa-print"></i> Print
+                            </button>
+
+
+                        </div>*@
+                </div>
+
+                <div id="dvContainer">
+
+                    <div class="box-body chat" id="chat-box">
+                        <div class="table-responsive">
+                            <table id="myTable" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Employee Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Tran date")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Check In")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Check Out")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Total duration")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Shift")
+                                        </th>  <th>
+                                            @Html.DisplayName("Status")
+                                        </th>
+                                        
+                                        <th>
+                                            @Html.DisplayName("Holiday/Weekends")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Leaves")
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.staffName)
+                                            </td>
+                                            <td>
+                                                @Convert.ToDateTime(item.attendDate).ToString("dd-MM-yyyy")
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CheckIn)
+                                            </td>
+                                            <td>@Html.DisplayFor(modelItem => item.CheckOut)</td>
+                                            <td>@Convert.ToDateTime(item.TotalDuration).ToString("HH:mm:ss")</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ShiftName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                        
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</section>
+
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var table = $('.table').DataTable({
+            "columnDefs": [
+                { "visible": false, "targets": 0 }
+            ],
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            "order": [[0, 'asc']],
+            "displayLength": 25,
+            "drawCallback": function (settings) {
+                var api = this.api();
+                var rows = api.rows({ page: 'current' }).nodes();
+                var last = null;
+
+                api.column(0, { page: 'current' }).data().each(function (group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td colspan=8">' + group + '</td></tr>'
+                        );
+
+                        last = group;
+                    }
+                });
+            }
+        });
+
+        // Order by the grouping
+        $('.table tbody').on('click', 'tr.group', function () {
+            var currentOrder = table.order()[0];
+            if (currentOrder[0] === 0 && currentOrder[1] === 'asc') {
+                table.order([0, 'desc']).draw();
+            }
+            else {
+                table.order([0, 'asc']).draw();
+            }
+        });
+    });
+</script>
+
+@*<script>
+        $(document).ready(function () {
+            $("#myTable").DataTable({
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": false, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/home/LoadData",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                        { "data": "ContactName", "name": "ContactName", "autoWidth": true },
+                        { "data": "CompanyName", "name": "CompanyName", "autoWidth": true },
+                        { "data": "Phone", "name": "Phone", "autoWidth": true },
+                        { "data": "Country", "name": "Country", "autoWidth": true },
+                        { "data": "City", "name": "City", "autoWidth": true },
+                        { "data": "PostalCode", "name": "PostalCode", "autoWidth": true }
+                ]
+            });
+        });
+    </script>*@
+
+
+

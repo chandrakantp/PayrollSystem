@@ -1,0 +1,53 @@
+﻿@model IEnumerable<edueTree.Models.MemberattendanceConfigModel>
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header">
+                <div class="box-title">
+                    Member Machine Config
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("Staff Name")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Serial Key")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Finger Id")
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StaffName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SerialKey)
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FingureId)
+
+                            </td>
+
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

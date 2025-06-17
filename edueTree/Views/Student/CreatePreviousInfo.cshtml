@@ -1,0 +1,112 @@
+﻿@model edueTree.Models.PreviousEduInfoModel
+
+<section class="content-header">
+    <h1>
+        Add Student School Previous Info
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Student</a></li>
+        <li class="active">Add</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <section class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-plus-square"></i>
+                    <h3 class="box-title">Add</h3>
+                </div>
+                <div class="box-body chat" id="chat-box">
+                    <div class="item">
+                        @using (Html.BeginForm())
+                        {                                                                        
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal" id="defaultForm">                              
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(a => a.studentid)
+                                @Html.HiddenFor(a => a.InfoId)
+                                @Html.HiddenFor(a => a.ClassId)
+
+                                
+
+                                <div class="form-group">
+                                    @Html.Label("Name Of School:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(model => model.NameOfSchool, new { id = "nameOfSchool", @class = "form-control", placeholder = "previous school name" })                                       
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    @Html.Label("Passing Year:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(model => model.PassingYear, new { id = "passingYear", @class = "form-control", placeholder = "passing year" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Reson Of Leaving:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-7">
+                                        @Html.TextAreaFor(model => model.LeavingReason, new { id = "resonOfLeaving", @class = "form-control", placeholder = "resion of leaving" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    @Html.Label("Contact:", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(model => model.Precontact, new { id = "contact", @class = "form-control", placeholder = "contact number" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Address:", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-7">
+                                        @Html.TextAreaFor(model => model.Preschooladdress, new { id = "address", @class = "form-control", placeholder = "address" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("City:", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(model => model.Preschoolcity, new {id = "city", @class = "form-control", placeholder = "city"})
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("State:", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(model => model.Prestate, new { id = "state", @class = "form-control", placeholder = "state" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Pincode:", new {@class = "control-label col-md-3"})
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(model => model.Prepincode, new { id = "Pincode", @class = "form-control", placeholder = "pincode" })
+                                    </div>
+                                </div>
+                            
+                            
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-10">
+                                        <input type="submit" value="Save" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                      
+                    </div>
+                    @*<div class="box-footer">
+                        <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                            <div class="btn-group" data-toggle="btn-toggle">
+                                <a href='@Url.Action("Index")'><i class="fa fa-arrow-left"></i> Back to list</a>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+        </section>
+    </div>
+</section>

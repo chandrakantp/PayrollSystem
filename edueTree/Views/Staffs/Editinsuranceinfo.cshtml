@@ -1,0 +1,79 @@
+﻿@model edueTree.Models.InsuranceinfoModel
+@{
+    ViewBag.Title = "Editinsuranceinfo";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Editinsuranceinfopost", "staffs"))
+            {
+                <div class="box box-success">
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="box-header">
+                        <h4>Edit Insurance Info</h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            @Html.HiddenFor(model => model.Insid)
+                            @Html.HiddenFor(model => model.staffid)
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Staff / Emp code:</label>
+                                    @Html.TextBoxFor(model => model.Staffcode, new { id = "Staffcode", @class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Staffcode, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="StaffCodeMessage" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Name:</label>
+                                    @Html.TextBoxFor(model => model.Name, new { id = "EnrollNumber", @class = "form-control", placeholder = "enter enroll number", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Name, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="enrollNumberMessage" />
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Policy No:</label>
+                                    @Html.TextBoxFor(model => model.Policyno, new { id = "Policyno", @class = "form-control", placeholder = "enter Policy No" })
+                                    @Html.ValidationMessageFor(model => model.Policyno, string.Empty, new { @class = "help-block" })
+                                    <span class="help-block" id="Policyno" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Policy Date</label>
+                                    @Html.TextBoxFor(model => model.Policydate, new { id = "Policydate", @class = "form-control datepicker", placeholder = "policy Date" })
+                                    <span class="help-block" id="Policydate" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Policy Expiry Date</label>
+                                    @Html.TextBoxFor(model => model.Expirydate, new { id = "Policydate", @class = "form-control datepicker", placeholder = "Expiry Date" })
+                                    <span class="help-block" id="Policydate" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Update" class="btn btn-default pull-right" />
+                        <a href='@Url.Action("StaffDashboard", "Staffs", new { staffid =Model.staffid })' class="btn btn-default pull-left">Back to list</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

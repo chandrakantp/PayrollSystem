@@ -1,0 +1,179 @@
+﻿@using edueTree.Models
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "FirmDashboard";
+    Layout = "~/Views/Shared/_LayoutSuperadmin.cshtml";
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Active Companies</span>
+                                <span class="info-box-number">
+                                    @{
+                                        dbContainer db = new dbContainer();
+                                        var activeCompany = db.FirmInfoes.Where(s => s.isActive == true).Count();
+                                        @activeCompany
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-red"><i class="ion ion-ios-people-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Inactive Companies</span>
+                                <span class="info-box-number">
+                                    @{
+                                        dbContainer db1 = new dbContainer();
+                                        var inactiveCompany = db1.FirmInfoes.Where(s => s.isActive == false).Count();
+                                        @inactiveCompany
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-yellow"><i class="fa fa-male"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Male Active<br /> Employees</span>
+                                <span class="info-box-number">
+                                    @{
+                                        dbContainer db2 = new dbContainer();
+                                        var activeMember = db2.Staffs.Where(s => s.isActive == true && s.gender == 1).Count();
+                                        @activeMember
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-blue"><i class="fa fa-female"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Female Active <br />Employees</span>
+                                <span class="info-box-number">
+                                    @{
+                                        dbContainer db3 = new dbContainer();
+                                        var inactiveMember = db3.Staffs.Where(s => s.isActive == true && s.gender == 2).Count();
+                                        @inactiveMember
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </table>
+            </div>
+        </div>
+
+
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box bg-yellow">
+                                <span class="info-box-icon"><i class="fa fa-sign-in"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Today Logins</span>
+                                    <span class="info-box-number">
+                                        @{
+                                            dbContainer db4 = new dbContainer();
+                                            var loginCounter = db4.TblLoginRecords.Where(s => s.createdDate >= DateTime.UtcNow).Count();
+                                            @loginCounter
+                                        }
+                                    </span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box bg-blue">
+                                <span class="info-box-icon"><i class="fa fa-sign-in"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Logins</span>
+                                    <span class="info-box-number">
+                                        @{
+                                            dbContainer db5 = new dbContainer();
+                                            var loginCounterAll = db5.TblLoginCounters.Sum(s => s.Lcounter);
+                                            @loginCounterAll
+                                        }
+                                    </span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box bg-red">
+                                <span class="info-box-icon"><i class="fa fa-clock-o"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Attendance Request Pending</span>
+                                    <span class="info-box-number">
+                                        @{
+                                            dbContainer db6 = new dbContainer();
+                                            var Attendancecount = db6.AttendanceRequests.Where(s => s.isApproved == null && s.Staff.isActive == true).Count();
+                                            @Attendancecount
+                                        }
+                                    </span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box bg-green">
+                                <span class="info-box-icon"><i class="fa fa-calendar-times-o"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Leave Request Pending</span>
+                                    <span class="info-box-number">
+                                        @{
+                                            dbContainer db7 = new dbContainer();
+                                            var leavecount = db7.LeaveRequests.Where(s => s.status == "Planned" || s.status == "Requested" && s.Staff.isActive == true).Count();
+                                            @leavecount
+                                        }  
+                                    </span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>

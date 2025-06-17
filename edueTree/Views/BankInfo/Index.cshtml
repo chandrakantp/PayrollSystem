@@ -1,0 +1,136 @@
+﻿@using edueTree.Helpers
+@model edueTree.Models.StaffModel
+
+@{ Layout = null; }
+
+<div class="box box-primary">
+    <div class="box-header">
+        <i class="fa  fa-file-text"></i>
+        <h3 class="box-title">Staff Bank Information</h3>
+        <div class="pull-right" title="Add Document">
+            @if (ViewBag.message == true)
+            {
+                <a href='@Url.Action("Create", new { StaffId = TempData["staffId"] })' class="btn btn-primary"><i class="fa fa-plus"></i>Add Bank Info</a>
+            }
+            <div class="modal fade" id="bankinfomodel" role="dialog"></div>
+        </div>
+    </div>
+    <div class="box-body">
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+
+                    <th>
+                        @Html.DisplayName("Account Holder Name")
+
+                    </th>
+                    <th>
+                        @Html.DisplayName("Bank Name")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Bank Branch")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Account No")
+                    </th>
+
+                    <th>
+                        @Html.DisplayName("Ifsc Code")
+                    </th>
+                    <th></th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.BankInfolist)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HolderName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BankName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Branch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BankIfsc)
+                        </td>
+
+                        <td>
+                            @if (ViewBag.message == true)
+                            {@Html.EncodedActionLink("<i class='fa fa-pencil-square'></i>", "Edit", "BankInfo", new { id = item.BankinfoId }, null)}
+                        </td>
+                        <td>
+                            @if (ViewBag.message == true)
+                            {
+                                <a data-toggle="modal" data-target="#myModalBankDelete" href='@Url.Action("Delete", new {id = item.BankinfoId})'><i class="fa fa-trash"></i></a>
+                            }
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="modal fade" id="myModalBankDelete" role="dialog"></div>
+    </div>
+</div>
+@*<script>
+        $(function() {
+
+            $(document).ready(function() {
+                $('.table').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            });
+
+        });
+
+    </script>*@
+
+
+@*<script type="text/javascript">
+        $.noConflict();
+        jQuery(document).ready(function () {
+            if (true) {
+                if ('@TempData["notice"]' === "success") {
+                    $.notify(" Record Inserted  Successfully ! ", "success");
+                }
+                if ('@TempData["notice"]' === "update") {
+                    $.notify(" Record Updated  Successfully ! ", "success");
+                }
+                if ('@TempData["notice"]' === "exist") {
+                    $.notify(" Record Already Exist ! ", "warn");
+                }
+                if ('@TempData["notice"]' === "delete") {
+                    $.notify(" Record Deleted Successfully ! ", "success");
+                }
+                if ('@TempData["notice"]' === "cantdelete") {
+                    $.notify(" Can't delete, because this used some where. ! ", "warn");
+                }
+            }
+        });
+    </script>*@
+
+@*<script>
+        $(function () {
+
+            $(document).ready(function () {
+                $('.table').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                });
+            });
+
+        });
+
+    </script>*@
